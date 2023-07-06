@@ -1,0 +1,49 @@
+<style>
+    .searchFilterBox {
+        border: none !important;
+        border-left: none !important;
+        width: 50% !important;
+        margin-top: 10px;
+    }
+</style>
+<div>
+    <div class="panel panel-primary">
+        <div style="background: none; padding: 5px 0; height:50px;" class="panel-heading">گزارش مکاتبات افراد سازمان
+            <button ng-click="Func.onExcelClick()" class="btn btn-default pull-left downloadReport">
+                <img src="app/assets/img/excel.png">
+            </button>
+            <button ng-click="Func.onPdfClick()" class="btn btn-default pull-left downloadReport">
+                <img src="app/assets/img/pdf.png">
+            </button>
+        </div>
+        <div class="panel-body">
+            <vt-search control-fn="Controller.searchController"></vt-search>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-hover col-sm-12">
+                <thead>
+                    <tr>
+                        <th>نام افراد</th>
+                        <th>ارجاع داده شده</th>
+                        <th>ارجاع دریافت شده</th>
+                        <th>ارجاع بدون پاسخ</th>
+                        <th>پیش نویس ایجاد کرده</th>
+                        <th>تعداد نامه های داخلی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="letter in Data.letterList">
+                        <td>{{letter.user.title}}</td>
+                        <td>{{letter.sentForward|EnToFaNumber}}</td>
+                        <td>{{letter.receiverForward|EnToFaNumber}}</td>
+                        <td>{{letter.notRespondForward|EnToFaNumber}}</td>
+                        <td>{{letter.draft|EnToFaNumber}}</td>
+                        <td>{{letter.letterInside|EnToFaNumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<style>
+    .moreInfoModal em {
+        background: #ff0;
+        font-style: normal;
+        font-weight: bold;
+    }
+</style>
+<div class="modal-body moreInfoModal">
+    <p ng-repeat="item in Data.items" ng-bind-html="item.fragments"></p>
+</div>

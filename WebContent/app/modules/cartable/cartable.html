@@ -1,0 +1,19 @@
+<style>
+	.container {
+		width: auto !important;
+	}
+	
+	.mainContent {
+		padding: 0px;
+	}
+	
+	.navbar {
+		margin-bottom: 0px;
+	}
+</style>
+
+<cartable-menu api="Controller.api" 
+	on-filter-click="Func.cartableListMenuIndermidiariFn"
+	settings="Controller.cartableMenu.settings">
+</cartable-menu>
+<div ui-view="cartableContainer" style="height:100%" ></div>

@@ -1,0 +1,14 @@
+<div class="panel panel-default themeWrapper">
+    <div>
+        <p>ترکیب رنگی مورد خود را انتخاب نمایید</p>
+        <div class="themeContainer" ng-repeat="theme in Data.themeList" ng-click="Func.loadCss(theme)" ng-class="{'current-theme': theme.name==Data.themeName}">
+<!--            <p>{{theme.persianName}}</p>-->
+            <div style="background-color: {{theme.mainColor}}"></div>
+            <div style="background-color: {{theme.secondColor}}"></div>
+            <div style="background-color: {{theme.thirdColor}}"></div>
+        </div>
+        <div style="width: calc(100% - 450px); text-align: center; margin: 50px 0 0;">
+            <button style="height: 50px;font-size: 15px; padding: 10px 30px;" class="btn btn-primary" ng-click="Func.onSaveClick()">ذخیره و بازگشت به کارتابل</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row">
+    <label class="col-sm-5 letter-body-label" style="margin-bottom: 25px" ng-class="{'required':isEditMode}">نامه</label>
+    <div class="col-sm-7" style="max-width: 410px;">
+        <vt-file required="false"
+            is-edit-mode="isEditMode" type="type"
+            model="model"
+            hide-download="true"
+            callback-fn="onFileUploaded"
+            remove-callback-fn="onRemoveFile">
+        </vt-file>
+    </div>
+</div>
+<div class="row col-sm-12" ng-if="pdfUrl">
+    <div class="wrappre" ng-if="!isEditMode" ng-hide="pdfUrl">
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
+        </div>
+    </div>      
+    <!--<div class="wrapper pdfKateb" ng-if="pdfUrl && !isEditMode">-->
+        <!--<div class="" style="height: 600px !important;width: 800px !important;" vt-pdf control-fn="{canSign:false, pdfUrl: pdfUrl}"></div>-->
+        <!--&lt;!&ndash; <iframe src="{{pdfUrl}}" style="width: 100%; height: 900px;"></iframe> &ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="wrapper pdfKateb" ng-if="pdfUrl && isEditMode">-->
+    	<!--<iframe src="{{pdfUrl}}" style="height: 600px !important;width: 800px !important;"></iframe>-->
+    <!--</div>-->
+    <div class="wrapper pdfKateb" ng-if="pdfUrl">
+        <iframe id="letter-body-iframe" ng-src="{{getPdfUrl(pdfUrl)}}"
+            style="height: calc(100vh - 230px) !important;width: 100% !important;" frameborder="0">
+            <!--allowfullscreen mozallowfullscreen webkitallowfullscreen>-->
+        </iframe>
+    </div>
+</div>

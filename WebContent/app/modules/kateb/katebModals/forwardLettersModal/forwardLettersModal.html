@@ -1,0 +1,165 @@
+<div class="modal-header">
+    <h3 class="modal-title">ارجاع</h3>
+</div>
+<div class="modal-body">
+    <div class="col-sm-12 well well-sm"
+         ng-if="Data.selectedNode">
+        <i style="height: 16px;"
+           ng-click="Data.selectedNode=null"
+           class="flaticon-close-button pull-right btn btn-xs"></i>&nbsp;&nbsp;
+        <div class="row rowForm">
+            <label class="col-sm-3">مخاطب</label>
+            <div class="col-sm-9">
+                <ul style="padding-right: 10px;">
+                    <li ng-repeat="item in Data.selectedNode.deliveryTo">{{item.title}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">ارجاع دهنده</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.forwarder.title}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">تاریخ رسمی</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.officialDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">مهلت پاسخ</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.requestResponseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">هامش</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.hamesh}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">پاسخ</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.response}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">تاریخ پاسخ</label>
+            <div class="col-sm-9">
+                {{Data.selectedNode.responseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">ضمائم</label>
+            <div class="col-sm-9">
+                <div ng-repeat="attachment in Data.selectedNode.attachments track by $index">
+                    <button ng-show="attachment.letterBody"
+                            class="btn col-sm-12"
+                            ng-click="Func.onShowLetterModalClick(attachment.letterBody)">نمایش نامه
+                    </button>
+                </div>
+                <vt-file class="col-sm-8"
+                         model="Data.selectedNode.fileBody"
+                         is-edit-mode="false">
+                </vt-file>
+            </div>
+        </div>
+    </div>
+    <form name="form">
+        <div class="row rowForm"
+             ng-class="{'has-error':Data.validationClicked && form.draftDeliveryTo.$invalid}">
+            <label class="col-sm-3"
+                   ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
+            <div class="col-sm-9">
+                <!--<multiselect model="Data.forward.deliveryTo" name="letterDeliveryTo" ng-model="Data.forward.deliveryTo" options="Data.puaList"-->
+                <!--is-edit-mode="Data.mode!='view'"></multiselect>-->
+                <!--<vt-typeahead api="Controller.typeahead"-->
+                              <!--ng-model="Data.forward.deliveryTo"-->
+                              <!--model="Data.forward.deliveryTo"-->
+                              <!--vt-array-required-->
+                              <!--name="draftDeliveryTo"-->
+                              <!--is-edit-mode="true">-->
+                <!--</vt-typeahead>-->
+                <multiselect-reciever model="Data.forward.deliveryTo" search-fn="Controller.multiselectRecieverSearch(query)"
+                                      name="draftDeliveryTo" ng-model="Data.forward.deliveryTo"
+                                      options="Data.puaList" is-edit-mode="true" vt-array-required>
+                </multiselect-reciever>
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">انتخاب هامش</label>
+            <div class="col-sm-9">
+                <ui-select ng-model="Data.hamesh"
+                           on-select="Func.onHameshSelect($item, $model)">
+                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="hamesh in Data.hameshList">
+                        <div ng-bind-html="hamesh.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">هامش</label>
+            <div class="col-sm-9">
+							<textarea type="text"
+                                      class="form-control"
+                                      name="description"
+                                      ng-model="Data.forward.hamesh"></textarea>
+            </div>
+        </div>
+        <div class="row rowForm">
+            <label class="col-sm-3">فوریت</label>
+            <div class="col-sm-9">
+                <select class="form-control"
+                        ng-model="Data.forward.priority">
+                    <option value="Normal">عادی</option>
+                    <option value="Critical">فوری</option>
+                    <option value="Blocker">خیلی فوری</option>
+                </select>
+            </div>
+        </div>
+        <div class="row rowForm">
+            <div class="col-sm-4 col-sm-offset-4">
+                <label>نیاز به پاسخ</label>
+                    <input type="checkbox"
+                           ng-model="Data.responseNeeded">
+            </div>
+            <div class="col-sm-4">
+                <label>نیاز به ضمیمه</label>
+                    <input type="checkbox"
+                           ng-model="Data.attachmentNeeded">
+            </div>
+            <div class="col-sm-4 col-sm-offset-8">
+                <label>ارجاع مخفی</label>
+                <input type="checkbox">
+            </div>
+        </div>
+        <div class="row rowForm"
+             ng-if="Data.responseNeeded">
+            <label class="col-sm-3">مهلت پاسخ</label>
+            <div class="col-sm-9">
+                <vt-persian-date-picker name="requestResponseDate"
+                                        model="Data.forward.requestResponseDate"></vt-persian-date-picker>
+            </div>
+        </div>
+        <div class="row rowForm"
+             ng-if="Data.attachmentNeeded">
+            <letter-attachment
+                    model="Data.forward.attachments"
+                    is-edit-mode="true">
+            </letter-attachment>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary pull-left"
+            type="button"
+            ng-click="Func.onForwardLetters()">ارسال ارجاع
+    </button>
+    <button class="btn btn-sm btn-warning pull-left" style="margin-left: 5px"
+            type="button"
+            ng-click="Func.onForwardAndArchiveClick()">ارجاع و بایگانی
+    </button>
+</div>

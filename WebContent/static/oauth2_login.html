@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>سامانه کاتب</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" type="image/png" sizes="32x32" href="app/assets/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../app/assets/img/favicon.png">
+    <!-- Browser Not Support JavaScript and Redirect To page notSupportJS.html -->
+    <noscript>
+        <meta http-equiv="refresh" content="0; URL=error-browser.html?errorType=JS"/>
+    </noscript>
+
+    <script type="text/javascript" src="../static/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="../static/assets/js/jquery.query-2.1.7.js"></script>
+    <script type="text/javascript" src="../static/assets/js/login.js"></script>
+    <script type="text/javascript" src="../static/assets/js/rainbows.js"></script>
+    <script type="text/javascript" src="../static/assets/js/angular.js"></script>
+    <script type="text/javascript" src="../static/assets/js/md5.min.js"></script>
+
+    <link href="../app/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../app/lib/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+    <link href="../app/lib/css-ripple-effect/dist/ripple.min.css" rel="stylesheet">
+    <link href="../app/assets/font/kateb/font/flaticon.css" rel="stylesheet" media="screen">
+    <link href="../app/assets/css/flaticon-theme.css" rel="stylesheet" media="screen">
+    <link href="../app/assets/css/font.css" rel="stylesheet" media="screen">
+    <link type="text/css" rel="stylesheet" href="../static/assets/css/style.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="../app/assets/css/material-input.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="../app/assets/css/management.css" media="screen"/>
+    <style>
+        /* 	@font-face { */
+        /*     font-family: iranianSans; */
+        /*     src: url('../fonts/iranianSans/eot/IRANSansWeb.eot'); */
+        /*     src: url('../fonts/iranianSans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */ */
+        /*          url('../fonts/iranianSans/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/ */
+        /*          url('../fonts/iranianSans/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ */
+        /*          url('../fonts/iranianSans/ttf/IRANSansWeb.ttf') format('truetype'); */
+        /* } */
+        /*
+         General Styles
+        ----------------------------------------------------------------------------------------------------
+        */
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family:iranianSans !important;
+        }
+        #main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .flaticon-profile , .flaticon-lock-padlock{
+            float: right;
+            position: relative;
+            color: #333;
+            top: -38px;
+            z-index: 2;
+            right: 10px;
+        }
+        [class^="flaticon-"]::before, [class*=" flaticon-"]::before, [class^="flaticon-"]::after, [class*=" flaticon-"]::after {
+            color: #9E9E9E;
+            font-size: 22px;
+        }
+        #LoginForm .group-material-input input:focus ~ [class^="flaticon-"]::before,
+        #LoginForm .group-material-input input:focus ~ [class*=" flaticon-"]::before,
+        #LoginForm .group-material-input input:focus ~ [class^="flaticon-"]::after,
+        #LoginForm .group-material-input input:focus ~ [class*=" flaticon-"]::after{
+            color: #005fd5;
+        }
+        body, html{
+            height: 100%;
+        }
+        body{
+            background-image: url("assets/images/pattern-bg.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 1200px;
+        }
+        .ripple > input{
+            background: transparent none repeat scroll 0 0;
+            border: 0 solid;
+            color: #fff;
+            display: block;
+            height: 100%;
+            width: 100%;
+            outline: none;
+        }
+
+        h1{
+            font-size: 66px;
+        }
+        h2{
+            font-size: 24px;
+        }
+        h1 , h2{
+            color: #005fd5;
+            margin: 30px 0;
+        }
+        #alarm, #alarm-user-pass, #alarm-captcha {
+            font-size: 12px;
+            text-align: right;
+            display: none;
+        }
+        .ripple.btn{
+            height: 56px;
+        }
+        .text-copyright{
+            margin-top: 15px;
+            font-weight: bold;
+            color: #999;
+        }
+        .text-copyright > a{
+            color: #0152B7
+        }
+        .ripple > input {
+            font-size: 22px;
+        }
+        .ripple{
+            margin-bottom: 30px;
+        }
+
+        .group-material-input.form-control {
+            background-color: transparent;
+            background-image: none;
+            border: 0px solid #ccc;
+            border-radius: 0px;
+            box-shadow: none;
+            color: inherit;
+            display: block;
+            font-size: inherit;
+            height: inherit;
+            line-height: inherit;
+            padding: inherit;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            width: 100%;
+        }
+
+        .input-group-btn .btn{
+            border: 0px solid;
+        }
+        .input-group-btn .btn:hover , .input-group-btn .btn:active ,.input-group-btn .btn:focus{
+            background-color: transparent;
+        }
+
+        .group-material-input.form-control input{
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+        .input-group img {
+            height: 20px;
+            width: 20px;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: #999;
+        }
+
+
+        #LoginForm .group-material-input input{
+            border-radius: 6px;
+            box-shadow: none;
+            border: 1px solid #e0e0e0;
+            padding-left: 15px;
+            color: #999;
+        }
+        #LoginForm .group-material-input input:focus{
+            border-color: #005fd5
+        }
+        #LoginForm .group-material-input label{
+            color: #c3c3c3;
+            right: 40px;
+            font-size: 16px;
+            margin-bottom: 0;
+            top: 15px;
+        }
+        #LoginForm .group-material-input input:focus ~ label,
+        #LoginForm .group-material-input input:valid ~ label,
+        #LoginForm .group-material-input .valid ~ label{
+            color: #005fd5;
+            top: -10px;
+            background: #fff;
+            display: inline-block;
+            padding: 0 10px;
+            right: 10px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+
+        .logoWhite .st0 {
+            fill-rule: evenodd;
+            clip-rule: evenodd;
+            fill: #005FD5
+        }
+
+        .logoWhite .st1,
+        .logoWhite .st2 {
+            fill-rule: evenodd;
+            clip-rule: evenodd
+        }
+
+        .logoWhite .st1 {
+            fill: #2184FF
+        }
+
+        .logoWhite .st2 {
+            fill: #0152B7
+        }
+
+        .logoWhite .st3 {
+            fill-rule: evenodd;
+            clip-rule: evenodd;
+            fill: #00306B
+        }
+
+        .logoWhite .st4 {
+            fill: #FFF
+        }
+
+        .logoWhite .st5 {
+            fill: #CFDCE9
+        }
+        .login-box {
+            max-width: 500px;
+            box-shadow: 0 0 20px -7px rgba(0,95,213,0.3);
+            border-radius: 18px;
+            background: #fff;
+        }
+        .login-logo {
+            transform: translateY(-25px);
+            margin-bottom: -60px;
+        }
+        .login-box .row {
+            margin: 0;
+            padding: 0 40px;
+        }
+
+        .btn-success {
+            overflow: hidden;
+            position: relative;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 0 none !important;
+            color: rgba(255, 255, 255, 1);
+            background-color: #00d576;
+            box-shadow: 0 0 14px -4px rgba(0,0,0,0.3);
+            padding: 3px 20px 6px;
+        }
+        .btn-success.disabled, .btn-success.disabled.active, .btn-success.disabled.focus, .btn-success.disabled:active, .btn-success.disabled:focus, .btn-success.disabled:hover, .btn-success[disabled], .btn-success[disabled].active, .btn-success[disabled].focus, .btn-success[disabled]:active, .btn-success[disabled]:focus, .btn-success[disabled]:hover, fieldset[disabled] .btn-success, fieldset[disabled] .btn-success.active, fieldset[disabled] .btn-success.focus, fieldset[disabled] .btn-success:active, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success:hover{
+            background-color: #00d576;
+        }
+        .btn-success.active, .btn-success.focus, .btn-success:active, .btn-success:focus, .btn-success:hover, .open>.dropdown-toggle.btn-success{
+            background-color: #009854;
+        }
+
+        .captcha-container{
+            display: flex;
+            height: 45px;
+            border: 1px solid #e0e0e0;
+            align-items: stretch;
+            padding: 0;
+            border-radius: 4px;
+        }
+        .captchaImg{
+            width: auto;
+            max-width: 120px;
+            min-width: 120px;
+            height: 43px;
+            object-fit: contain;
+        }
+        .captchaImg + button{
+            height: 42.6px;
+            background-color: rgb(255, 255, 255) ! important;
+            border-width: 0 1px 0 0;
+            transform: translateX(-8px);
+            border-color: #e0e0e0;
+            border-radius: 7px 0 0 7px !important;
+        }
+        .rotating{
+            animation-delay: 0s;
+            animation-direction: normal;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+            animation-name: rotating;
+            animation-timing-function: linear;
+        }
+        .checkbox > input {
+            opacity: 0.01;
+            position: absolute;
+            right: 0;
+            z-index: -1;
+        }
+        .checkbox > input {
+            opacity: 0.01;
+            position: absolute;
+            right: 0;
+            z-index: -1;
+        }
+        .checkbox > label{
+            background-image: url(assets/images/unchecked.png);
+            background-size: 15px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            cursor: default;
+            min-height: auto;
+            color: #999 !important;
+        }
+        .checkbox > input:checked + label{
+            background-image: url(assets/images/checked.png);
+        }
+        .checkbox >input:indeterminate + label{
+            background-image: url(assets/images/indeterminate.png);
+        }
+        @keyframes rotating{
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(-360deg)
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="main" class="container" style="height: 100%;">
+    <form id="LoginForm" style="display: flex;  justify-content: center; align-items: center">
+        <div class="login-box text-center">
+            <!--<div class="login-logo">
+                <svg class="logoWhite" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 200 200"
+                     style="enable-background:new 0 0 200 200; width: 120px;" xml:space="preserve">
+                    <polygon class="st0"
+                             points="17.9,39.9 99.6,8.4 181.4,39.9 181.4,161.3 99.6,192.7 17.9,161.3 17.9,39.9 "></polygon>
+                    <polygon class="st1" points="99.6,8.4 181.4,39.6 181.4,161.1 99.6,130 99.6,8.4 "></polygon>
+                    <polygon class="st2" points="99.6,8.4 17.9,39.6 17.9,161.1 99.6,130 99.6,8.4 "></polygon>
+                    <polyline class="st3"
+                              points="30.2,156.3 100.1,182.9 170.1,156.3 100.1,129.8 30.2,156.3 "></polyline>
+                    <path class="st4"
+                          d="M30.2,64.5V52l70,27.5V92L30.2,64.5L30.2,64.5z M30.2,89.6V77l58.6,23v12.6L30.2,89.6L30.2,89.6z M30.2,114.7  v-12.6l58.6,23v12.6L30.2,114.7L30.2,114.7z M30.2,139.8v-12.6l70,27.5v12.6L30.2,139.8L30.2,139.8z M30.2,137.1v-27.5h11v27.5H30.2  L30.2,137.1z"></path>
+                    <polygon class="st5"
+                             points="169.8,64.5 169.8,52 99.9,79.5 99.9,92 158.8,68.9 158.8,81.4 99.9,104.5 99.9,109.6 99.9,109.6   99.9,137.1 99.9,137.1 99.9,142.2 158.8,119 158.8,131.5 99.9,154.7 99.9,167.2 169.8,139.8 169.8,127.2 169.8,127.2 169.8,114.7   169.8,114.7 169.8,102.1 110.9,125.3 110.9,112.8 169.8,89.6 169.8,77 169.8,77 169.8,64.5 "></polygon>
+                    <polyline class="st3" points="30.2,52.2 99.9,79.2 169.6,52.2 99.9,25.2 30.2,52.2 "></polyline>
+                </svg>
+            </div>-->
+            <div class="row">
+                <h2 style="font-weight: bold; margin-bottom: 5px;">سامانه کاتب</h2>
+                <p style="margin-top: 0px;">تسریع و تسهیل در بروکراسی اداری و سازمانی</p>
+                <div class="group-material-input">
+                    <input type="text" id="username" class="username" name="j_username" maxlength="128" required
+                           autocomplete="off" readonly
+                           onfocus="this.removeAttribute('readonly');">
+                    <label>نام کاربری</label>
+                    <span class="flaticon-profile"></span>
+                </div>
+                <div class="group-material-input">
+                    <input type="password" id="password" class="password" name="j_password" maxlength="128" required
+                           autocomplete="off" readonly
+                           onfocus="this.removeAttribute('readonly');">
+                    <label>رمز عبور</label>
+                    <span class="flaticon-lock-padlock"></span>
+                </div>
+            </div>
+            <!--<div class="row" style="background: #fff; border-radius: 50px;">
+                <div class="col-xs-5 col-sm-5 p-r captcha-container">
+                    <img id="captchaPic" class="captchaImg">
+                    <button tabindex="-1" class="btn btn-default" id="refreshCaptcha" type="button">
+                        <img src="assets/images/refresh.png" style="width: 20px;">
+                    </button>
+                </div>
+                <div class="col-xs-7 col-sm-7 p-l p-r">
+                    <div class="group-material-input form-control"
+                         style="padding: 0px; margin-bottom: 0; transform: translateX(-4px);">
+                        <input id="captcha" class="captcha" name="j_captcha" maxlength="7" type="text"
+                               style="    transform: translateX(-10px);">
+                        <label style="right: 30px; font-size: 13px;">کد درون تصویر</label>
+                    </div>
+                </div>
+            </div>-->
+            <div class="row">
+                <p id='alarm' class="alert alert-danger text-right" style="margin-top: 15px;">
+                </p>
+            </div>
+            <!--<div class="row text-right" style="margin: 20px -5px;">
+                <input placeholder="remember Me" id="rememberMe" name="_spring_security_remember_me" type="checkbox">
+                <label for="rememberMe" style="font-size: 12px;  cursor: pointer;">مرا به خاطر بسپار</label>
+            </div>-->
+            <div class="row">
+                <a class="ripple btn btn-block btn-success" style="    border-radius: 10px !important;width: 300px; margin: 40px auto 25px;">
+                    <input id="submit" type="submit" value="ورود">
+                </a>
+            </div>
+        </div>
+    </form>
+    <p class="text-center text-copyright">
+        طراحی و راه اندازی: <a href="http://viratech.ir/" target="_blank"> ویراتک شریف </a>
+    </p>
+</div>
+<style>
+    body, html {
+        overflow: auto !important;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#submit').click(function () {
+            if (document.getElementById("username").value &&
+                document.getElementById("password").value) {
+                $.ajax({
+                    type: "POST",
+                    url: '../j_spring_security_check',
+                    data: {
+                        j_username: document.getElementById("username").value,
+                        j_password: document.getElementById("password").value,
+                        _spring_security_remember_me: false
+                    },
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "JSON",
+                    error: function (strData) {
+                        document.getElementById('alarm').style.display = 'block';
+                        document.getElementById('alarm').innerHTML = strData.responseJSON.message;
+                        document.getElementById('alarm').innerHTML += "<img class=\"pull-left\" src=\"../static/assets/images/warning-sign-on-a-triangular-background.svg\" style=\"width: 20px; margin-top: -4px;\">";
+                        $('#alarm').fadeOut(250).fadeIn(250);
+                    },
+                    success: function (strData) {
+                        window.location = strData.location;
+                    }
+                });
+                return false;
+            } else {
+                document.getElementById('alarm').style.display = 'block';
+                document.getElementById('alarm').innerHTML = "لطفاً تمام فیلدها را پر کنید.";
+                document.getElementById('alarm').innerHTML += "<img class=\"pull-left\" src=\"../static/assets/images/warning-sign-on-a-triangular-background.svg\" style=\"width: 20px; margin-top: -4px;\">";
+                $('#alarm').fadeOut(250).fadeIn(250);
+                return false;
+            }
+        })
+    });
+</script>
+</body>
+</html>

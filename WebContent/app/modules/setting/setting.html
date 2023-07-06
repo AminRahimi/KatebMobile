@@ -1,0 +1,10 @@
+<div class="col-lg-2">
+	<div class="list-group">
+		<a ng-repeat="menu in Data.menuList" ui-sref="{{menu.uiSref}}"
+			class="list-group-item"
+			ng-class="{active : ($state == menu.uiSref)}">
+			<label class="control-label">{{menu.title}}</label>
+		</a>
+	</div>
+</div>
+<div class="col-lg-10" ui-view="content"></div>

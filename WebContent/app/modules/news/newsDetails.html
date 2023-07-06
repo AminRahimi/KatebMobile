@@ -1,0 +1,79 @@
+<div style="max-width: calc(100vw - 60px);margin: 20px auto">
+    <div class="col-sm-8 newsBox">
+        <div class="viraShadow">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-4" ng-if="Data.selectedNews.showPicture">
+                                <vt-photo ng-model="Data.selectedNews.photo"
+                                          ratio="1" is-edit-mode="false" no-title-description="true" has-large-size="true">
+                                </vt-photo>
+                            </div>
+                            <div style="padding-left: 0;" ng-class="{'col-sm-12': !Data.selectedNews.showPicture, 'col-sm-8': Data.selectedNews.showPicture}">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3 style="margin: 0 0 20px;" class="text-purple1">{{Data.selectedNews.title}}</h3>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="text-gray">تاریخ انتشار: </label>
+                                        <span class="text-gray">{{Data.selectedNews.publishDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                                    </div>
+                                    <div class="col-sm-12" style="padding-left: 0;margin: 20px 0;">
+                                        <div class="col-sm-6" style="padding: 0">
+                                            <label>منبع خبر: </label>
+                                            <span>{{Data.selectedNews.reference}}</span>
+                                        </div>
+                                        <!--<div class="col-sm-6 text-left" style="padding-left: 0;transform: translateY(-20px);">
+                                            <span>{{Data.selectedNews.likeCount|EnToFaNumber}}</span>
+                                            <button ng-click="Func.onLikeClick()" style="border: 1px solid #d2d2d2;background: #fff;padding: 2px 10px;">
+                                                <i class="glyphicon"
+                                                   ng-class="{'glyphicon-thumbs-up': !Data.isLike, 'glyphicon-thumbs-down': Data.isLike}"></i>
+                                            </button>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-sm-12 text-justify" ng-show="Data.selectedNews.showSummary">
+                                        <span class="text-gray3">{{Data.selectedNews.summary}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="margin-top: 30px;">
+                            <div class="ck-content" lang="fa" dir="rtl" ng-bind-html="Data.selectedNews.content|safeHTML"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 lastNewsContainer">
+        <div class="viraShadow">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>آخرین اخبار</span>
+                </div>
+                <div class="panel-body">
+                    <div class="latestNewsRow" ng-repeat="news in Data.latestNews">
+                        <div class="col-sm-4">
+                            <vt-photo ng-model="news.photo"
+                                      ratio="1" is-edit-mode="false" no-title-description="true">
+                            </vt-photo>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="col-sm-12">
+                                <a ui-sref="home.newsList.newsDetails({newsUid: news.uid})"><h5>{{news.title}}</h5></a>
+                            </div>
+                            <div class="col-sm-12 rowForm">
+                                <span>تاریخ انتشار: </span>
+                                <span>{{news.publishDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12 text-justify">
+                                <span>{{news.summary|splitString:200}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

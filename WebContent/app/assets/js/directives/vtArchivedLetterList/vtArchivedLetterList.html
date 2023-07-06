@@ -1,0 +1,45 @@
+<style>
+    .modernizationPopoverParent .popover {
+        transform: translateX(30px);
+    }
+</style>
+<div class="row rowForm">
+    <label class="col-sm-12" style="text-align: right;">لیست نامه های آرشیو شده</label>
+</div>
+<div ng-show="Data.isShowArchivedLetterList" class="row rowForm">
+    <table class="table table-striped table-hover col-sm-12">
+        <thead>
+        <tr>
+            <th class="col-sm-4">کاربر</th>
+            <th class="col-sm-3">تاریخ درخواست</th>
+            <th class="col-sm-2">سامانه آرشیو</th>
+            <th class="col-sm-2">وضعیت</th>
+            <th class="col-sm-1">جزئیات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="archive in Data.archivedLetterList">
+            <td>{{archive.realUser.title | EnToFaNumber}}</td>
+            <td>{{archive.registerDate | tehranDate:'jDD-jMMMM-jYYYY' | EnToFaNumber}}</td>
+            <td>
+                <span ng-show="archive.type == 'GANJEH'">گنجه</span>
+                <span ng-show="archive.type == 'SAMAN_SHAHR'">سامان شهر</span>
+                <span ng-show="archive.type == 'DIDGAH'">دیدگاه</span>
+            </td>
+            <td>
+                <span ng-show="archive.status == 'WAIT'">در صف پردازش</span>
+                <span class="text-success" ng-show="archive.status == 'SUCCESS'">آرشیو شده</span>
+                <span class="text-danger" ng-show="archive.status == 'FAILED'">آرشیو ناموفق</span>
+            </td>
+            <td>
+                <button class="btn btn-default" ng-click="Func.onShowDetailsModalClick($event, archive)">
+                    <i class="glyphicon glyphicon-th-list"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="!Data.isShowArchivedLetterList" class="row rowForm">
+    <span class="col-sm-offset-1 col-sm-11">موردی وجود ندارد.</span>
+</div>

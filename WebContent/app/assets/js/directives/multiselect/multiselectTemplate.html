@@ -1,0 +1,14 @@
+<div ng-show="isEditMode">
+	<ui-select ng-model="selectedItem" on-select="onSelect($item, $model)">
+	    <ui-select-match placeholder={{placeholder}}></ui-select-match>
+	    <ui-select-choices repeat="item in (options | filter: $select.search) track by $index">
+	        <span ng-bind="item.title"></span>
+	    </ui-select-choices>
+	</ui-select>
+</div>
+<div>
+	<label class="label label-default label-repeat" ng-repeat="item in model">
+		<span class="pull-right">{{item.title}}</span>
+		<i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, item); $event.stopPropagation();" ng-show="isEditMode"></i>
+	</label>
+</div>

@@ -1,0 +1,4 @@
+.dropdown-multiselect .dropdown-menu.dropdown-menu-form {
+    overflow: auto !important;
+    transform: translateX(60px);
+}

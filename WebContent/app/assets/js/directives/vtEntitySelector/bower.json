@@ -1,0 +1,25 @@
+{
+    "name": "vtEntitySelector",
+    "version": "0.0.1",
+    "authors": ["viratech <www.viratech.ir>"],
+    "description": "entity selector",
+    "main": [
+       	"vtEntitySelectorDirective.js",
+		"vtMultiEntitySelectorDirective.js",
+		"viewEntityModalCtrl.js",
+		"vtEntitySelectorSrvc.js",
+		"multiEntitySelectorModalCtrl.js",
+		"entitySelectorModalCtrl.js",
+		"addEntityModalCtrl.js",
+    ],
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test"
+	],
+    "dependencies": {
+    	
+    },
+    "devDependencies": {}
+}

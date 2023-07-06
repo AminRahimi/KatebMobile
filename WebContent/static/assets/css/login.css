@@ -1,0 +1,156 @@
+@font-face{
+	font-family:'yekan';
+	src:url('../fonts/WeblogmaYekan.ttf');
+}
+
+.loginContainer {
+ 	background-attachment: fixed;
+    background-image: url("../img/login-bg.jpg");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+	padding-top: 80px;
+}
+html,body,.loginContainer{
+	height: 100%;
+	font-family: yekan;
+}
+.loginBox {
+	background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 0 9px -5px #000;
+    float: none;
+    height: 55%;
+    margin: auto;
+    min-height: 400px;
+    overflow: hidden;
+    padding: 0;
+}
+.loginForm{
+ 	background-color: #017b99;
+    float: right;
+    height: 100% !important;
+    min-height: 400px;
+    padding-top: 30px;
+}
+.loginNews{
+	background-color: #ffffff;
+    float: right;
+    height: 100%;
+    padding: 0 20px 10px;
+}
+.logo{
+ 	direction: rtl;
+    display: block;
+    margin: 0 auto;
+    min-width: 145px;
+    text-align: right;
+    width: 70%;
+}
+.usernameField, .passwordField {
+	background-color: rgba(255, 255, 255, 0.88);
+    background-position: 97% 8px;
+    background-repeat: no-repeat;
+    border: medium none;
+    direction: rtl;
+    font-size: 14px;
+    height: 43px;
+    margin: 15px auto 0;
+    padding: 5px 50px 5px 10px;
+    text-align: center;
+    transition: all 1s ease 0s;
+    width: 100%;
+}
+.usernameField{background-image: url(../img/username-input.png);}
+.passwordField{background-image: url(../img/password.png);}
+.usernameField:focus, .passwordField:focus{
+	background-color: rgba(255,255,255,1);
+}
+.rememberMe {
+    color: #fff;
+    direction: rtl;
+    font-size: 11px;
+    font-weight: normal;
+    margin: 10px -4px;
+}
+.loginStatus {
+	color: #fe6f42;
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 15px auto;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.75s ease 0s;
+}
+.loginBtn {
+    background-color: #43a047;
+    border: medium none;
+    color: #fff;
+    height: 35px;
+    width: 100%;
+	transition: all 0.75s;
+}
+.loginBtn:hover {background-color: rgb(61, 150, 64);}
+.copyright {
+    direction: rtl;
+    font-size: 11px;
+    margin: 15px 0 7%;
+}
+.viratech{color: #0fffff}
+input[type="checkbox"] {
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:21px;
+    height:19px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url(../img/custom-cb.png) left top no-repeat;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url(../img/custom-cb.png) -19px top no-repeat;
+}
+
+#katebPhoto{
+    filter: grayscale(75%);
+    padding: 0;
+    transition: all 0.75s ease 0s;
+}
+
+#katebPhoto:hover{
+	box-shadow: 0 0 9px -5px #000;
+	filter: grayscale(0%);
+	
+}
+
+.news{
+	direction: rtl;
+    font-size: 12px;
+    margin: 59% auto 0;
+    padding-right: 30px;
+}
+
+.news > li{
+	color: #757575;
+	transition: all 0.5s;
+}
+
+.news > li:hover{
+	color: #ff7043;
+}
+#LoginForm {
+    float: right;
+    height: 100%;
+    padding: 0;
+}
+@media only screen and (max-width: 768px) {
+	.loginContainer{
+		padding: 0;
+	}
+	#LoginForm,.loginNews{
+		float: none;
+	}
+}

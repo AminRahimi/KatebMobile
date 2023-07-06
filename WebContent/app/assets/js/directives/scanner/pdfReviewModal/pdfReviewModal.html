@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h5 class="modal-title">ساخت نسخه PDF</h5>
+</div>
+<div class="modal-body">
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div ng-if="Data.showVtPdf" style="height: calc(100vh - 240px)" vt-pdf control-fn="Apis.vtPDF"></div>
+            <div ng-if="!Data.showVtPdf" style="height: calc(100vh - 241px)">
+                <div class="loading-content text-center">
+                    <img src="app/assets/img/loading.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 10px 0 0">
+        <div class="col-sm-4">
+            <label>نام فایل ساخته شده</label>
+            <div class="input-group" style="margin-top: 10px" >
+                <span class="input-group-addon" dir="ltr" style="border-color: #bdbdbd;">.pdf</span>
+                <input type="text" dir="ltr" class="form-control" ng-model="Data.fileName"
+                       style="margin: 0; border: 1px solid #bdbdbd;">
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" style="padding: 10px 0 0">
+        <div class="col-sm-12">
+            <div class="d-flex" style="justify-content: flex-end; height: 100%; align-items: flex-end;">
+                <button type="button" class="btn btn-default" ng-click="Func.onCancelClick()">انصراف</button>
+                <button type="button" class="btn btn-primary" uib-tooltip="Ctrl+Enter" ng-click="Func.onSaveClick('close')"
+                        ng-disabled="Data.isLoadingUploadAndClose || Data.isLoadingUploadAndReScan || !Data.showVtPdf || (!Data.fileName && Data.onSaveClicked)" style="margin-right: 15px;">آپلود pdf<i ng-show="Data.isLoadingUploadAndClose" class="fa fa-spinner fa-pulse fa-fw"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

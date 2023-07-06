@@ -1,0 +1,60 @@
+.single-button,#archive-btn,#refer-btn,#move-out{
+    background-color: transparent!important;
+    color: #0097a7!important;
+    font-family: iranyekanweb;
+    font-size: 1.2em!important;
+}
+.single-button > .flaticon-arrows-3::before,
+.single-button > .flaticon-arrows-3::before,
+.single-button > .flaticon-arrows-3::after,
+.single-button > .flaticon-arrows-3::after{
+    font-size: 12px;
+}
+
+.relatedLetterLable {
+    color: #0097a7;
+    font-weight: bold;
+}
+.read-letter{
+    background-color: #fff !important;
+    font-weight: bold !important;
+}
+.print-tree.tree ul {
+    padding-right: 20px;
+}
+
+/*@media print {*/
+    .letter-image {
+        page-break-inside: avoid;
+    }
+/*}*/
+.form-flex{
+    display: flex;
+    justify-content: flex-start;
+}
+.form-flex > div{
+    /* flex-grow: 1; */
+    width: 40%;
+    direction: rtl;
+    padding: 0 30px;
+}
+.form-flex > div.c2 {
+    width: 60%;
+}
+.form-flex > div > .row.rowForm > label{
+    text-align: right;
+}
+/* 
+.form-flex > div .label-default::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+} */
+.receiver{
+    display: flex;
+    flex-wrap: wrap;
+}
+.receiver > .label-default{
+    flex-grow: 1;
+}

@@ -1,0 +1,46 @@
+<div class="col-md-12" style="padding-left: 0px; padding-right: 5px;">
+	<div class="panel panel-default" style="box-shadow:0 0 6px -3px #000;">
+		<div class="panel-body">
+			<form name="Data.composeForm" role="form" novalidate>
+				<div class="row rowForm">
+					<label class="col-sm-1 required">موضوع</label>
+					<div class="col-sm-7"
+						ng-class="{'has-error': Data.composeForm.subject.$invalid && Data.validationClicked}">
+						<input class="form-control" type="text" name="subject" ng-model="Data.messageInfo.subject" required>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-1 required">گیرنده</label>
+					<div class="col-sm-7"
+					 	ng-class="{'has-error': Data.composeForm.receivers.$invalid && Data.validationClicked}">
+						<multiselect api="controller.multiselect" name="receivers" model="Data.messageInfo.receivers"
+							ng-model="Data.messageInfo.receivers" vt-array-required options="Data.recievers"
+							is-edit-mode="Data.mode!='view'"></multiselect>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<div class="col-lg-10 col-sm-offset-1">
+						<div class="ckeditorContainer">
+							<textarea name="content_ref" class="text-justify form-control"
+						  		id="editor1" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row rowForm" ng-show="Data.attachments.length>0">
+					<div class="col-lg-10 col-sm-offset-1">
+						<vt-attachment is-edit-mode="Data.mode!='view'" api="Controller.attachment" model="Data.attachments" max-size="1048576"></vt-attachment>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<div class="col-lg-10 col-sm-offset-1">
+						<button class="btn btn-primary pull-right" ng-click="Func.onOpenFileDialogClick()">
+							<i class="flaticon-tool"></i>
+						</button>
+						<button class="btn btn-primary pull-left" ng-click="Func.onSendMessagesClick()"
+							ng-disabled="Data.composeForm.$invalid && Data.validationClicked">ارسال</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

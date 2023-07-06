@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>ثبت نام</title>
+<!-- Browser Not Support JavaScript and Redirect To page notSupportJS.html -->
+<noscript>
+	<meta http-equiv="refresh"
+		content="0; URL=error-browser.html?errorType=JS" />
+</noscript>
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/md5.min.js"></script>
+<script type="text/javascript" src="assets/js/signup.js"></script>
+<script type="text/javascript" src="assets/js/notify.min.js"></script>
+
+<link type="text/css" rel="stylesheet" href="assets/css/style.css"
+	media="screen" />
+</head>
+<body>
+	<div id="main">
+		<div class="top">
+			<p class="p1"></p>
+			<p class="p4">
+				<img src="assets/images/vira.png"
+					style="width: 30px; margin-bottom: -10px;"> تولید شرکت <a
+					href="http://viratech.ir/" style="border: 0px solid black;">ویراتک
+					شریف <span style="font-family: Arial">©</span> 1393
+				</a>
+			</p>
+			<p class="p2"></p>
+			<p class="p3"></p>
+		</div>
+		<div class="middle">
+			<div class="d1" style="width: 350px;">
+				<div>
+
+					<form id="cahngePasswordForm">
+
+						<div class="input-box"
+							style="padding: 20px; width: 300px; background-color: rgba(255, 255, 255, 1)">
+
+							<div style="text-align: center">
+								<img src="assets/images/Goupleh.png">
+							</div>
+
+							<div>
+								<p id='alarm' class=""
+									style="font-size: 15px; color: red; text-align: right; visibility: hidden;">رمز
+									عبور یکسان نمی باشد</p>
+							</div>
+							<div id="password_input">
+
+
+
+								<div class="input-box">
+
+									<input placeholder="نام" id="name"
+										name="name"  type="text"
+										autocomplete="off"
+										style="display: block; width: 276px; height: 45px; background: transparent; border: 0; color: #333; font-size: 14px; padding-right: 30px;">
+									<!-- <img id="url_password" src="assets/images/passicon.png" alt=""> -->
+
+								</div>
+
+
+							</div>
+							<div id="password_input">
+
+
+
+								<div class="input-box" style="margin-top: 15px;">
+
+									<input placeholder="نام کاربری" id="username"
+										name="username"  type="text"
+										autocomplete="off"
+										style="display: block; width: 276px; height: 45px; background: transparent; border: 0; color: #333; font-size: 14px; padding-right: 30px;">
+									<!-- <img id="url_password" src="assets/images/passicon.png" alt=""> -->
+
+								</div>
+
+
+							</div>
+
+							<div id="password_input">
+
+
+								<div class="input-box" style="margin-top: 15px;">
+
+									<input placeholder=" گذرواژه جدید" id="newPassword"
+										name="j_newPassword" maxlength="128" type="password"
+										style="display: block; width: 276px; height: 45px; background: transparent; border: 0; color: #333; font-size: 14px; padding-right: 30px;">
+									<img id="url_password" src="assets/images/passicon.png" alt="">
+
+								</div>
+
+
+							</div>
+
+							<div id="password_input">
+
+
+								<div class="input-box" style="margin-top: 15px;"
+									id="input-repass">
+
+									<input placeholder="تکرار گذر واژه جدید" id="rePassword"
+										name="j_reNewPassword" maxlength="128" type="password"
+										onkeyup="checkpass()"
+										style="display: block; width: 276px; height: 45px; background: transparent; border: 0; color: #333; font-size: 14px; padding-right: 30px;">
+									<img id="url_password" src="assets/images/passicon.png" alt="">
+									<span class="glyphicon glyphicon-ok"></span>
+								</div>
+
+
+							</div>
+
+							<div id="submit">
+								<input class="click i4 input-box" id="savebtn" type="button"
+									value="ذخیره"  style="width: 148px;"> 
+									<input
+									class="click i4 input-box" id="cancelbtn" value="انصراف"
+									type="button" style="width: 148px; cursor: default;">
+							</div>
+
+						</div>
+
+
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<style>
+body,html {
+	overflow: auto !important;
+}
+</style>
+
+	<script>
+		function err() {
+			if (window.location.search == '?login_error=1') {
+				document.getElementById('alarm').style.visibility = 'visible';
+			}
+		};
+		err();
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-page-header">
+                <div class="panel-body">
+                    لیست اخبار
+                    <div class="col-md-2 pull-left">
+                        <button class="btn btn-primary pull-left"
+                                ng-click="Func.onAddNewsClick()" type="button">
+                            افزودن خبر
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-default">
+                    <div class="panel-body">
+                        <vt-search control-fn="Controller.userSearchController"></vt-search>
+                        <vt-grid control-fn="Controller.newsListController"></vt-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

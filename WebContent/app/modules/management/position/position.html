@@ -1,0 +1,194 @@
+
+<style>
+	div.wrapper {
+		overflow: auto;
+		}
+		.panel-search {
+		background-color: #fff !important;
+		}
+		
+	.fixed-detail{
+			position: fixed;
+			left: 15px;
+			top: 102px;
+			width: 435px;
+				}
+	.scrollable-table{
+			max-height: 500px;
+			overflow: auto
+	}
+</style><div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت سمت‌ها</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_POSITION">
+	<!--<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.positionSearchController"></vt-search>
+		</div>
+	</div>-->
+	<div class="panel panel-default">
+		<div class="panel-body">
+            <div class="row panel-search" style="margin-bottom: 10px;">
+                <div class="col-sm-12">
+                    <vt-search control-fn="Controller.search"></vt-search>
+                </div>
+            </div>
+
+            <!--<div class="row" ng-repeat="nodeArray in Data.searchResults" ng-show="Data.showSearchResult">
+                <div class="btn-breadcrumb btn-group col-sm-12" ng-click="Func.searchActions.onBreadcrumbSearchResultClick(nodeArray)">
+                    <span ng-repeat="node in nodeArray" class="btn  btn-breadcrumb-item" data-placement="bottom" data-toggle="tooltip">
+                        <lable class="control-label">{{node.title}}</lable>
+                    </span>
+                </div>
+            </div>-->
+
+            <div class="row" ng-repeat="nodeArray in Data.searchResults" ng-show="Data.showSearchResult">
+                <ul id="breadcrumbs-one" ng-click="Func.searchActions.onBreadcrumbSearchResultClick(nodeArray)">
+                    <li ng-repeat="node in nodeArray"><a ng-class="{'current': $last}">{{node.title}}</a></li>
+                </ul>
+            </div>
+
+            <vira-tree is-editable="false" options="{displayLabelKey:'name'}"
+                       selected-node="Data.selectedNode" controller="Controller.viraTree"
+                       is-full-tree="false" tree-data="treeDataForTopicManagement.data"></vira-tree>
+			<!--<tree control-fn="Controller.positionTreeController"
+				data="treeData" func="treeFunc"></tree>-->
+		</div>
+	</div>
+</div>
+<div class="col-md-4 fixed-detail " access-checker="API_VIEW_POSITION">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_POSITION" ng-show="true" type="button"
+					ng-click="Func.onAddpositionClick('root')"
+					ng-disabled="Data.mode=='add'">ایجاد ریشه</a>
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_POSITION" ng-show="treeData.selectedNode.uid" type="button"
+					ng-click="Func.onAddpositionClick('child')"
+					ng-disabled="Data.mode=='add'">ایجاد فرزند</a>
+                <a class="btn btn-sm btn-default btn-text"
+                   access-checker="API_EDIT_POSITION" ng-show="treeData.selectedNode.uid" type="button"
+                   ng-click="Func.onChangeParentClick()"
+                   ng-disabled="Data.mode=='add'">تغییر پدر</a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_POSITION"
+					ng-show="treeData.selectedNode.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditpositionClick()"
+					ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_POSITION" ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSavepositionClick()"
+					ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="positionForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_POSITION" ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdatepositionClick()"
+					ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="positionForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text" style="margin-top: 5px;"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled=""
+					ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_POSITION"
+					ng-show="treeData.selectedNode.uid && Data.mode=='view' && treeData.selectedNode.positionUserAssignments.length==0"
+					type="button" ng-click="Func.onDeletepositionClick()"
+					ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default scrollable-table"
+		ng-show="treeData.selectedNode.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="positionForm" role="form" novalidate>
+                <div class="row rowForm" ng-show="Data.mode=='view'" access-checker="SEE_ENTITY_UID">
+                    <label class="col-sm-5">شناسه</label>
+                    <div class="col-sm-7">
+                        {{treeData.selectedNode.uid}}
+                    </div>
+                </div>
+                <div class="row rowForm"
+					ng-class="{'has-error':positionForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{treeData.selectedNode.name|EnToFaNumber}}</div>
+					<div ng-if="Data.mode=='edit'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="treeData.selectedNode.name">
+					</div>
+					<div ng-if="Data.mode=='add'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.newposition.name">
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">نوع سمت</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{treeData.selectedNode.typeKey.value || (treeData.selectedNode.typeKey | appEnum)}}</div>
+					<div ng-if="Data.mode=='edit'" class="col-sm-7">
+						<select class="form-control" ng-model="treeData.selectedNode.typeKey" ng-init="treeData.selectedNode.typeKey | appEnum"
+							ng-options="item as item.value for item in (appConst.typeKey | objectToArray) track by item.key">
+							<option value="">هیچکدام</option>
+						</select>
+					</div>
+					<div ng-if="Data.mode=='add'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.newposition.typeKey"
+								ng-options="item.key as item.value for item in (appConst.typeKey | objectToArray) track by item.key">
+						</select>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">تخصیص کاربر</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{treeData.selectedNode.currentUser.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <ui-select ng-model="Data.currentUser" on-select="Func.onSelectcurrentUser(Data.currentUser)">
+                            <ui-select-match>{{$select.selected.title}}</ui-select-match>
+                            <ui-select-choices repeat="user in Data.userList"
+                                               refresh="Func.refreshCurrentUser($select.search)">
+                                <div ng-bind="user.title"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <a ng-click="Func.onRemovecurrentUser()" ng-show="Data.currentUser.uid">بازپس‌گیری تخصیص کاربر</a>
+					</div>
+				</div>
+				<div class="row rowForm" ng-show="Data.mode=='view'">
+					<label class="col-sm-5">تاریخچه تخصیص کاربر</label>
+					<div class="col-sm-12 wrapper">
+						<table class="table table-striped "
+							ng-show="Data.puaHistory.length">
+							<thead><tr>
+                                <th access-checker="SEE_ENTITY_UID"></th>
+								<th>نام و نام خانوادگی</th>
+								<th>تاریخ شروع</th>
+								<th>تاریخ پایان</th>
+							</tr></thead>
+							<tbody>
+								<tr ng-repeat="pua in Data.puaHistory">
+                                    <td access-checker="SEE_ENTITY_UID">
+                                        <button class="btn btn-sm" ngclipboard data-clipboard-text="{{pua.user.uid}}"
+                                                ngclipboard-success="Func.onCopyToClipboardSuccess(event);"
+                                                tooltip="کپی شناسه" tooltip-append-to-body="true"
+                                                tooltip-trigger="mouseenter" tooltip-popup-delay="500">
+                                            <i class="fa fa-clipboard"></i>
+                                        </button>
+                                    </td>
+									<td>{{pua.user.title}}<br><span access-checker="SEE_ENTITY_UID">{{pua.user.uid}}</span></td>
+									<td>{{pua.startTime|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</td>
+									<td>{{pua.finishTime|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+

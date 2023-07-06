@@ -1,0 +1,980 @@
+<style type="text/css">
+	.follow{
+		height: auto;
+	    left: 3%;
+	    max-height: 67%;
+	    min-height: 340px;
+	    overflow: auto;
+	    /*position: absolute;*/
+	    top: 45px;
+	}
+    .node-info{
+        background: transparent;
+        box-shadow: 0 0 13px -8px #333;
+        position: sticky;
+        top: 50px;
+    }
+    .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+    .tree-view {
+        /* width: 510px; */
+    }
+</style>
+<script type="text/ng-template" id="cartable-acction-btn-close">
+    <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button" ng-click="Func.onReturnClick()">
+        <i class="flaticon-close-button"></i>
+        بستن
+    </a>
+  </script>
+
+  <script type="text/ng-template" id="cartable-acction-btn-tag">
+    <tag-input style="display: inline-block;height: 35px; padding: 0" class="btnActionInLetter"  list-change="Func.onTagInputListChanged" external-data="Data.tagInputExternalData">
+    </tag-input>
+  </script>
+
+  <script type="text/ng-template" id="cartable-acction-btn-archive">
+    <description-dropdown uid-list="Data.archiveInputExternalData" cb="Func.onArchiveCb"> </description-dropdown>
+   
+  </script>
+  <script type="text/ng-template" id="cartable-acction-btn-reply">
+    <a class="btn btn-sm btn-text btn-icon btnActionInLetter" ng-click="Func.onReplyClick()">
+        <i class="fa fa-mail-reply"></i>
+        پاسخ
+    </a>
+  </script>
+  <script type="text/ng-template" id="cartable-acction-btn-user-archive">
+    <a access-checker="USER_LETTER_ARCHIVE" class="btn btn-sm btn-text btn-icon btnActionInLetter" ng-click="Func.onAddToUserArchive()">
+        انتقال به آرشیو شخصی
+    </a>
+  </script>
+  <script type="text/ng-template" id="cartable-acction-btn-follow">
+    <button class="btn btn-sm btn-text btn-icon btnActionInLetter white-bg" type="button" ng-click="Func.onFollowClick()" ng-show="!Data.isFollow">نیاز به پیگیری</button>
+  </script>
+  <script type="text/ng-template" id="cartable-acction-btn-un-follow">
+    <button ng-show="Data.isFollow" class="btn btn-sm btn-text btn-icon btnActionInLetter white-bg" style="border: 1px solid #d6d6d6 !important" type="button" ng-click="Func.onUnfollowClick()">عدم نیاز به پیگیری</button>
+    
+  </script>
+  <script type="text/ng-template" id="cartable-acction-btn-user-un-archive">
+    <span access-checker="USER_LETTER_ARCHIVE">
+        <un-archive  class="btn btn-sm btn-icon white-bg"
+                            exchange-function-for-delete="Func.exchangeDelete">
+    </span>
+        </un-archive>
+  </script>
+
+
+
+
+
+
+<div class="col-sm-10 col-sm-offset-2 panel-cartable-content">
+	<div class="panel panel-default" style="overflow: visible">
+		<div class="panel-body"  style="border-bottom: 1px solid #ddd;justify-content:space-between;display: flex;">
+            <div class="btnActionRow">
+                <div ng-repeat="actionButton in  Data.actionButtons" >
+                    <span ng-include="'cartable-acction-btn-'+ actionButton"></span>
+                </div>
+            </div>
+            <div style="">
+                <button ng-click="Func.onGetPreviousLetterClick()"
+                    type="button"
+                    ng-show="Data.isNextPrevFeaturePossible"
+                    class="btn btn-sm btn-text btn-icon white-bg pull-left btnActionInLetter noBorder"
+                    ng-disabled="Data.isPrevDisabled">
+                <i class="fa fa-arrow-up"></i>                    قبلی
+                </button>
+                <button ng-click="Func.onGetNextLetterClick()"
+                        type="button"
+                        ng-show="Data.isNextPrevFeaturePossible"
+                        class="btn btn-sm btn-text btn-icon white-bg pull-left btnActionInLetter "
+                        ng-disabled="Data.isNextDisabled">
+                    <i class="fa fa-arrow-down"></i>بعدی
+                </button>
+            </div>
+		</div>
+	</div>
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			<ul class="nav nav-tabs">
+				<li role="presentation" ng-class="{'active':tab.active}" ng-repeat="tab in Data.tabList" ng-click="Func.onTabClick(tab)" access-checker="{{tab.feature}}">
+					<a>{{tab.title}}</a>
+				</li>
+			</ul>
+
+            <div class="col-sm-12" ng-show="Data.selectedTab.id == 0">
+                <letter-form-type ng-model="Data.selectedLetterFormType" ng-if="Data.letter && Data.letter.forms && Data.letter.forms.length>0"
+                    apis="Apis" mode="Data.mode" letter="Data.letter" org-uid="Data.orgUid"></letter-form-type>
+            </div>
+			<div class="col-sm-12 form-flex" ng-show="Data.selectedTab.id == 0">
+                <div class="c1">
+                    <div class="row rowForm">
+                        <label class="col-sm-5">شماره نامه</label>
+                        <div class="col-sm-7">{{Data.letter.internalNumber|EnToFaNumber}}</div>
+				    </div>    
+                    <div class="row rowForm" ng-if="Data.letter.initiation.externalNumber">
+                        <label class="col-sm-5">شماره خارجی</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.externalNumber|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.initiation.draft.uid">
+                        <label class="col-sm-5">شماره پیش نویس</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.draft.title|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.indicatorNumber">
+                        <label class="col-sm-5">شماره اندیکاتور</label>
+                        <div class="col-sm-7">{{Data.letter.indicatorNumber|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-5">موضوع</label>
+                        <div class="col-sm-7">{{Data.letter.subject}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.topicCategory.title">
+                        <label class="col-sm-5">رده موضوعی</label>
+                        <div class="col-sm-7">{{Data.letter.topicCategory.title}}</div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-5">تاریخ رسمی</label>
+                        <div ng-show="Data.letter.type == 'ORIGINAL'" class="col-sm-7">{{Data.letter.officialDate|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}</div>
+                        <div ng-show="Data.letter.type == 'FORWARDED'" class="col-sm-7">{{Data.letter.letterOfficialDate|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.type == 'FORWARDED'">
+                        <label class="col-sm-5" >تاریخ ارجاع</label>
+                        <div class="col-sm-7">{{Data.letter.creationDate|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.initiation.header.title">
+                        <label class="col-sm-5">سربرگ</label>
+                        <div class="col-sm-7">
+                            {{Data.letter.initiation.header.title}}
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.initiation.pageSize">
+                        <label class="col-sm-5">اندازه صفحه</label>
+                        <div class="col-sm-7">
+                            {{Data.letter.initiation.pageSize}}
+                        </div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-5">فوریت</label>
+                        <div class="col-sm-7">{{Data.letter.priority|appEnum:priority}}</div>
+                    </div>
+
+                    <div class="row rowForm">
+                        <label class="col-sm-5">نوع نامه</label>
+                        <div class="col-sm-7">{{Data.letter.dirType|appEnum:letterType}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.initiation.originalityType">
+                        <label class="col-sm-5">نوع</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.originalityType|appEnum:licenceType}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.initiation.receivingStyle">
+                        <label class="col-sm-5">نوع دریافت</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.receivingStyle|appEnum:letterRecivingType}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.confidentialityLevel">
+                        <label class="col-sm-5">سطح محرمانگی</label>
+                        <div class="col-sm-7">{{Data.letter.confidentialityLevel|appEnum:confidentialityLevel}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.type=='OUTSIDE'">
+                        <label class="col-sm-5">دبیرخانه</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.initiatingSecretariat.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.initiation.initiatingOperator.title">
+                        <label class="col-sm-5">مسئول ثبت</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.initiatingOperator.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.initiation.receivingDescription">
+                        <label class="col-sm-5">توضیحات</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.receivingDescription|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.tags">
+                        <label class="col-sm-5">برچسب ها</label>
+                        <div class="col-sm-7">
+                            <span class="customLabel label label-default pull-right" ng-repeat="tag in Data.letter.tags track by $index">
+                                <span style="margin: 5px;">{{tag.title}}</span>
+                                <i style="height: 25px; padding: 0px; margin-top: 0px;" class="btn flaticon-close-button" ng-click="Func.onRemoveTagClick($index, tag);"> </i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.lpa.isArchived">
+                        <label class="col-sm-5">توضیحات بایگانی</label>
+                        <pre class="col-sm-7 well well-sm content-with-html" ng-bind-html="Data.lpa.description | safeHTML"></pre>
+                    </div>
+                </div>
+                <div class="c2">
+                    <div class="row rowForm">
+                        <label class="col-sm-5">فرستنده</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.sender.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.organization.title">
+                        <label class="col-sm-5">سازمان فرستنده</label>
+                        <div class="col-sm-7">{{Data.letter.organization.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.forwarder">
+                        <label class="col-sm-5">ارجاع دهنده</label>
+                        <div class="col-sm-7">{{Data.letter.forwarder.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.initiation.actor.title">
+                        <label class="col-sm-5">اقدام کننده</label>
+                        <div class="col-sm-7">{{Data.letter.initiation.actor.title}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.hamesh">
+                        <label class="col-sm-5">هامش</label>
+                        <div class="col-sm-7">{{Data.letter.hamesh|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.requestResponseDate">
+                        <label class="col-sm-5">مهلت پاسخ گویی</label>
+                        <div class="col-sm-7">{{Data.letter.requestResponseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-5">گیرندگان</label>
+                        <div class="col-sm-7">
+                            <label class="label label-default label-repeat col-sm-12" ng-repeat="pua in Data.letter.deliveryTo">
+                                <div>{{pua.title}}</div>
+                                <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
+                                <div ng-show="pua.description">{{pua.description}}</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row rowForm" >
+                        <label class="col-sm-5">رونوشت</label>
+                        <div class="col-sm-7">
+                            <label class="label label-default label-repeat col-sm-12" ng-repeat="pua in Data.letter.deliveryCc">
+                                <div>{{pua.title}}</div>
+                                <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
+                                <div ng-show="pua.description">{{pua.description}}</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-show="Data.letter.deliveryBcc.length>0">
+                        <label class="col-sm-5">رونوشت پنهان</label>
+                        <div class="col-sm-7">
+                            <label class="label label-default label-repeat col-sm-12" ng-repeat="pua in Data.letter.deliveryBcc">
+                                <div>{{pua.title}}</div>
+                                <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
+                                <div ng-show="pua.description">{{pua.description}}</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.shamsQRCodeEnabled">
+                        <label class="col-sm-5">کد QR شمس</label>
+                        <div class="col-sm-7 receiver">
+                            <img ng-src="{{'api/letter/qr_code/'+ Data.letter.uid+'?w=100&h=100'}}" alt="QRCode">
+                        </div>
+                    </div>
+                    
+                </div>
+				
+				
+			</div>
+
+			<div class="col-sm-12" ng-if="Data.selectedTab.id == 1">
+				<div class="row rowForm">
+					<div class="col-sm-8 col-sm-offset-2hashemi">
+						<letter-body model="Data.letter.fileBody"
+							 is-edit-mode="false"
+							 on-file-uploaded="loadPdfFn"
+							 pdf-file="Data.pdfFile"
+							 api="Controller.pdfFile">
+						</letter-body>
+                        <!--<iframe ng-src="{{Func.trustSrc(Data.pdfFile)}}" style="height: 600px !important;width: 800px !important;" frameborder="0"></iframe>-->
+					</div>
+                    <div class="col-sm-4" style="max-height: calc(100vh - 230px);overflow: auto">
+                        <accordion close-others="false">
+                            <accordion-group is-open="print.open" ng-init="print.open=true">
+                                <accordion-heading>
+                                    <h4>چاپ</h4>
+                                    <i class="pull-right glyphicon"
+                                       ng-class="{'glyphicon-chevron-down': print.open, 'glyphicon-chevron-right': !print.open}"></i>
+                                </accordion-heading>
+                                <div>
+                                    <kateb-print disable-checkbox="Data.letter.modifyInProcess"
+                                                 letter-uid="Data.letter.uid" model="Data.letter" type="Data.letter.initiation.type"
+                                                 is-print-with-signature="Data.isPrintWithSignature"
+                                                 is-print-with-header="Data.isPrintWithHeader"
+                                                 indecator-number="Data.indecatorNumber" deliverycc="Data.delivery_cc" word-enable=true
+                                                 deliverybcc="Data.delivery_bcc">
+                                    </kateb-print>
+                                </div>
+                            </accordion-group>
+                            <accordion-group is-open="attachment.open" ng-init="attachment.open=true">
+                                <accordion-heading>
+                                    <h4>ضمیمه</h4>
+                                    <i class="pull-right glyphicon"
+                                       ng-class="{'glyphicon-chevron-down': attachment.open, 'glyphicon-chevron-right': !attachment.open}"></i>
+                                </accordion-heading>
+                                <div>
+                                    <letter-attachment model="Data.letter.attachments"
+                                                       is-edit-mode="false">
+                                    </letter-attachment>
+                                </div>
+                            </accordion-group>
+                            <accordion-group is-open="relatedLetters.open" ng-init="relatedLetters.open=true">
+                                <accordion-heading>
+                                    <h4>نامه های مرتبط</h4>
+                                    <i class="pull-right glyphicon"
+                                       ng-class="{'glyphicon-chevron-down': relatedLetters.open, 'glyphicon-chevron-right': !relatedLetters.open}"></i>
+                                </accordion-heading>
+                                <div>
+                                    <div class="row is-view-attachment"
+                                         ng-repeat="letter in Data.relatedLetterList track by $index">
+                                        <span class="col-sm-12">{{letter.dirType|appEnum:letterType}}</span>
+                                        <div class="col-sm-2" style="text-align:center">
+                                            <div class="img-type-attachment fa fa-envelope-o bg-letter"></div>
+                                            <div class="title-attachment">{{letter.letterBody.name|splitString:15}}</div>
+                                        </div>
+                                        <div class="col-sm-10 description-attachment">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">فرستنده: </span>
+                                                    <span class="col-sm-8">{{letter.initiation.sender.title}}</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">موضوع: </span>
+                                                    <span class="col-sm-8">{{letter.subject}}</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">تاریخ ایجاد: </span>
+                                                    <span class="col-sm-8">{{letter.creationDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">شماره داخلی: </span>
+                                                    <span class="col-sm-8">{{letter.internalNumber|EnToFaNumber}}</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">الویت: </span>
+                                                    <span class="col-sm-8">{{letter.priority|appEnum:priority}}</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="relatedLetterLable col-sm-4">گیرندگان: </span>
+                                                    <span class="col-sm-12" ng-repeat="deliveryTo in letter.deliveryTo track by $index">
+                                                        <div class="col-sm-8" style="margin-right: 55px;">{{deliveryTo.title}}</div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <a class="btn pull-left"
+                                               ui-sref="home.cartable.orgLetter({letterUid: letter.uid})"
+                                               target="_blank">نمایش نامه</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </accordion-group>
+                        </accordion>
+                    </div>
+				</div>
+			</div>
+
+			<!--<div class="col-sm-10 col-sm-offset-1" ng-show="Data.selectedTab.id == 2">
+				<letter-attachment model="Data.letter.attachments" is-edit-mode="false"> </letter-attachment>
+			</div>-->
+
+            <div class="col-sm-12" ng-show="Data.selectedTab.id == 3">
+                <!--<div class="col-sm-9">
+                    <div class="row rowForm" ng-if="Data.letter.hamesh">
+                        <label class="col-sm-5">هامش</label>
+                        <div class="col-sm-7">{{Data.letter.hamesh|EnToFaNumber}}</div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.forwarder">
+                        <label class="col-sm-5">ارجاع دهنده</label>
+                        <div class="col-sm-7">{{Data.letter.forwarder.title}}</div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-5">تاریخ رسمی</label>
+                        <div class="col-sm-7">{{Data.letter.officialDate|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}</div>
+                    </div>
+                </div>-->
+                <div class="text-left">
+                    <i class="flaticon-interface-3" ng-click="Func.onShowTreeOrListClick('list')"></i>
+                    <i class="flaticon-motherboard-detail" ng-click="Func.onShowTreeOrListClick('tree')"></i>
+                    <i class="flaticon-technology-2" ng-click="Func.onPrintClick('#listViewPrint')" ng-show="Data.listView"></i>
+                    <i class="flaticon-signs" ng-click="Func.onChangeTreeMode('full')" ng-show="Data.treeMode=='brief'"></i>
+<!--                    <i class="flaticon-minus" ng-click="Func.onChangeTreeMode('brief')" ng-show="Data.treeMode=='full'"></i>-->
+                </div>
+                <!--<div ng-show="Data.listView" id="listViewPrint">-->
+                <!--<div class="col-sm-11" ng-repeat="item in Data.listViewInfo">-->
+                <!--<div class="row rowForm">-->
+                <!--<div class="col-sm-3">-->
+                <!--<span>{{item.letter.forwarder.title}}</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-7">-->
+                <!--<label>مخاطب: </label>-->
+                <!--<span>{{item.positionUserAssignment.title}}</span>-->
+                <!--<i class="flaticon-security text-danger"></i>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                <!--<label>مهلت پاسخ:</label>-->
+                <!--<br>-->
+                <!--<div class="pull-left row">-->
+                <!--<span>{{item.letter.requestResponseDate|tehranDate:'HH:mm'|EnToFaNumber}}</span>-->
+                <!--<span ng-if="item.letter.requestResponseDate">|</span>-->
+                <!--<span>{{item.letter.requestResponseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row rowForm">-->
+                <!--<div class="col-sm-3">-->
+                <!--<div>-->
+                <!--<span>{{item.letter.officialDate|tehranDate:'HH:mm'|EnToFaNumber}}</span>-->
+                <!--<span ng-if="item.letter.officialDate">|</span>-->
+                <!--<span>{{item.letter.officialDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-sm-7">-->
+                <!--<span>{{item.letter.hamesh}}</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row rowForm">-->
+                <!--<div class="col-sm-3">-->
+                <!--<i class="flaticon-computer"></i>-->
+                <!--</div>-->
+                <!--<div class="col-sm-7">-->
+                <!--<span>{{item.respond}}</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                <!--<label>زمان پاسخ:</label>-->
+                <!--<br>-->
+                <!--<div class="pull-left row">-->
+                <!--<span>{{item.respondDate|tehranDate:'HH:mm'|EnToFaNumber}}</span>-->
+                <!--<span ng-if="item.respondDate">|</span>-->
+                <!--<span>{{item.respondDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<hr>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div ng-if="Data.listView" id="listViewPrint">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6 no-float">
+                                <div id="letter-image" class="col-sm-12 letter-image" ng-style="{'padding': '50px 0px'}">
+                                    <img class="img-responsive" ng-if="Data.letter.uid" ng-src="{{Func.getLetterImage()}}" style="border: 1px solid #ccc">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 no-float tree-view print-tree-wrapper" ng-style="{'padding': '50px 0px'}">
+                                <open-tree tree-data="Data.letterForwardTreeData" api="Controller.treeApi" letter="Data.letter"
+                                           class="open-tree tree print-tree no-drop-actions" template="Print"></open-tree>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="Data.letterFeatures['forward']">
+
+                    <div class="col-sm-6">
+                        <form name="Data.form">
+                            <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && Data.form.letterDeliveryTo.$invalid}">
+                                <label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
+                                <div class="col-sm-7">
+                                    <multiselect-reciever model="Data.forward.deliveryTo"
+                                        search-fn="Controller.multiselectRecieverSearch(query)" name="letterDeliveryTo"
+                                        ng-model="Data.forward.deliveryTo" options="Data.puaList" is-edit-mode="Data.mode!='view'"
+                                        vt-array-required>
+                                    </multiselect-reciever>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">انتخاب هامش</label>
+                                <div class="col-sm-7">
+                                    <ui-select ng-model="Data.hamesh" on-select="Func.onHameshSelect($item, $model)">
+                                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="hamesh in Data.hameshList">
+                                            <div ng-bind-html="hamesh.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">هامش</label>
+                                <div class="col-sm-7">
+                                    <textarea type="text" class="form-control" name="description" ng-model="Data.forward.hamesh"></textarea>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">فوریت</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" ng-model="Data.forward.priority">
+                                        <option selected value="Normal">عادی</option>
+                                        <option value="Critical">فوری</option>
+                                        <option value="Blocker">خیلی فوری</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row rowForm col-md-offset-5">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-9">نیاز به پاسخ</label>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" ng-model="Data.responseNeeded">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="col-sm-9">نیاز به ضمیمه</label>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" ng-model="Data.attachmentNeeded">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" access-checker="HIDDEN_FORWARD">
+                                    <label class="col-sm-9">ارجاع مخفی</label>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" ng-model="Data.forward.hidden">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row rowForm" ng-if="Data.responseNeeded">
+                                <label class="col-sm-5">مهلت پاسخ</label>
+                                <div class="col-sm-7">
+                                    <vt-persian-date-picker name="requestResponseDate" min-date="Data.currentDate"
+                                        model="Data.forward.requestResponseDate"></vt-persian-date-picker>
+                                </div>
+                            </div>
+                            <div class="row rowForm col-md-offset-3" ng-if="Data.attachmentNeeded">
+                                <letter-attachment model="Data.forward.attachments" is-edit-mode="true"> </letter-attachment>
+                            </div>
+                            <div class="row rowForm">
+                                <button class="btn btn-sm btn-primary pull-left" type="button" ng-click="Func.onForwardClick()"
+                                    ng-disabled="Data.form.$valid && Data.validationClicked && Data.forwardIsDisabled">ارسال ارجاع</button>
+                                <button class="btn btn-sm btn-warning pull-left" style="margin-left: 5px" type="button"
+                                    ng-click="Func.onForwardAndArchiveClick()"
+                                    ng-disabled="Data.form.$valid && Data.validationClicked && Data.forwardIsDisabled">ارجاع و بایگانی</button>
+                                <button class="btn btn-sm btn-warning pull-left" style="margin-left: 5px" type="button"
+                                    ng-click="Func.onForwardAndNextClick()"
+                                    ng-disabled="Data.form.$valid && Data.forwardIsDisabled && Data.validationClicked || Data.letterState.totalCount === Data.letterState.totalIndex + 1">ارجاع
+                                    و بعدی</button>
+                            </div>
+                        </form>
+                    </div>
+                    <hr class="col-sm-11">
+
+                </div>
+                <div ng-show="Data.treeView">
+                    <div class="clearfix">
+                        <div class="col-sm-8 tree-view" ng-if="Data.letter.uid">
+                            <open-tree tree-data="Data.letterForwardTreeData" api="Controller.treeApi" class="open-tree tree no-drop-actions" letter="Data.letter">
+                            </open-tree>
+                        </div>
+                        <div class="col-sm-4  well well-sm node-info" ng-if="Data.selectedNode.letter && Data.letterFeatures['tree-respond']">
+                            <i style="height: 16px;" ng-click="Data.selectedNode = {}" class="flaticon-close-button pull-right btn btn-xs"></i>
+                            &nbsp;&nbsp;
+                            <div class="row rowForm">
+                                <label class="col-sm-5">مخاطب</label>
+                                <div class="col-sm-7">
+                                    <ul style="padding-right: 10px;">
+                                        <li ng-repeat="item in Data.selectedNode.letter.deliveryTo"
+                                            style="border: 1px outset; border-radius: 4px; padding: 5px; margin-bottom: 2px;">
+                                            <div>{{item.title}}</div>
+                                            <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="item.description">
+                                            <div ng-show="item.description">{{item.description|EnToFaNumber}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">ارجاع دهنده</label>
+                                <div class="col-sm-7">{{Data.selectedNode.letter.forwarder.title}}</div>
+                            </div>
+                            <!-- <div class="row rowForm">
+                        							<label class="col-sm-5">زمان اولین مشاهده</label>
+                        							<div class="col-sm-7">{{Data.selectedNode.readingDate|tehranDate:'HH:mm:ss jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+                        						</div>
+                        						<div class="row rowForm">
+                        							<label class="col-sm-5">آخرین زمان مشاهده</label>
+                        							<div class="col-sm-7">{{Data.selectedNode.lastReadingDate|tehranDate:'HH:mm:ss jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+                        						</div>
+                        						<div class="row rowForm">
+                        							<label class="col-sm-5">تعداد مشاهدات</label>
+                        							<div class="col-sm-7">{{Data.selectedNode.readCounter}}</div>
+                        						</div> -->
+                            <div class="row rowForm">
+                                <label class="col-sm-5">تاریخ رسمی</label>
+                                <div class="col-sm-7">{{Data.selectedNode.letter.officialDate|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">مهلت پاسخ</label>
+                                <div class="col-sm-7">{{Data.selectedNode.letter.requestResponseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">تاریخ پاسخ</label>
+                                <div class="col-sm-7">{{Data.selectedNode.respondDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">پاسخ ارجاع</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group" ng-show="Data.selectedNode.canRespond">
+                                        <input type="text" class="form-control" ng-model="Data.forwardRespond">
+                                        <span class="input-group-btn">
+                                            <button ng-click="Func.onSendNodeForwardCommentClick()" type="button"
+                                                class="btn btn-sm btn-primary pull-right">پاسخ ارجاع</button>
+                                        </span>
+                                    </div>
+                                    <p class="form-control-static" ng-hide="Data.selectedNode.canRespond">{{Data.selectedNode.respond}}</p>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">هامش</label>
+                                <div class="col-sm-7">{{Data.selectedNode.letter.hamesh|EnToFaNumber}}</div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-5">ضمائم</label>
+                                <div class="col-sm-7">
+                                    <div ng-repeat="attachment in Data.selectedNode.letter.forwardAttachments track by $index">
+                        
+                                        <button style="margin: 1px;" ng-show="attachment.letterBody" class="btn btn-primary col-sm-12"
+                                            ng-click="Func.onShowLetterModalClick(attachment.letterBody)">{{attachment.letterBody.title}}</button>
+                                        <vt-file ng-show="attachment.fileBody" model="attachment.fileBody" is-edit-mode="false"> </vt-file>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                            <!--
+                                                <div class="row rowForm">
+                                                    <label class="col-sm-5">زمان اولین مشاهده: </label>
+                                                    <label class="col-sm-7">{{treeData.item.readingDate|tehranDate:'HH:mm:ss jDD-jMMMM-jYYYY'|EnToFaNumber}}</label>
+                                                  </div>
+                                                  <div class="row rowForm">
+                                                    <label class="col-sm-5">آخرین زمان مشاهده: </label>
+                                                    <label class="col-sm-7">{{treeData.item.lastReadingDate|tehranDate:'HH:mm:ss jDD-jMMMM-jYYYY'|EnToFaNumber}}</label>
+                                                  </div>
+                                                  <div class="row rowForm">
+                                                    <label class="col-sm-5">تعداد مشاهدات: </label>
+                                                    <label class="col-sm-7">{{treeData.item.readCounter|EnToFaNumber}}</label>
+                                                  </div>
+                        -->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+
+			<!--<div class="col-sm-7" ng-show="Data.selectedTab.id == 4">
+				<kateb-print disable-checkbox="Data.letter.modifyInProcess" letter-uid="Data.letter.uid" model="Data.letter" is-print-with-signature="Data.isPrintWithSignature" is-print-with-header="Data.isPrintWithHeader" indecator-number="Data.indecatorNumber" deliverycc="Data.delivery_cc" deliverybcc="Data.delivery_bcc"></kateb-print>
+			</div>-->
+
+			<!--<div class="col-sm-7" ng-show="Data.selectedTab.id == 5">
+				<div class="row is-view-attachment" ng-repeat="letter in Data.relatedLetterList track by $index">
+					<h4 class="col-sm-12">{{letter.dirType|appEnum:letterType}}</h4>
+					<div class="col-sm-2" style="text-align:center">
+						<div class="img-type-attachment fa fa-envelope-o bg-letter"></div>
+						<div class="title-attachment">{{letter.letterBody.name|splitString:15}}</div>
+					</div>
+					<div class="col-sm-10 description-attachment">
+						&lt;!&ndash;<div class="col-sm-2">&ndash;&gt;
+							&lt;!&ndash;<button class="col-sm-12 btn" ng-click='Func.onReception(letter.fileBody)'>دریافت</button>&ndash;&gt;
+						&lt;!&ndash;</div>&ndash;&gt;
+						<div class="col-sm-12">
+							<div class="col-sm-12">
+								<span class="relatedLetterLable col-sm-4">فرستنده: </span>
+								<span class="col-sm-8">{{letter.initiation.sender.title}}</span>
+							</div>
+							<div class="col-sm-12">
+								<span class="relatedLetterLable col-sm-4">موضوع: </span>
+								<span class="col-sm-8">{{letter.subject}}</span>
+							</div>
+							<div class="col-sm-12">
+								<span class="relatedLetterLable col-sm-4">تاریخ ایجاد: </span>
+								<span class="col-sm-8">{{letter.creationDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+							</div>
+							<div class="col-sm-12">
+								<span class="relatedLetterLable col-sm-4">شماره داخلی: </span>
+								<span class="col-sm-8">{{letter.internalNumber|EnToFaNumber}}</span>
+							</div>
+							<div class="col-sm-12">
+								<span class="relatedLetterLable col-sm-4">الویت: </span>
+								<span class="col-sm-8">{{letter.priority|appEnum:priority}}</span>
+							</div>
+						</div>
+						&lt;!&ndash;ng-click="Func.onShowLetterModalClick(letter)"&ndash;&gt;
+						<a class="btn pull-left" ui-sref="home.cartable.orgLetter({letterUid: letter.uid})" target="_blank">نمایش نامه</a>
+					</div>
+				</div>
+			</div>-->
+			<div class="col-sm-12" ng-show="Data.selectedTab.id == 6">
+				<p class="help-block" ng-show="Data.events.length==0">موردی یافت نشد.</p>
+				<!-- FIXME Sherwin -->
+				<style>
+					.align-center th{
+						text-align: center;
+					}
+				</style>
+				<table class="table table-striped col-sm-12 logsTable" ng-show="Data.events.length>0">
+                    <thead>
+                        <tr class="align-center">
+                            <th>کاربر</th>
+                            <th>IP</th>
+                            <th>اقدام</th>
+                            <th>زمان</th>
+                            <th class="col-sm-1">نام و نام خانوادگی</th>
+                            <th class="col-sm-1">لینک به فرآیند</th>
+                        </tr>
+                    </thead>
+					<tr ng-repeat="event in Data.events|orderBy: '-date'">
+						<td>{{event.username|EnToFaNumber}}</td>
+						<td>{{event.ip_address|EnToFaNumber}}</td>
+						<td tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="down"
+                        tooltip-popup-delay="500" tooltip="{{event.details|EnToFaNumber}}">{{event.details|EnToFaNumber}}</td>
+						<td>{{event.date|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</td>
+                        <td ng-click="Func.onShowFullnameClick(event)" style="cursor: pointer;overflow: visible;">
+                            <div style="position: relative;">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <div class="customTooltip" ng-show="event.showTooltip">{{event.tooltipContent}}</div>
+                            </div>
+                        </td>
+                        <td style="cursor: pointer;">
+                            <a ng-show="event.showProcessLink" ui-sref="home.process.processInstanceInfo({uid: event.processUid})">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                        </td>
+					</tr>
+				</table>
+			</div>
+
+            <div class="col-sm-12" ng-show="Data.selectedTab.id == 7">
+                <div ng-if="Data.letterFeatures['send']">
+                    <div class="row rowForm">
+                        <label class="col-sm-2">نحوه ارسال</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" ng-model="Data.letter.type" name="receivingStyle">
+                                <!--<option value="Post">پست</option>-->
+                                <!--<option value="Fax">فکس</option>-->
+                                <!--<option value="Courier">پیک</option>-->
+                                <option value="Org">بین سازمان</option>
+                                <!--<option value="Ece">ECEP</option>-->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.type == 'Courier'">
+                        <label class="col-sm-2">نام پیک</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" ng-model="Data.letter.courierName">
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.type == 'Fax'">
+                        <!--<label class="col-sm-2">انتخاب سازمان</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" ng-model="Data.letter.organization" name="receivingStyle">
+                                <option value="Post">پست</option>
+                                <option value="Fax">فکس</option>
+                                <option value="Courier">پیک</option>
+                            </select>
+                        </div>-->
+                        <label class="col-sm-2">شماره فکس</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" ng-model="Data.letter.faxNumber">
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.type == 'Org'">
+                        <label class="col-sm-2">انتخاب سازمان</label>
+                        <div class="col-sm-3">
+                            <select class="form-control"
+                                    ng-model="Data.organization"
+                                    name="organization"
+                                    ng-change="Func.onOrganiztionChange(Data.organization)"
+                                    ng-options="organization as organization.title for organization in Data.organizationList">
+                            </select>
+                        </div>
+                        <label class="col-sm-2">انتخاب سمت</label>
+                        <div class="col-sm-3">
+                            <ui-select ng-model="Data.letter.reciverPostionUserAssignment">
+                                <ui-select-match>
+                                    <span ng-bind="$select.selected.title"></span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in (Data.members | filter: $select.search) track by $index">
+                                    <span ng-bind="item.title"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.type == 'Post'">
+                        <label class="col-sm-2">کد مرسوله</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" ng-model="Data.letter.boxNumber">
+                        </div>
+                        <label class="col-sm-2">کد پستی</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" ng-model="Data.letter.postalCode">
+                        </div>
+                    </div>
+                    <div class="row rowForm" ng-if="Data.letter.type == 'Ece'">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-4">
+                            <button class="btn btn-primary" type="button" ng-click="Func.onLetterDownloadClick()">دریافت نامه</button>
+                        </div>
+                    </div>
+                    <div class="row rowForm">
+                        <label class="col-sm-2">توضیحات</label>
+                        <div class="col-sm-8">
+						<textarea type="text" class="form-control" name="description" rows="4"
+                                  ng-model="Data.letter.description"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary pull-left"
+                            type="button"
+                            ng-click="Func.onSaveClick()" ng-disabled="Data.isLoadingSaveClick">ثبت ارسال</button>
+                    <hr>
+                </div>
+                <div class="col-sm-12">
+                    <h4> آرشیو ارسال </h4>
+                    <div ng-repeat="deliveryTo in Data.letter.deliveryTo" ng-show="deliveryTo.dispatches.length" class="description-attachment col-sm-offset-1 col-sm-9 archive-history">
+                        <div ng-repeat="archive in deliveryTo.dispatches">
+                            <div class="col-sm-6" ng-if="archive.sendingOperator.title">
+                                <label>فرستنده</label>
+                                <span>{{archive.sendingOperator.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.sendDate">
+                                <label>تاریخ</label>
+                                <span>{{archive.sendDate|tehranDate:'jDD-jMMMM-jYYYY '|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.type">
+                                <label>نحوه ارسال</label>
+                                <span>{{archive.type|appEnum}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.destOrganization">
+                                <label>سازمان</label>
+                                <span>{{archive.destOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.faxNumber">
+                                <label>شماره فکس</label>
+                                <span>{{archive.faxNumber|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.description">
+                                <label>توضیحات</label>
+                                <span>{{archive.description}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDate">
+                                <label>تاریخ بازگشت</label>
+                                <span>{{archive.returnDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDescription">
+                                <label>توضیحات بازگشت</label>
+                                <span>{{archive.returnDescription}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.destEceExternalOrganization">
+                                <label>سازمان مقصد</label>
+                                <span>{{archive.destEceExternalOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.eceEmail">
+                                <label>ایمیل مقصد</label>
+                                <span>{{archive.eceEmail}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.destEceExternalOrganization">
+                                <label>سازمان مقصد</label>
+                                <span>{{archive.destEceExternalOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.eceEmail">
+                                <label>ایمیل مقصد</label>
+                                <span>{{archive.eceEmail}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="deliveryCc in Data.letter.deliveryCc" ng-show="deliveryCc.dispatches.length" class="description-attachment col-sm-offset-1 col-sm-9 archive-history">
+                        <div ng-repeat="archive in deliveryCc.dispatches">
+                            <div class="col-sm-6" ng-if="archive.sendingOperator.title">
+                                <label>فرستنده</label>
+                                <span>{{archive.sendingOperator.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.sendDate">
+                                <label>تاریخ</label>
+                                <span>{{archive.sendDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.type">
+                                <label>نحوه ارسال</label>
+                                <span>{{archive.type|appEnum}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.destOrganization">
+                                <label>سازمان</label>
+                                <span>{{archive.destOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.faxNumber">
+                                <label>شماره فکس</label>
+                                <span>{{archive.faxNumber|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.description">
+                                <label>توضیحات</label>
+                                <span>{{archive.description}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDate">
+                                <label>تاریخ بازگشت</label>
+                                <span>{{archive.returnDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDescription">
+                                <label>توضیحات بازگشت</label>
+                                <span>{{archive.returnDescription}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="deliveryBcc in Data.letter.deliveryBcc" ng-show="deliveryBcc.dispatches.length" class="description-attachment col-sm-offset-1 col-sm-9 archive-history">
+                        <div ng-repeat="archive in deliveryBcc.dispatches">
+                            <div class="col-sm-6" ng-if="archive.sendingOperator.title">
+                                <label>فرستنده</label>
+                                <span>{{archive.sendingOperator.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.sendDate">
+                                <label>تاریخ</label>
+                                <span>{{archive.sendDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.type">
+                                <label>نحوه ارسال</label>
+                                <span>{{archive.type|appEnum}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.destOrganization">
+                                <label>سازمان</label>
+                                <span>{{archive.destOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-6" ng-if="archive.faxNumber">
+                                <label>شماره فکس</label>
+                                <span>{{archive.faxNumber|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.description">
+                                <label>توضیحات</label>
+                                <span>{{archive.description|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDate">
+                                <label>تاریخ بازگشت</label>
+                                <span>{{archive.returnDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.returnDescription">
+                                <label>توضیحات بازگشت</label>
+                                <span>{{archive.returnDescription}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.destEceExternalOrganization">
+                                <label>سازمان مقصد</label>
+                                <span>{{archive.destEceExternalOrganization.title}}</span>
+                            </div>
+                            <div class="col-sm-12" ng-if="archive.eceEmail">
+                                <label>ایمیل مقصد</label>
+                                <span>{{archive.eceEmail}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" ng-show="Data.selectedTab.id == 8">
+                <div class="row rowForm">
+                    <div class="col-sm-8">
+                        <vt-archived-letter-list api="Controller.archivedLetterListApi"></vt-archived-letter-list>
+                    </div>
+                    <div ng-if="Data.hasExternalArchives && Data.letterFeatures['archive']" class="col-sm-4">
+                        <div class="row rowForm">
+                            <label class="col-sm-12" style="text-align: right;">بایگانی نامه</label>
+                        </div>
+                        <div class="row rowForm">
+                            <div class="col-sm-offset-1 col-sm-11">
+                                <ng-form name="Data.vtFolderSelectorForm">
+                                    <vt-folder-selector model="Data.selectedFolder" has-upload="true"
+                                                        is-edit-mode="true" form-name="Data.vtFolderSelectorForm"
+                                                        upload-fn="Func.onFolderUploadFn()" modernization-code-placement="'right'"></vt-folder-selector>
+                                </ng-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>

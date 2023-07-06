@@ -1,0 +1,99 @@
+@CHARSET "ISO-8859-1";
+.is-view-attachment{
+	border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+    border-radius: 5px;
+}
+.is-view-attachment .img-type-attachment{
+	height: 35px;
+    width: 35px;
+/*    color: rgba(255, 255, 255, 0.5);*/
+    font-size: 35px;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 5px;
+    background: none;
+}
+.is-view-attachment .title-attachment{
+	direction: ltr;
+	text-align: center;
+}
+.is-view-attachment .description-attachment{
+    background-color: #fff;
+    padding: 10px;
+    height: auto;
+    border-radius: 3px;
+    color: #f44336;
+/*    width: 100%;*/
+}
+.is-view-attachment .actions > .btn {
+    line-height: 1;
+    color: #666666;
+    text-align: initial;
+    height: auto;
+    border: 1px solid;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 3px;
+}
+.is-view-attachment .description-attachment > div:nth-child(2) {
+    padding-top: 0px;
+}
+.is-view-attachment .description-attachment > div.col-sm-12 > div.col-sm-12{
+    margin-bottom: 10px;
+}
+.bg-word{
+	color: #2196f3;
+}
+.bg-excel{
+	color: #43A047;
+}
+.bg-image{
+	color: #455A64;
+}
+.bg-letter{
+	color: #ff9800;
+}
+.bg-pdf{
+	color: #f44336;
+}
+.bg-audio{
+	color: #0097A7;
+}
+.bg-file{
+	color: #959595;
+}
+.show-letter-modal{
+    height: 600px;
+}
+.scan-scanner .wrapper, .katebLetterBody .pdfKateb ,.katebLetterBody .letter-body-label{
+    display: none;
+}
+.is-view-attachment > span{
+/*    width: 100%;*/
+    display: block;
+    font-size: 14px;
+}
+.is-view-attachment > div:not(:last-child) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 15px 0;  
+}
+.is-view-attachment > div:not(:last-child) > .img-type-attachment{
+    margin-left: 10px;
+}
+.is-view-attachment > div:not(:last-child).actions{
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: auto;
+    min-width: 130px;
+    justify-content: space-between;
+}

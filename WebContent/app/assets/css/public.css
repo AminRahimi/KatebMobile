@@ -1,0 +1,47 @@
+@CHARSET "ISO-8859-1";
+
+.panel-page-header .panel-body{
+		font-family: "iranianSans";
+		color : #0097a7;
+}
+.modal-title button {
+   /*  line-height: 30px;*/
+    padding: 0; 
+    background-color: transparent;
+}
+
+
+
+.total-items-pagination{
+	background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    color: #979797;
+    display: inline-block;
+    padding: 5px 10px;
+    position: relative;
+    top: -31px;
+}
+.kateb-version {
+    position: absolute;
+    color: white;
+    font-size: 9px ! important;
+    bottom: -9px;
+    left: 5px;
+}
+.unread-messages-count {
+    background: #eb3d4d none repeat scroll 0 0;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: bold;
+    height: 15px;
+    left: 8px;
+    top: 10px;
+    line-height: 2;
+    margin-left: 15px;
+    margin-top: -1px;
+    padding: 0 6px;
+    position: absolute;
+    width: auto;
+    z-index: 4;
+}

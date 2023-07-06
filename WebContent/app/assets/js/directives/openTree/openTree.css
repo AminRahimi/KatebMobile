@@ -1,0 +1,37 @@
+/*.tree-line {
+	position: absolute; 
+	border-width: medium medium 1px !important; 
+	border-style: none none dashed !important; 
+	border-color: -moz-use-text-color -moz-use-text-color rgb(154, 207, 234)  !important; 
+	-moz-border-top-colors: none !important; 
+	-moz-border-right-colors: none !important; 
+	-moz-border-bottom-colors: none !important; 
+	-moz-border-left-colors: none !important; 
+	border-image: none !important; 
+	top: 9px; 
+	width: 55%;"
+}
+.metadata {
+	 width: 60px;
+     float: left;
+     border: none !important;
+     text-align: center !important;
+}
+.tree-metadata {
+	float: left; 
+	display: inline-block; 
+	border: medium none !important; 
+	background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+	position: absolute; 
+	left: 0px;
+	z-index: 9999;"
+}
+
+.openTreePopover {
+	font-size: 10px !important;
+    padding: 2 !important;
+}*/
+
+.unreadNode{
+    color: #fb7546;
+}

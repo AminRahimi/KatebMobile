@@ -1,0 +1,20 @@
+<style>
+    .panel-body{
+        width: 100%;
+        overflow: auto;
+    }
+</style>
+<div>
+    <div class="panel panel-primary">
+        <div style="padding: 5px 0;; height:50px;" class="panel-heading">لیست رزرو نامه
+            <a ng-click="Func.onExcelClick()" class="btn btn-default pull-left downloadReport">
+                <img src="app/assets/img/excel.png">
+            </a>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-grid control-fn="Controller.listController"></vt-grid>
+        </div>
+    </div>
+</div>

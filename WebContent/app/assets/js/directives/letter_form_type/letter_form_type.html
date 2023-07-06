@@ -1,0 +1,81 @@
+<style>
+    #letterFormTypeSelect.ui-select-bootstrap .ui-select-toggle>.caret {
+        right: initial;
+        left: 10px;
+        /* or any other value - it should be the same as the original right value */
+    }
+
+    #letterFormTypeSelect.ui-select-bootstrap>.ui-select-match>.btn {
+        text-align: right !important;
+        direction: rtl;
+    }
+
+    #letterFormTypeSelect.ui-select-bootstrap>.ui-select-match>.btn>span.pull-left {
+        float: right !important;
+    }
+
+    #btnRemoveLetterFormType {
+        margin-right: 5px;
+    }
+
+    div.bhoechie-tab-menu {
+        border-bottom: 1px solid lightgrey;
+    }
+
+    div.bhoechie-tab-menu div.list-group>a.active {
+        padding: 5px !important;
+        background-color: white !important;
+        color: gray !important;
+    }
+
+    div.bhoechie-tab-menu div.list-group>a.active:after {
+        border-right: none !important;
+    }
+
+    div.bhoechie-tab-content {
+        padding-right: 0 !important;
+    }
+
+    letter-form-type schema-form-fields vt-persian-date-picker {
+        padding: 0 !important;
+    }
+</style>
+<div class="{{ cssClass ? cssClass : 'col-sm-6' }}">
+    <div class="row rowForm {{ cssClassSelectorType }}" access-checker="ADD_FORM_TO_LETTER"
+        ng-if="mode && mode!=='view'">
+        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }}">نوع نامه</label>
+        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }} d-flex">
+            <ui-select style="flex: 1;" ng-model="Data.selectedLetterFormType" ng-click="Func.getLetterFormTypeList()"
+                ng-change="Func.onChangeLetterFormType()" ng-disabled="mode==='view' || !mode" id="letterFormTypeSelect"
+                append-to-body="true">
+                <ui-select-match>
+                    <span ng-bind="$select.selected.name"></span>
+                </ui-select-match>
+                <ui-select-choices
+                    repeat="item in (Func.getLetterFormTypeListForSelect() | filter: $select.search) track by $index">
+                    <span ng-bind="item.name"></span>
+                </ui-select-choices>
+            </ui-select>
+            <button class="btn btn-danger" id="btnRemoveLetterFormType" ng-if="Data.selectedLetterFormType"
+                ng-click="Func.removeLetterFormType()">حذف نوع
+                نامه</button>
+        </div>
+
+    </div>
+    <div class="row rowForm {{ cssClassSelectorType }}" ng-if="mode==='view' || !mode">
+        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }}">نوع نامه</label>
+        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }}">{{ Data.selectedLetterFormType.name }}</div>
+    </div>
+    <div>
+        <form class="form-horizontal" role="form" novalidate="novalidate" ng-if="Data.selectedLetterFormType">
+            <div class="row form-group form-of-document">
+                <schema-form-fields entity-type="Data.selectedLetterFormType.entityType.key"
+                    options="{dateCustomClass:options.dateCustomClass}" is-edit-mode="mode && mode!=='view'"
+                    api="apis.schemaFormApi" schema="Data.schema" model="Data.formLetterTypeDataModel"
+                    custom-template="Data.customTemplate"></schema-form-fields>
+            </div>
+        </form>
+    </div>
+    <hr ng-if="mode && mode!=='view'" access-checker="ADD_FORM_TO_LETTER">
+    <hr ng-if="mode==='view' || !mode">
+</div>

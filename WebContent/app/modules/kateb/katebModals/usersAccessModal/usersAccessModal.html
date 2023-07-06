@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h3 class="modal-title">دسترسی ها</h3>
+</div>
+<div class="modal-body">
+    <div class="well well-lg">
+        <form name="userAccessForm" role="form" novalidate>
+            <div class="row rowForm">
+                <label class="col-sm-5">اعضا</label>
+                <div class="col-sm-7">
+                    <vt-typeahead api="Controller.userTypeaheadApi"
+                                  name="users"
+                                  model="Data.selectedgroup.users"
+                                  is-edit-mode="Data.mode!='view'">
+                    </vt-typeahead>
+                </div>
+            </div>
+            <div class="row rowForm">
+                <label class="col-sm-5">سمت ها</label>
+                <div class="col-sm-7">
+                    <vt-typeahead api="Controller.positionsTypeaheadApi"
+                                  name="positions"
+                                  model="Data.selectedgroup.positions"
+                                  is-edit-mode="Data.mode!='view'">
+                    </vt-typeahead>
+                </div>
+            </div>
+            <div class="row rowForm">
+                <label class="col-sm-5">سمت - شخص</label>
+                <div class="col-sm-7">
+                    <vt-typeahead api="Controller.positionUserAssignemtsTypeaheadApi"
+                                  name="positionUserAssignemts"
+                                  model="Data.selectedgroup.positionUserAssignemts"
+                                  is-edit-mode="Data.mode!='view'">
+                    </vt-typeahead>
+                </div>
+            </div>
+            <div class="row rowForm">
+                <label class="col-sm-5">گروه ها</label>
+                <div class="col-sm-7">
+                    <vt-typeahead api="Controller.groupsTypeaheadApi"
+                                  name="groups"
+                                  model="Data.selectedgroup.groups"
+                                  is-edit-mode="Data.mode!='view'">
+                    </vt-typeahead>
+                </div>
+            </div>
+            <div class="row rowForm">
+                <label class="col-sm-5">همه افراد سازمان</label>
+                <div ng-show="Data.mode=='view'" class="col-sm-7">
+                    {{Data.selectedgroup.all|checkmark}}
+                </div>
+                <div ng-show="Data.mode!='view'" class="col-sm-1">
+                    <input type="checkbox" class="form-control" name="all"
+                           ng-model="Data.selectedgroup.all">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-warning pull-left"
+            type="button"
+            ng-click="Func.onCancel()">انصراف
+    </button>
+    <button class="btn btn-sm btn-success pull-left"
+            type="button"
+            ng-click="Func.onSave()">افزودن
+    </button>
+</div>

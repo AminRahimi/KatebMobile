@@ -1,0 +1,128 @@
+<style>
+    .iframe-container {
+        margin-top: 10px;
+        overflow: hidden;
+        /* 16:9 aspect ratio */
+        padding-top: 36.25%;
+        position: relative;
+        margin-right: 15px;
+        max-height: 400px;
+
+    }
+
+    .iframe-container iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .box {
+        height: 200px;
+        width: 200px;
+    }
+
+    .slide-item {
+        float: right;
+        margin: 5px;
+        padding-bottom: 3px;
+        border-bottom: 3px solid transparent;
+    }
+
+    .ui-sortable-handle {
+        list-style: none;
+    }
+
+    .slide-item img {
+        pointer-events: none;
+        width: 140px;
+        height: 140px;
+        border-radius: 3px;
+    }
+
+    .slid-add button {
+        width: 139px;
+        height: 60px;
+        color: rgb(165, 166, 170);
+        border-width: 2px;
+        border-style: dashed;
+        border-color: rgb(201, 201, 201);
+        border-image: initial;
+        border-radius: 3px;
+        margin-right: 5px;
+        margin-top: 46px;
+    }
+
+    .slide-album{
+        max-height: 156px;
+        transform: translateY(-56px)translatex(-1px);
+    }
+    .inline-dsp {
+        display: inline-block;
+    }
+
+    .return-btn {
+        margin-top: 0px !important;
+        margin-bottom: 11px;
+        margin-right: 30px !important;
+    }
+
+    .custom-margin {
+        margin-top: 20px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .btn-upload {
+        float: left;
+    }
+
+    .custom-row {
+        max-height: 155px;
+        transform: scale(0.8) translateY(-115px)translatex(122px);
+    }
+</style>
+<div class="panel panel-default panel-page-header ">
+    <div class="panel-body "> انتخاب تصویر از {{Data.mode==='view'?'آلبوم':'سیستم'}}
+        <button ng-if="Data.mode === 'view'" class="btn btn-custom btn-upload"
+            ng-click="Func.onSaveClick();">ذخیره</button>
+        <button ng-if="Data.mode === 'add'" class="btn btn-custom btn-upload" ng-click="Func.onAddToAlbum();">افزودن به
+            آلبوم</button>
+    </div>
+    <div class="iframe-container">
+        <iframe
+            ng-src="{{Data.selectedPhoto.hash ? 'static/loginPreview.html?url=files/?mode=view&fcode='+ Data.selectedPhoto.hash: 'static/loginPreview.html'}}"
+            frameborder="0"></iframe>
+    </div>
+    <div class="panel-body slide-album " ng-if="Data.mode==='view'">
+        <div>
+            <div class="slide-item" ng-repeat="slide in Data.photoList">
+                <a href="" ng-click="Func.preview(slide)"><img ng-src="files/?mode=view&fcode={{slide.hash}}"
+                        style="margin-bottom: 10px;"></a>
+                <div class="row rowForm text-center">
+                    <!-- <button ng-if="!slide.active" type="button" class="btn btn-default">پیشنمایش</button> -->
+                    <button ng-click="Func.deleteBgPhoto(slide.uid)" type="button" class="btn btn-default">حذف</button>
+                </div>
+
+            </div>
+            <div class="slid-add">
+                <button type="button" class="btn btn-default glyphicon glyphicon-plus"
+                    ng-click="Func.onClickAddBgPhoto()"></button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="Data.mode==='add'" class="custom-row">
+        <div class="panel-body box inline-dsp">
+            <vt-photo-slide ratio="1" is-edit-mode="true" class="custom-iframe" ng-model="Data.selectedPhoto.hash"
+                no-title-description="false" hash-object-name="false" is-remove-btn="true">
+            </vt-photo-slide>
+        </div>
+        <div class=" text-left slid-add inline-dsp">
+            <button type="button" class="btn btn-default glyphicon return-btn " ng-click="Func.onClickBack()"> بازگشت به
+                آلبوم</button>
+        </div>
+        <p class="custom-margin"><span class="custom-margin" style="color: rgb(251, 117, 70);">*</span>سایز عکس انتخابی
+            ۳۸۴×۴۰۰ باشد.</p>
+    </div>
+</div>

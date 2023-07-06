@@ -1,0 +1,15 @@
+<div class="modal-header">
+   <h5 class="modal-title">انتخاب نامه
+   <button class="flaticon-close-button pull-left btn" ng-click="Func.onCancelClick()"></button>
+   </h5>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12 managementContainer">
+			<vt-search control-fn="Controller.allLettersSearchController"></vt-search>
+		</div>
+		<div class="col-sm-12">
+			<vt-grid control-fn="Controller.allLettersListController"></vt-grid>
+		</div>
+	</div>
+</div>

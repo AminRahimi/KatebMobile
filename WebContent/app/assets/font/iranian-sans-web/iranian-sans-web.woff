@@ -1,0 +1,175 @@
+
+<!DOCTYPE html >
+<html lang="fa">
+<head id="Head1"><base id="baseTag" href="http://www.shatel.ir/"></base>
+	<!--[if lt IE 9]>
+<script>
+  var e = ("abbr,article,aside,audio,canvas,datalist,details,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video").split(',');
+  for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}
+</script>
+<![endif]-->
+
+	<script type="text/javascript">
+		function loco$(id) { if (typeof id == 'string') return document.getElementById(id); return id; }
+		var AjaxList = Array;
+		var lc$ = (lc$ ? lc$ : {
+			debug: true,
+			log: function(ex){
+				if(!lc$.debug) return;
+				if(typeof console != 'undefined' && console.log)
+					if(ex.stack)
+						console.log(ex.stack);
+					else
+						console.log(JSON.stringify(ex));
+			},
+			_uid: 0,
+			guidEmpty: '00000000-0000-0000-0000-000000000000',
+			uid: function(){return lc$._uid++;},
+			exec: function(code, args){
+				if(!code) return;
+				try{
+					if (typeof code === 'function')
+						code(args);
+					else
+						eval(code);
+				}catch(ex){lc$.log(ex)}
+			}
+		});
+		if (!(typeof (WebForm_OnSubmit) == "function")) { WebForm_OnSubmit = function() { return true; }; }
+		lc$.ready = {
+			rb: false, isRdy: false, rhArr: [],
+			rhdlr: function() {
+				for (var i = 0; i < locoReady.rhArr.length; i++) {
+					try {var fn = locoReady.rhArr[i]; fn();}catch (ex) { lc$.log(ex); }
+				}
+				locoReady.rhArr = [];locoReady.isRdy = true;
+			},
+			bindReady: function() {
+				if (this.rb) return;
+				this.rb = true;
+				if (document.addEventListener) {
+					document.addEventListener("DOMContentLoaded", this.rhdlr, false);
+					window.addEventListener("load", this.rhdlr, false);
+				} else if (document.attachEvent) {
+					document.attachEvent("onreadystatechange", this.rhdlr);
+					window.attachEvent("onload", this.rhdlr);
+				}
+			},
+			add: function(fn) {
+				if (this.isRdy) {fn();return;}
+				this.bindReady();
+				this.rhArr.push(fn);
+			}
+		}
+		var locoReady = lc$.ready;
+
+		if (typeof HTMLElement != "undefined" && !HTMLElement.prototype.insertAdjacentElement) {
+			HTMLElement.prototype.insertAdjacentElement = function(where, parsedNode) {
+				switch (where) {
+					case 'beforeBegin': this.parentNode.insertBefore(parsedNode, this); break;
+					case 'afterBegin': this.insertBefore(parsedNode, this.firstChild); break;
+					case 'beforeEnd': this.appendChild(parsedNode); break;
+					case 'afterEnd': 
+						if (this.nextSibling) this.parentNode.insertBefore(parsedNode, this.nextSibling);
+						else this.parentNode.appendChild(parsedNode);
+						break;
+				}
+			}
+			HTMLElement.prototype.insertAdjacentHTML = function(where, htmlStr) {
+				var span = document.createElement('span');
+				span.innerHTML = htmlStr;
+				this.insertAdjacentElement(where, span)
+			}
+			HTMLElement.prototype.insertAdjacentText = function(where, txtStr) {
+				var parsedText = document.createTextNode(txtStr);
+				this.insertAdjacentElement(where, parsedText);
+			}
+		}
+	</script>
+
+	<meta charset="utf-8" /><link id="styleLink" rel="stylesheet" href="/UIPacks/Shatel/themes/general/Styles/rtl-style6.css?v=0" /><link id="onlineEditStyleLink" rel="stylesheet" /><meta name='description' content=''/><meta name='keywords' content='رتبه یک اینترنت پرسرعت,رتبه اول اینترنت پرسرعت ADSL2+,اینترنت پرسرعت,شاتل,رتبه برتر اینترنت پرسرعت,برترین رتبه اینترنت پرسرعت,اینترنت پرسرعتADSL2+'/><title>
+	شاتل-خطای 404
+</title></head>
+<body>
+	<script type="text/javascript">
+		lc$.section= 'Error-404';
+
+	</script>
+	<!-- 
+	http://www.shatel.ir/default.aspx?scn=Error-404&amp;IRANSans&amp;web 
+	BizDomainId:  00000000-0000-0000-0000-000000000000		
+	UserId:  00000000-0000-0000-0000-000000000000		
+	SiteId:  fb81bc44-85f6-4e67-b883-8572891a5315 
+	-->
+	<form name="form1" method="post" onsubmit="javascript:return WebForm_OnSubmit();" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="DyxEQW1Zw1tzMEUU1xV3z8yajqx895ci5aFibU6nPM7Pl/WnJpO/4b6MbOTQswAZ/MtrPsP1FWPq8J5PVeT8uqt34w1ZkchTkZya7czwCYM2NYQBsFQqQDaP7hM=" />
+</div>
+
+		
+		<div style="clear: both;">
+			<img style="display: none" /></div>
+	<div id='ctl01'  class="section-template"><div id="ctl01_Main" class="ph"><div id='ctl01_Dec_StaticContent_staticcontentbrowser' ><div id="ctl01_Dec_StaticContent_staticcontentbrowser_Body" class="od">
+<!-- Module: 'StaticContent_staticcontentbrowser', id: '408444160'-->
+<!-- TemplateId: '4d3d9041-c7a6-48b8-8197-59a002604241', Language: 'fa'-->
+<style><!--
+.header-eror{background:url(PortalData/Subsystems/StaticContent/uploads/Image/general/rtl/titr-khata.png) no-repeat; width:446px; height:51px; margin-right:255px}
+.footer-eror{display:block; width:130px; margin:5px auto 0; font-size:22px; text-decoration:none; border-bottom:1px solid #CCC; text-align:center; padding-bottom:5px; color:#333333; font-family:arial}
+--></style>
+<div style="margin: 0 auto; width: 864px; padding-top: 190px;"><img src="PortalData/Subsystems/StaticContent/uploads/Image/general/rtl/error404-pic.png" style="float: right; margin: 0 100px 0 0;" border="0" height="110" width="35" />
+<div class="header-eror">&nbsp;</div>
+<p style="margin: 42px 225px 0 0;">در حال بروز رسانی</p>
+<hr style="width: 859px; margin: 80px 0 0; color: #ccc;" />
+<a class="footer-eror" href="#">www.shatel.ir</a>
+<div class="clr">&nbsp;</div>
+</div></div>
+</div></div>
+<div id="ctl01_Center" class="ph"></div></div></form>
+	
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54232948-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+
+
+
+
+
+	<!--[if IE 6]>
+   <script type="text/javascript"  src="js/dd_belatedpng.js"></script>
+   <script type="text/javascript">DD_belatedPNG.fix('table, div, img');</script>
+   <![endif]-->
+   <script type="text/javascript">
+   	lc$.clientTimeOffset = new Date() - new Date('12/13/15 9:51:14 +03:30');
+   	lc$.timeZoneOffset = 210;
+   	lc$.jsPath = 'Js';
+   	lc$.jsVersion = '0';
+   </script>
+	
+
+	<script type="text/javascript">
+		function setRowHeight(liList)
+		{
+			var maxHeight = 0;for( var j=0; j<liList.length; j++){var itemHeight = 0;itemHeight = parseInt( liList[j].attributes.getNamedItem('oldHeight').value);if(itemHeight > maxHeight)maxHeight = itemHeight;} for( var k=0; k<liList.length; k++){liList[k].style.height = maxHeight + 'px';}
+		}	
+		function setLiHeight(ul)
+		{
+			var columnCount = 1;if(ul.attributes.getNamedItem('cc')) columnCount = ul.attributes.getNamedItem('cc').value;if (columnCount==1) return; var liList = ul.getElementsByTagName('li');var validLiList = new Array(); for( var i=0; i<liList.length; i++) if(liList[i].attributes.getNamedItem('lt') && liList[i].attributes.getNamedItem('lt').value == 'i' && liList[i].attributes.getNamedItem('v').value != 'false') validLiList.push(liList[i]); var liRow = new Array();for(var j=0; j<validLiList.length; j++){if(liRow.length == columnCount ) { setRowHeight(liRow);liRow = new Array();} if(!validLiList[j].attributes.getNamedItem('oldHeight')){ var namedItem = document.createAttribute('oldHeight');namedItem.value = validLiList[j].clientHeight;validLiList[j].attributes.setNamedItem(namedItem);}liRow.push(validLiList[j]);}setRowHeight(liRow);
+		}
+		function setTemplateListHeight()
+		{
+			var ulList = document.getElementsByTagName('ul');var validUlList = new Array(); for(var i=0; i<ulList.length; i++){if( ulList[i].attributes.getNamedItem('lt') && ulList[i].attributes.getNamedItem('lt').value && ulList[i].attributes.getNamedItem('lt').value == 'l') validUlList.push(ulList[i]);} for( var j=0; j<validUlList.length; j++) setLiHeight(validUlList[j]);
+		}
+		setTemplateListHeight();
+	</script>
+
+</body>
+</html>
+<!-- Memory Cached Page | Cache Time: 12/13/2015 9:51:14 AM | Expire Time: 12/13/2015 10:01:14 AM --><!-- Current Time: 12/13/2015 9:58:20 AM -->

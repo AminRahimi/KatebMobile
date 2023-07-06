@@ -1,0 +1,36 @@
+<div class="panel panel-default viraShadow" style="width: calc(100vw - 50px); margin: 20px auto; border-radius: 5px;    max-width: 1200px;">
+    <div class="panel-body">
+        <div class="row rowForm newsRow" ng-repeat="new in Data.newsList">
+            <div ng-class="{'col-sm-4': $first && Data.itemsPagination.currentPage == 1, 'col-sm-2': !$first || Data.itemsPagination.currentPage != 1}">
+                <vt-photo ng-model="new.photo"  ng-show="new.showPicture"
+                    ratio="1" is-edit-mode="false" no-title-description="true">
+                </vt-photo>
+            </div>
+            <div ng-class="{'col-sm-8': $first && Data.itemsPagination.currentPage == 1, 'col-sm-10': !$first || Data.itemsPagination.currentPage != 1}">
+                <div class="row rowForm">
+                    <div class="col-sm-12">
+                        <a style="font-size: 22px; margin-bottom: 20px;  display: inline-block;" ui-sref="home.newsList.newsDetails({newsUid: new.uid})">{{new.title}}</a>
+                        <i access-checker="SEE_NEWS_READERS" class="fa fa-eye pull-left" ng-click="Func.onUserList( new.uid)" style="cursor: pointer;font-size: 15px"></i>
+                    </div>
+                    <div class="col-sm-12 rowForm">
+                        <label>تاریخ انتشار: </label>
+                        <span>{{new.publishDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+                    </div>
+                    <div class="col-sm-12" ng-show="new.showSummary">
+                        <span class="text-justify">{{new.summary}}</span>
+                    </div>
+                </div>
+            </div>
+            <!--<hr ng-show="$first && Data.itemsPagination.currentPage == 1">-->
+        </div>
+        <pagination ng-show="Data.itemsPagination.show"
+            total-items="Data.itemsPagination.totalItems"
+            ng-model="Data.itemsPagination.currentPage"
+            max-size="Data.itemsPagination.maxSize"
+            items-per-page="Data.itemsPagination.perPage" ng-change="Data.itemsPagination.onPageChange()"
+            class="pagination-sm pull-left" boundary-links="true" first-text="ابتدا"
+            last-text="انتها" next-text="بعدی" previous-text="قبلی">
+        </pagination>
+
+    </div>
+</div>

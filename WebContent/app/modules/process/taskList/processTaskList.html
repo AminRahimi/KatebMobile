@@ -1,0 +1,32 @@
+<div class="well well-sm action-bar"
+     ng-show="Data.checkedItemList.length>0">
+    <tag-input
+            external-data="Data.checkedItemList"
+            ng-show="Data.checkedItemList.length>0">
+    </tag-input>
+    <description-dropdown
+            uid-list="Data.checkedItemEntityUIdLis"
+            ng-show="Data.checkedItemEntityUIdLis.length>0"
+            cb="Func.onArchiveCb">
+    </description-dropdown>
+    <button class="btn btn-primary single-button"
+            ng-click="Func.openForwardLetterModal()">
+     <i class="flaticon-arrows-1"></i>
+        ارجاع
+    </button>
+
+    <!-- <a id="archive-btn"
+        class="btn btn-primary"
+        ng-show="Data.checkedItemList.length>0">
+       <i class="flaticon-folder-1"></i> بایگانی</a> -->
+    <!--<a id="refer-btn" class="btn btn-primary" ng-click="Func.onActionbarItemClick('inventoryCheck');"
+       ng-click="Func.onActionbarItemClick('inventoryCheck');" ng-show="Data.checkedItemList.length>0">
+        <i class="fa flaticon-interface-2"></i> ارجاع</a>
+    <a id="move-out" class="btn btn-primary" ng-click="Func.onActionbarItemClick('exit');"
+       ng-click="Func.onActionbarItemClick('exit');">
+        <i class="flaticon-log-out"></i> خروج از کارتابل</a> -->
+</div>
+<cartable-list class="processCartableList" directive-is-ready="Func.listDirectiveIsReady()"
+               process-task-fn="Func.onProcessTaskClick(task, cartable)"
+               api="Controller.api" options="Controller.options">
+</cartable-list>

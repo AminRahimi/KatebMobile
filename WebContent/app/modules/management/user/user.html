@@ -1,0 +1,315 @@
+<style>
+	.move-container{
+		margin-top: 15px;
+	}
+	.move-btn{
+		text-align: end;
+	}
+	.confirm-delete{
+		background-color: #E9E9E9;
+		top: 137px;
+		position: absolute;
+		left: 187px;
+		color: #333;
+	}
+</style>
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت کاربران
+            <a class="pull-left" target="_blank" href="/Kateb/api/user/allUsers/excel" access-checker="MANAGEMENT_USER" >
+                <span class="glyphicon"></span>
+                دانلود لیست کاربران
+            </a>
+        </div>
+	</div>
+</div>
+<div class="col-md-8 userTop" access-checker="API_LIST_USER">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.userSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.userListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_USER" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_USER"
+					ng-show="true" type="button"
+					ng-click="Func.onAdduserClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_USER"
+					ng-show="Data.selecteduser.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onEdituserClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_USER"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveuserClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="userForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_USER"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateuserClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="userForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_USER"
+					ng-show="Data.selecteduser.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onDeleteuserClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+                <a class="btn btn-sm btn-info btn-text"
+                   ng-show="Data.selecteduser.uid && Data.mode!='edit'" type="button"
+                   ng-click="Func.onLoginClick()" ng-disabled="" access-checker="LOG_IN_AS_OTHER_USER">ورود به عنوان کاربر</a>
+				<a class="btn btn-sm btn-default pull-left" ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" access-checker="CHANGE_USER_ORGANIZATION" ng-show="Data.selecteduser.uid && Data.mode!='edit'">
+		<div class="panel-body">
+			<div class="move-container" >
+				<div class="row rowForm">
+					<label class="col-sm-4" style="margin-top: 7px;">سازمان مقصد</label>
+					<div class="col-sm-8">
+						<ui-select ng-model="Data.selectedOrg" on-select="Func.onSelectOrg($item, $model);">
+							<ui-select-match>
+								<span ng-bind="$select.selected.title"></span>
+							</ui-select-match>
+							<ui-select-choices repeat="item in (Data.extOrgList | filter: $select.search) track by $index">
+								<span ng-bind="item.title"></span>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+				<div class="move-container move-btn">
+					<a class="btn btn-sm btn-info btn-text" type="button" ng-click="Func.onConfirmClick()"
+						ng-disabled="!Data.selectedOrg">انتقال کاربر
+					<ul class="confirm-delete" ng-if="Data.confirmDelete">
+						<div style="padding: 5px 10px;">
+							<div>آیا مطمئن هستید؟</div>
+							<div class="text-left">
+								<button type="button" class="btn btn-default btn-sm" >انصراف</button>
+								<button type="button" class="btn  btn-primary"
+									ng-click="Func.onMoveClick()">بله، منتقل
+									شود</button>
+							</div>
+						</div>
+					</ul>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selecteduser.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="userForm" role="form" novalidate>
+				<div class="row rowForm" ng-class="{'has-error':userForm.username.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode=='add'}">نام کاربری</label>
+					<div class="col-sm-7" ng-show="Data.mode!='add'">
+				{{Data.selecteduser.username|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode=='add'" class="col-sm-7">
+						<input type="text" class="form-control" name="username" required
+							ng-model="Data.selecteduser.username">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':userForm.password.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode=='add'}">رمز عبور</label>
+					<div ng-if="Data.mode=='add'" class="col-sm-7">
+						<input type="password" class="form-control" name="password" required
+							ng-model="Data.selecteduser.password">
+					</div>
+					<div ng-if="Data.mode=='edit'" class="col-sm-7">
+						<input autocomplete="off"  class="form-control" name="password" 
+							ng-model="Data.selecteduser.password">
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">فعال بودن</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduser.enabled|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="enabled" 
+							ng-model="Data.selecteduser.enabled">
+					</div>
+				</div>
+				<div class="row rowForm" ng-class="{'has-error':userForm.nationCode.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode=='add'}">کد ملی</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selecteduser.nationCode|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="nationCode"
+							   ng-required="Data.mode=='add'"
+							   ng-pattern="/^[0-9]{1}[0-9]{9}$/"
+							   ng-model="Data.selecteduser.nationCode">
+
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduser.firstName|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="firstName" 
+							ng-model="Data.selecteduser.firstName">
+					
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">ایمیل</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selecteduser.email|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="email" ng-model="Data.selecteduser.email">
+				
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">نام خانوادگی</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduser.lastName|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="lastName" 
+							ng-model="Data.selecteduser.lastName">
+					
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">
+						<a  tooltip="نام نمایشی در زمان امضای کاربر، در کنار تصویر امضا، نمایش داده می‌شود" tooltip-placement="top"
+							tooltip-popup-delay="500"><img src="app/assets/img/caution.png" alt=""></a>
+						نام نمایشی
+					</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selecteduser.displayName|EnToFaNumber}}
+					</div>
+					<div class="col-sm-7 ">
+						<input type="text" class="form-control" name="displayName" ng-model="Data.selecteduser.displayName" 
+						ng-if="Data.mode!='view'" >
+				
+					</div>
+				</div>
+                <div class="row rowForm">
+					<label class="col-sm-5">شماره پرسنلی دیدگاه</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduser.didgahPersonnelNo|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="didgahPersonnelNo" 
+							ng-model="Data.selecteduser.didgahPersonnelNo">
+					
+					</div>
+				</div>
+                <div class="row rowForm">
+					<label class="col-sm-5">امضا</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+                        <img style="width: 160px;" src="files/?mode=view&fcode={{Data.selecteduser.signature.hash}}" />
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<vt-photo 
+                            ng-model="Data.selecteduser.signature" 
+                            ratio="1" 
+                            is-edit-mode="Data.mode!='view'" 
+                            no-title-description="true">
+                        </vt-photo>
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">نقش‌ها</label>
+					<div class="col-sm-12">
+						<table class="table table-striped">
+							<tbody>
+								<tr ng-repeat="role in Data.selecteduser.roles">
+									<td>{{role.title}}</td>
+									<td ng-show="Data.mode=='view'"
+										ng-class="{'fa fa-square-o':role.active==false,'fa fa-check-square':role.active==true}"></td>
+									<td ng-show="Data.mode!='view'">
+										<input type="checkbox" ng-model="role.active">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<hr />
+				<div class="row rowForm">
+					<label class="col-sm-5">اجازه امضا</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedUserAuthorization.accessToSignLetter|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="accessToSignLetter" 
+							ng-model="Data.selectedUserAuthorization.accessToSignLetter">
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">اجازه امضای نامه با گیرنده خارج از سازمان</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedUserAuthorization.signIssuedLetterAccess|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="signIssuedLetterAccess"
+							   ng-model="Data.selectedUserAuthorization.signIssuedLetterAccess" checked>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">اجازه ارسال نامه به خارج سازمان</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedUserAuthorization.sendLetterToOut|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="sendLetterToOut" 
+							ng-model="Data.selectedUserAuthorization.sendLetterToOut">
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">مشاهده توسط سازمان‌های همکار</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedUserAuthorization.seenByCooperatorInstitutions|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="seenByCooperatorInstitutions" 
+							ng-model="Data.selectedUserAuthorization.seenByCooperatorInstitutions">
+					</div>
+				</div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">اجازه امضای بین سازمانی</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedUserAuthorization.accessToParaphOtherOrgLetter|checkmark}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="checkbox" class="" name="accessToParaphOtherOrgLetter"
+                               ng-model="Data.selectedUserAuthorization.accessToParaphOtherOrgLetter">
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_USER" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.userAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

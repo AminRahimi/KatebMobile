@@ -1,0 +1,65 @@
+/* FIXME hardcoded color */
+.edit-layout-attributes .draggable.margin {
+  background: #757575;
+  position: absolute;
+  z-index: 1;
+}
+.edit-layout-attributes .draggable.left-margin {
+  width: 5px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.edit-layout-attributes .draggable.right-margin {
+  width: 5px;
+  height: 100%;
+  top: 0;
+}
+.edit-layout-attributes .draggable.top-margin {
+  width: 100%;
+  height: 5px;
+  top: 0;
+}
+.edit-layout-attributes .draggable.bottom-margin {
+  width: 100%;
+  height: 5px;
+  bottom: 0;
+}
+
+.edit-layout-attributes .margin-left-possible-area {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.edit-layout-attributes .margin-right-possible-area {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.edit-layout-attributes .margin-top-possible-area {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+}
+.edit-layout-attributes .margin-bottom-possible-area {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+}
+
+/* FIXME hardcoded color */
+.edit-layout-attributes .draggable-date,
+.edit-layout-attributes .draggable-number,
+.edit-layout-attributes .draggable-attachment,
+.edit-layout-attributes .draggable-postscript {
+  width: 100px;
+  height: 18px;
+  border: 1px solid #757575;
+  position: absolute;
+}

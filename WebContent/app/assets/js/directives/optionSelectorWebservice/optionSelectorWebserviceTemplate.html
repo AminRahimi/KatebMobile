@@ -1,0 +1,40 @@
+<span ng-show="isEditMode">
+<!--      <select class="form-control col-md-12" ng-change="onSelect()" ng-model="selected" ng-options="opt as opt.label for opt in options[schema.enumType]"> -->
+<!--      </select> -->
+     
+     <div>
+
+		 <ui-select ng-model="selected" on-select="onSelect($item, $model)">
+			<ui-select-match>
+				<span ng-bind="$select.selected.title" ng-if="!schema.multiple"></span>
+			</ui-select-match>
+			<!--<ui-select-choices refresh="Func.onRefresh($select.search)" repeat="item in (options | filter: $select.search) track by $index">-->
+			<ui-select-choices refresh="Func.onRefresh($select.search)" repeat="item in options track by $index">
+				<span ng-bind="item.title"></span>
+			</ui-select-choices>
+		</ui-select>
+
+	 </div>
+	<div ng-if="schema.multiple">
+		<label class="label label-default label-repeat" ng-repeat="item in model">
+			<span ng-if="!schema.typeParams.link" class="pull-right">{{item.title}}</span>
+			<a href="#{{schema.typeParams.link.replace('${uid}', item.uid)}}" ng-if="schema.typeParams.link" target="_blank">{{item.title}}</a>
+			<i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove(item); $event.stopPropagation();" ></i>
+		</label>
+
+	</div>
+</span>
+<span ng-show="!isEditMode">
+	<span ng-if="schema.multiple">
+		<label class="label label-default label-repeat" ng-repeat="item in model">
+			<span ng-if="!schema.typeParams.link" class="pull-right">{{item.title}}</span>
+			<a href="#{{schema.typeParams.link.replace('${uid}', item.uid)}}" ng-if="schema.typeParams.link" target="_blank">{{item.title}}</a>
+		</label>
+
+
+	</span>
+	<span ng-if="!schema.multiple">
+		<label ng-if="!schema.typeParams.link">{{model.title}}</label>
+		<a href="#{{schema.typeParams.link.replace('${uid}', model.uid)}}" ng-if="schema.typeParams.link" target="_blank">{{model.title}}</a>
+	</span>
+</span>

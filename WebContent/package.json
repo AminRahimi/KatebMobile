@@ -1,0 +1,18 @@
+{
+  "name": "Kateb",
+  "version": "1.0.0",
+  "description": "The Kateb project",
+  "main": "index.js",
+  "scripts": {
+    "test": "We Are The Champions ..."
+  },
+  "author": "Amin Rahimi",
+  "license": "Property",
+  "dependencies": {
+    "@ckeditor/ckeditor5-alignment": "^36.0.1",
+    "@ckeditor/ckeditor5-build-classic": "^36.0.1",
+    "@ckeditor/ckeditor5-find-and-replace": "^36.0.1",
+    "@ckeditor/ckeditor5-font": "^36.0.1",
+    "interactjs": "^1.10.17"
+  }
+}

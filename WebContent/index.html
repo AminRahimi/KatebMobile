@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>..:: اتوماسیون اداری - کاتب ::..</title>
+
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+<!-- bower:css -->
+<link href="app/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="all">
+<link href="app/lib/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet" media="all">
+<link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="all">
+<link href="app/lib/cropper/dist/cropper.min.css" rel="stylesheet" media="all">
+<link href="app/lib/AngularJS-Toaster/toaster.min.css" rel="stylesheet" media="all">
+<link href="app/lib/angular-ui-select/select.min.css" rel="stylesheet" media="all" />
+<link href="app/lib/angular-hotkeys/build/hotkeys.min.css" rel="stylesheet" media="all" />
+<link href="app/lib/ng-tags-input/ng-tags-input.min.css" rel="stylesheet" media="all" />
+<link href="app/lib/ng-tags-input/ng-tags-input.bootstrap.min.css" rel="stylesheet" media="all" />
+<link href="app/lib/kateb-font/flaticon.css" rel="stylesheet" media="all" type="text/css">
+<link href="app/assets/font/new-ganjeh/flaticon.css" rel="stylesheet" media="all">
+<link href="app/lib/ng-sortable/dist/ng-sortable.min.css" rel="stylesheet" media="all"/>
+<link href="app/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+<!-- endbower -->
+
+<!-- build:css style.css -->
+<!-- internal library -->
+<link href="app/lib/vtSchemaDirective/style.css" rel="stylesheet" media="all">
+<link href="app/lib/vtCommon/vtDatePicker/style.css" rel="stylesheet" media="all">
+<link href="app/lib/vtCommon/vtSearch/style.css" rel="stylesheet" media="all">
+<link href="app/lib/vtCommon/vtMessageShower/style.css" rel="stylesheet" media="all">
+<link href="app/lib/tree/style.css" rel="stylesheet" media="all">
+<link href="app/lib/media/vtFile/style.css" rel="stylesheet" media="all" />
+<link href="app/lib/media/vtPhoto/style.css" rel="stylesheet" media="all" />
+<link href="app/lib/media/vtPhotoSlide/style.css" rel="stylesheet" media="all" />
+<link href="app/lib/vtCartable/style.css" rel="stylesheet" media="all" />
+<link href="app/modules/cartable/style.css" rel="stylesheet" media="all" />
+<link href="app/modules/process/style.css" rel="stylesheet" media="all" />
+<link href="app/lib/vtPDFSignable/web/viewer.css" rel="stylesheet" media="all">
+<link href="app/lib/vtNotification/style.css" rel="stylesheet" media="all"/>
+<link href="app/lib/vtPDFSignable/web/locale/locale.properties" media="all" rel="resource" type="application/l10n"/>
+<link href="app/lib/vtCartable/directives/vtCartableSearch/vtDropdownMultiString/style.css" rel="stylesheet" />
+<link href="app/assets/js/directives/viraTree/tree.css" rel="stylesheet" media="all">
+<link href="app/lib/viewerjs/dist/viewer.min.css" rel="stylesheet" media="all">
+
+
+<!-- project css -->
+<link href="app/assets/css/font.css" rel="stylesheet" media="all">
+<link href="app/assets/css/tab.css" rel="stylesheet" media="all">
+<link href="app/assets/css/base.css" rel="stylesheet" media="all">
+<link href="app/assets/css/bootstrap.css" rel="stylesheet" media="all">
+<link href="app/assets/css/process.css" rel="stylesheet" media="all">
+<link href="app/assets/css/dropdown-submenu.css" rel="stylesheet" media="all">
+<link href="app/assets/css/public.css" rel="stylesheet" media="all">
+<link href="app/assets/css/secretariat.css" rel="stylesheet" media="all">
+<link href="app/assets/css/angularjs-dropdown-multiselect.css" rel="stylesheet" media="all">
+<link href="app/lib/vtCartable/directives/vtCartableSearch/style.css" rel="stylesheet" media="all">
+<link href="app/assets/js/directives/letterTab/style.css" rel="stylesheet" media="all">
+<link href="app/assets/js/directives/letterTabCM/style.css" rel="stylesheet" media="all">
+
+<link href="app/lib/vtAttachment/style.css" rel="stylesheet" media="all" />
+<link href="app/modules/message/style.css" rel="stylesheet" media="all" />
+<link href="app/assets/js/directives/typeahead/style.css" rel="stylesheet" media="all" />
+<link href="app/assets/css/news.css" rel="stylesheet" media="all" />
+<link href="app/assets/css/rule.css" rel="stylesheet" media="all">
+<link href="app/assets/css/kateb-theme.css" rel="stylesheet" media="all">
+<link href="app/assets/css/breadcrumb.css" rel="stylesheet" media="all">
+<link href="app/assets/css/newBreadcrumb.css" rel="stylesheet" media="all">
+<link href="app/modules/management/letterlayout/letterLayoutVisualAttributeSetter/style.css" rel="stylesheet" media="all">
+<link href="app/assets/js/directives/scanner/scanner-modlue.css" rel="stylesheet" media="all">
+
+<!--<link href="app/assets/css/jooybar-bootstrap-theme.css" rel="stylesheet" media="all">-->
+    
+    
+<!-- <link href="app/assets/css/kateb-theme-gray.css" rel="stylesheet" media="all" media="all"> -->
+<link href="app/lib/vtCartable/directives/vtCartableGrid/vtGridStyle.css?v=2" rel="stylesheet" media="all">
+<link href="app/assets/js/directives/vtFolderSelector/vtFolderSelector.css" rel="stylesheet" media="all">
+<!-- endbuild -->
+
+<!-- ckeditor dll files -->
+<script src="node_modules/ckeditor5/build/ckeditor5-dll.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-editor-classic/build/editor-classic.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-essentials/build/essentials.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-basic-styles/build/basic-styles.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-heading/build/heading.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-autoformat/build/autoformat.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-block-quote/build/block-quote.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-image/build/image.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-link/build/link.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-indent/build/indent.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-media-embed/build/media-embed.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-list/build/list.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-table/build/table.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-font/build/font.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-find-and-replace/build/find-and-replace.js"></script>
+<script src="node_modules/@ckeditor/ckeditor5-alignment/build/alignment.js"></script>
+
+<!-- ckeditor translations -->
+<script src="app/ckeditor/fa.js"></script>
+<!-- TODO if needed -->
+<!-- <script src="node_modules/@ckeditor/ckeditor5-paste-from-office/build/paste-from-office.js"></script> -->
+
+<!-- custom ckeditor plugin -->
+<script src="app/assets/js/ckeditor-add-pic.js"></script>
+
+<!-- ckeditor css -->
+<link href="app/assets/css/ckeditor.css" rel="stylesheet" media="all">
+
+<!-- bower:js -->
+<script src="app/lib/angular/angular.js"></script>
+<script src="app/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="app/lib/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="app/lib/jquery/dist/jquery.min.js"></script>
+<script src="app/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/lib/lodash/dist/lodash.min.js"></script>
+<script src="app/lib/restangular/dist/restangular.min.js"></script>
+<script src="app/lib/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+<script src="app/lib/angular-animate/angular-animate.min.js"></script>
+<script src="app/lib/AngularJS-Toaster/toaster.min.js"></script>
+<script src="app/lib/momentjs/min/moment.min.js"></script>
+<script src="app/lib/moment-jalaali/build/moment-jalaali.js"></script>
+<script src="app/lib/angular-ui-utils/keypress.min.js"></script>
+<script src="app/lib/cropper/dist/cropper.min.js"></script>
+<script src="app/lib/ng-file-upload/ng-file-upload.min.js"></script>
+<script src="app/lib/angular-file-upload/angular-file-upload.min.js"></script>
+<script src="app/lib/angular-ui-select/select.min.js"></script>
+<script src="app/lib/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="app/lib/angular-hotkeys/build/hotkeys.min.js"></script>
+<script src="app/lib/jquery.nicescroll-master/jquery.nicescroll.min.js"></script>
+<script src="app/lib/fabric/dist/fabric.min.js"></script>
+<script src="app/lib/bootstrap-filestyle-1.2.1/src/bootstrap-filestyle.min.js"></script>
+<script src="app/lib/ng-sortable/dist/ng-sortable.min.js"></script>
+<script src="app/lib/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+<script src="app/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="app/lib/interactjs/dist/interact.min.js"></script>
+<script src="app/lib/viewerjs/dist/viewer.min.js"></script>
+<!-- endbower -->
+
+<!-- build:js assets/lib.js -->
+<!-- INTERNAL LIBRARY -->
+<!-- commons -->
+<script src="app/lib/vtCommon/vtFilter/checkmarkFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon/vtFilter/EnToFaNumberFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/EnToFaButtonFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/FaToEnNumberFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDateFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDateJustDateFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDatePastFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/sliceFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/stringFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/FaToEnAndYeKeFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchModule.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchSrvc.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchDirective.js"></script>
+<script src="app/lib/vtCommon/vtGrid/gridDirective.js"></script>
+<script src="app/lib/vtCommon/vtMessageShower/vtMessageShower.js"></script>
+<script src="app/lib/vtCommon/vtPersianDatePicker/vtPersianDatePickerDirective.js"></script>
+<script src="app/lib/vtCommon/vtDatePicker/persian-datepicker-tpls.js"></script>
+<script src="app/lib/vtCommon/vtDatePicker/persiandate.js"></script>
+<script src="app/lib/vt-persian-interval/persian-interval-datepicker.js"></script>
+<script src="app/lib/vtCommon/vtDirectives/accessChecker/accessCheckerDirective.js"></script>
+<script src="app/lib/vtCommon/vtCommons.js"></script>
+<script src="app/lib/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiText/multiTextDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiTextarea/multiTextareaDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/fileSelector/fileSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/imageSelector/imageSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/imageSelector/imageModalCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiFileSelector/multiFileSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/bigText/bigTextDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/bigText/bigTextModalCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/integer/integerDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/optionSelector/optionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiOptionSelector/multiOptionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/radioOptionSelector/radioOptionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/addProperty/addPropertyDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/attachFileSingle/attachFileSingleDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/attachFileMultiple/attachFileMultipleDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/schema-form.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/entitySrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formManagementDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formManagementCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/advancedEntityTypeManagementCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/baseSelector/baseSelectSrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formManagementSrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formViewCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/help.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/addViewGroupCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/editPropCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/autoCompleteTagInput/autoCompleteTagInputDirective.js"></script>
+<script src="app/assets/js/directives/tableEntitySelector/tableEntitySelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/entitySelector/emptyValueLabelFilter.js"></script>
+<script src="app/lib/vtSchemaDirective/components/entitySelector/entitySelectorSrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/components/entitySelector/entitySelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiEntitySelector/multiEntitySelectorDirective.js"></script>
+<!-- directive -->
+<script src="app/lib/vtSchemaDirective/directives/entityTypeEditAdd/entityTypeEditAdd.directive.js"></script>
+<script src="app/lib/vtSchemaDirective/directives/entityTypeSelector/entityTypeSelector.directive.js"></script>
+<script src="app/lib/vtSchemaDirective/directives/entityTypeSelector/entityTypeListModal.ctrl.js"></script>
+<script src="app/lib/vtSchemaDirective/directives/entityTypeSelector/entityTypeAddEditModal.ctrl.js"></script>
+<script src="app/lib/vtSchemaDirective/directives/entityTypeList/entityTypeList.directive.js"></script>
+<script src="app/lib/formvalidators/vtarrayrequired/vtArrayRequired.js"></script>
+<!-- indeteminate -->
+<script src="app/lib/indeterminate/vtTriStateCheckbox.js"></script>
+
+
+
+<!-- vtPDF -->
+
+<!-- vtPDF with siging feature -->
+<script src="app/lib/vtPDFSignable/vtPDFDirective.js"></script>
+
+
+<!-- vtPDF without siging feature -->
+<script src="app/lib/pdfobject/pdfobject.min.js"></script>
+<script src="app/assets/js/directives/vtPDF/vtPDFDirective.js"></script>
+
+
+
+<!-- tree -->
+<script src="app/lib/tree/treeModule.js"></script>
+<script src="app/lib/tree/treeConfigSrvc.js"></script>
+<script src="app/lib/tree/treeSrvc.js"></script>
+<script src="app/lib/tree/tree/treeDirective.js"></script>
+<script src="app/lib/tree/selectTree/selectTreeDirective.js"></script>
+<script src="app/lib/tree/treeModalCtrl.js"></script>
+<!-- media -->
+<script src="app/lib/media/mediaModule.js"></script>
+<script src="app/lib/media/vtFile/fileDirective.js"></script>
+<script src="app/lib/media/vtFile/fileSrvc.js"></script>
+<script src="app/lib/media/vtNgCropper/vtNgCropperDirective.js"></script>
+<script src="app/lib/media/vtPhoto/vtPhotoDirective.js"></script>
+<script src="app/lib/media/vtPhotoSlide/vtPhotoSlideDirective.js"></script>
+<!-- cartable -->
+<script src="app/lib/vtCartable/cartableSrvc.js"></script>
+<script src="app/lib/vtCartable/cartableConfig.js"></script>
+<script src="app/lib/vtCartable/cartableNotificationHandlerConst.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/vtDropdownMultiselect/vtDropdownMultiselectDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/vtDropdownMultiString/vtDropdownMultiStringDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/vtDropdownTaginput/vtDropdownTaginputDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/cartableSearchModule.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/cartableSearchSrvc.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableSearch/cartableSearchDirective.js"></script>
+<script src="app/lib/vtCartable/cartableMenu/cartableMenuDirective.js"></script>
+<script src="app/lib/vtCartable/cartableList/cartableListDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableFilter/vtCartableFilterDirective.js"></script>
+<!-- eventLogUI -->
+<script src="app/lib/eventLogUI/logSrvc.js"></script>
+<script src="app/lib/eventLogUI/logCtrl.js"></script>
+<script src="app/lib/eventLogUI/detailsModal/detailsModalCtrl.js"></script>
+<script src="app/lib/eventLogUI/objectLogCtrl.js"></script>
+<script src="app/lib/eventLogUI/logConfig.js"></script>
+<!-- notification -->
+<script src="app/lib/vtNotification/vtNotificationDirective.js"></script>
+<script src="app/lib/vtNotification/vtNotificationSrvc.js"></script>
+<!-- attachment -->
+<script src="app/lib/vtAttachment/vtAttachmentDirectives.js"></script>
+<!-- form validator libs -->
+<script src="app/lib/formValidators/vtarrayrequired/vtArrayRequired.js"></script>
+
+<!-- ngclipboard -->
+<script src="app/lib/clipboard.js-master/dist/clipboard.js"></script>
+<script src="app/lib/ngclipboard-master/dist/ngclipboard.js"></script>
+<!-- FILTERS -->
+<script src="app/assets/js/md5.min.js"></script>
+<!--<script src="app/assets/js/jquery.yeke.js"></script>-->
+<!-- <script src="app/assets/js/jquery-migrate.js"></script> -->
+<script src="app/assets/js/filters/filterModule.js"></script>
+<script src="app/assets/js/filters/appEnum.js"></script>
+<script src="app/assets/js/filters/objectToArray.filter.js"></script>
+<script src="app/assets/js/filters/msToTimeFilter.js"></script>
+<script src="app/assets/js/filters/BMG.js"></script>
+<script src="app/assets/js/filters/tehranDateFilter.js"></script>
+<!-- DIRECTIVES -->
+<script src="app/assets/js/directives/vtIndeterminateCheckbox/vtIndeterminateCheckbox.js"></script>
+<script src="app/assets/js/directives/letterTab/letterTabModule.js"></script>
+<script src="app/assets/js/directives/letterTabCM/letterTabCMModule.js"></script>
+<script src="app/assets/js/directives/dateInterval/dateIntervalDirective.js"></script>
+<script src="app/assets/js/services/canvasShape.js"></script>
+<script src="app/assets/js/directives/multiselect/multiselectDirective.js"></script>
+
+<script src="app/assets/js/directives/multiselectReciever/multiselectRecieverSrvc.js"></script>
+<script src="app/assets/js/directives/multiselectReciever/multiselectRecieverDirective.js"></script>
+
+<script src="app/assets/js/directives/scanner/scannerDirective.js"></script>
+<script src="app/assets/js/directives/scanner/scannerStatusModal/scannerStatusModalCtrl.js"></script>
+<script src="app/assets/js/directives/scanner/pdfReviewModal/pdfReviewModalCtrl.js"></script>
+<script src="app/assets/js/directives/scannerCM/scannerCMDirective.js"></script>
+<script src="app/assets/js/directives/isolateForm/isolateFormDirective.js"></script>
+<script src="app/assets/js/directives/openTree/openTreeDirective.js"></script>
+<script src="app/assets/js/directives/tagInput/tagInputDirective.js"></script>
+<script src="app/assets/js/directives/descriptionDropdown/descriptionDropdownDirective.js"></script>
+<script src="app/assets/js/directives/vtMaxlength/vtMaxlengthDirective.js"></script>
+<script src="app/assets/js/directives/typeahead/typeaheadDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableGrid/vtCartableGridDirective.js"></script>
+<script src="app/assets/js/directives/katebPrint/katebPrintDirective.js"></script>
+<script src="app/assets/js/directives/katebPrint/printReportModal/printReportModalCtrl.js"></script>
+<script src="app/assets/js/directives/optionSelectorWebservice/optionSelectorWebserviceDirective.js"></script>
+<script src="app/assets/js/directives/vtDateInterval/vtDateIntervalDirective.js"></script>
+<script src="app/lib/vtCartable/directives/vtCartableDateInterval/vtCartableDateIntervalDirective.js"></script>
+<script src="app/assets/js/directives/scan/scanDirective.js"></script>
+<script src="app/assets/js/directives/deleteButton/deleteButtonDirective.js"></script>
+<script src="app/assets/js/directives/deleteModal/confirmButtonDirective.js"></script>
+<script src="app/assets/js/directives/deleteFromArchive/deleteFromArchiveDirective.js"></script>
+<script src="app/assets/js/directives/viraTree/viraTreeDirective.js"></script>
+<script src="app/assets/js/directives/viraTree/viraTreeSrvc.js"></script>
+<script src="app/assets/js/directives/viraTree/treeNodeModalCtrl.js"></script>
+<script src="app/assets/js/directives/viraTree/treeModalCtrl.js"></script>
+<script src="app/assets/js/directives/viraTreePagination/viraTreePaginationDirective.js"></script>
+<script src="app/assets/js/directives/viraTreePagination/viraTreePaginationSrvc.js"></script>
+<script src="app/assets/js/directives/vtFolderSelector/vtFolderSelectorDirective.js"></script>
+<script src="app/assets/js/directives/vtFolderSelector/modal/chooseFolderModalCtrl.js"></script>
+<script src="app/assets/js/directives/labelChooser/labelChooserDirective.js"></script>
+<script src="app/assets/js/directives/vtFolderSelector/vtFolderSelectorSrvc.js"></script>
+<script src="app/assets/js/directives/vtArchivedLetterList/vtArchivedLetterListDirective.js"></script>
+<script src="app/assets/js/directives/docList/docListCtrl.js"></script>
+<script src="app/assets/js/directives/vtPatternRestrict/vtPatternRestrictDirective.js"></script>
+<script src="app/assets/js/directives/vtMoveNextInput/vtMoveNextInputDirective.js"></script>
+<script src="app/assets/js/directives/letter_form_type/letter_form_type_directive.js"></script>
+<!-- CONSTANT -->
+<script src="app/assets/js/constant/notificationHandlerConst.js"></script>
+<!--  CONFIGURATION  -->
+<script src="app/modules/kateb/config/config.js"></script>
+<script src="app/modules/kateb/config/run.js"></script>
+<script src="app/modules/kateb/config/configMenuConst.js"></script>
+<script src="app/modules/kateb/config/configRouteConst.js"></script>
+<script src="app/modules/kateb/config/configSrvc.js"></script>
+<script src="app/modules/kateb/config/configStateConst.js"></script>
+<script src="app/modules/kateb/config/configCacheConst.js"></script>
+<script src="app/modules/kateb/config/configModule.js"></script>
+    <script src="app/modules/kateb/config/cmConfig.js"></script>
+
+
+
+<script src="app/modules/kateb/katebSrvc.js"></script>
+<script src="app/modules/kateb/katebModals/forwardLettersModal/forwardLettersModalCtrl.js"></script>
+<script src="app/modules/kateb/katebModals/sendLettersModal/sendLettersModalCtrl.js"></script>
+<script src="app/modules/kateb/katebModals/usersAccessModal/usersAccessModalCtrl.js"></script>
+<script src="app/modules/kateb/allLetterModal/allLetterModalCtrl.js"></script>
+<script src="app/modules/kateb/notificationModal/notificationModalCtrl.js"></script>
+<script src="app/modules/kateb/templateModal/templateModalCtrl.js"></script>
+<script src="app/modules/kateb/katebModals/modalPoolService.js"></script>
+<script src="app/modules/kateb/katebModals/modalPoolConst.js"></script>
+<!-- HOME -->
+<script src="app/modules/home/homeSrvc.js"></script>
+<script src="app/modules/home/homeCtrl.js"></script>
+<script src="app/modules/home/changePassword/changePasswordCtrl.js"></script>
+<script src="app/modules/home/homeConfig.js"></script>
+<!-- theme -->
+<script src="app/modules/theme/themeSrvc.js"></script>
+<script src="app/modules/theme/themeConfig.js"></script>
+<script src="app/modules/theme/themeCtrl.js"></script>
+<!-- ----------------------- MANAGEMENT ----------------------- -->
+<script src="app/modules/management/managementConfig.js"></script>
+<script src="app/modules/management/managementCtrl.js"></script>
+<!-- letterformtype -->
+<script src="app/modules/management/letterFormType/letterFormTypeSrvc.js"></script>
+<script src="app/modules/management/letterFormType/letterFormTypeConfig.js"></script>
+<script src="app/modules/management/letterFormType/letterFormTypeCtrl.js"></script>
+<!-- userrole -->
+<script src="app/modules/management/userrole/userroleSrvc.js"></script>
+<script src="app/modules/management/userrole/userroleConfig.js"></script>
+<script src="app/modules/management/userrole/userroleCtrl.js"></script>
+<!-- user -->
+<script src="app/modules/management/user/userSrvc.js"></script>
+<script src="app/modules/management/user/userConfig.js"></script>
+<script src="app/modules/management/user/userCtrl.js"></script>
+<!-- organization -->
+<script src="app/modules/management/organization/organizationSrvc.js"></script>
+<script src="app/modules/management/organization/organizationConfig.js"></script>
+<script src="app/modules/management/organization/organizationCtrl.js"></script>
+<!-- indicatorbook -->
+<script src="app/modules/management/indicatorbook/indicatorbookSrvc.js"></script>
+<script src="app/modules/management/indicatorbook/indicatorbookConfig.js"></script>
+<script src="app/modules/management/indicatorbook/indicatorbookCtrl.js"></script>
+<!-- position -->
+<script src="app/modules/management/position/positionSrvc.js"></script>
+<script src="app/modules/management/position/positionConfig.js"></script>
+<script src="app/modules/management/position/positionCtrl.js"></script>
+<!-- hameshhotkey -->
+<script src="app/modules/management/hameshhotkey/hameshhotkeySrvc.js"></script>
+<script src="app/modules/management/hameshhotkey/hameshhotkeyConfig.js"></script>
+<script src="app/modules/management/hameshhotkey/hameshhotkeyCtrl.js"></script>
+<!-- secretariat -->
+<script src="app/modules/management/secretariat/secretariatManagementSrvc.js"></script>
+<script src="app/modules/management/secretariat/secretariatManagementConfig.js"></script>
+<script src="app/modules/management/secretariat/secretariatManagementCtrl.js"></script>
+<!-- group -->
+<script src="app/modules/management/group/groupSrvc.js"></script>
+<script src="app/modules/management/group/groupConfig.js"></script>
+<script src="app/modules/management/group/groupCtrl.js"></script>
+<!-- publicsetting -->
+<script src="app/modules/management/publicsetting/publicsettingSrvc.js"></script>
+<script src="app/modules/management/publicsetting/publicsettingConfig.js"></script>
+<script src="app/modules/management/publicsetting/publicsettingCtrl.js"></script>
+<!-- systemFont -->
+<script src="app/modules/management/systemFont/systemFontSrvc.js"></script>
+<script src="app/modules/management/systemFont/systemFontConfig.js"></script>
+<script src="app/modules/management/systemFont/systemFontCtrl.js"></script>
+<!-- letterlayout -->
+<script src="app/modules/management/letterlayout/letterlayoutSrvc.js"></script>
+<script src="app/modules/management/letterlayout/letterlayoutConfig.js"></script>
+<script src="app/modules/management/letterlayout/letterlayoutCtrl.js"></script>
+<script src="app/modules/management/letterlayout/letterLayoutVisualAttributeSetter/letterLayoutVisualAttributeSetter.js"></script>
+<!-- lettertemplate -->
+<script src="app/modules/management/lettertemplate/lettertemplateSrvc.js"></script>
+<script src="app/modules/management/lettertemplate/lettertemplateConfig.js"></script>
+<script src="app/modules/management/lettertemplate/lettertemplateCtrl.js"></script>
+<!-- loginSetting -->
+<script src="app/modules/management/loginSetting/loginSettingSrvc.js"></script>
+<script src="app/modules/management/loginSetting/loginSettingConfig.js"></script>
+<script src="app/modules/management/loginSetting/loginSettingCtrl.js"></script>
+<!-- globallettertemplate -->
+<script src="app/modules/management/globallettertemplate/globallettertemplateSrvc.js"></script>
+<script src="app/modules/management/globallettertemplate/globallettertemplateConfig.js"></script>
+<script src="app/modules/management/globallettertemplate/globallettertemplateCtrl.js"></script>
+<!-- incomingLettertemplate -->
+<script src="app/modules/management/incomingLettertemplate/incomingLettertemplateSrvc.js"></script>
+<script src="app/modules/management/incomingLettertemplate/incomingLettertemplateConfig.js"></script>
+<script src="app/modules/management/incomingLettertemplate/incomingLettertemplateCtrl.js"></script>
+<!-- tag -->
+<script src="app/modules/management/tag/tagSrvc.js"></script>
+<script src="app/modules/management/tag/tagConfig.js"></script>
+<script src="app/modules/management/tag/tagCtrl.js"></script>
+<!-- externalorganization -->
+<script src="app/modules/management/externalorganization/externalorganizationSrvc.js"></script>
+<script src="app/modules/management/externalorganization/externalorganizationConfig.js"></script>
+<script src="app/modules/management/externalorganization/externalorganizationCtrl.js"></script>
+<script src="app/modules/management/externalorganization/memberModalCtrl.js"></script>
+<!-- process -->
+<script src="app/modules/management/process/processManagementConfig.js"></script>
+<script src="app/modules/management/process/processManagementSrvc.js"></script>
+<script src="app/modules/management/process/processManagementCtrl.js"></script>
+<!-- Department -->
+<script src="app/modules/management/department/departmentSrvc.js"></script>
+<script src="app/modules/management/department/departmentConfig.js"></script>
+<script src="app/modules/management/department/departmentCtrl.js"></script>
+<!-- news -->
+<script src="app/modules/management/news/newsManegementModule.js"></script>
+<script src="app/modules/management/news/newsManagementConfig.js"></script>
+<script src="app/modules/management/news/newsManagementCtrl.js"></script>
+<script src="app/modules/management/news/newsListManagementCtrl.js"></script>
+<script src="app/modules/management/news/newsManagementSrvc.js"></script>
+<!-- allUser -->
+<script src="app/modules/management/allUser/allUserSrvc.js"></script>
+<script src="app/modules/management/allUser/allUserConfig.js"></script>
+<script src="app/modules/management/allUser/allUserCtrl.js"></script>
+<!-- ----------------------- ----------------------- -->
+<!-- SETTING -->
+<script src="app/modules/setting/settingConfig.js"></script>
+<script src="app/modules/setting/settingCtrl.js"></script>
+<!-- intelcartable -->
+<script src="app/modules/setting/intelcartable/intelcartableSrvc.js"></script>
+<script src="app/modules/setting/intelcartable/intelcartableConfig.js"></script>
+<script src="app/modules/setting/intelcartable/intelcartableCtrl.js"></script>
+<!-- conferment -->
+<script src="app/modules/setting/conferment/confermentSrvc.js"></script>
+<script src="app/modules/setting/conferment/confermentConfig.js"></script>
+<script src="app/modules/setting/conferment/confermentCtrl.js"></script>
+<!-- hameshhotkey -->
+<script src="app/modules/setting/hameshhotkey/privatehameshhotkeySrvc.js"></script>
+<script src="app/modules/setting/hameshhotkey/privatehameshhotkeyConfig.js"></script>
+<script src="app/modules/setting/hameshhotkey/privatehameshhotkeyCtrl.js"></script>
+<!-- privatesetting -->
+<script src="app/modules/setting/privatesetting/privatesettingSrvc.js"></script>
+<script src="app/modules/setting/privatesetting/privatesettingConfig.js"></script>
+<script src="app/modules/setting/privatesetting/privatesettingCtrl.js"></script>
+<!-- tag -->
+<script src="app/modules/setting/tag/privatetagSrvc.js"></script>
+<script src="app/modules/setting/tag/privatetagConfig.js"></script>
+<script src="app/modules/setting/tag/privatetagCtrl.js"></script>
+<!-- group -->
+<script src="app/modules/setting/group/privategroupSrvc.js"></script>
+<script src="app/modules/setting/group/privategroupConfig.js"></script>
+<script src="app/modules/setting/group/privategroupCtrl.js"></script>
+<!-- template -->
+<script src="app/modules/setting/template/templateSrvc.js"></script>
+<script src="app/modules/setting/template/templateConfig.js"></script>
+<script src="app/modules/setting/template/templateCtrl.js"></script>
+<!-- SECRETARIAT -->
+<script src="app/modules/secretariat/secretariatModule.js"></script>
+<script src="app/modules/secretariat/secretariatSrvc.js"></script>
+<script src="app/modules/secretariat/secretariatCtrl.js"></script>
+<script src="app/modules/secretariat/incoming/secretariatIncomingCtrl.js"></script>
+<script src="app/modules/secretariat/incoming/incommingLetterTemplateListCtrl.js"></script>
+<script src="app/modules/secretariat/incoming/secretariatIncomingListCtrl.js"></script>
+<script src="app/modules/secretariat/reserve/reserveCtrl.js"></script>
+<script src="app/modules/secretariat/issued/secretariatIssuedCtrl.js"></script>
+<script src="app/modules/secretariat/issued/secretariatIssuedAddCtrl.js"></script>
+<script src="app/modules/secretariat/issued/secretariatIssuedListCtrl.js"></script>
+<script src="app/modules/secretariat/returnedLetters/returnedLettersListCtrl.js"></script>
+<script src="app/modules/secretariat/rejectedLetters/rejectedLettersListCtrl.js"></script>
+<script src="app/modules/secretariat/reserve/reserveSrvc.js"></script>
+<script src="app/modules/secretariat/reserve/reserveCtrl.js"></script>
+<script src="app/modules/secretariat/reserveList/reserveListSrvc.js"></script>
+<script src="app/modules/secretariat/reserveList/reserveListCtrl.js"></script>
+<script src="app/modules/secretariat/follow_up_customer_letter/follow_up_customer_letter.ctrl.js"></script>
+<script src="app/modules/secretariat/issuedLetter/secretariatIssuedLetterListCtrl.js"></script>
+<script src="app/modules/secretariat/incommingLetter/secretariatIncommingLetterListCtrl.js"></script>
+<script src="app/modules/secretariat/unapprovedIncoming/secretariatUnapprovedIncomingListCtrl.js"></script>
+<script src="app/modules/secretariat/letterView/letterViewCtrl.js"></script>
+<script src="app/modules/secretariat/rejectedLetters/secretariatRejectedCtrl.js"></script>
+<script src="app/modules/secretariat/secretariatConfig.js"></script>
+<!-- CARTABLE -->
+<script src="app/modules/cartable/cartableConfig.js"></script>
+<script src="app/modules/cartable/cartableKatebSrvc.js"></script>
+<script src="app/modules/cartable/cartableCtrl.js"></script>
+<script src="app/modules/cartable/taskList/cartableTaskListCtrl.js"></script>
+<script src="app/modules/cartable/draft/cartableDraftCtrl.js"></script>
+<script src="app/modules/cartable/draft/transferModalCtrl.js"></script>
+<script src="app/modules/cartable/letter/cartableLetterCtrl.js"></script>
+<script src="app/modules/cartable/orgLetter/cartableOrgLetterListCtrl.js"></script>
+<script src="app/modules/cartable/orgLetter/cartableOrgLetterCtrl.js"></script>
+<script src="app/modules/cartable/archiveLetter/archiveLetterListCtrl.js"></script>
+<script src="app/modules/cartable/archiveLetter/archiveLetterCtrl.js"></script>
+<!-- MESSAGE -->
+<script src="app/modules/message/messageModule.js"></script>
+<script src="app/modules/message/messageConfig.js"></script>
+<script src="app/modules/message/messageSrvc.js"></script>
+<script src="app/modules/message/messageCtrl.js"></script>
+<script src="app/modules/message/compose/messageComposeCtrl.js"></script>
+<script src="app/modules/message/inbox/messageInboxCtrl.js"></script>
+<script src="app/modules/message/send/messageSendCtrl.js"></script>
+<!-- REPORT -->
+<script src="app/modules/report/reportConfig.js"></script>
+<script src="app/modules/report/reportSrvc.js"></script>
+<script src="app/modules/report/incomingIssuedLetter/incomingIssuedLetterCtrl.js"></script>
+<script src="app/modules/report/incomingIssuedLetterUser/incomingIssuedLetterUserReportCtrl.js"></script>
+<script src="app/modules/report/letterSecretary/letterSecretaryCtrl.js"></script>
+<script src="app/modules/report/correspondenceUnit/correspondenceUnitCtrl.js"></script>
+<script src="app/modules/report/reserveList/reserveListReportCtrl.js"></script>
+<script src="app/modules/report/process/processCtrl.js"></script>
+<script src="app/modules/report/accessAllLetters/accessAllLettersConfig.js"></script>
+<script src="app/modules/report/accessAllLetters/accessAllLettersSrvc.js"></script>
+<script src="app/modules/report/accessAllLetters/accessAllLettersCtrl.js"></script>
+<script src="app/modules/report/accessAllLetters/accessAllLettersForOrgUsers/accessAllLettersForOrgUsersCtrl.js"></script>
+
+<!-- PROCESS -->
+<script src="app/modules/process/processConfig.js"></script>
+<script src="app/modules/process/processKatebSrvc.js"></script>
+<script src="app/modules/process/processCtrl.js"></script>
+<script src="app/modules/process/taskList/processTaskListCtrl.js"></script>
+<script src="app/modules/process/processList/processListCtrl.js"></script>
+<script src="app/modules/process/processInfo/processInfoCtrl.js"></script>
+<script src="app/modules/process/processInstanceInfo/processInstanceInfoCtrl.js"></script>
+<!-- News -->
+<script src="app/modules/news/newsConfig.js"></script>
+<script src="app/modules/news/newsListCtrl.js"></script>
+<script src="app/modules/news/newsDetailsCtrl.js"></script>
+<script src="app/modules/news/newsSrvc.js"></script>
+<script src="app/modules/news/userListModal/userListModalCtrl.js"></script>
+<!-- RULE -->
+<script src="app/modules/management/rule/ruleSrvc.js"></script>
+<script src="app/modules/management/rule/ruleConfig.js"></script>
+<script src="app/modules/management/rule/ruleCtrl.js"></script>
+<!-- Search -->
+<script src="app/modules/search/searchConfig.js"></script>
+<script src="app/modules/search/searchCtrl.js"></script>
+<script src="app/modules/search/searchSrvc.js"></script>
+<script src="app/modules/search/moreInfoModal/moreInfoModalCtrl.js"></script>
+
+<script src="app/app.js"></script>
+<script src="app/utils.js"></script>
+<!-- endbuild -->
+
+
+<script src="app/lib/vtPDFSignable/web/compatibility.js"></script>
+<script src="app/lib/vtPDFSignable/web/l10n.js"></script>
+<script src="app/lib/vtPDFSignable/build/pdf.js"></script>
+<script src="app/lib/vtPDFSignable/web/viewer.js"></script>
+
+
+
+<script src="app/assets/js/trackjs.js"></script>
+
+<script >
+    const  TrackJSObj = (function(){
+        if(!window.TrackJS){
+            return null;
+        }
+        const MAX_DAY_COUNT= 3;
+
+
+        
+        const getSavedLogObj = function (params) {
+            if(!angular.isDefined(localStorage.trackjs) || !angular.isObject(JSON.parse(localStorage.trackjs))){
+                    localStorage.trackjs = JSON.stringify({});
+            }
+
+            return JSON.parse(localStorage.trackjs);
+        }
+        const addLog = function(payload){
+            let savedTrackJsLogs = getSavedLogObj()
+            //remove log  more than MAX_DAY_COUNT days
+            if(Object.keys(savedTrackJsLogs).length>MAX_DAY_COUNT){
+
+                savedTrackJsLogs = Object.keys(savedTrackJsLogs).sort().slice(-MAX_DAY_COUNT).reduce((trakjslogs,dateKey)=>{trakjslogs[dateKey]=savedTrackJsLogs[dateKey];return trakjslogs},{})
+            }
+            savedTrackJsLogs[moment().format('jYYYY/jMM/jDD')] = savedTrackJsLogs[moment().format('jYYYY/jMM/jDD')] || {timestamp:Date.now(),logs:[]};
+            savedTrackJsLogs[moment().format('jYYYY/jMM/jDD')].logs.push({time:moment().format('HH:mm:ss') ,payload:payload});
+            localStorage.trackjs = JSON.stringify(savedTrackJsLogs);
+        }
+
+        const TrackJSObj = TrackJS.install({
+            token: "KATEB",
+            onError: function(payload, error) {
+                // console.log(this,payload, error);
+                addLog(payload);
+                return true
+            },
+            network: { error: false }
+        });
+        addLog('Page load')
+
+        return TrackJSObj;
+
+
+    })()
+
+</script>
+</head>
+<body class="not-show-ui-until-ready-angular" ng-class="{'show-ui-after-ready-angular' : true}">
+    <vt-show-message></vt-show-message>
+    <div ui-view style="height:100%;"></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<style>
+	.sideCalender > div.well.well-sm.col-sm-12 {
+		background: #fff none repeat scroll 0 0;
+		box-shadow: none;
+		padding: 0;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table{
+		width: 100%;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child{
+		background-color: #0097a7;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:last-child{
+		background-color: #00838f;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:last-child th{
+		color: rgba(255, 255, 255, 0.82);
+		font-size: 15px;
+		font-weight: normal;
+		padding: 4px 0;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child th button{
+		background-color: #0097a7;
+		color: #fff;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child th button:hover{
+		background-color: #00a1b2;
+		border: none;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child th button i{
+		color: #fff;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table > tbody > tr > td > .btn.btn-default{
+		border: none;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table > tbody > tr > td > .btn.btn-default span{
+		color: #4c4c4c;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table > tbody > tr > td > .btn.btn-default.active{
+		background-color: #ff7043;
+	}
+	.sideCalender > div.well.well-sm.col-sm-12 > table > tbody > tr > td > .btn.btn-default.active span{
+		color: #fff;
+		font-size: 12px;
+	}
+	.sinceThen {
+		padding: 5px 15px;
+	}
+	.sinceThen span {
+		color: #0097a7;
+	}
+</style>
+<div class="col-sm-6 sinceThen">از <span> {{model.startDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span></div>
+<div class="col-sm-6 sinceThen">تا <span> {{model.endDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span></div>
+<div class="col-sm-6 sideCalender">
+	<persian-datepicker date-disabled="onNonCurrentDayOfMonthDisable(date, mode, activeDate)"
+			ng-model="model.startDate"
+			show-weeks="false"
+			class="well well-sm col-sm-12"
+			starting-day="6">
+	</persian-datepicker>
+</div>
+<div class="col-sm-6 sideCalender">
+	<persian-datepicker date-disabled="onNonCurrentDayOfMonthDisable(date, mode, activeDate)"
+			ng-model="model.endDate"
+			show-weeks="false"
+			class="well well-sm col-sm-12"
+			starting-day="6">
+	</persian-datepicker>
+</div>

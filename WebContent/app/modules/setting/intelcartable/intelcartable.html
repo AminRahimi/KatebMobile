@@ -1,0 +1,434 @@
+<style>
+    .first-sight{
+        margin: 100px auto 0;
+        width: 66%;
+        float: none;
+    }
+    .first-sight ul {
+        display: flex;
+        justify-content: space-between;
+    }
+    .first-sight ul > li {
+        border: 1px solid #dfdfdf!important;
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .kateb-tabs button , .add-filter{
+        max-width: 200px;
+        height: 50px;
+        font-size: 15px;
+        margin: 40px auto;
+        border-radius: 4px !important;
+        box-shadow: 0 0 6px -3px rgba(0,0,0,0.7);
+    }
+    .kateb-tabs:not(.first-sight){
+        padding: 0;
+    }
+    .intelCartable-panel .panel-management > ul > li{
+        padding: 20px 25px;
+    }
+
+    .intel-content{
+        position: relative;
+        padding-left: 0;
+    }
+
+    .intelcartableForm,
+    .intel-content .panel-management{
+        max-height: calc(100vh - 295px);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .intelcartableForm > div,
+    .intel-content .panel-management > div{
+        width: 100%;
+        margin: 10px 0;
+    }
+    .value{
+        font-size: 12px;
+    }
+    .filter-tag {
+        background: #f0f0f0;
+        padding: 4px 10px;
+        margin: 5px;
+        display: inline-block;
+}
+.flaticon-close-button::before {
+    font-size: 9px !important;
+}
+    .fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+</style>
+
+<div class="panel panel-default" style="margin: 20px; border-radius: 3px; box-shadow: 0px 0px 15px -6px rgba(0, 0, 0, 0.6)">
+    <div class="panel-heading" style="    background: none;  font-size: 20px;">کارتابل هوشمند</div>
+    <div class="panel-body" style="height: calc(100vh - 160px);">
+        <div class="panel-body ">
+            <div class="col-sm-4">
+                <label class=" orgSender">انتخاب سمت</label>
+                <div style="min-width: 250px;">
+                    <ui-select ng-model="Data.selectedIntelcartable.positionUserAssignment" on-select="Func.onSelectPosition();">
+                        <ui-select-match placeholder="سمت را وارد نمایید...">
+                            <span ng-bind="$select.selected.title"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (Data.positionList | filter: $select.search) track by $index">
+                            <span ng-bind="item.title"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+        <div ng-if="Data.selectedIntelcartable.positionUserAssignment">
+            <div class="row intelCartable-panel panel" style="margin: 0; padding:0; box-shadow: none; position: relative;">
+                <div class="col-sm-2 kateb-tabs" ng-class="{'first-sight' : !Data.mode }" ng-if="!Data.mode">
+                    <div class="panel panel-default" style="padding:0">
+                        <div class="panel-body panel-management" style="padding:0">
+                            <ul as-sortable="Controller.dragControlListeners"
+                                ng-model="Data.intelcartableList">
+                                <li ng-repeat="intelcartable in Data.intelcartableList"
+                                    as-sortable-item ng-click="Func.onSelectFilter(intelcartable.uid)">
+                                    <div as-sortable-item-handle>
+                                        {{intelcartable.title}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-primary btn-block" ng-click="Func.onClickAddNewFilter()">ایجاد
+                                فیلتر جدید
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 intel-content" ng-if="Data.mode">
+                    <div class="panel panel-default col-sm-offset-1" ng-if="Data.mode">
+                        <div class="panel-body panel-management">
+                            <form name="Data.intelcartableForm" class="Data.intelcartableForm"
+                                  role="form"
+                                  novalidate>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-bottom: 15px;">
+                                        <h5>اطلاعات فیلتر</h5>
+                                    </div>
+                                </div>
+                                <div class="row rowForm"
+                                     ng-class="{'has-error':Data.intelcartableForm.title.$invalid && Data.validationClicked}">
+                                    <label class="col-sm-3"
+                                           ng-class="{'required':Data.mode!='view'}">عنوان فیلتر</label>
+                                    <div ng-show="Data.mode=='view'"
+                                         class="col-sm-3">
+                                        {{Data.selectedIntelcartable.title|EnToFaNumber}}
+                                    </div>
+                                    <div ng-show="Data.mode!='view'"
+                                         class="col-sm-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               name="title"
+                                               required
+                                               ng-model="Data.selectedIntelcartable.title">
+        
+                                    </div>
+                                </div>
+                                <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && Data.intelcartableForm.description.$invalid}">
+                                    <label class="col-sm-3" >توضیح </label>
+                                    <div class="col-sm-3">
+                                        <textarea ng-if="Data.mode!='view'" type="text" class="form-control" name="description" ng-model="Data.selectedIntelcartable.description">
+                                        </textarea>
+                                        <span  ng-if="Data.mode=='view'">
+                                            {{Data.selectedIntelcartable.description}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row rowForm">
+                                    <label class="col-sm-3" >تاریخ شروع</label>
+                                    <div ng-show="Data.mode=='view'" class="col-sm-3">
+                                        {{Data.selectedIntelcartable.startTime|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                    </div>
+                                    <div ng-show="Data.mode!='view'" class="col-sm-3">
+                                        <vt-persian-date-picker name="startTime" model="Data.selectedIntelcartable.startTime">
+                                        </vt-persian-date-picker>
+                                    </div>
+                                </div>
+                                <div class="row rowForm">
+                                    <label class="col-sm-3" >تاریخ انقضا</label>
+                                    <div ng-show="Data.mode=='view'" class="col-sm-3">
+                                        {{Data.selectedIntelcartable.endTime|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                    </div>
+                                    <div ng-show="Data.mode!='view'" class="col-sm-3">
+                                        <vt-persian-date-picker name="endTime"  model="Data.selectedIntelcartable.endTime">
+                                        </vt-persian-date-picker>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-bottom: 15px;">
+                                        <h5>شروط فیلتر</h5>
+                                    </div>
+                                </div>
+                                <div class="row rowForm"
+                                     ng-class="{'has-error':!Data.selectedIntelcartable.field && Data.validationClicked && !Data.letterFilters.length}">
+                                    <label class="col-sm-3" ng-if="Data.mode!='view'"
+                                           ng-class="{'required':Data.mode!='view'}"> مشخصه نامه</label>
+                                    <div class="col-sm-3" ng-if="Data.mode!='view'">
+                                        <ui-select name = "letterDescription"  ng-model="Data.selectedIntelcartable.field" on-select="Func.onSelectField($item);" >
+                                            <ui-select-match placeholder="مشخصه نامه را وارد نمایید...">
+                                                <span ng-bind="$select.selected.title"></span>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (Data.letterFieldList | filter: $select.search) track by $index">
+                                                <span ng-bind="item.title"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row rowForm" ng-if="Data.selectedIntelcartable.field=='SENDER'" ng-class="{'has-error':Data.intelcartableForm.sender.$invalid && Data.validationClicked}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}"> فرستنده نامه</label>
+                                    <div class="col-sm-3" ng-if="Data.mode!='view'">
+                                        <ui-select ng-model="Data.selectedIntelcartable.sender" on-select="Func.onSelectField($item);">
+                                            <ui-select-match placeholder="فرستنده نامه را وارد نمایید...">
+                                                <span ng-bind="$select.selected.title"></span>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (Data.senderList | filter: $select.search) track by $index">
+                                                <span ng-bind="item.title"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div> -->
+                                <div class="row rowForm" ng-if="Data.mode=='view' && Data.selectedIntelcartable.letterFilters.sender" >
+                                    <label class="col-sm-3" > فرستنده نامه</label>
+                                    <div class="col-sm-3"> {{Data.selectedIntelcartable.letterFilters.sender}}</div>
+                                </div>
+                                <div class="row rowForm" ng-if="Data.selectedIntelcartable.field && Data.selectedIntelcartable.field.value !='SENDER'&& Data.selectedIntelcartable.field.value !='PRIORITY' && Data.selectedIntelcartable.field.value !='CONFIDENTIALITY_LEVEL'"
+                                     ng-class="{'has-error':!Data.selectedIntelcartable.operator && Data.validationClicked && !Data.letterFilters.length}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}"> نوع فیلتر</label>
+                                    <div class="col-sm-3">
+                                        <ui-select name="filterKind" ng-model="Data.selectedIntelcartable.operator" on-select="Func.onSelectOperator($item);">
+                                            <ui-select-match placeholder="نوع فیلتر را وارد نمایید...">
+                                                <span ng-bind="$select.selected.title"></span>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (Data.operatorList | filter: $select.search) track by $index">
+                                                <span ng-bind="item.title"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="row rowForm" ng-if="Data.selectedIntelcartable.field.value =='SENDER'"
+                                    ng-class="{'has-error':Data.validationClicked && !Data.letterFilters.length}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}"> فرستنده</label>
+                                    <div class="col-sm-3">
+                                        <multiselect-reciever model="Data.selectedIntelcartable.field.sender" not-show-model="true" placeholder="نام فرستنده را وارد نمایید..."
+                                        search-fn="Controller.multiselectSenderSearch($root.currentUserOrg.uid, query)" name="sender"
+                                        ng-model="Data.selectedIntelcartable.sender" on-select-fn="Func.onSelectSender(item)" options="Data.puaList" is-edit-mode="Data.mode!='view'"
+                                         >
+                                    </multiselect-reciever></div>
+                                </div>
+                                <div class="row rowForm" ng-if="Data.selectedIntelcartable.operator && Data.selectedIntelcartable.field.value !='SENDER' && Data.selectedIntelcartable.field.value !='PRIORITY' && Data.selectedIntelcartable.field.value !='CONFIDENTIALITY_LEVEL'"
+                                    ng-class="{'has-error': Data.validationClicked && !Data.letterFilters.length}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}"> مقدار فیلتر</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control value" name="value"  ng-model="Data.selectedIntelcartable.value" placeholder='{{Data.selectedIntelcartable.field.title}} را وارد نمایید'>
+                                    
+                                    </div>
+                                <button class="btn btn-sm btn-primary" ng-show="Data.mode != 'view'"
+                                    ng-click="Func.onAddFilterClick('customValue')" ng-disabled="!Data.selectedIntelcartable.value">
+                                    افزودن فیلتر
+                                </button>
+                                </div>
+                                <div class="row rowForm" ng-if="Data.selectedIntelcartable.field.value == 'PRIORITY'"
+                                     ng-class="{'has-error':!Data.letterFilters.length && Data.validationClicked}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}">فوریت نامه</label>
+                                    <div class="col-sm-3" ng-show="Data.mode != 'view'">
+                                        <select class="form-control" name="priority" ng-change="Func.onAddFilterClick('EnumPri')"
+                                                ng-model="Data.selectedIntelcartable.priority">
+                                            <option value="Normal">عادی</option>
+                                            <option value="Critical">فوری</option>
+                                            <option value="Blocker">خیلی فوری</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3" ng-show="Data.mode == 'view'">
+                                        {{Data.selectedIntelcartable.priority|appEnum}}
+                                    </div>
+                                </div>
+                                <div class="row rowForm" ng-if="Data.selectedIntelcartable.field.value == 'CONFIDENTIALITY_LEVEL'"
+                                     ng-class="{'has-error':Data.validationClicked && !Data.letterFilters.length}">
+                                    <label class="col-sm-3" ng-class="{'required':Data.mode!='view'}">سطح محرمانگی</label>
+                                    <div class="col-sm-3" ng-show="Data.mode != 'view'">
+                                        <select class="form-control" name="confidentialityLevel" ng-model="Data.selectedIntelcartable.confidentialityLevel" ng-change="Func.onAddFilterClick('EnumCnof')">
+                                            <option value="Unclassified">طبقه بندی نشده</option>
+                                            <option value="Restricted">محرمانه</option>
+                                            <option value="Confidential">فوق محرمانه</option>
+                                            <option value="Secret">سری</option>
+                                            <option value="Top_secret">فوق سری</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3" ng-show="Data.mode == 'view'">
+                                        {{Data.selectedIntelcartable.priority|appEnum}}
+                                    </div>
+                                </div>
+                                <div class="row rowForm" >
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3" ng-if="Data.isAddfilterClicked && Data.mode =='add' " style="margin-bottom: 15px;">
+                                        <span class="filter-tag" ng-repeat="filter in Data.letterFilters"  ng-if="filter.field != 'SENDER'" >
+                                                {{filter.field |EnToFaNumber |appEnum}}
+                                                {{filter.operator |EnToFaNumber |appEnum}}
+                                                {{filter.value |EnToFaNumber |appEnum}}
+                                            <i class="flaticon-close-button" ng-click="Func.onRemoveFilterSelectedFinalClick(filter)"></i>
+                                        </span>
+                                        <span class="filter-tag" ng-repeat="filter in Data.letterFilters"  ng-if="filter.field == 'SENDER'" >
+                                                {{filter.field |EnToFaNumber |appEnum}}
+                                                {{filter.operator |EnToFaNumber |appEnum}}
+                                                {{filter.sender.title |EnToFaNumber |appEnum}}
+                                            <i class="flaticon-close-button" ng-click="Func.onRemoveFilterSelectedFinalClick(filter)"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-3" ng-if="Data.mode !='add' ">
+                                        <span class="filter-tag" ng-repeat="filter in Data.letterFilters" ng-if="filter.field != 'SENDER'">
+                                            {{filter.field |EnToFaNumber |appEnum}}
+                                            {{filter.operator |EnToFaNumber |appEnum}}
+                                            {{filter.value |EnToFaNumber |appEnum}}
+                                            <i ng-if="Data.mode =='edit'" class="flaticon-close-button" ng-click="Func.onRemoveFilterSelectedFinalClick(filter)"></i>
+                                        </span>
+                                        <span class="filter-tag" ng-repeat="filter in Data.letterFilters" ng-if="filter.field == 'SENDER'">
+                                            {{filter.field |EnToFaNumber |appEnum}}
+                                            {{filter.operator |EnToFaNumber |appEnum}}
+                                            {{filter.sender.title |EnToFaNumber |appEnum}}
+                                            <i ng-if="Data.mode =='edit'" class="flaticon-close-button" ng-click="Func.onRemoveFilterSelectedFinalClick(filter)"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-bottom: 15px;">
+                                        <h5>عملیات فیلتر</h5>
+                                    </div>
+                                </div>
+                                <div >
+                                    <div class="row rowForm" style="margin-bottom: 20px;">
+                                        <div class="col-sm-12" style="margin-bottom: 10px;">
+                                            <label class="checkbox-inline" ng-show="Data.mode != 'view'" style="color: #0097a7;">
+                                                <input type="checkbox" ng-model="Data.selectedIntelcartable.sendToArchive" ng-change="Func.onArchiveSend()">انتقال نامه به بایگانی</label>
+                                            <div ng-show="Data.mode == 'view' && Data.selectedIntelcartable.sendToArchive" style="color: #0097a7;"><span
+                                                    class="glyphicon glyphicon-ok"></span> انتقال نامه به بایگانی
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row rowForm" style="margin-bottom: 20px;">
+                                        <div class="col-sm-12" style="margin-bottom: 10px;">
+                                            <label class="checkbox-inline" ng-show="Data.mode != 'view'" style="color: #0097a7;">
+                                                <input type="checkbox" ng-model="Data.selectedIntelcartable.needToTrack" ng-change="Func.onTrack()">انتقال نامه به نیاز به پیگیری</label>
+                                            <div ng-show="Data.mode == 'view' && Data.selectedIntelcartable.needToTrack" 
+                                                style="color: #0097a7;"><span class="glyphicon glyphicon-ok"></span> انتقال نامه به نیاز به پیگیری
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row rowForm" style="margin-bottom: 20px;">
+                                        <div class="col-sm-12" style="margin-bottom: 10px; padding-right: 0px;">
+                                            <div class="col-sm-3">
+                                                <label class="checkbox-inline" ng-show="Data.mode != 'view'" style="color: #0097a7;">
+                                                    <input type="checkbox" ng-model="Data.checkboxAddTags" ng-change="Func.onTags()">افزودن
+                                                    برچسب</label>
+                                                <div ng-show="Data.mode == 'view' && Data.checkboxAddTags" style="color: #0097a7;"><span
+                                                        class="glyphicon glyphicon-ok"></span> برچسب
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3" ng-if="Data.checkboxAddTags">
+                                                <multiselect-reciever model="Data.tags" search-fn="Controller.multiselectTagToSearch(query)" name="priority"
+                                                    ng-model="Data.tags" options="Data.tagList" is-edit-mode="Data.mode!='view'" vt-array-required
+                                                    on-select-fn="Func.onSelectTags(item)">
+                                                </multiselect-reciever>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                    <div class="row rowForm" ng-class="{'has-error':Data.intelcartableForm.priority.$invalid && Data.validationClicked}">
+                                        <div class="col-sm-12" style="margin-bottom: 10px;">
+                                            <label ng-show="Data.mode != 'view'" class="checkbox-inline" style="color: #0097a7;"><input type="checkbox"
+                                                    ng-model="Data.selectedIntelcartable.checkboxReferenceTo" ng-change="Func.onForwardTo()">ارجاع
+                                                نامه</label>
+                                            <div ng-show="Data.mode == 'view' && Data.selectedIntelcartable.checkboxReferenceTo" style="color: #0097a7;"><span class="glyphicon glyphicon-ok"></span> ارجاع
+                                                نامه
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-3" style="font-weight: normal; padding-right: 35px;" ng-if="Data.selectedIntelcartable.checkboxReferenceTo"
+                                            ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
+                                        <div class="col-sm-3" ng-if="Data.selectedIntelcartable.checkboxReferenceTo">
+                                            <multiselect-reciever model="Data.referenceTo"
+                                                search-fn="Controller.multiselectReferenceToSearch($root.currentUserOrg.uid, query)" name="priority"
+                                                ng-model="Data.referenceTo" options="Data.puaList" is-edit-mode="Data.mode!='view'"
+                                                vt-array-required on-select-fn="Func.onSelectReferenceTo(item)">
+                                            </multiselect-reciever>
+                                        </div>
+                                    </div>
+                                    <div class="row rowForm" ng-if="Data.selectedIntelcartable.checkboxReferenceTo" style="margin-bottom: 20px;">
+                                        <div class="col-sm-12" style="margin-bottom: 10px;">
+                                            <label class="checkbox-inline" ng-show="Data.mode != 'view'" style="color: #0097a7;">
+                                                <input type="checkbox" ng-model="Data.checkboxHamesh" ng-change="Func.onChnageCheckboxHamesh()">هامش</label>
+                                            <div ng-show="Data.mode == 'view' && Data.selectedIntelcartable.hamesh" style="color: #0097a7;"><span
+                                                    class="glyphicon glyphicon-ok"></span> هامش
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12"
+                                            ng-show="(Data.mode != 'view' && Data.checkboxHamesh) || (Data.mode == 'view' && Data.selectedIntelcartable.hamesh)">
+                                            <div class="row rowForm" ng-show="Data.mode!='view'"><div class="col-sm-3" ng-show="Data.mode=='view'">{{Data.hamesh}}</div>
+                                            </div> 
+                                            <div class="row rowForm">
+                                                <label class="col-sm-3" style="padding-right: 35px;">متن هامش</label>
+                                                <div class="col-sm-3" ng-show="Data.mode!='view'">
+                                                    <textarea class="form-control" name="description"
+                                                        ng-model="Data.selectedIntelcartable.hamesh"></textarea>
+                                                </div>
+                                                <div class="col-sm-3" ng-show="Data.mode=='view'">
+                                                    {{Data.selectedIntelcartable.hamesh}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+        
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-left" style="padding-top: 10px;     position: absolute;
+                    left: 20px;
+                    top: 0;" ng-if="Data.mode">
+                        <button class="btn btn-sm btn-primary"
+                                ng-show="Data.mode == 'add'"
+                                ng-disabled="isDisableOnDubClick"
+                                ng-click="Func.onSaveClick()">
+                            ذخیره
+                        </button>
+                        <button class="btn btn-sm btn-primary"
+                                ng-show="Data.selectedIntelcartable.uid && Data.mode =='edit'"
+                                ng-disabled="isDisableOnDubClick"
+                                ng-click="Func.onUpdateClick()">
+                            ثبت تغییرات
+                        </button>
+                        <button class="btn btn-sm btn-danger"
+                                ng-show="Data.mode == 'view'"
+                                ng-click="Func.onDeleteClick()">
+                            حذف
+                        </button>
+                        <button class="btn btn-sm btn-warning"
+                                ng-show="Data.mode == 'view'"
+                                ng-click="Func.onEditClick()">
+                            ویرایش
+                        </button>
+                        <button class="btn btn-sm btn-default"
+                                ng-show="Data.mode"
+                                ng-click="Func.onCancelClick()">
+                            <span ng-if="Data.mode != 'view'">انصراف</span>
+                            <span ng-if="Data.mode == 'view'">بازگشت</span>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

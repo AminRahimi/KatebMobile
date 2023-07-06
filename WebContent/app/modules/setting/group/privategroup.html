@@ -1,0 +1,126 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">گروه‌های شخصی</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_PRIVATE_GROUP">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.groupSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.groupListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_PRIVATE_GROUP" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_PRIVATE_GROUP"
+					ng-show="true" type="button"
+					ng-click="Func.onAddgroupClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_PRIVATE_GROUP"
+					ng-show="Data.selectedgroup.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditgroupClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_PRIVATE_GROUP"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSavegroupClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="groupForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_PRIVATE_GROUP"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdategroupClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="groupForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_PRIVATE_GROUP"
+					ng-show="Data.selectedgroup.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onDeletegroupClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedgroup.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="groupForm" role="form" novalidate>
+				<div class="row rowForm" ng-class="{'has-error':groupForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedgroup.name|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.selectedgroup.name">
+					
+					</div>
+				</div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">اعضا</label>
+                    <div class="col-sm-7">
+                        <vt-typeahead api="Controller.userTypeaheadApi"
+                                      name="users"
+                                      model="Data.selectedgroup.container.users"
+                                      is-edit-mode="Data.mode!='view'">
+                        </vt-typeahead>
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">سمت ها</label>
+                    <div class="col-sm-7">
+                        <vt-typeahead api="Controller.positionsTypeaheadApi"
+                                      name="positions"
+                                      model="Data.selectedgroup.container.positions"
+                                      is-edit-mode="Data.mode!='view'">
+                        </vt-typeahead>
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">سمت - شخص</label>
+                    <div class="col-sm-7">
+                        <vt-typeahead api="Controller.positionUserAssignemtsTypeaheadApi"
+                                      name="positionUserAssignemts"
+                                      model="Data.selectedgroup.container.positionUserAssignemts"
+                                      is-edit-mode="Data.mode!='view'">
+                        </vt-typeahead>
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">همه افراد سازمان</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedgroup.container.all|checkmark}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="checkbox" class="form-control" name="all"
+                               ng-model="Data.selectedgroup.container.all">
+
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_PRIVATE_GROUP" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.groupAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

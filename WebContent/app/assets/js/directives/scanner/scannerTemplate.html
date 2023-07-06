@@ -1,0 +1,133 @@
+<ng-form name="Data.scanerForm">
+
+
+<div class="scanner-modlue" ng-if="Data.scannerStatus == 'ok'">
+    <div class="top">
+        <div class="row">
+            <div class="col-sm-12" style="display: flex; align-items: center; justify-content: start; margin: 20px 0 0; padding-right: 5px;flex-wrap: wrap">
+                <div>
+                    <select class="form-control" name="selectedScaner" ng-model="Data.selectedScaner" ng-options="scanner as scanner.title for scanner in Data.scannerList">
+                    </select>
+                </div>
+                <div style="margin-right: 10px;">
+                    <button type="button" class="btn btn-primary" ng-click="Func.onClickStartScan()" ng-disabled="Data.isLoadingStartScan || Data.isLoadingAddFromLocal">
+                        <img ng-show="!Data.isLoadingStartScan" src="app/assets/img/play.png">
+                        <i ng-show="Data.isLoadingStartScan" class="fa fa-spinner fa-pulse fa-fw"></i>
+                        شروع اسکن</button>
+                </div>
+                <div style="margin-right: 10px;">
+                    <div class="btn-group" dropdown dropdown-append-to-body auto-close="outsideClick">
+                        <button type="button" class="btn btn-default" dropdown-toggle
+                                ng-disabled="Data.isLoadingStartScan || Data.isLoadingAddFromLocal">
+                            <i ng-show="Data.isLoadingAddFromLocal" class="fa fa-spinner fa-pulse fa-fw"></i>
+                            <i class="fa fa-folder-open"></i>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" >
+                            <!--<li>
+                                <a>افزودن از سرور</a>
+                            </li>-->
+                            <li>
+                                <a href ngf-select="Func.onClickAddFromLocal($files)" ngf-multiple="true">افزودن از رایانه (تصویر)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div style="margin-right: 10px;">
+                    <button type="button" class="btn btn-default">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                </div>-->
+                <div style="margin-right: 10px;">
+                    <button type="button" class="btn btn-default" ng-click="Func.onClickRotate(90)" ng-disabled="!Data.selectedImages.length">
+                        <img src="app/assets/img/toright.png">
+                    </button>
+                </div>
+                <div style="margin-right: 10px;">
+                    <button type="button" class="btn btn-default" ng-click="Func.onClickRotate(-90)" ng-disabled="!Data.selectedImages.length">
+                        <img src="app/assets/img/toleft.png">
+                    </button>
+                </div>
+                <div style="margin-right: 10px;">
+                    <button type="button" class="btn btn-danger" ng-click="Func.onClickRemove();" ng-disabled="!Data.selectedImages.length">حذف</button>
+                </div>
+                <div style="margin-right: 10px;">
+                    <!-- FIXME :fix uib-tooltip everywhere-->
+                    <button type="button" class="btn btn-outline-blue"
+                            ng-click="Func.onClickGeneratePDF()" uib-tooltip="Ctrl+Enter"
+                            ng-disabled="Data.isLoadingStartScan || Data.isLoadingAddFromLocal || !Data.readyImages.length">ساخت PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="Data.readyImages.length > 0" style="display: flex;">
+        <div class="col-sm-9" style="padding-top: 0; padding-left: 0; border-left: 1px solid #dcdcdc;">
+            <div id="scan-scrollbar">
+                <div class="checkbox" style="margin-right: 5px;">
+                    <input style="cursor: pointer;margin: 0;" type="checkbox" id="chReady" indeterminate
+                           ng-model="Data.readyImagesSelectAll"
+                           ng-change="Func.onChangeCheckboxSelectAll()"
+                           ng-disabled="Data.isLoadingStartScan || Data.isLoadingAddFromLocal" />
+                    <label style="cursor: pointer;" for="chReady"> {{Data.selectedImages.length | EnToFaNumber}} صفحه از {{Data.readyImages.length | EnToFaNumber}} صفحه انتخاب شده است</label>
+                </div>
+                <div id="scan-container" class="scan-container" data-as-sortable="Controller.sortable" data-ng-model="Data.readyImages">
+                    <div class="loading-cover" ng-show="Data.isLoadingStartScan || Data.isLoadingAddFromLocal"></div>
+                    <div class="scan-item" ng-repeat="image in Data.readyImages" data-as-sortable-item
+                         ng-click="Func.onClickSelectImageForView($index)"
+                         ng-class="{'scan-item-selected' : image.selected, 'scan-item-onselect' : Data.selectedIndexImage == $index}"
+                         style="background-image: url({{image.base64Min}});">
+                        <div style="width: 100%; height: 100%; position: relative; z-index: 3;transform: translateY(-10px)" data-as-sortable-item-handle>
+                            <div style="height: calc(100% - 40px)">
+                                <div class="checkbox">
+
+                                    <!-- FIXME inline style for margin -->
+                                    <input id="ch{{$index}}" type="checkbox" style="margin-right: 5px;" ng-model="image.selected" ng-change="Func.onChangeCheckboxImages();">
+                                    <label for="ch{{$index}}" style="display: inline-block;margin: 5px 10px 0 0">&nbsp;</label>
+                                    <div class="box-image-selector" ng-click="image.selected = !image.selected; Func.onChangeCheckboxImages();"></div>
+                                </div>
+                            </div>
+                            <div style="height: 28px; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;transform: translateY(12px); border-radius: 0 0 3px 3px;">{{$index+1 | EnToFaNumber}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" style="padding-top: 20px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h6 class="text-muted no-margin">اندازه فایل</h6>
+                    <p>
+                        <span dir="ltr">{{Data.readyImages[Data.selectedIndexImage].width * 0.2645833333 | number:0 | EnToFaNumber}}&times;{{Data.readyImages[Data.selectedIndexImage].height * 0.2645833333 | number:0 | EnToFaNumber}}</span>
+                        <span>میلیمتر</span>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 image-view-parent">
+                    <img id="image-view" ng-click="Func.onClicKGoToImageViewer(Data.selectedIndexImage)"
+                         ng-src="{{Data.readyImages[Data.selectedIndexImage].base64}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="Data.readyImages.length == 0">
+        <div class="col-sm-12">
+            <img src="app/assets/img/scan-empty.png" style="width: 80px; height: 80px;margin: 10% auto 0;display: block;">
+            <p class="help-block" style="text-align: center;">داده ای برای نمایش وجود ندارد.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-if="Data.showVtPdf" style="height: calc(100vh - 240px)" vt-pdf control-fn="Apis.vtPDF"></div>
+    </div>
+</div>
+<div ng-if="Data.scannerStatus == 'oldVersion' || Data.scannerStatus == 'inactive'">
+
+    <button type="button" class="btn btn-danger" ng-click="Func.onOpenScannerStatusModal()">
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <span class="sr-only">Split button!</span>
+    </button>
+
+</div>
+
+</ng-form>

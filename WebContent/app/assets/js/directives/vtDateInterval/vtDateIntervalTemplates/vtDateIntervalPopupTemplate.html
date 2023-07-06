@@ -1,0 +1,31 @@
+<div class="col-sm-5">{{model.startDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+<div class="col-sm-5">{{model.endDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</div>
+<p class="input-group col-sm-5">
+    <input type="text" class="form-control"
+           datepicker-popup-persian="{{config.format}}"
+           ng-model="model.startDate"
+           is-open="isOpen.startDate"
+           close-text="config.closeText" />
+    <span class="input-group-btn">
+        <button type="button"
+                class="btn btn-default"
+                ng-click="openPersian($event, 'startDate')">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </button>
+    </span>
+</p>
+
+<p class="input-group col-sm-5">
+    <input type="text" class="form-control"
+           datepicker-popup-persian="{{config.format}}"
+           ng-model="model.endDate"
+           is-open="isOpen.endDate"
+           close-text="config.closeText" />
+    <span class="input-group-btn">
+        <button type="button"
+                class="btn btn-default"
+                ng-click="openPersian($event, 'endDate')">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </button>
+    </span>
+</p>

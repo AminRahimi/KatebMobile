@@ -1,0 +1,82 @@
+<style>
+    .searchFilterBox {
+    border: none !important;
+    border-left: none !important;
+    width: 50% !important;
+    margin-top: 10px;
+    }
+    .organization{
+        position: absolute;
+        top: 57px;
+        left: 500px;
+        display: flex;
+    }
+    .orgSender{
+        margin-top: 7px;
+        min-width: 140px;
+    }
+</style>
+<div>
+    <div class="panel panel-primary">
+        <div style="padding: 5px 0;; height:50px;" class="panel-heading">تعداد نامه های وارده و صادره سازمان
+			<button ng-click="Func.onExcelClick()" class="btn btn-default pull-left downloadReport">
+				<img src="app/assets/img/excel.png">
+			</button>
+            <button ng-click="Func.onPdfClick()" class="btn btn-default pull-left downloadReport">
+                <img src="app/assets/img/pdf.png">
+            </button>
+<!--
+			<button class="btn btn-default pull-left downloadReport">
+				<img src="app/assets/img/csv.png">
+			</button>
+-->
+		</div>
+        <div class="panel-body ">
+            <vt-search control-fn="Controller.searchController"></vt-search>
+            <div class="organization" >
+                <label class=" orgSender" >نام سازمان فرستنده</label>
+                <div style="min-width: 250px;">
+                    <ui-select ng-model="Data.selectedOrg" on-select="Func.onSelectOrg($item);">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.title"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (Data.orgList | filter: $select.search) track by $index">
+                            <span ng-bind="item.title"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-hover col-sm-12">
+                <thead>
+                    <tr>
+                        <th>نام سازمان</th>
+                        <th>کل نامه ها</th>
+                        <th>تعداد ارجاعات</th>
+                        <th>تعداد نامه های وارده</th>
+                        <th>تعداد نامه های صادره</th>
+                        <th>تعداد نامه های داخلی</th>
+                        <th>تعداد پیش‌نویس </th>
+                        <th>تعداد ارجاع بی‌پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="letter in Data.letterList">
+                        <td>{{letter.organization.title}}</td>
+                        <td>{{letter.letterCore|EnToFaNumber}}</td>
+                        <td>{{letter.forwardedLetterCopy|EnToFaNumber}}</td>
+                        <td>{{letter.letterInitiationFromSecretariat|EnToFaNumber}}</td>
+                        <td>{{letter.letterDeliveryThroughSecretariat|EnToFaNumber}}</td>
+                        <td>{{letter.letterInside|EnToFaNumber}}</td>
+                        <td>{{letter.letterDraft|EnToFaNumber}}</td>
+                        <td>{{letter.notRespondLetterPossitionAssignment|EnToFaNumber}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

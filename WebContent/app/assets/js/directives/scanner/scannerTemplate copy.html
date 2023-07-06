@@ -1,0 +1,137 @@
+<ng-form name="Data.scanerForm">
+    <!--<div class="btn-group row" dropdown>
+      &lt;!&ndash; ng-click="Func.onScanClick();" &ndash;&gt;
+      <img ng-if="Data.scannerLoading" class="scanner-loading" src="app/assets/img/loader.gif">
+      <button ng-disabled="!Data.scanerStatus || Data.isScanning" ng-click="Func.onScanClick();" id="split-button" type="button" class="btn btn-danger">اسکن</button>
+      <button type="button" class="btn btn-danger" dropdown-toggle >
+        <span class="glyphicon glyphicon-cog"></span>
+        <span class="sr-only">Split button!</span>
+      </button>
+        <ul class="dropdown-menu col-sm-12" role="menu" aria-labelledby="split-button">
+          <span ng-if="!Data.scanerStatus">
+            <div class="text-info">
+              نرم افزار اسکن سامانه کاتب بر روی سیستم شما نصب نمی باشد.<br />
+              لطفا نرم افزار را از لینک زیر دانلود کنید و پس از نصب و راه اندازی این صفحه را دوباره بارگذاری نماید<br /><br />
+              <div class="col-sm-12 text-center" style="font-weight: bold">
+                <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">دانلود نرم افزار</a>
+              </div>
+            </div>
+          </span>
+          <span ng-if=" Data.scanerStatus.data.version < Data.lastScannerVersion">
+            <div class="text-info">
+              نرم افزار اسکن سامانه‌ی کاتب بر روی سیستم شما بروز نمی‌باشد.<br />
+              لطفا نرم افزار را از لینک زیر بروزرسانی کنید و سپس دوباره صفحه را بارگذاری نماید<br /><br />
+              <div class="col-sm-12 text-center" style="font-weight: bold">
+                <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">بروزرسانی نرم افزار</a>
+              </div>
+            </div>
+          </span>
+          <span ng-if="Data.scanerStatus && (Data.scanerStatus.data.version >= Data.lastScannerVersion)">
+            <li ng-class="{'has-error':Data.validationClick && Data.scanerForm.selectedScaner.$invalid}" class="col-sm-12" role="menuitem">
+              <label class="col-sm-7 required">انتخاب اسکنر</label>
+              <select required name="selectedScaner" class="form-control col-sm-5" ng-model="Data.selectedScaner" ng-click="Func.onPrevent($event);"
+                ng-options="scanner as scanner.title for scanner in Data.scannerList">
+              </select>
+            </li>
+            <li ng-class="{'has-error':Data.validationClick && Data.scanerForm.pageSize.$invalid}" class="col-sm-12" role="menuitem">
+              <label class="col-sm-7 required">اندازه صفحه</label>
+              <select required name="pageSize" class="form-control col-sm-5" ng-model="Data.pageSize" ng-click="Func.onPrevent($event);">
+                <option value="A4">A4</option>
+                <option value="A5">A5</option>
+                <option value="B5">B5</option>
+              </select>
+            </li>
+            <li ng-class="{'has-error':Data.validationClick && Data.scanerForm.scanQuality.$invalid}" class="col-sm-12" role="menuitem">
+              <label class="col-sm-7 required">کیفیت اسکن</label>
+              <select required name="scanQuality" class="form-control col-sm-5" ng-model="Data.scanQuality" ng-click="Func.onPrevent($event);">
+                <option value="300">300dpi</option>
+                <option value="200">200dpi</option>
+              </select>
+            </li>
+            <li ng-class="{'has-error':Data.validationClick && Data.scanerForm.scanType.$invalid}" class="col-sm-12" role="menuitem">
+              <label class="col-sm-7 required">حالت اسکن</label>
+              <select required name="scanType" class="form-control col-sm-5" ng-model="Data.scanType" ng-click="Func.onPrevent($event);">
+                <option value="false">تک صفحه ای</option>
+                <option value="true">چند صفحه ای</option>
+              </select>
+            </li>
+          </span>
+        </ul>
+    </div>-->
+    <div class="col-sm-12" ng-if="Data.scanerStatus && Data.scanerStatus.data.version >= Data.lastScannerVersion">
+      <div class="row rowForm">
+        <div class="col-sm-6">
+          <select required name="selectedScaner" class="form-control" ng-model="Data.selectedScaner" ng-click="Func.onPrevent($event);"
+                  ng-options="scanner as scanner.title for scanner in Data.scannerList">
+          </select>
+        </div>
+        <div class="col-sm-6" ng-show="Data.selectedScaner.uid == 'OPEN_NAPS'">
+          <button class="btn btn-primary" type="button" ng-click="Func.onScanClick()">بازکردن</button>
+        </div>
+        <div class="col-sm-6" ng-show="Data.selectedScaner.uid != 'OPEN_NAPS'">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">{{Data.scanedFilesCounter}}</span>
+            <button class="btn btn-danger" type="button" ng-click="Func.onRemoveClick()" aria-describedby="basic-addon1">
+              <i class="flaticon-delete"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12" ng-show="Data.selectedScaner.uid != 'OPEN_NAPS'" ng-if="Data.scanerStatus && Data.scanerStatus.data.version >= Data.lastScannerVersion">
+      <div class="row rowForm">
+          <div class="col-sm-12">
+            <button class="btn btn-primary" type="button" ng-click="Func.onScanClick()" ng-disabled="Data.scannerLoading">اسکن</button>
+            <button class="btn btn-primary" type="button" ng-click="Func.onUploadClick()" ng-show="Data.scanedFilesCounter>0">آپلود</button>
+            <button class="btn btn-primary" type="button" ng-click="Func.onScanAndUploadClick()" ng-disabled="Data.scannerLoading">اسکن و آپلود</button>
+            <img ng-if="Data.scannerLoading" class="scanner-loading" src="app/assets/img/loader.gif">
+          </div>
+      </div>
+    </div>
+    <div dropdown ng-if="!Data.scanerStatus || Data.scanerStatus.data.version < Data.lastScannerVersion">
+      <button type="button" class="btn btn-danger" dropdown-toggle id="split-button">
+        <span class="glyphicon glyphicon-warning-sign" style="font-size: 15px;"></span>
+        <span class="sr-only">Split button!</span>
+      </button>
+      <ul class="dropdown-menu col-sm-12" role="menu" aria-labelledby="split-button">
+          <span ng-if="!Data.scanerStatus">
+            <div class="text-info">
+              نرم افزار اسکن سامانه کاتب بر روی سیستم شما نصب نمی باشد.<br />
+              لطفا نرم افزار را از لینک زیر دانلود کنید و پس از نصب و راه اندازی این صفحه را دوباره بارگذاری نماید<br /><br />
+              <div class="col-sm-12 text-center" style="font-weight: bold">
+                <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">دانلود نرم افزار</a>
+              </div>
+            </div>
+          </span>
+          <span ng-if=" Data.scanerStatus.data.version < Data.lastScannerVersion">
+            <div class="text-info">
+              نرم افزار اسکن سامانه‌ی کاتب بر روی سیستم شما بروز نمی‌باشد.<br />
+              لطفا نرم افزار را از لینک زیر بروزرسانی کنید و سپس دوباره صفحه را بارگذاری نماید<br /><br />
+              <div class="col-sm-12 text-center" style="font-weight: bold">
+                <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">بروزرسانی نرم افزار</a>
+              </div>
+            </div>
+          </span>
+      </ul>
+    </div>
+  
+    <!--<div class="col-sm-12" ng-if="!Data.scanerStatus">
+      <div class="text-info">
+        نرم افزار اسکن سامانه کاتب بر روی سیستم شما نصب نمی باشد.<br />
+        لطفا نرم افزار را از لینک زیر دانلود کنید و پس از نصب و راه اندازی این صفحه را دوباره بارگذاری نماید<br /><br />
+        <div class="col-sm-12 text-center" style="font-weight: bold">
+          <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">دانلود نرم افزار</a>
+        </div>
+      </div>
+    </div>-->
+    <div class="row">
+        <!--<div class="wrapper" ng-if="pdfUrl">-->
+        <div class="wrapper" ng-if="pdfUrl && !options.isHidenPDFViewer" style="margin-top: 85px;">
+          <!--<div style="height: 600px !important;width: 800px !important;" vt-pdf control-fn="{canSign:false, pdfUrl: pdfUrl}"></div>-->
+          <iframe src="{{Func.trustSrc(pdfUrl)}}" style="height: 600px !important;width: 800px !important;" frameborder="0"></iframe>
+        </div>
+          <!--<ng-pdf template-url="app/assets/html/pdfViewer.html"></ng-pdf>-->
+      <!--</div>-->
+    </div>
+  </ng-form>
+  

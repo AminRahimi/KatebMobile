@@ -1,0 +1,243 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">تفویض اختیارات</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_CONFERMENT">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.confermentSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.confermentListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_CONFERMENT" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_CONFERMENT"
+					ng-show="true" type="button"
+					ng-click="Func.onAddconfermentClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_CONFERMENT"
+					ng-show="Data.selectedconferment.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditconfermentClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_CONFERMENT"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveconfermentClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="confermentForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_CONFERMENT"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateconfermentClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="confermentForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_CONFERMENT"
+					ng-show="Data.selectedconferment.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onDeleteconfermentClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedconferment.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="confermentForm" role="form" novalidate>
+
+				<div class="row rowForm" ng-class="{'has-error':confermentForm.user.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">سمت</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedconferment.position.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.position" name="user" required
+								ng-change="Func.onSelectposition(Data.position)"
+								ng-options="position as position.title for position in Data.positionList">
+						</select>
+					</div>
+				</div>
+
+				<div class="row rowForm" ng-class="{'has-error':confermentForm.user.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">جانشین</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedconferment.successor.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7 dropdown-selector">
+                        <i class="fa fa-times" ng-click="Func.onRemoveSenderClick()" ng-show="Data.selectedconferment.successor"></i>
+                        <ui-select ng-model="Data.selectedconferment.successor" required name="user">
+                            <ui-select-match>{{$select.selected.title}}</ui-select-match>
+                            <ui-select-choices repeat="successor in (Data.successorList | filter: $select.search) track by $index"
+                                               refresh="Func.onUserRefresh($select.search)">
+                                <div ng-bind="successor.title"></div>
+                            </ui-select-choices>
+                        </ui-select>
+						<!--<select class="form-control" ng-model="Data.successor" name="user" required-->
+							<!--ng-change="Func.onSelectSuccessor(Data.successor)"-->
+							<!--ng-options="successor as successor.title for successor in Data.successorList">-->
+						<!--</select>-->
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">فعال</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedconferment.active|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="active" 
+							ng-model="Data.selectedconferment.active">
+					</div>
+				</div>
+
+				<div class="row rowForm">
+					<label class="col-sm-5">مشاهده‌ی نامه‌های دریافتی</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedconferment.seeReceivedLetters|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="seeReceivedLetters"
+							   ng-model="Data.selectedconferment.seeReceivedLetters">
+					</div>
+				</div>
+
+				<div class="row rowForm">
+					<label class="col-sm-5">ارسال و امضاء نامه</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedconferment.sendAndSignLetter |checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="sendAndSignLetter"
+							   ng-model="Data.selectedconferment.sendAndSignLetter">
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">  پاراف نامه</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedconferment.sendAndParaphLetter |checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="sendAndParaphLetter"
+							   ng-model="Data.selectedconferment.sendAndParaphLetter">
+					</div>
+				</div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">اجازه دیدن کارتابل پیش نویس</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedconferment.seeDrafts |checkmark}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="checkbox" class="" name="seeDrafts "
+                               ng-model="Data.selectedconferment.seeDrafts">
+                    </div>
+                </div>
+
+				<div class="row rowForm" ng-class="{'has-error':confermentForm.startTime.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">تاریخ شروع</label>
+					<div ng-if="Data.mode=='view' && Data.selectedconferment.startTime" class="col-sm-7">
+				{{Data.selectedconferment.startTime|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<vt-persian-date-picker name="startTime" ng-model="Data.selectedconferment.startTime" model="Data.selectedconferment.startTime" is-required="true" required></vt-persian-date-picker>
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':confermentForm.endTime.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">تاریخ پایان</label>
+					<div ng-if="Data.mode=='view' && Data.selectedconferment.endTime" class="col-sm-7">
+				{{Data.selectedconferment.endTime|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<vt-persian-date-picker name="endTime" ng-model="Data.selectedconferment.endTime" model="Data.selectedconferment.endTime" is-required="true" required></vt-persian-date-picker>
+					</div>
+				</div>	
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">مشاهده ارجاع‌ها</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.seeReferences|checkmark}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<input type="checkbox" class="" name="seeReferences" -->
+							<!--ng-model="Data.selectedconferment.seeReferences">-->
+					<!--</div>-->
+				<!--</div>	-->
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">پاسخ به ارجاع‌ها</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.responseToReferences|checkmark}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<input type="checkbox" class="" name="responseToReferences" -->
+							<!--ng-model="Data.selectedconferment.responseToReferences">-->
+					<!--</div>-->
+				<!--</div>	-->
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">مشاهده نامه‌های دریافتی</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.seeReceivedLetters|checkmark}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<input type="checkbox" class="" name="seeReceivedLetters" -->
+							<!--ng-model="Data.selectedconferment.seeReceivedLetters">-->
+					<!--</div>-->
+				<!--</div>	-->
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">پاسخ به نامه‌های دریافتی</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.responseReceivedLetters|checkmark}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<input type="checkbox" class="" name="responseReceivedLetters" -->
+							<!--ng-model="Data.selectedconferment.responseReceivedLetters">-->
+					<!--</div>-->
+				<!--</div>	-->
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">مشاهده نامه‌ها با برچسب</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.seeLettersWithTag.title|EnToFaNumber}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<select class="form-control" ng-model="Data.seeLettersWithTag" name="seeLettersWithTag" -->
+							<!--ng-change="Func.onSelectseeLettersWithTag(Data.seeLettersWithTag)" -->
+							<!--ng-options="seeLettersWithTag as seeLettersWithTag.title for seeLettersWithTag in Data.seeLettersWithTagList">-->
+						<!--</select>-->
+					<!--</div>-->
+				<!--</div>	-->
+				<!--<div class="row rowForm">-->
+					<!--<label class="col-sm-5">پاسخ به نامه‌ها با برچسب</label>-->
+					<!--<div ng-show="Data.mode=='view'" class="col-sm-7">-->
+				<!--{{Data.selectedconferment.responseLettersWithTag.title|EnToFaNumber}}-->
+					<!--</div>-->
+					<!--<div ng-show="Data.mode!='view'" class="col-sm-7">-->
+						<!--<select class="form-control" ng-model="Data.responseLettersWithTag" name="responseLettersWithTag" -->
+							<!--ng-change="Func.onSelectresponseLettersWithTag(Data.responseLettersWithTag)" -->
+							<!--ng-options="responseLettersWithTag as responseLettersWithTag.title for responseLettersWithTag in Data.responseLettersWithTagList">-->
+						<!--</select>-->
+					<!--</div>-->
+				<!--</div>	-->
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_CONFERMENT" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.confermentAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

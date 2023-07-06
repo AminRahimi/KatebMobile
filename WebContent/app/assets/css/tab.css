@@ -1,0 +1,21 @@
+.nav-tabs {
+	margin-bottom: 10px;
+}
+.nav-tabs > li > a{
+	border: none !important;
+	color: #0097a7;
+	font-family: iranianSans;
+	font-size: 14px;
+}
+
+.nav-tabs > li{
+	cursor: pointer;
+}
+
+.nav-tabs > li > a:hover{
+	background: transparent;
+}
+
+.nav-tabs > li.active{
+	border-bottom: solid 2px #fe754a;
+}

@@ -1,0 +1,30 @@
+
+
+<li id="{{treeData.uid}}" class="tree-node" ng-repeat="treeData in treeData.children | orderBy:'indexInParent'">
+	<span style="width: 200px; padding: 0px 3px; background-color: transparent; border: medium none;"> <span class="treeNode" style="position: relative;display: inline-flex;align-items: center" ng-class="{'treeNodeSelected':treeData.selectedClass , 'close-tree':treeData.isCollapsed && treeData.childCount, 'open-tree':!treeData.isCollapsed && treeData.childCount}" ng-click="onSelectNodeClick(treeData);"><i
+        ng-class="{'flaticon-signs':treeData.isCollapsed && treeData.childCount,'flaticon-minus':!treeData.isCollapsed && treeData.childCount,'glyphicon glyphicon-leaf':!treeData.childCount}" class="" ng-click="onCollapseClick(treeData);$event.stopPropagation();"></i>
+			<p ng-show="!uploadFile" style="" >{{treeData[options.displayLabelKey] || treeData.title}}</p>
+			<p ng-show="uploadFile && treeData.hasAccess" style="">{{treeData[options.displayLabelKey] || treeData.title}}</p>
+			<p ng-show="uploadFile && !treeData.hasAccess" style="cursor: not-allowed;" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="left" tooltip-popup-delay="50" tooltip="شما دسترسی لازم برای آرشیو در این فولدر را ندارید.">{{treeData[options.displayLabelKey] || treeData.title}}</p>
+	<span class="badge" ng-if="isWithStats" style="bottom: 2px;">{{treeData.stats}}</span>
+			<div class="dropdown" style="float: left; left: 0px; position: absolute; top: 3px;" ng-if="isEditable">
+				<a role="button" data-toggle="dropdown" data-target="#" onclick="dropDownFixPosition(this);"> <i class="caret"></i>
+				</a>
+
+				<ul aria-labelledby="drop4" role="menu" class="dropdown-menu dropdown-menu-right">
+					<li><a href="" tabindex="-1" role="menuitem" ng-click="onNewChildClick(treeData)">فرزند جدید</a></li>
+					<li ng-if="treeData.name!='*'"><a href="" tabindex="-1" role="menuitem" ng-click="onChangeParentClick(treeData)">تغییر پدر</a></li>
+					<li ng-if="treeData.name!='*'"><a href="" tabindex="-1" role="menuitem" ng-click="onChangeChildNameClick(treeData)">ویرایش</a></li>
+					<li ng-if="treeData.name!='*'"><a href="" tabindex="-1" role="menuitem" ng-click="onDeleteChildClick(treeData)">حذف</a></li>
+					<li ng-if="treeData.name!='*'"><a href="" tabindex="-1" role="menuitem" ng-click="onCopyClick(treeData)">کپی</a></li>
+
+					<li ng-if="!$first"><a href="" tabindex="-1" role="menuitem" ng-click="onChangeIndexClick(treeData,-1)"> <i class="glyphicon glyphicon-arrow-up"></i>
+					</a></li>
+					<li ng-if="!$last"><a href="" tabindex="-1" role="menuitem" ng-click="onChangeIndexClick(treeData,1)"> <i class="glyphicon glyphicon-arrow-down"></i>
+					</a></li>
+				</ul>
+			</div>
+	</span>
+</span>
+    <ul class="treeChild" collapse="treeData.isCollapsed" ng-include="treeItemRendererAddress">
+    </ul></li>

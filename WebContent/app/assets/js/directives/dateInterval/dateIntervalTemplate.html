@@ -1,0 +1,8 @@
+<label class="col-sm-2 p-t-10">{{label}}</label>
+<vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-sm-10" model="date"></vt-persian-date-picker>
+<select class="form-control col-sm-3 time-picker" ng-model="houre"  ng-show="haveTime">
+     <option ng-repeat="i in Data.hoursRange track by $index">{{$index}}</option>
+</select>
+<select class="form-control col-sm-3 time-picker" ng-model="minute" ng-show="haveTime">
+     <option ng-repeat="i in Data.minutesRange track by $index">{{$index}}</option>
+</select>

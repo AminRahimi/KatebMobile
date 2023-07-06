@@ -1,0 +1,50 @@
+<!-- <p class='input-group noPadding' ng-class="{hidden:!isEditMode}"> -->
+<!--      <input id="{{field}}" ng-readonly="true" ng-attr-name="{{field}}" ng-model="model.displayString" type="text" class="form-control"></input> -->
+<!--      <i style="position: absolute; z-index: 2; left: 81px; top: 19px; cursor: pointer;" ng-click="onRemoveSelectedClick()" ng-show="model" class="glyphicon glyphicon-remove  text-danger"></i> -->
+<!--      <i style="position: absolute; z-index: 2; top: 19px; cursor: pointer; left: 100px;" ng-click="onEditSelectedClick()" ng-show="model" class="glyphicon glyphicon-edit  text-primary"></i> -->
+<!--      <span class='input-group-addon btn btn-default' ng-click='openEntitySelectorModal()' ng-if="!isAddOnly"> -->
+<!--           <i class='glyphicon glyphicon-search'></i> -->
+<!--      </span> -->
+<!--      <span class="input-group-addon btn btn-default" ng-hide="schema.isCreateDisabled" ng-click="onOpenAddNewEntityModal()"> -->
+<!--           <span class="glyphicon glyphicon-plus"></span> -->
+<!--      </span> -->
+<!-- </p> -->
+<!-- <p class="form-control-static" ng-class="{hidden:isEditMode}" ng-show="model && model.displayString"> -->
+<!--      <label class="label label-default pull-right" style="padding: 10px; margin: 2px; cursor: pointer;"> -->
+<!--           <a ng-click="openEntityInfoModal(model);" style="color: black;"> {{model.displayString}} </a> -->
+<!--      </label> -->
+<!-- </p> -->
+
+<div ng-class="{hidden:!isEditMode}" class="col-sm-5 noSidePadding">
+     <div class="btn-group">
+          <button ng-click='openEntitySelectorModal()' ng-if="!isAddOnly" class="btn btn-sm btn-default ng-scope" type="button">
+               <i class="glyphicon glyphicon-search"></i>
+          </button><!-- end ngIf: !isAddOnly -->
+          <button ng-hide="schema.isCreateDisabled" ng-click="onOpenAddNewEntityModal()" class="btn btn-sm btn-default" type="button">
+               <i class="glyphicon glyphicon-plus"></i>
+          </button>
+     </div>
+</div>
+
+<div  ng-show="model && model.displayString">
+     <table class="table table-striped table-entity-view" >
+          <thead>
+               <tr>
+               		<th>#</th>
+                    <th ng-repeat-start="viewGroup in schemaOfEntityType.jsonSchema.viewGroups" ng-if="false"></th>
+                    <th ng-repeat='field in viewGroup.members track by $index' ng-repeat-end>{{schemaOfEntityType.jsonSchema.properties[field].label}}</th>
+                    <th></th>
+               </tr>
+          </thead>
+          <tbody>
+               <tr>
+               		<th scope="row">1</th>
+                    <td ng-repeat-start="viewGroup in schemaOfEntityType.jsonSchema.viewGroups" ng-if="false"></td>
+                    <td ng-repeat='field in viewGroup.members track by $index' ng-repeat-end ng-click="openEntityInfoModal(model)">
+                         <schema-form-field api="apis[field]" is-focused='isFocused' field='field' suffix="suffix" schema='schemaOfEntityType.jsonSchema.properties[field]' model='model' required='schemaOfEntityType.jsonSchema.properties[field].required' label='{{schemaOfEntityType.jsonSchema.properties[field].label}}' is-edit-mode='false'></schema-form-field>
+                    </td>
+                    <td><span class=" glyphicon glyphicon-remove" ng-class="{hidden:!isEditMode}" style="cursor: pointer; cursor: hand; position: relative; z-index: 2; top: 4px; color: red" data-placement="top" title="پاک کردن" ng-click="onRemoveSelectedClick(model);" id="remove"> </span></td>
+               </tr>
+          </tbody>
+     </table>
+</div>

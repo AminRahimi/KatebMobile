@@ -1,0 +1,9 @@
+.bhoechie-tab-content {
+    border: none !important;
+}
+.processCartableList #saveAsCom {
+    display: none !important;
+}
+.download-btn {
+    margin-bottom: 10px;
+}

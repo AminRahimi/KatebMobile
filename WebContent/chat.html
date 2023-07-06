@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\">
+<title>Insert title here</title>
+
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/cupertino/jquery-ui.css'/>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js'></script>
+<script src='chatClient/strophe.js'></script>
+<script src='chatClient/flXHR.js'></script>
+<script src='chatClient/strophe.flxhr.js'></script>
+
+<link type="text/css" href="chatClient/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet"/>
+<link type="text/css" href="chatClient/staticfile/styleChat.css" media="all" rel="stylesheet"/>
+<script src='chatClient/staticfile/jsChat.js'></script>
+
+
+
+</head>
+<body>
+
+<div id=main-container>
+    <div id="chat-window">
+       	<div class="panel panel-default">
+               <div id="person-info-wrapper" class="panel-heading top-bar">
+                      <h3 class="panel-title">
+                      <span class="glyphicon glyphicon-comment"></span>
+                      <span id="person-name"> start chat </span>
+                      <span id="person-jid" class="hidden"></span>
+                      <span id="person-status"></span>
+                      </h3>
+               </div>
+               <div id='message-wrapper' class="panel-body msg_container_base">
+                   <div id='start-message'>select contact to start chat</div>
+               </div>
+               <div class="panel-footer">
+                   <div class="input-group">
+                       <input id="chat-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                       <span class="input-group-btn">
+                       <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                       </span>
+                   </div>
+               </div>
+   		</div>
+    </div>
+	    
+	<!-- container of roster list -->
+	<div id=rosters-wrapper>
+		<input id="roster-search-input" class="form-control input-sm" type="text" placeholder="search roster">
+		<ul id="roster-list">
+			
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>

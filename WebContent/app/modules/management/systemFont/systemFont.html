@@ -1,0 +1,60 @@
+<div class="col-sm-12" access-checker="API_LIST_FONT">
+    <div class="panel panel-default panel-page-header">
+        <div class="panel-body">مدیریت فونت </div>
+    </div>
+    <div class="col-md-8" >
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <vt-search control-fn="Controller.systemFontListSearchController"></vt-search>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <vt-grid control-fn="Controller.systemFontListController"></vt-grid>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"  >
+        <div class="panel panel-default">
+            <div class="panel-body panel-management">
+                <div class="col-sm-12">
+                    <a class="btn btn-sm btn-default btn-text" access-checker="API_ADD_FONT" ng-show="!Data.selectedFont.uid && Data.mode=='view'"
+                        type="button" ng-click="Func.onAddFontClick()" ng-disabled="Data.mode=='add'">ایجاد</a>
+                    <a class="btn btn-sm btn-primary btn-text" access-checker="API_EDIT_FONT"
+                        ng-show="Data.selectedFont.uid && Data.mode=='view'" type="button"
+                        ng-click="Func.onEditsystemFontClick()" ng-disabled="" >ویرایش</a>
+                    <a class="btn btn-sm btn-success btn-text" access-checker="API_ADD_FONT"
+                        ng-show="Data.mode !='view'" type="button" ng-click="Func.onSaveFontClick()">ذخیره</a>
+                    <a class="btn btn-sm btn-warning btn-text" ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+                        ng-click="Func.onCancelClick()" ng-disabled="" >انصراف</a>
+                    <a class="btn btn-sm btn-danger btn-text" access-checker="API_DELETE_FONT"
+                        ng-show="Data.selectedFont.uid && Data.mode=='view'" type="button"
+                        ng-click="Func.onDeleteFontClick()" ng-disabled="">حذف</a>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default"  ng-show="Data.selectedFont.uid || Data.mode=='add'">
+            <div class="panel-body">
+                <div class="row rowForm">
+                    <label class="col-sm-5">فونت</label>
+                    <div class="col-sm-7" ng-show="Data.mode=='add'">
+                        <vt-file model="Data.selectedFont" is-edit-mode="Data.fileAttach"></vt-file>
+                    </div>
+                    <div ng-show="Data.mode!='add'" class="col-sm-7">
+                        {{Data.selectedFont.name}}
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">فعال</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedFont.enabled|checkmark}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="checkbox" class="" name="enabled" ng-model="Data.selectedFont.enabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<style>
+    .panel-cartable-content > .panel-primary > .panel-body {
+        height: calc(100vh - 70px);
+        overflow: auto;
+    }
+	.table-responsive{
+		background-color: #f8f8f8;
+	}
+	th{
+		background-color: #fff;
+	}
+</style>
+<div class="well well-sm action-bar" style="background: #fff"
+     ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
+        <button  class="btn btn-sm btn-icon white-bg"
+                ng-click="Func.onRemoveLettersFromUserArchiveClick()">
+            بازگرداندن از آرشیو شخصی
+        </button>
+</div>
+<div class="well well-sm action-bar" style="background: #fff"
+     ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
+
+         <tag-input
+                    external-data="Data.checkedItemList"
+                    ng-show="Data.checkedItemList.length>0">
+        </tag-input>
+        <description-dropdown style="vertical-align: super;"
+                              uid-list="Data.checkedItemEntityUIdLis"
+                              ng-show="Data.checkedItemEntityUIdLis.length>0"
+                              cb="Func.onArchiveCb">
+        </description-dropdown>
+        <button class="btn btn-primary single-button"
+                ng-click="Func.openForwardLetterModal()">
+         <i class="flaticon-arrows-1"></i>
+            ارجاع
+        </button>
+        <button access-checker="USER_LETTER_ARCHIVE" class="btn btn-primary single-button"
+                ng-click="Func.onAddLettersToUserArchiveSuccess()">
+            انتقال به آرشیو شخصی
+        </button>
+        <label class="dropdown">
+            <button class="btn btn-primary single-button dropdown-toggle" type="button"
+                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                نیاز به پیگیری
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-click="Func.onFollowClick()"><a>پیگیری</a></li>
+                <li><a ng-click="Func.onUnfollowClick()">عدم پیگیری</a></li>
+            </ul>
+        </label>
+        <button class="btn btn-primary single-button" access-checker="SEND_TO_OTHER_ORG"
+                ng-click="Func.openSendLetterModal()">
+            <i class="flaticon-interface-2"></i>
+            ارسال
+        </button>
+        <button class="btn btn-primary" ng-click="Func.readTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter &&
+                                                                   ($parent.Data.selectedFilter.filter.uid.indexOf('letter.unread')>-1 || $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1)">خوانده شده</button>
+        <button class="btn btn-warning" ng-click="Func.unreadTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter && $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1">خوانده نشده</button>
+
+
+    <!-- <a id="archive-btn"
+        class="btn btn-primary"
+        ng-show="Data.checkedItemList.length>0">
+       <i class="flaticon-folder-1"></i> بایگانی</a> -->
+    <!--<a id="refer-btn" class="btn btn-primary" ng-click="Func.onActionbarItemClick('inventoryCheck');"
+       ng-click="Func.onActionbarItemClick('inventoryCheck');" ng-show="Data.checkedItemList.length>0">
+        <i class="fa flaticon-interface-2"></i> ارجاع</a>
+    <a id="move-out" class="btn btn-primary" ng-click="Func.onActionbarItemClick('exit');"
+       ng-click="Func.onActionbarItemClick('exit');">
+        <i class="flaticon-log-out"></i> خروج از کارتابل</a> -->
+</div>
+<cartable-list directive-is-ready="Func.listDirectiveIsReady()"
+               process-task-fn="Func.onProcessTaskClick(task, cartable)"
+               api="Controller.api" options="Controller.options">
+</cartable-list>

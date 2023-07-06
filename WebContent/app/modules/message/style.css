@@ -1,0 +1,9 @@
+.message-actionbar{
+	left: 15px;
+    margin-bottom: 5px;
+    padding-bottom: 0;
+    position: fixed;
+    right: 15px;
+    width: auto;
+    z-index: 10;
+}

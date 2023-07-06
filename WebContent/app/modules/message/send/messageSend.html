@@ -1,0 +1,58 @@
+<div class="col-md-12" style="padding:0">
+	<div class="panel panel-default">
+		<!--<div class="panel-heading">-->
+			<!--<cartable-search control-fn="Controller.searchController"></cartable-search>-->
+		<!--</div>-->
+		<div class="panel-body">
+			<div class="row" style="margin: 0">
+				<div class="col-sm-12" ng-class="{'col-sm-9':Data.showMessageInfo}" style="overflow: hidden">
+					<vt-grid control-fn="Controller.listController"></vt-grid>
+				</div>
+				<div class="col-sm-0" ng-class="{'col-sm-3':Data.showMessageInfo}" style="overflow: hidden" ng-show="Data.showMessageInfo">
+                    <button ng-click="Data.showMessageInfo=false" style="    display: block; cursor: pointer; background: no-repeat; position: absolute; text-align: center; left: 20px;
+    padding: 0 10px; border: 0; font-size: 20px;z-index: 2;" ng-show="Data.showMessageInfo">&times;</button>
+					<div class="row rowForm">
+						<div class="col-sm-12">
+							<label>موضوع:</label>
+							<span>{{Data.messageInfo.subject}}</span>
+						</div>
+					</div>
+					<div class="row rowForm">
+						<div class="col-sm-12">
+							<label>گیرندگان</label>
+							<span ng-repeat="receiver in Data.messageInfo.receivers">
+								{{receiver.title|EnToFaNumber}}
+								<span ng-hide="$last">، </span>
+							</span>
+						</div>
+					</div>
+					<div class="row rowForm">
+						<div class="col-sm-12">
+							<span>{{Data.messageInfo.creationDate|tehranDate:'HH:mm'|EnToFaNumber}}</span>
+							<span>|</span>
+							<span>{{Data.messageInfo.creationDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+						</div>
+					</div>
+					<div class="row rowForm">
+						<div class="col-sm-12">
+							<pre class="txt-file" ng-bind-html="Data.messageInfo.content"></pre>
+						</div>
+					</div>
+					<!--ng-if="Data.messageInfo.attachments.length>0"-->
+					<!--<div class="row rowForm" ng-if="false">-->
+						<!--<div class="col-sm-12 text-left">-->
+							<!--<span ng-click="Func.onDownloadSelectedFilesClick()">دانلود انتخاب شده ها</span>-->
+							<!--<span>|</span>-->
+							<!--<span ng-click="Func.onDownloadAllFilesClick()">دانلود همه</span>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="row rowForm" ng-show="Data.messageInfo.attachments.length>0">
+						<div class="col-sm-12">
+							<vt-attachment is-edit-mode="false" api="Controller.attachment" model="Data.messageInfo.attachments"></vt-attachment>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

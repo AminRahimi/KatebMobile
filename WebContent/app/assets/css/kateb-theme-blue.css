@@ -1,0 +1,116 @@
+.navbar,
+.navbar > .container .navbar-brand,
+.navbar-left{
+	background-color: #0062d2;
+}
+.navbar{
+    box-shadow: 0 -10px 60px -4px #4780c1 inset;
+}
+.panel-cartable-menu .cartable-accordion .panel-group > a{
+    color: #0062d2;
+	border-color: #0062d2 !important;
+}
+.panel-cartable-menu,
+.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group,
+.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-heading, .panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-heading .panel-title span{
+    background-color: #fff;
+    color: #0062d2 !important;
+}
+.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-collapse > .panel-body .list-group-item span.badge{
+    background-color: #5a9ce6 !important;
+}
+a.list-group-item:focus, a.list-group-item:hover,
+.table > thead > tr > th{
+    color: #0062d2;
+}
+.nav.navbar-nav .dropdown-menu{
+    background: #fafafa;
+}
+.navbar .dropdown-menu > li > a{
+    color: #999;
+}
+.navbar .dropdown-menu > li > a:focus, .navbar .dropdown-menu > li > a:hover{
+    color: #666;
+}
+.nicescroll-cursors{
+    background-color: #0062d2 !important;
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover{
+    color: #00d576;
+}
+.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-collapse > .panel-body .list-group-item span.badge.label-bg{
+    background-color: #00d576 !important;
+}
+.table thead {
+    border-bottom: 2px solid #0062d2;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+    background-color: #0062d2;
+    border-color: #4780c1;
+}
+.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child,
+.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:first-child th button{
+    background-color:#0775f3 !important;
+    border-radius: 0;
+}
+.sideCalender > div.well.well-sm.col-sm-12 > table thead tr:last-child{
+    background-color: #0062d2 !important;
+}
+.btn{
+    border-radius: 3px;
+}
+.btn-primary{
+    border: 1px solid #00d576;
+    color: #fff;
+    background: #00d576;
+    border-radius: 2px !important
+}
+.btnActionInLetter,
+.btn-icon{
+    color:  #0062d2 !important
+}
+.nav-tabs > li > a{
+    color: #aaa;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{
+    color: #00d576;
+}
+.nav-tabs > li.active{
+    border-color: #00d576;
+}
+#toolbarContainer, .findbar, .secondaryToolbar{
+    background-color: #0062d2;
+}
+h4 {
+    color: #00d576;
+}
+.row.rowForm > label{
+    color: #0062d2;
+}
+.btn-print{
+    color: #0062d2;
+}
+.btn-outline-primary {
+    color: #0062d2;
+    border: 1px solid #0062d2;
+}
+.panel-right-secretariat a.list-group-item > h6 >.label-bg{
+    background-color: #5a9ce6;
+}
+.panel-right-secretariat a.list-group-item.active > h6 >.label-bg{
+    background-color:#00d576
+}
+
+.col-sm-4.col-sm-offset-2.well.well-sm .row.rowForm > label{
+    color: #0062d2;
+}
+.table > thead > tr > th{
+    color: #0062d2 !important;
+}
+.panel-right-secretariat .title,
+.panel-page-header .panel-body{
+    color: #0062d2;
+}
+.btn-danger{
+    background: #ec3737;   
+}

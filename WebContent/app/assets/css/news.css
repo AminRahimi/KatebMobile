@@ -1,0 +1,44 @@
+hr {
+    clear: both;
+}
+
+.blue-color {
+    color: rgb(0, 151, 167);
+}
+
+.newsRow {
+    border-bottom: 1px solid #d7d7d7;
+    padding: 5px 10px;
+}
+
+.lastNewsContainer > div > div.panel{
+	padding: 0;
+}
+.lastNewsContainer > div > div.panel > div.panel-heading{
+	background-color: transparent;
+	border-color: #1eaaba;
+    color: #646464;
+}
+.lastNewsContainer{
+	max-height: 90%;
+    overflow: auto;
+    padding-left: 0;
+}
+.latestNewsRow {
+    border-bottom: 1px solid #dddddd;
+    min-height: 125px;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.newsRow .slideTheme img,
+.newsBox .slideTheme img,
+.latestNewsRow .slideTheme img {
+	filter: brightness(100%);
+}
+.newsRow:first-child .slideTheme img{
+    max-height: 260px;
+    max-width: 390px;
+    width: 100%;
+    object-fit: cover;
+}

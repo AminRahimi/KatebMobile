@@ -1,0 +1,128 @@
+<style>
+	.thumbnail {
+		height: 280px;
+	}
+
+	.template-title {
+		text-align: center;
+		display: block;
+	}
+
+	/* Small screens, laptops. */
+	@media (max-height: 769px) {
+		.modal-body {
+			height: 529px;
+			overflow: auto;
+		}
+	}
+
+	/* large screens, laptops. */
+	@media (max-height: 1201px) and (min-height:770px) {
+		.modal-content {
+			top: 30px;
+		}
+
+		.modal-body {
+			height: 680px;
+			overflow: auto;
+		}
+	}
+
+	.template-item {
+		padding: 0 !important;
+		margin: 3% !important;
+	}
+
+	.private-template-img {
+		margin-bottom: 40px;
+	}
+
+	.search-template {
+		width: 30%;
+		font-size: 12px;
+		margin-right: 10px;
+	}
+
+	.modal-title {
+		margin-top: 5px;
+	}
+</style>
+<div class="modal-header">
+	<div style="display: flex;">
+		<h5 class="modal-title" ng-if="Data.orgUid === 'CURRENT'">انتخاب قالب</h5>
+		<h5 class="modal-title" ng-if="Data.orgUid === 'EXTERNAL'">انتخاب سازمان فرستنده</h5>
+		<input class="form-control search-template" type="text" ng-if="Data.orgUid === 'CURRENT'" ng-model="Data.query"
+			ng-change="Func.searchTemplateList(Data.query)" placeholder="قالب مورد نظر را سرچ کنید...">
+		<input class="form-control search-template" type="text" ng-if="Data.orgUid === 'EXTERNAL'" ng-model="Data.query"
+			ng-change="Func.searchGlobalsTemplateList(Data.query)" placeholder="قالب مورد نظر را سرچ کنید...">
+	</div>
+</div>
+<div class="modal-body">
+	<form name="form" class="row rowForm" ng-class="{'has-error':form.senderOrganization.$invalid && Data.validationClicked}" ng-if="Data.orgUid === 'EXTERNAL'">
+		<label class="col-sm-2 required" style="padding-top: 8px;">نام سازمان فرستنده</label>
+		<div class="col-sm-5">
+			<ui-select ng-model="Data.selectedOrg" on-select="Func.onSelectOrg($item, $model);" required name="senderOrganization">
+				<ui-select-match>
+					<span ng-bind="$select.selected.title"></span>
+				</ui-select-match>
+				<ui-select-choices repeat="item in (Data.orgList | filter: $select.search) track by $index">
+					<span ng-bind="item.title"></span>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</form>
+	<div class="row" ng-if="Data.orgUid === 'CURRENT' || Data.orgUid === 'EXTERNAL'">
+		<div class="col-sm-11" style="margin-right: 6%;">
+			<div style="padding: 0 !important;margin: 3% !important;" class="col-sm-6 col-md-3 box-shadow-items">
+				<div class="thumbnail col-sm-12">
+					<img src="/Kateb/app/assets/img/letter_template_blank.png" alt="تصویر قالب خالی"
+						style="margin-top: 17px;">
+					<div class="caption">
+						<p>
+							<a ng-click="Func.onSelectTemplate(Data.clientTemplate)" class="btn btn-primary btn-block"
+								role="button" title="{{Data.clientTemplate.name}}">{{Data.clientTemplate.name}}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- private template -->
+			<div ng-if="template.type==='private'" ng-repeat="template in Data.letterList track by $index"
+				class="col-sm-6 col-md-3 box-shadow-items template-item">
+				<div class="thumbnail col-sm-12">
+					<span class="template-title">قالب شخصی</span>
+					<img class="private-template-img" ng-if="template.thumnail.hash"
+						src="files/?mode=view&fcode={{template.thumnail.hash}}" alt="تصویر قالب شخصی">
+					<img ng-if="!template.thumnail.hash" src="/Kateb/app/assets/img/letter_template.png"
+						alt="تصویر قالب خالی">
+					<div class="caption">
+						<p>
+							<a ng-click="Func.onSelectTemplate(template)" class="btn btn-primary btn-block"
+								role="button" title="{{template.name}}">{{template.name}}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- public template -->
+			<div ng-if="template.type==='public'" ng-repeat="template in Data.letterList track by $index"
+				class="col-sm-6 col-md-3 box-shadow-items template-item">
+				<div class="thumbnail col-sm-12">
+					<span class="template-title">قالب عمومی</span>
+					<img ng-if="template.thumnail.hash" src="files/?mode=view&fcode={{template.thumnail.hash}}"
+						alt="تصویر قالب عمومی" style="margin-bottom: 40px;">
+					<img ng-if="!template.thumnail.hash" src="/Kateb/app/assets/img/letter_template.png"
+						alt="تصویر قالب خالی">
+					<div class="caption">
+						<p>
+							<a ng-click="Func.onSelectTemplate(template)" class="btn btn-primary btn-block"
+								role="button" title="{{template.name}}">{{template.name}}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<!-- <button class="btn btn-primary" type="button" ng-click="Func.onSelectTemplate()">تایید</button> -->
+	<button class="btn btn-warning" type="button" ng-click="Func.onCancelClick()">انصراف</button>
+</div>

@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    {
+      "name": "Add pic",
+      "className": "AddPic",
+      "description": "Adds text to the editor.",
+      "path": "src/addpic.js",
+      "uiComponents": [
+        {
+          "name": "addPicButton",
+          "type": "Button",
+          "iconPath": "theme/icons/ckeditor.svg"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<ul class="dropdown-menu"
+    ng-show="isOpen() && !moveInProgress"
+    ng-style="{top: position().top+'px', left: position().left+'px'}"
+    style="max-height: 150px; overflow-y: auto;display: block;">
+    <li class="typeahead-match" ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+        ng-mouseenter="selectActive($index)" ng-click="selectMatch($index); $event.stopPropagation();" role="option"
+        id="{{::match.id}}">
+        <div typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+    </li>
+</ul>

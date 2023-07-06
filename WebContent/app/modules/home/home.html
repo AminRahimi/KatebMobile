@@ -1,0 +1,200 @@
+<script>
+    _.contains = _.includes;
+</script>
+<style>
+    vt-dropdown-multi-string div{
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+    } 
+    .open>.dropdown-menu {
+        /* display: flex;
+        flex-wrap: wrap; */
+        margin-right: 10px;
+        margin-left: 33px;
+    }
+    /* .dropdown-submenu>.dropdown-menu {
+    top: 5px;
+    margin-top: -6px;
+    margin-right: -58px;
+} */
+</style>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="position: relative;">اتوماسیون اداری
+                <img src='app/assets/img/brandIcon.png'>
+                <span class="kateb-version">نسخه {{version|EnToFaNumber}}</span>
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display: flex !important;">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="menuItem in menuData | orderBy:'order':false"
+                    ng-class="{'active': isMenuActive(menuItem), 'dropdown' : (menuItem.childItems && menuItem.childItems.length)}"
+                    access-checker="{{menuItem.feature}}">
+                    <a ng-if="!(menuItem.childItems && menuItem.childItems.length)" ui-sref="{{menuItem.uiSref}}">
+                        <span class="glyphicon {{'glyphicon-'+menuItem.icon}}"></span>
+                        {{menuItem.title}}
+                        <span ng-if="menuItem.uiSref === 'home.newsList'" class="badge pull-left text-info"
+                              style="margin-right: 5px; background-color: rgb(251, 117, 70);">{{Data.unReadNews | EnToFaNumber}}</span>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href=""
+                       role="button" aria-haspopup="true" aria-expanded="false"
+                       ng-if="(menuItem.childItems && menuItem.childItems.length)">
+                        {{menuItem.title}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul ng-if="(menuItem.childItems && menuItem.childItems.length)"
+                        ng-class="{ 'active': isMenuActive(menuItem),
+							'dropdown-menu' : !(childItem.submenus && childItem.submenus.length)}">
+
+                        <li ng-repeat="childItem in menuItem.childItems" access-checker="{{childItem.feature}}"
+                            ng-class="{'menu-item dropdown dropdown-submenu' : (childItem.submenus && childItem.submenus.length)}">
+                            <a ng-if="!(childItem.submenus && childItem.submenus.length)"
+                               ui-sref="{{childItem.uiSref}}">{{childItem.title}}</a>
+
+                            <a ng-if="childItem.submenus && childItem.submenus.length"
+                               href="" class="dropdown-toggle" data-toggle="dropdown">{{childItem.title}}</a>
+                            <ul class="dropdown-menu" ng-if="childItem.submenus && childItem.submenus.length">
+                                <li ng-repeat="submenu in childItem.submenus" access-checker="{{submenu.feature}}">
+                                    <a class="submenu-item" ng-click="onSubmenuClick(childItem, submenu)">{{submenu.title}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li access-checker="SEE_MANAGEMENT_TAB">
+                    <a href="http://172.16.85.206:8080/Jooybar" target="_blank">فرآیندهای بیشتر</a>
+                </li>
+                <!--         <li> -->
+                <!--             <a href="cm/#/">فرم ساز</a> -->
+                <!--         </li> -->
+                <!--<li>-->
+                <!--<a target="_blank" href="/Kateb/api/user/allUsers/excel" access-checker="MANAGEMENT_USER" > -->
+                <!--<span class="glyphicon"></span>-->
+                <!--دانلود لیست کاربران	-->
+                <!--</a>-->
+                <!--</li>-->
+            </ul>
+            <ul class="nav navbar-nav search-header" id="search-header">
+                <li class="dropdown" ng-if="Data.showSearchBar">
+                    <span class="fa fa-navicon" aria-hidden="true" data-toggle="dropdown"></span>
+                    <input class="form-control search-header-input dropdown-toggle"
+                           ng-model="Data.searchQuery.query.quickSearch" id="dropdownMenu1" aria-expanded="true"
+                           ui-keypress="{13:'Func.onSearchClick()'}" placeholder="جستجو در متن و اطلاعات نامه‌ها..." autocomplete="off">
+                    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <div class="search-header-item">
+                                <vt-cartable-date-interval label="' تاریخ'" model="Data.searchQuery.query.date"></vt-cartable-date-interval>
+                            </h5>
+                        </div>
+                        <div class="search-header-item">
+                            <vt-dropdown-multi-string label="'گیرنده'" model="Data.searchQuery.query.delivery"></vt-dropdown-multi-string>
+                            <!--<div dropdown is-open="Data.isOpenDeliveryDropdown" auto-close="outsideClick">-->
+                            <!--<span class="model-length" ng-if="Data.searchQuery.query.delivery.length">{{Data.searchQuery.query.delivery.length|EnToFaNumber}}</span>-->
+                            <!--<div id="single-button1" dropdown-toggle class="dropdown-toggle-box">گیرنده <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>-->
+                            <!--<ul class="tag-popup dropdown-menu"  role="menu" aria-labelledby="single-button1">-->
+                            <!--<li>-->
+                            <!--<multiselect-reciever model="Data.searchQuery.query.delivery"-->
+                            <!--search-fn="Func.getPuaList($root.currentUserOrg.uid, null, query)"-->
+                            <!--ng-model="Data.searchQuery.query.delivery" name="letterDeliveryTo"-->
+                            <!--vt-array-required-->
+                            <!--is-edit-mode="true">-->
+                            <!--</multiselect-reciever>-->
+                            <!--</li>-->
+                            <!--</ul>-->
+
+                            <!--</div>-->
+                        </div>
+                        <div class="search-header-item">
+                            <vt-dropdown-multi-string label="'فرستنده'" model="Data.searchQuery.query.sender"></vt-dropdown-multi-string>
+                            <!--<div dropdown is-open="Data.isOpenSenderDropdown" auto-close="outsideClick">-->
+                            <!--<span class="model-length" ng-if="Data.searchQuery.query.sender.length">{{Data.searchQuery.query.sender.length|EnToFaNumber}}</span>-->
+                            <!--<div id="single-button2" dropdown-toggle class="dropdown-toggle-box">فرستنده <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>-->
+                            <!--<ul class="tag-popup dropdown-menu"  role="menu" aria-labelledby="single-button2">-->
+                            <!--<li>-->
+                            <!--<multiselect-reciever model="Data.searchQuery.query.sender"-->
+                            <!--search-fn="Func.getPuaList($root.currentUserOrg.uid, null, query)"-->
+                            <!--ng-model="Data.searchQuery.query.sender" name="lettersenderTo"-->
+                            <!--vt-array-required-->
+                            <!--is-edit-mode="true">-->
+                            <!--</multiselect-reciever>-->
+                            <!--</li>-->
+                            <!--</ul>-->
+
+                            <!--</div>-->
+                        </div>
+                        <div class="search-header-item">
+                            <vt-dropdown-multi-string label="'برچسب'" model="Data.searchQuery.query.tag"></vt-dropdown-multi-string>
+                            <!--<vt-typeahead api="Func.getTagList"-->
+                            <!--model="Data.searchQuery.query.tag"-->
+                            <!--is-edit-mode="true">-->
+                            <!--</vt-typeahead>-->
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary btn-block" ng-click="Func.onSearchClick(); "
+                                    ng-disabled="!Data.searchQuery.query.quickSearch && !Data.searchQuery.query.date.length && !Data.searchQuery.query.delivery.length && !Data.searchQuery.query.sender.length && !Data.searchQuery.query.tag.length">جستجو</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-link"
+                                style="border-bottom: 2px dotted #eee; border-radius: 0; padding: 0;text-decoration: none;"
+                                ng-click="Func.onSearchClick('advanced'); $event.stopPropagation();" >جستجوی پیشرفته</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" style="background-color: #00838f;">
+                <li>
+                    <vt-notification class="navbar-brand pull-left"></vt-notification>
+                </li>
+                <li>
+                    <a class="navbar-brand pull-left flaticon-envelope" ui-sref="home.message.inbox"
+                       style="background:none; position: relative;">
+                        <span ng-show="Data.unreadMessagesCount.count > 0" class="unread-messages-count">{{Data.unreadMessagesCount.count | EnToFaNumber}}</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" style="background-color: #00838f;">
+                <li class="dropdown" style="min-width: 180px;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">{{userFullName}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" style="width: 160px;">
+                        <li><a>{{time|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</a></li>
+                        <li><a ui-sref="home.changePassword">تغییر رمز عبور</a></li>
+                        <li class="menu-item dropdown dropdown-submenu dropdown-submenu-left">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> تنظیمات
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="submenu in settingMenu" access-checker="{{submenu.feature}}">
+                                    <a class="submenu-item" ui-sref="{{submenu.uiSref}}">{{submenu.title}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a ui-sref="home.theme">تغییر ظاهر سامانه</a></li>
+                        <li ng-show="Data.currentUserConfig.config.server.host==='kateb.saadev.ir'"><a ng-click="Func.onGetClientLogClick()">client error log</a></li>
+                        <li class="divider"></li>
+                        <li><a href="logout">خروج</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div ng-class="{'container' : (stateName.indexOf('management')==-1 && stateName.indexOf('setting')==-1),
+               'managementContainer' : stateName.indexOf('management') !== -1 } ">
+
+    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 mainContent" ui-view="mainContent"></div>
+</div>

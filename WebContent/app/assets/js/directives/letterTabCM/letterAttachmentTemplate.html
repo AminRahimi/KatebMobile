@@ -1,0 +1,90 @@
+<div class="row is-view-attachment" ng-repeat="item in model track by $index">
+     <h4 class="col-sm-12">{{item.relationTypeKey|appEnum:attachmentType}}</h4>
+     <div class="col-sm-2" style="text-align:center" ng-show="item.type=='FILE'">
+          <div class="img-type-attachment fa" ng-class="{
+    			'fa-file-pdf-o bg-pdf':Func.checkFileType(item.fileBody)=='pdf', 
+    			'fa-file-word-o bg-word':Func.checkFileType(item.fileBody)=='doc', 
+    			'fa-file-excel-o bg-excel':Func.checkFileType(item.fileBody)=='xls', 
+    			'fa-file-image-o bg-image':Func.checkFileType(item.fileBody)=='img', 
+    			'fa-file-audio-o bg-audio':Func.checkFileType(item.fileBody)=='mp3', 
+    			'fa-file-text-o bg-file':Func.checkFileType(item.fileBody)=='none'}"></div>
+          <div class="title-attachment">{{item.fileBody.name|splitString:15}}</div>
+     </div>
+     <div class="col-sm-2" style="text-align:center" ng-show="item.type=='LETTER'">
+          <div class="img-type-attachment fa fa-envelope-o bg-letter"></div>
+          <div class="title-attachment">{{item.letterBody.title|splitString:15}}</div>
+     </div>
+     <div class="col-sm-9 description-attachment">
+          <div class="col-sm-2">
+               <a class="col-sm-12 btn" ng-show="item.type=='FILE'" ng-click='Func.onReception(item.fileBody)'>دریافت</a>
+               <a class="col-sm-12 btn text-danger" ng-show="isEditMode" ng-click='Func.onRemove($index)'>حذف</a>
+               <!--ng-click="Func.onShowLetterModalClick($index)"-->
+               <a ng-show="item.letterBody" class="btn col-sm-12"
+                  ui-sref="home.cartable.orgLetter({letterUid: item.letterBody.uid})" target="_blank">نمایش نامه</a>
+               <span class="col-sm-12 text-primary" ng-show="item.uploader">آپلود کننده: 
+               {{item.uploader}}</span>
+          </div>
+          <div class="col-sm-10">{{item.description}}</div>
+     </div>
+</div>
+<div ng-show="isEditMode">
+     <ng-form name="letterAttachementForm" isolate-form novalidate>
+     <div class="row rowForm">
+          <label class="col-sm-2">افزودن</label>
+          <label class="radio-inline">
+               <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="FILE" ng-model="Data.type" ng-checked="true" class="letter-attachment-radio">
+               <label for="inlineRadio1">
+                    <span>
+                         <span></span>
+                    </span>
+                    <label>فایل</label>
+               </label>
+          </label>
+          <label class="radio-inline">
+               <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="LETTER" ng-model="Data.type" ng-click="Func.onLetterType()" class="letter-attachment-radio">
+               <label for="inlineRadio2">
+                    <span>
+                         <span></span>
+                    </span>
+                    <label>نامه</label>
+               </label>
+          </label>
+     </div>
+     <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
+          <label class="col-sm-2" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
+          <div ng-show="isEditMode" class="col-sm-4">
+               <select class="form-control" ng-model="Data.attachmentType" name="attachmentType" required>
+                    <option value="Turn">عطف</option>
+                    <option value="Follow">پیرو</option>
+                    <option value="Appendix">پیوست</option>
+                    <option value="Relation">ارتباط</option>
+               </select>
+          </div>
+     </div>
+     <div class="row rowForm" ng-if="Data.type=='FILE'" ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">
+          <label class="col-sm-2" ng-class="{'required':isEditMode}">فایل</label>
+          <div class="col-sm-5" required ng-model="Data.file" name="file">
+               <vt-file required="false" is-edit-mode="isEditMode" ‌ model="Data.file">‌</vt-file>
+          </div>
+     </div>
+     <div class="row rowForm" ng-if="Data.type=='LETTER'" ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachLetter.$invalid}">
+          <label class="col-sm-2" ng-class="{'required':isEditMode}">نامه</label>
+          <div class="col-sm-4">
+               <a class="btn btn-cs btn-primary" ng-click="Func.onSelectLetter()">انتخاب</a>
+               <span ng-show="Data.attachLetter" ng-model="Data.attachLetter" required name="attachLetter">{{Data.attachLetter.internalNumber}} - {{Data.attachLetter.subject}}</span>
+               <!--<a ng-show="Data.attachLetter" class="btn btn-sm btn-info" ng-click="Func.onShowLetterModalClick()">نمایش نامه</a>-->
+          </div>
+     </div>
+     <div class="row rowForm">
+          <label class="col-sm-2">توضیحات</label>
+          <div ng-show="isEditMode" class="col-sm-9">
+               <textarea type="text" class="form-control" name="description" ng-model="Data.description"></textarea>
+          </div>
+     </div>
+     <div class="row rowForm">
+          <div class="col-sm-4 col-sm-offset-7">
+               <button class="btn btn-primary pull-left btn-cs" ng-click="Func.onAddAttachments()" ng-disabled="letterAttachementForm.$invalid && Data.validationClicked">افزودن</button>
+          </div>
+     </div>
+     </ng-form>
+</div>

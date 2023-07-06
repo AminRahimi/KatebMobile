@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Kateb/static/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/Kateb/static/assets/css/login.css">
+    <script src="../static/assets/js/jquery.js"></script>
+    
+    <script type="text/javascript" src="../static/assets/js/md5.min.js"></script>
+    <title>ورود به سامانه</title>
+</head>
+<style>
+    body{
+        display: none;
+    }
+    #bgPhoto {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #captcha {
+        background: rgba(230, 231, 232, 0.7) none repeat scroll 0 0;
+        border: medium none;
+        height: 40px;
+        padding-right: 15px;
+        text-align: center;
+        text-transform: uppercase;
+        width: 100%;
+        border-radius: 3px 0px 0px 3px;
+        color: #000000;
+    }
+.captchaImg {
+    border: 1px solid #dadada;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 45px);
+}
+.captcha-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 180px;
+    flex-direction: row-reverse;
+}
+.row-captcha {
+    background: #fff;
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px auto;
+    width: 305px;
+}
+</style>
+<body>
+<div class="loginContainer row">
+    <div class="loginBox col-lg-6 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+        <form id="LoginForm" class="col-sm-6"  method="post" action="../j_spring_security_check"
+              onSubmit="hashPassword(this)">
+            <div class="col-xs-12 loginForm">
+                <img class="logo" src="/Kateb/static/assets/img/automation.png">
+                <div>
+                    <input maxlength="128" name="j_username" placeholder="لطفا نام کاربری خود را وارد نمایید" 
+                           class="usernameField" type="text">
+                    <input maxlength="128" placeholder="لطفا رمز عبور خود را وارد نمایید" class="passwordField"
+                           type="password" id="password">
+                    <label class="loginStatus" id="alarm">رمز عبور و یا نام کاربری خود را بصورت صحیح وارد نمایید</label>
+                    <label class="loginStatus" id="wrong-captcha">مقدار کد امنیتی را بصورت صحیح وارد نمایید</label>
+                    <div  class="rememberMe">
+                    <div class="row-captcha">
+                        <% if (((java.util.function.Predicate) ir.viratech.commons.spring.context.ApplicationContextProvider
+                            .getInitializedApplicationContext().getBean("captchaRequiredPredicate")).test(request)) { %>
+                        <div class="captcha-container">
+                            <img id="captchaPic" class="captchaImg">
+                            <button tabindex="-1" class="btn btn-default" id="refreshCaptcha" type="button">
+                                <img src="/Kateb/static/assets/img/refresh.png" style="height: 20px;" class="refresh-captcha-image">
+                            </button>
+                        </div>
+                        <div>
+                            <input id="captcha" class="captcha" name="j_captcha" maxlength="7" type="text" placeholder="کد درون تصویر">
+                        </div>
+                        <% } %>
+                    </div>
+                       
+                    </div>
+                    <div class="rememberMe">
+                        <input name="_spring_security_remember_me" type="checkbox" id="c1" name="cc"/>
+                        <label for="c1"><span style="margin: 0 5px 0 10px;"></span>مرا به خاطر بسپار</label>
+                    </div>
+
+                </div>
+                <input id="submit" class="loginBtn" type="submit" value="ورود به ناحیه کاربری"/>
+                <div class="copyright">
+                    <img src="/Kateb/static/assets/img/vira-logo.png">
+                    <span style="color: #fff;">طرح و راه اندازی:</span>
+                    <a class="viratech" href="https://www.kateb.app">ساد افزار رایا </a>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-6 loginNews" id="bgPhoto">
+
+        </div>
+        <div class="col-sm-6 loginNews " id="defaultPhoto">
+            <img style="margin: 10px auto;" class="logo" src="/Kateb/static/assets/img/logo.png">
+            <div class="col-xs-12">
+                <img id="katebPhoto" style="width:100%;" src="/Kateb/static/assets/img/slide.jpg">
+            </div>
+            <ul class="news">
+                <li>قابلیت اسکن مستقیم در سامانه</li>
+                <li>نمایش درخت ارجاع</li>
+                <!-- 					<li>نمایش تاریخچه انتقال پیش نویس</li> -->
+                <li>امکان ثبت نامه توسط چندین دبیر در دبیرخانه</li>
+                <li>امکان استفاده از قالب های تعریف شده در نامه نگاری</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<script>
+    function httpGetAsync(theUrl, onSuccess, onError) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
+                onSuccess(xmlHttp.responseText);
+            } else if(xmlHttp.readyState === 4 && xmlHttp.status !== 200) {
+                onError();
+            }
+        };
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+    document.getElementById('alarm').style.display = "none";
+    document.getElementById('wrong-captcha').style.display = "none";
+    httpGetAsync('../api/config', function () {
+        window.location.replace('../');
+    }, function () {
+        httpGetAsync('../api/wallpaper', function () {
+            document.body.style.display = 'block';
+            document.getElementById("bgPhoto").style.display = "block";
+            document.getElementById('bgPhoto').style.backgroundImage = "url(../api/wallpaper)";
+            document.getElementById("defaultPhoto").style.display = "none";
+        }, function () {
+            document.body.style.display = 'block';
+            document.getElementById("defaultPhoto").style.display = "block";
+            document.getElementById('bgPhoto').style.display = "none";
+        })
+    });
+    function err() {
+            // document.getElementsByClassName('bgPhoto').style.height = "77%";
+
+        if (window.location.search == '?login_error=1' ) {
+            document.getElementById('alarm').style.display = "block";
+            document.getElementById('alarm').style.opacity = '1';
+
+        }
+        if (window.location.search == '?login_error=4') {
+            document.getElementById('wrong-captcha').style.display = "block";
+            document.getElementById('wrong-captcha').style.opacity = '1';
+
+        }
+
+    };
+    err();
+    var hashPassword = function (form) {
+        // ../ j_spring_security_check
+        // Create a hidden input element, and append it to the form:
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'j_password';
+        // input.value = md5(document.getElementById('password').value);
+        input.value = document.getElementById('password').value;
+        ////theForm.input;
+        form.appendChild(input);
+
+
+//			form.submit();
+        //form.j_password.value = md5(form.j_password.value);
+    }
+     function refreshCaptcha() {
+            var captchaSrc = "../captcha/captcha.png";
+            $("#captchaPic").attr("src", captchaSrc);
+            $("#refreshCaptcha").click(function () {
+                $('.captchaImg + button > img').addClass('rotating');
+                $("#captchaPic").attr("src", captchaSrc + "?" + Date.now()).load(function () {
+                    $('.captchaImg + button > img').removeClass('rotating');
+                });
+                $("#captcha").val('');
+            });
+        };
+        refreshCaptcha();
+        function refreshCaptchaForce() {
+            var captchaSrc = "../captcha/captcha.png";
+            $('.captchaImg + button > img').addClass('rotating');
+            $("#captchaPic").attr("src", captchaSrc + "?" + Date.now()).load(function () {
+                $('.captchaImg + button > img').removeClass('rotating');
+            });
+            $("#captcha").val('');
+        };
+</script>
+</body>
+</html>

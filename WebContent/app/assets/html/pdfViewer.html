@@ -1,0 +1,25 @@
+<style>
+	.rotate0 {-webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	.rotate90 {-webkit-transform: rotate(90deg); transform: rotate(90deg); }
+	.rotate180 {-webkit-transform: rotate(180deg); transform: rotate(180deg); }
+	.rotate270 {-webkit-transform: rotate(270deg); transform: rotate(270deg); }
+	.pdf-controls { width: 100%; display: block; background: #eee; padding: 1em;}
+	.fixed { position: fixed; top: 0; left: calc(50% - 480px); z-index: 100; width: 100%; padding: 1em; background: rgba(238, 238, 238,.9); width: 960px; }
+	canvas, canvas *{
+		direction: ltr !important;
+/* 		max-width: 786px; */
+	}
+</style>
+<nav ng-class="{'pdf-controls fixed': scroll > 100, 'pdf-controls': scroll <= 100}" style="direction: ltr;">
+	<button class="btn btn-sm btn-default" ng-click="goPrevious()"><</span></button>
+	<button class="btn btn-sm btn-default" ng-click="goNext()">></span></button>
+	<button class="btn btn-sm btn-default" ng-click="zoomIn()">+</span></button>
+	<button class="btn btn-sm btn-default" ng-click="fit()">{{"100%"|EnToFaNumber}}</span></button>
+	<button class="btn btn-sm btn-default" ng-click="zoomOut()">-</span></button>
+	<button class="btn btn-sm btn-default" ng-click="rotate()">{{"90"|EnToFaNumber}}</span></button>
+	<span>صفحه: </span><input id="pageNum" type="text" min=1 ng-model="pageNum"><span> / {{pageCount|EnToFaNumber}}</span>
+</nav>
+<div style="position: relative;">
+<canvas id="pdf-canvas" class="rotate0"></canvas>
+<canvas scale="page-fit" height="792" width="612" id="canvasShape" style="position: absolute; top: 0; right: 0;"></canvas>
+</div>

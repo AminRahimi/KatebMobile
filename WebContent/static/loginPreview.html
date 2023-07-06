@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Kateb/static/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/Kateb/static/assets/css/login.css">
+    <script type="text/javascript" src="../static/assets/js/md5.min.js"></script>
+    <title>ورود به سامانه</title>
+</head>
+<style>
+    #bgPhoto {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .loginBtn {
+        text-align: center;
+    }
+
+    .loginContainer {
+        background-size: contain !important;
+        transform: scale(0.9);
+    }
+
+    .loginBox {
+        margin-top: 49px;
+        transform: scale(0.6) translateY(-98px) translateX(21px);
+    }
+
+    .loginContainer {
+        padding-top: 0 !important;
+        transform: scale(0.9) translateY(-25px);
+    }
+</style>
+
+<body>
+    <div class="loginContainer row">
+        <div class="loginBox  col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+            <form id="LoginForm" class="col-sm-6" method="post" action="../j_spring_security_check"
+                onSubmit="hashPassword(this)">
+                <div class="col-xs-12 loginForm">
+                    <img class="logo" src="/Kateb/static/assets/img/automation.png">
+                    <div>
+
+                        <input maxlength="128" name="j_username" placeholder="لطفا نام کاربری خود را وارد نمایید"
+                            class="usernameField" type="text" disabled>
+                        <input maxlength="128" placeholder="لطفا رمز عبور خود را وارد نمایید" class="passwordField"
+                            type="password" id="password" disabled>
+                        <label class="loginStatus" id="alarm">رمز عبور و یا نام کاربری خود را بصورت صحیح وارد
+                            نمایید</label>
+                        <div class="rememberMe">
+                            <input name="_spring_security_remember_me" type="checkbox" id="c1" name="cc" disabled />
+                            <label for="c1"><span style="margin: 0 5px 0 10px;"></span>مرا به خاطر بسپار</label>
+                        </div>
+
+                    </div>
+                    <input id="submit" class="loginBtn" value="ورود به ناحیه کاربری" disabled />
+                    <div class="copyright">
+                        <img src="/Kateb/static/assets/img/vira-logo.png">
+                        <span style="color: #fff;">طرح و راه اندازی:</span>
+                        <span class="viratech">ساد افزار رایا </span>
+                    </div>
+                </div>
+            </form>
+            <div class="col-sm-6 loginNews" id="bgPhoto">
+
+            </div>
+            <div class="col-sm-6 loginNews " id="defaultPhoto">
+                <img style="margin: 10px auto;" class="logo" src="/Kateb/static/assets/img/logo.png">
+                <div class="col-xs-12">
+                    <img id="katebPhoto" style="width:100%;" src="/Kateb/static/assets/img/slide.jpg">
+                </div>
+                <ul class="news">
+                    <li>قابلیت اسکن مستقیم در سامانه</li>
+                    <li>نمایش درخت ارجاع</li>
+                    <!-- 					<li>نمایش تاریخچه انتقال پیش نویس</li> -->
+                    <li>امکان ثبت نامه توسط چندین دبیر در دبیرخانه</li>
+                    <li>امکان استفاده از قالب های تعریف شده در نامه نگاری</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+
+        function httpGet(theUrl) {
+
+            xmlHttp.open("GET", theUrl);
+            xmlHttp.send();
+            return xmlHttp.responseText;
+        };
+        httpGet('../api/wallpaper');
+
+        function err() {
+            if (window.location.search == '?login_error=1') {
+                document.getElementById('alarm').style.opacity = '1';
+            }
+        };
+        var str = (window.location.search).toString();
+        var result = str.replace('?url=', '../');
+
+        function getBgPhoto() {
+
+            document.getElementById('bgPhoto').style.backgroundImage = "url(" + result + ")";
+            document.getElementById("defaultPhoto").style.display = "none";
+        };
+        err();
+        if (result) {
+            getBgPhoto();
+        } else {
+            document.getElementById("defaultPhoto").style.display = "block";
+            document.getElementById('bgPhoto').style.display = "none";
+        }
+        var hashPassword = function (form) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'j_password';
+            // input.value = md5(document.getElementById('password').value);
+            input.value = document.getElementById('password').value;
+            form.appendChild(input);
+        }
+    </script>
+</body>
+
+</html>

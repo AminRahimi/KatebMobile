@@ -1,0 +1,206 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">قوانین مکاتبات</div>
+	</div>
+</div>
+<div class="col-md-7">
+	<!--<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.ruleSearchController"></vt-search>
+		</div>
+	</div>-->
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<!--<vt-grid control-fn="Controller.ruleListController"></vt-grid>-->
+            <!--<ul as-sortable="Controller.dragControlListeners"-->
+                <!--ng-model="Data.ruleList">-->
+                <!--<li ng-repeat="item in Data.ruleList"-->
+                    <!--as-sortable-item ng-click="onSelectRule(item)">-->
+                    <!--<div as-sortable-item-handle>-->
+                          <!--<span class="glyphicon glyphicon-sort"></span>-->
+                        <!--<div class="text-center">{{item.name}}</div>-->
+                    <!--</div>-->
+                    <!--<hr>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <button class="btn btn-success pull-left" ng-click="Func.onSyncClick()">همگام سازی</button>
+            <table class="table table-striped" as-sortable="Controller.dragControlListeners"
+                   ng-model="Data.ruleList">
+                <tbody>
+                <tr ng-repeat="item in Data.ruleList" ng-class="{'last-table-row': $last}"  ng-click="Func.onSelectrule(item)"
+                    as-sortable-item>
+                    <td as-sortable-item-handle><span ng-hide="$last" class="glyphicon glyphicon-sort"></span></td>
+                    <td class="col-sm-12">
+                        <div>
+                            <div class="text-center">{{item.title}}</div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+	</div>
+</div>
+
+<div class="col-md-5"
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					ng-show="true" type="button"
+					ng-click="Func.onAddModeClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					ng-show="Data.selectedrule.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onEditruleClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveruleClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="ruleForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateruleClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="ruleForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					ng-show="Data.selectedrule.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onDeleteruleClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<!--<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>-->
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedrule.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="ruleForm" role="form" novalidate>
+				<div class="row rowForm" ng-class="{'has-error':ruleForm.rulename.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode=='add'}">نام</label>
+					<div class="col-sm-7" ng-show="Data.mode=='view'">
+				{{Data.selectedrule.name}}
+					</div>
+					<div ng-show="Data.mode=='add' || Data.mode=='edit'" class="col-sm-7">
+						<input type="text" class="form-control" name="rulename" required
+							ng-model="Data.selectedrule.name">
+					</div>
+				</div>
+				<div class="row rowForm col-sm-7 col-sm-offset-5" ng-show="Data.mode=='add'">
+					<label class="radio-inline">
+						<input type="radio" name="priority" id="priority1" value="inGroup" ng-model="Data.type">
+						<label for="priority1">
+							<span><span></span></span>
+							<label>قانون بین یک گروه</label>
+						</label>
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="priority" id="priority2" value="betweenGroups" ng-model="Data.type">
+						<label for="priority2">
+							<span><span></span></span>
+							<label>
+								قانون بین دو گروه
+							</label>
+						</label>
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="priority" id="priority3" value="relational" ng-model="Data.type">
+						<label for="priority3">
+							<span><span></span></span>
+							<label>
+								قانون بر اساس چارت سازمان
+							</label>
+						</label>
+					</label>
+				</div>
+                <div class="row rowForm" ng-if="Data.type == 'inGroup'">
+                    <label class="col-sm-5">نوع</label>
+                    <div class="col-sm-7" ng-show="Data.mode=='view'">
+                        {{Data.selectedrule.rule|appEnum:"rules"}}
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="Data.selectedrule.rule" ng-show="Data.mode!='view'">
+                            <option value="INGROUP-ALL-TO-ALL">ارسال همه به همه</option>
+                            <option value="INGROUP-ANY-TO-ANY">ارسال هیچ به هیچ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row rowForm" ng-if="Data.type == 'relational'">
+                    <label class="col-sm-5">نوع</label>
+                    <div class="col-sm-7" ng-show="Data.mode=='view'">
+                        {{Data.selectedrule.rule|appEnum:"rules"}}
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="Data.selectedrule.rule" ng-show="Data.mode!='view'">
+                            <option value="REALTIONAL-SIBLING">ارسال به هم سطح</option>
+                            <option value="REALTIONAL-PARENT_CHILDS">ارسال یک سطح به بالادست و زیردست</option>
+                            <option value="REALTIONAL-PARENT-TO-ALL-GRANDCHILD">ارسال بالادست به همه زیردستان</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row rowForm" ng-if="Data.type == 'betweenGroups'">
+                    <label class="col-sm-5">نوع</label>
+                    <div class="col-sm-7" ng-show="Data.mode=='view'">
+                        {{Data.selectedrule.rule|appEnum:"rules"}}
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="Data.selectedrule.rule" ng-show="Data.mode!='view'">
+                            <option value="BETWEENGROUPS-ALL-TO-ALL">ارسال همه به همه</option>
+                            <option value="BETWEENGROUPS-ANY-TO-ANY">ارسال هیچ به هیچ</option>
+                            <option value="BETWEENGROUPS-ALL-TO-ALL-ONEWAY">ارسال گروه اول به گروه دوم</option>
+                        </select>
+                    </div>
+                </div>
+                <label ng-if="Data.type == 'betweenGroups'">گروه شماره یک</label>
+                <div class="row rowForm" ng-show="Data.type != 'relational' && Data.mode!='view'">
+                    <label class="col-sm-5">افزودن نوع سمت</label>
+                    <div ng-if="Data.mode!='view'" class="col-sm-7">
+                        <select class="form-control" ng-model="Data.typeKeyOne"
+                                ng-change="Func.onPositionTypeChange('one', Data.typeKeyOne)"
+                                ng-options="item.key as item.value for item in (appConst.typeKey | objectToArray) track by item.key">
+                        </select>
+                    </div>
+                </div>
+                <div class="row rowForm" ng-show="Data.type != 'relational'">
+					<label class="col-sm-5">افزودن سمت</label>
+					<div class="col-sm-7">
+						<multiselect options="Data.groupList" model="Data.selectedrule.groupOne" name="groupOne"
+							is-edit-mode="Data.mode!='view'"></multiselect>
+					</div>
+				</div>
+                <label ng-if="Data.type == 'betweenGroups'">گروه شماره دو</label>
+                <div class="row rowForm" ng-show="Data.type == 'betweenGroups' && Data.mode!='view'">
+                    <label class="col-sm-5">افزودن نوع سمت</label>
+                    <div ng-if="Data.mode!='view'" class="col-sm-7">
+                        <select class="form-control" ng-model="Data.typeKeyTwo"
+                                ng-change="Func.onPositionTypeChange('two', Data.typeKeyTwo)"
+                                ng-options="typeKey as (typeKey|appEnum) for typeKey in Data.typeKeyList">
+                        </select>
+                    </div>
+                </div>
+				<div class="row rowForm" ng-show="Data.type == 'betweenGroups'">
+					<label class="col-sm-5">افزودن سمت</label>
+					<div class="col-sm-7">
+						<multiselect options="Data.groupList" model="Data.selectedrule.groupTwo"  name="groupTwo"
+									 is-edit-mode="Data.mode!='view'"></multiselect>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--<div class="col-md-4" access-checker="API_VIEW_RULE" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.ruleAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>-->
+
+

@@ -1,0 +1,55 @@
+<div class="modal-body">
+	<form name="memberModalForm" role="form" novalidate>
+		<div class="row rowForm">
+			<label class="col-sm-3">پیشوند</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control" name="prefix" 
+					ng-model="Data.member.prefix">
+			</div>
+		</div>
+		<div class="row rowForm">
+			<label class="col-sm-3">نام و نام خانوادگی</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control" name="name" 
+					ng-model="Data.member.name">
+			</div>
+		</div>
+		<div class="row rowForm" ng-class="{'has-error':memberModalForm.position.$invalid && Data.validationClicked}">
+			<label class="col-sm-3" ng-class="{'required':Data.mode!='view'}">سمت</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control" name="position" required 
+					ng-model="Data.member.position">
+			</div>
+		</div>
+		<div class="row rowForm">
+			<label class="col-sm-3">پسوند</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control" name="postfix" 
+					ng-model="Data.member.postfix">
+			</div>
+		</div>
+		<div class="row rowForm">
+			<label class="col-sm-3" ng-class="{'required':Data.mode!='view'}">نام نمایشی</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control" name="displayName" required
+					ng-model="Data.member.displayName">
+			</div>
+		</div>
+		
+	</form>
+</div>
+<div class="modal-footer">
+	<a class="btn btn-success btn-sm" ng-click="Func.onSaveClick(false)" 
+		ng-disabled="memberModalForm.$invalid && Data.validationClicked"
+		ng-show="Data.mode=='add'">افزودن و بعدی</a>
+	<a class="btn btn-success btn-sm" ng-click="Func.onSaveClick(true)" 
+		ng-disabled="memberModalForm.$invalid && Data.validationClicked"
+		ng-show="Data.mode=='add'">افزودن و پایان</a>
+	<a class="btn btn-primary btn-sm" ng-click="Func.onFinishClick()" 
+		ng-show="Data.mode=='add'">پایان</a>
+	<a class="btn btn-success btn-sm" ng-click="Func.onUpdateClick()" 
+		ng-disabled="memberModalForm.$invalid && Data.validationClicked"
+		ng-show="Data.mode=='edit'">ثبت تغییرات</a>
+		
+	<a class="btn btn-warning btn-sm" ng-click="Func.onCancelModalClick()">انصراف</a>
+</div>

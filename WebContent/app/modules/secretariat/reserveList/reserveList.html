@@ -1,0 +1,46 @@
+<style>
+   .table{
+        overflow: auto;
+   }
+   #single-button{
+       min-width: 70px;
+       padding-top: 4px;
+   }
+   .string-width{
+       min-width: 140px;
+   }
+   .status{
+           min-width: 145px;
+           z-index: 1;
+   }
+   .date{
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+        width: 164px;
+   }
+   option {
+        font: -moz-pull-down-menu !important;
+        }
+    select{
+        font-family: iranianSans !important;
+    }
+   .panel-left-secretariat > .col-md-12 > .panel.panel-default:nth-child(2) {
+    height: calc(100vh - 164px);
+}
+</style>
+<div class="col-md-12 managementContainer not30">
+    <div class="panel panel-primary" ng-if="Data.featuresList.indexOf('ACCESS_REG_ISSUED')!=-1">
+        <div class="panel-heading">
+            لیست شماره رزرو های اولیه
+        </div>
+
+        <div class="panel-body">
+            <vt-search control-fn="Controller.searchController"></vt-search>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body table">
+            <vt-grid control-fn="Controller.listController"></vt-grid>
+        </div>
+    </div>
+</div>

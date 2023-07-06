@@ -1,0 +1,178 @@
+<div class="col-sm-12">
+    <div class="panel panel-default panel-page-header">
+        <div class="panel-body">مدیریت واحد سازمانی</div>
+    </div>
+</div>
+<div class="col-md-8"
+     access-checker="API_LIST_DEPARTMENT">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-search control-fn="Controller.departmentSearchController"></vt-search>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-grid control-fn="Controller.departmentListController"></vt-grid>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4"
+     access-checker="API_VIEW_DEPARTMENT">
+    <div class="panel panel-default">
+        <div class="panel-body panel-management">
+            <div class="col-sm-12">
+                <a class="btn btn-sm btn-default btn-text"
+                   access-checker="API_ADD_DEPARTMENT"
+                   ng-show="true"
+                   type="button"
+                   ng-click="Func.onAddDepartmentClick()"
+                   ng-disabled="Data.mode=='add'"
+                   ng-bind="'CREATE'|EnToFaButton"></a>
+                <a class="btn btn-sm btn-primary btn-text"
+                   access-checker="API_EDIT_DEPARTMENT"
+                   ng-show="Data.selectedDepartment.uid && Data.mode=='view'"
+                   type="button"
+                   ng-click="Func.onEditDepartmentClick()"
+                   ng-disabled=""
+                   ng-bind="'EDIT'|EnToFaButton"></a>
+                <a class="btn btn-sm btn-success btn-text"
+                   access-checker="API_ADD_DEPARTMENT"
+                   ng-show="Data.mode=='add'"
+                   type="button"
+                   ng-click="Func.onSaveDepartmentClick()"
+                   ng-bind="'SAVE'|EnToFaButton"
+                   ng-disabled="departmentForm.$invalid && Data.validationClicked"></a>
+                <a class="btn btn-sm btn-success btn-text"
+                   access-checker="API_EDIT_DEPARTMENT"
+                   ng-show="Data.mode=='edit'"
+                   type="button"
+                   ng-click="Func.onUpdateDepartmentClick()"
+                   ng-bind="'UPDATE'|EnToFaButton"
+                   ng-disabled="departmentForm.$invalid && Data.validationClicked"></a>
+                <a class="btn btn-sm btn-warning btn-text"
+                   ng-show="Data.mode=='edit' || Data.mode=='add'"
+                   type="button"
+                   ng-click="Func.onCancelClick()"
+                   ng-disabled=""
+                   ng-bind="'CANCEL'|EnToFaButton"></a>
+                <a class="btn btn-sm btn-danger btn-text"
+                   access-checker="API_DELETE_DEPARTMENT"
+                   ng-show="Data.selectedDepartment.uid && Data.mode=='view'"
+                   type="button"
+                   ng-click="Func.onDeleteDepartmentClick()"
+                   ng-disabled=""
+                   ng-bind="'DELETE'|EnToFaButton"></a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default"
+         ng-show="Data.selectedDepartment.uid || Data.mode=='add'">
+        <div class="panel-body">
+            <form name="departmentForm"
+                  role="form"
+                  novalidate>
+                <div class="row rowForm"
+                     ng-class="{'has-error':departmentForm.name.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5"
+                           ng-class="{'required':Data.mode!='view'}">نام</label>
+                    <div ng-show="Data.mode=='view'"
+                         class="col-sm-7">
+                        {{Data.selectedDepartment.name|EnToFaNumber}}
+                    </div>
+                    <div ng-if="Data.mode=='edit'"
+                         class="col-sm-7">
+                        <input type="text"
+                               class="form-control"
+                               name="name"
+                               required
+                               ng-model="Data.selectedDepartment.name">
+                    </div>
+                    <div ng-if="Data.mode=='add'"
+                         class="col-sm-7">
+                        <input type="text"
+                               class="form-control"
+                               name="name"
+                               required
+                               ng-model="Data.selectedDepartment.name">
+                    </div>
+                </div>
+                <div class="row rowForm"
+                     ng-class="{'has-error':departmentForm.name.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5"
+                           ng-class="{'required':Data.mode!='view'}">کد</label>
+                    <div ng-show="Data.mode=='view'"
+                         class="col-sm-7">
+                        {{Data.selectedDepartment.code|EnToFaNumber}}
+                    </div>
+                    <div ng-if="Data.mode=='edit'"
+                         class="col-sm-7">
+                        <input type="text"
+                               class="form-control"
+                               name="name"
+                               required
+                               ng-model="Data.selectedDepartment.code">
+                    </div>
+                    <div ng-if="Data.mode=='add'"
+                         class="col-sm-7">
+                        <input type="text"
+                               class="form-control"
+                               name="name"
+                               required
+                               ng-model="Data.selectedDepartment.code">
+                    </div>
+                </div>
+                <div class="row rowForm"
+                     ng-class="{'has-error':departmentForm.departmentRoot.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5"
+                           ng-class="{'required':Data.mode!='view'}">ریشه‌ی واحد</label>
+                    <div ng-show="Data.mode=='view'"
+                         class="col-sm-7">
+                        {{Data.selectedDepartment.manager.title|EnToFaNumber}}
+                    </div>
+                    <div ng-if="Data.mode=='edit'"
+                         class="col-sm-7">
+                        <select class="form-control" required
+                                ng-model="Data.selectedDepartment.manager"
+                                name="departmentRoot"
+                                ng-options="manager as manager.title for manager in Data.managerList">
+                        </select>
+
+                    </div>
+                    <div ng-if="Data.mode=='add'"
+                         class="col-sm-7">
+                        <select class="form-control" required
+                                ng-model="Data.selectedDepartment.manager"
+                                name="departmentRoot"
+                                ng-options="manager as manager.title for manager in Data.managerList">
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row rowForm">
+                    <label class="col-sm-5">فعال</label>
+                    <div ng-show="Data.mode=='view'"
+                         class="col-sm-7">
+                        <div class="col-sm-7">
+                            {{Data.selectedDepartment.enabled|checkmark}}
+                        </div>
+                    </div>
+                    <div ng-if="Data.mode=='edit'"
+                         class="col-sm-7">
+                        <input type="checkbox"
+                               name="active"
+                               ng-model="Data.selectedDepartment.enabled">
+                    </div>
+                    <div ng-if="Data.mode=='add'"
+                         class="col-sm-7">
+                        <input type="checkbox"
+                               name="active"
+                               ng-model="Data.selectedDepartment.enabled">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

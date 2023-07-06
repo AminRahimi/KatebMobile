@@ -1,0 +1,123 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت نقش‌ها</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_ROLE">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.userroleSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.userroleListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_ROLE" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_ROLE"
+					ng-show="true" type="button"
+					ng-click="Func.onAdduserroleClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_ROLE"
+					ng-show="Data.selecteduserrole.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onEdituserroleClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_ROLE"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveuserroleClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="userroleForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_ROLE"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateuserroleClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="userroleForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_ROLE"
+					ng-show="Data.selecteduserrole.uid && Data.mode!='edit'" type="button"
+					ng-click="Func.onDeleteuserroleClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selecteduserrole.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="userroleForm" role="form" novalidate>
+				<div class="row rowForm" ng-class="{'has-error':userroleForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">عنوان</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduserrole.name|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.selecteduserrole.name">
+					
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">نمایش به همه</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7"
+						 ng-class="{'fa fa-square-o':!Data.selecteduserrole.userDefined,
+						 			'fa fa-check-square':Data.selecteduserrole.userDefined}">
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" ng-model="Data.selecteduserrole.userDefined">
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5" >توضیحات</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selecteduserrole.description|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<textarea type="text" class="form-control" name="description" 
+							ng-model="Data.selecteduserrole.description"></textarea>
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">دسترسی‌ها</label>
+					<div class="col-sm-12">
+						<table class="table table-striped">
+							<tbody>
+								<tr ng-repeat="feature in Data.selecteduserrole.features">
+									<td>{{feature.title}}</td>
+									<td ng-show="Data.mode=='view'"
+										ng-class="{'fa fa-square-o':feature.active==false,'fa fa-check-square':feature.active==true}"></td>
+									<td ng-show="Data.mode!='view'">
+										<input type="checkbox" ng-model="feature.active">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_ROLE" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.userroleAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

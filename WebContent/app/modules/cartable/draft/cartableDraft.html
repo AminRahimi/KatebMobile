@@ -1,0 +1,613 @@
+<style>
+    .letterTemplate {
+        color: #fff !important;
+        max-width: 181px !important;
+        margin-top: 3px;
+    }
+
+    .btnActionInLetter {
+        border: 1px solid #d6d6d6 !important;
+    }
+
+    .form-control.not-radius {
+        display: none;
+    }
+
+    .btn.btn-default.not-radius {
+        border: #ccc dashed;
+        width: 500px;
+        height: 120px;
+        margin-top: 20px;
+    }
+
+    #upload-text {
+        display: block !important;
+    }
+
+    .editor {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+    }
+
+    .template-icon {
+        margin-top: 8px;
+        font-size: 13px !important;
+        color: #999 !important;
+        height: 47px;
+    }
+
+    .closebtnt:hover,
+    .closebtn {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+
+    .editbtn,
+    .editbtn:hover {
+        left: 28px;
+        top: 68px;
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+
+    .viewbtn,
+    .viewbtn:hover {
+        left: 56px;
+        top: 37px;
+        font-size: 15px;
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+
+    .template-drop-down {
+        z-index: 999;
+        margin-top: 8px;
+        padding: 6px;
+        font-family: iranyekanweb;
+        border-radius: 0px;
+        position: absolute;
+        right: 70px;
+    }
+    .nav-tabs .nav-tab.has-error a::after{
+        content: " !";
+        color: red;
+    }
+</style>
+<div class="col-sm-10 col-sm-offset-2 panel-cartable-content">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row"
+                ng-show="Data.mode!=='view' || (Data.mode==='view' && Data.draft && Data.draft.uid)">
+                <div ng-show="Data.mode !=='view' || (Data.mode ==='view' && Data.letterLayout && Data.letterLayout.isFetched)">
+                    <div class="col-sm-12" style="display: flex; justify-content: space-between"
+                         ng-show="Data.mode!='signature' && Data.mode!='paraph'">
+                        <div class="actions">
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                               ng-click="Func.onReturnClick()"><i class="flaticon-close-button"></i>بستن</a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" ng-if="Data.draft.canReclaim"
+                               access-checker="RECLAIM_DRAFT" type="button" ng-click="Func.OnReclaimClick()"> بازپسگیری پیش
+                                نویس</a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                               ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode=='view'"
+                               ng-click="Func.onEditClick()" ng-disabled=""><i
+                                    class="flaticon-pencil-on-a-notes-paper"></i>
+                                {{'EDIT'|EnToFaButton}}
+                            </a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                               ng-click="Func.onSignatureClick()" ng-if="Data.draft.canSign"
+                               ng-disabled="Func.isActionButtonDisabled()"><i
+                                    class="flaticon-interface-2"></i>امضاء
+                            </a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                               ng-if="Data.draft.canParaph" ng-click="Func.onParaphClick()"
+                               ng-disabled="Func.isActionButtonDisabled()"><i
+                                    class="flaticon-interface-2"></i>پاراف</a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                               ng-click="Func.onTransferClick()"
+                               ng-if="(Data.draft.canMove || Data.draft.canMove==undefined)"
+                               ng-disabled="Func.isActionButtonDisabled()"><i class="flaticon-arrow"></i>انتقال
+                            </a>
+                            <!-- save template and draft btn -->
+                            <div id="draftTemplateId" class="btn-group" dropdown ng-show="Data.mode=='add'">
+                                <button ng-click="Func.onSaveClick()" type="button"
+                                        class="btn btn-sm btn-text btn-icon white-bg btnActionInLetter"
+                                        ng-disabled="Func.isActionButtonDisabled('SAVE')">
+                                    <i class="flaticon-technology"></i> ‌ذخیره
+                                </button>
+                                <button type="button" ng-if="Data.newOrganizationUid === 'CURRENT'"
+                                        class="btn btn btn-sm dropdown-toggle white-bg btnActionInLetter" dropdown-toggle>
+                                    <div>ذخیره قالب نامه<div class="caret" style="margin-right: 5px;"></div>
+                                    </div>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu template-drop-down" ng-if="Data.newOrganizationUid === 'CURRENT'"
+                                    role="menu">
+                                    <li>
+                                        <div class="input-group" style="position: relative;">
+                                            <input type="text" class="form-control" placeholder="نام قالب ..."
+                                                   ng-model="Data.userDefinedTemplateName">
+                                            <!-- <vt-photo ng-model="Data.selecteduser.signature" ratio="1" style="position: absolute; left: 42px;"
+                                                    is-edit-mode="Data.mode!='view'" no-title-description="true">
+                                            </vt-photo> -->
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="form-control template-icon">
+                                            آیکون قالب
+                                            <div>
+                                                <vt-photo ng-model="Data.userDefinedTemplateThumnail" ratio="1"
+                                                          style="position: absolute; left: 42px; top: 60px;"
+                                                          is-edit-mode="Data.mode!='view'" no-title-description="true"
+                                                          template-mode="true">
+                                                </vt-photo>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button style="margin-top: 10px;"
+                                                class="btn btn-xs btn-primary col-sm-12 btnActionInLetter letterTemplate"
+                                                ng-click="Func.savePrivateLetterTemplate('edit');"
+                                                access-checker="API_EDIT_PRIVATE_LETTER_TEMPLATE">ذخیره قالب
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-xs btn-primary col-sm-12 btnActionInLetter letterTemplate"
+                                                ng-disabled="!Data.userDefinedTemplateName"
+                                                ng-click="Func.savePrivateLetterTemplate('add');"
+                                                access-checker="API_ADD_PRIVATE_LETTER_TEMPLATE">ذخیره قالب جدید
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-xs btn-primary col-sm-12 btnActionInLetter letterTemplate"
+                                                ng-disabled="!Data.userDefinedTemplateName"
+                                                ng-click="Func.savePublicLetterTemplate();"
+                                                access-checker="API_EDIT_PUBLIC_LETTER_TEMPLATE">ذخیره قالب عمومی
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end of save template and draft btn -->
+                            <a ng-show="Data.mode!='add'" class="btn btn-sm btn-text btn-icon btnActionInLetter"
+                               ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode!='view'"
+                               type="button" ng-click="Func.onUpdateClick()"
+                               ng-disabled="Func.isActionButtonDisabled('SAVE')"><i class="flaticon-technology"></i>
+                                {{'UPDATE'|EnToFaButton}}
+                            </a>
+                            <a class="btn btn-sm btn-text btn-icon btnActionInLetter" ng-show="'a'=='b'"
+                               ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode!='view'"
+                               type="button" ng-click="Func.onResetClick()"><i class="fa fa-refresh"></i>ریست
+                            </a>
+                            <delete-button class="btn btn-sm btn-text btn-icon btnActionInLetter noBorder"
+                                           
+                                            exchange-function-for-delete="Func.exchangeDelete"
+                                           ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined)&& Data.draft.uid && !Data.duplicateUid">
+                            </delete-button>
+                        </div>
+
+                        <div class="letter navigation">
+                            <button ng-click="Func.onGetPreviousLetterClick()" type="button" ng-show="Data.isNextPrevFeaturePossible && Data.mode==='view'"
+                                    class="btn btn-sm btn-text btn-icon white-bg pull-left"
+                                    ng-disabled="Data.isPrevDisabled">
+                                <i class="fa fa-arrow-up"></i> قبلی
+                            </button>
+                            <button ng-click="Func.onGetNextLetterClick()" type="button" ng-show="Data.isNextPrevFeaturePossible && Data.mode==='view'"
+                                    class="btn btn-sm btn-text btn-icon white-bg pull-left"
+                                    ng-disabled="Data.isNextDisabled">
+                                <i class="fa fa-arrow-down"></i>بعدی
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-show="Data.mode=='signature'">
+                        <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                           ng-click="Func.onBackToEditClick()"><i class="flaticon-close-button"></i>بستن</a>
+                        <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button" ng-if="Data.draft.canSign"
+                           ng-click="Func.onSendClick()" ng-disabled="Data.disableSendBtn"><i
+                                class="flaticon-interface-2"></i>ارسال</a>
+                    </div>
+                    <div class="col-sm-12" ng-show="Data.mode=='paraph'">
+                        <a class="btn btn-sm btn-text btn-icon btnActionInLetter" type="button"
+                           ng-click="Func.onBackToEditClick()"><i class="flaticon-close-button"></i>بستن</a>
+                        <a class="btn btn-sm btn-text btn-icon btnActionInLetter" ng-disabled="controller.vtPDF.maxCharError" type="button" ng-if="Data.draft.canParaph"
+                           ng-click="Func.onSendParaphClick()" ng-disabled="Data.disableSendBtn || controller.vtPDF.maxCharError"><i
+                                class="flaticon-interface-2"></i>ارسال</a>
+                    </div>
+                </div>
+                <div ng-show="Data.mode ==='view' && !(Data.letterLayout && Data.letterLayout.isFetched)">
+                    <div class="col-sm-12" style="display: flex; justify-content: space-between"
+                         ng-show="Data.mode!='signature' && Data.mode!='paraph'">
+                        <div class="actions">
+                            <delete-button class="btn btn-sm btn-text btn-icon btnActionInLetter noBorder"
+                                            exchange-function-for-delete="Func.exchangeDelete"
+                                           ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined)&& Data.draft.uid && !Data.duplicateUid">
+                            </delete-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger" style="margin-bottom: 5px; padding: 10px 15px"
+        ng-if="Data.draft.messages.length > 0">
+        <div ng-repeat="messeage in Data.draft.messages track by $index">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span>{{messeage | EnToFaNumber}}</span>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-body" ng-show="(Data.mode!='signature' && Data.mode!='paraph')">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="nav-tab" ng-class="{'active':tab.active,'has-error':Data.validationClicked && tab.hasError()}" ng-repeat="tab in Data.tabList"
+                    ng-click="Func.onTabClick(tab)"><a>{{tab.title}}</a></li>
+            </ul>
+            <form name="form" novalidate>
+                <div ng-show="Data.selectedTab.id == 0">
+                    <div>
+                        <letter-form-type ng-model="Data.selectedLetterFormType" css-class-selector-type="col-sm-12" css-class-selector-type-label="col-sm-4"
+                            css-class-selector-type-input="col-sm-8"
+                            ng-if="(Data.mode==='view' && Data.draft && Data.draft.forms && Data.draft.forms.length>0) || Data.mode!=='view'"
+                            apis="Apis" mode="Data.mode" letter="Data.draft" org-uid="Data.orgUid"></letter-form-type>
+                    </div>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-6">
+                            <div class="row rowForm" ng-show="Data.draft.letterNumber">
+                                <label class="col-sm-4">شماره نامه</label>
+                                <div class="col-sm-8">{{Data.draft.letterNumber|EnToFaNumber}}</div>
+                            </div>
+                            <div class="row rowForm" ng-show="Data.draft.number">
+                                <label class="col-sm-4">شماره پیش نویس</label>
+                                <div class="col-sm-8">{{Data.draft.number|EnToFaNumber}}</div>
+                            </div>
+                            <div class="row rowForm"
+                                ng-class="{'has-error':Data.validationClicked && form.subject.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">موضوع</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">{{Data.draft.subject}}</div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8">
+                                    <style>
+                                        input.auto-size-input {
+                                            min-width: 100%;
+                                            max-width: 100%;
+                                        }
+
+                                        #hidden_span {
+                                            position: absolute;
+                                            top: 0px;
+                                            left: 0px;
+                                            visibility: hidden;
+                                            width: 10px;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                        }
+                                    </style>
+                                    <input type="text" class="form-control auto-size-input" name="subject"
+                                        ng-model="Data.draft.subject" required ng-init="doAoutoSizeInput()"
+                                        maxlength="250" />
+                                    <div id="counter"></div>
+                                    <span id="hidden_span"></span>
+                                </div>
+                            </div>
+                            <div ng-show="Data.mode=='view'" class="row rowForm">
+                                <label class="col-sm-4">تاریخ نامه</label>
+                                <div class="col-sm-8">
+                                    {{Data.draft.letterOfficialDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                </div>
+                            </div>
+                            <div class="row rowForm"
+                                 ng-hide="Data.mode=='view' && !Data.draft.letterLayout.title"
+                                 ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">سربرگ</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">{{Data.draft.letterLayout.title}}</div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8 dropdown-selector">
+                                    <i class="fa fa-times" ng-click="Func.onRemoveSenderClick('layout')"
+                                       ng-show="Data.letterLayout"></i>
+                                    <ui-select on-select="Func.onSelectLetterLayout(Data.letterLayout)" ng-model="Data.letterLayout" required name="letterLayout">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected.name"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="item in (Data.letterLayoutList | filter:{enabled:'true'}) track by $index">
+                                            <span ng-bind="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="row rowForm" ng-if="Data.counter"
+                                ng-class="{'has-error':Data.validationClicked && form.secretariat.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">دبیرخانه</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">
+                                    {{Data.draft.secretariat.title}}
+                                </div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8">
+                                    <select class="form-control" ng-model="Data.secretariat" name="secretariat" required
+                                        ng-change="Func.onSelectSecretariat(Data.secretariat)"
+                                        ng-options="secretariat as secretariat.title for secretariat in Data.secretariatList">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row rowForm" ng-show="Data.mode=='view'">
+                                <label class="col-sm-4">وضعیت</label>
+                                <div class="col-sm-8">
+                                    {{Data.draft.state|appEnum:draftState}}
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-4">فوریت</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">{{Data.draft.priority|appEnum}}</div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8">
+                                    <select class="form-control" ng-model="Data.draft.priority">
+                                        <option value="Normal">عادی</option>
+                                        <option value="Critical">فوری</option>
+                                        <option value="Blocker">خیلی فوری</option>
+                                        <option value="Immediate">آنی</option>
+                                        <option value="Unknown">نامشخص</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row rowForm">
+                                <label class="col-sm-4">سطح محرمانگی</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">
+                                    {{Data.draft.confidentialityLevel|appEnum:confidentialityLevel}}
+                                </div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8">
+                                    <select class="form-control" ng-model="Data.draft.confidentialityLevel">
+                                        <option value="Unclassified">طبقه بندی نشده</option>
+                                        <option value="Restricted">محرمانه</option>
+                                        <option value="Confidential">فوق محرمانه</option>
+                                        <option value="Secret">سری</option>
+                                        <option value="Top_secret">فوق سری</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row rowForm" ng-show="Data.mode!='view'">
+                                <label class="col-sm-4">نیاز به پاسخ</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" ng-model="Data.responseNeeded">
+                                </div>
+                            </div>
+                            <div class="row rowForm" ng-if="Data.responseNeeded">
+                                <label class="col-sm-4">مهلت پاسخ</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">
+                                    {{Data.draft.requestResponseDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                </div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8">
+                                    <vt-persian-date-picker min-date="Data.currentDate" name="requestResponseDate"
+                                        model="Data.draft.requestResponseDate"></vt-persian-date-picker>
+                                </div>
+                            </div>
+                            <div ng-if="Data.hasExternalArchives" class="row rowForm"
+                                 ng-class="{'has-error':Data.validationClicked && Data.vtFolderSelectorForm.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">بایگانی نامه</label>
+                                <div class="col-sm-8" ng-if="Data.isDraftLoaded || Data.hasExternalArchives">
+                                    <ng-form name="Data.vtFolderSelectorForm">
+                                        <vt-folder-selector model="Data.draft.externalArchive" required = "Data.mode=='add'"
+                                            is-edit-mode="Data.mode!='view'"
+                                            form-name="Data.vtFolderSelectorForm"></vt-folder-selector>
+                                    </ng-form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row rowForm"
+                                ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">امضا کننده</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">{{Data.draft.sender.title}}</div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8 dropdown-selector">
+                                    <i class="fa fa-times" ng-click="Func.onRemoveSenderClick('sender')"
+                                        ng-show="Data.draft.sender"></i>
+                                    <ui-select ng-model="Data.draft.sender" required name="draftSender"
+                                        on-select="Func.onSelectSender($item, $model);">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected.title"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                            repeat="item in (Data.senderList | filter: $select.search) track by $index">
+                                            <span ng-bind="item.title"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="row rowForm"
+                                ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">اقدام کننده</label>
+                                <div ng-show="Data.mode=='view'" class="col-sm-8">{{Data.draft.actor.title}}</div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-8 dropdown-selector">
+                                    <i class="fa fa-times" ng-click="Func.onRemoveSenderClick('actor')"
+                                        ng-show="Data.draft.actor"></i>
+                                    <ui-select ng-model="Data.draft.actor" required name="draftActor">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected.title"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                            repeat="item in (Data.senderList | filter: $select.search) track by $index">
+                                            <span ng-bind="item.title"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-4">پاراف کنندگان</label>
+                                <div class="col-sm-8">
+                                    <multiselect api="controller.paraphMultiselect" model="Data.draft.paraphers"
+                                        name="paraphers" options="Data.senderList" is-edit-mode="Data.mode!='view'">
+                                    </multiselect>
+                                </div>
+                            </div>
+                            <div class="row rowForm"
+                                ng-class="{'has-error':Data.validationClicked && form.letterDeliveryTo.$invalid}">
+                                <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
+                                <div class="col-sm-8">
+                                    <multiselect-reciever model="Data.draft.deliveryTo"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        ng-model="Data.draft.deliveryTo" name="letterDeliveryTo" vt-array-required
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                    </multiselect-reciever>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-4">رونوشت</label>
+                                <div class="col-sm-8">
+                                    <multiselect-reciever has-description="true" model="Data.draft.deliveryCc"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)"
+                                        is-edit-mode="Data.mode!='view'"></multiselect-reciever>
+                                </div>
+                                <div ng-show="Data.mode!='view'" class="col-sm-6" style="padding: 10px 15px;">
+                                    <a ng-init="bcc=false" ng-click="bcc = !bcc" ng-show="!bcc"
+                                        class="text-success">افزودن
+                                        رونوشت پنهان</a>
+                                </div>
+                            </div>
+                            <div class="row rowForm" ng-show="bcc || Data.draft.deliveryBcc.length">
+                                <label class="col-sm-4">رونوشت پنهان</label>
+                                <div class="col-sm-8">
+                                    <multiselect-reciever has-description="true" model="Data.draft.deliveryBcc"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                    </multiselect-reciever>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-10" ng-show="Data.selectedTab.id == 1">
+                    <div class="row rowForm " ng-show="Data.mode!='view'">
+                        <label class="radio-inline" >
+                            <input type="radio" name="editorType" id="editorType1" value="Editor"
+                                   ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('Editor')" >
+                            <label for="editorType1">
+                                <span><span></span></span>
+                                <label>ویرایشگر متن</label>
+                            </label>
+                        </label>
+                        <label class="radio-inline" >
+                            <input type="radio" name="editorType" id="editorType2" value="System"
+                                   ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('File')" >
+                            <label for="editorType2">
+                                <span><span></span></span>
+                                <label>ویرایشگر سیستم</label>
+                            </label>
+                        </label>
+                        <label class="radio-inline" >
+                            <input type="radio" name="editorType" id="editorType3" value="File"
+                                   ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('File')" >
+                            <label for="editorType3">
+                                <span><span></span></span>
+                                <label>بارگذاری فایل</label>
+                            </label>
+                        </label>
+                    </div>
+                    <div class="row rowForm col-sm-offset-2" ng-show="Data.editorType == 'Editor'"
+                         ng-class="{'has-error':Data.validationClicked && Data.ckeditorInvalid}">
+                        <div ng-show="Data.mode=='view'">
+                            <div class="col-sm-12 ck-content" lang="fa" dir="rtl" ng-bind-html="Func.trustAsHtml(Data.draft.textBody)"></div>
+                        </div>
+
+                        <div ng-show="Data.mode!='view' && Data.draft.bodyType=='Editor'"
+                             class="col-lg-12 ckeditorContainer" id="ckeditorContainer">
+                            <textarea name="content_ref" class="text-justify form-control" id="editor1" rows="200"
+                                      cols="80"></textarea>
+                        </div>
+                    </div>
+                    <div class="row rowForm col-sm-offset-2 editor" ng-show="Data.editorType == 'File'">
+                        <div class="col-sm-7"
+                             ng-class="{'has-error':Data.validationClicked && form.draftFileBody.$invalid}"
+                             name="draftFileBody" ng-model="Data.draft.fileBody"
+                             ng-required="Data.draft.bodyType=='File'">
+
+                            <vt-file class="col-sm-8" model="Data.draft.fileBody" is-edit-mode="Data.mode!='view'" remove-callback-fn="Func.removeFileBodyCallBack"
+                                     type="Data.draftFileBody">
+                            </vt-file>
+
+                            <a class="btn btn-default col-sm-4" ng-if="Data.letterTemplateFile"
+                               href="{{Data.letterTemplateFile}}">دانلود قالب</a>
+                        </div>
+                    </div>
+                    <div class="row rowForm col-sm-offset-2 editor" ng-show="Data.editorType == 'System'">
+                        <div class="col-sm-7"
+                             ng-class="{'has-error':Data.validationClicked && form.draftFileBody.$invalid}"
+                             name="draftFileBody" ng-model="Data.draft.fileBody"
+                             ng-required="Data.draft.bodyType=='System'">
+                            <div class="row" ng-if="Data.mode!='view'">
+                                <div class="col-sm-4" access-checker="WEB_EDIT">
+                                    <button class="btn" ng-disabled="!Data.draft.letterLayout" ng-click="Func.onEditDocxWhitSystemEdit()" >
+                                        شروع ویرایش
+                                    </button>
+                                    <img tooltip="پس از انتخاب سربرگ در قسمت اطلاعات نامه می توانید با استفاده از ویرایشگر سیستم خود شروع به ویرایش نمایید." src="app/assets/img/information-button.png" style="width:12px;" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" ng-show="Data.selectedTab.id == 2">
+                    <letter-attachment model="Data.draft.attachments" is-edit-mode="Data.mode!='view'">
+                    </letter-attachment>
+                </div>
+                <!-- TODO -->
+                <div class="" ng-show="Data.selectedTab.id==3" style="z-index: 0;" ng-if="Data.mode!=='signature' && Data.mode!='paraph' && pdfUrl">
+                    <div class="col-sm-8 col-sm-offset-2hashemi" >
+                            <div class="wrapper" >
+                                <!--<div style="height: 900px !important;width: 800px !important;" vt-pdf control-fn="{canSign:false,pdfUrl:pdfUrl}"></div>-->
+                                <iframe ng-src="{{Func.getPdfUrl(pdfUrl)}}"
+                                        style="height: 600px !important;width: 800px !important;" frameborder="0"></iframe>
+
+
+                            </div>
+                    </div>
+                    <div class="col-sm-4" style="height: 600px !important;">
+                        <accordion close-otheorgrs="false">
+                            <accordion-group is-open="print.open" ng-init="print.open=true">
+                                <accordion-heading>
+                                    <h4>چاپ</h4>
+                                    <i class="pull-right glyphicon"
+                                       ng-class="{'glyphicon-chevron-down': print.open, 'glyphicon-chevron-right': !print.open}"></i>
+                                </accordion-heading>
+                                <div>
+                                    <kateb-print model="Data.draft" disable-checkbox="Data.draft.paraphPdf"
+                                                 is-draft="true"
+                                                 pdf-generator="Func.generateDraftPdf"
+                                                 config="{hideSign:true,hidePrintLog:true,hideParaphers:true,hideBccList:true,hideCcList:true}"
+                                                 indecator-number="Data.indecatorNumber" deliverycc="Data.draft.delivery_cc"
+                                                 deliverybcc="Data.draft.delivery_bcc"></kateb-print>
+                                </div>
+                            </accordion-group>
+
+
+                        </accordion>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" ng-if="Data.selectedTab.id == 4 && Data.mode != 'add'">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <vt-grid control-fn="controller.draftHistoryListController"></vt-grid>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body" ng-if="Data.mode=='signature' || Data.mode=='paraph'">
+            <!--<div class="input-group">
+                <input type="text" class="form-control" placeholder="متن را وارد نمایید ..." ng-model="Data.draft.signatureHtml">
+            </div>-->
+            <div class="row col-sm-12">
+                <div class="wrapper" ng-if="pdfUrl">
+                    <div style="height: 900px !important;width: 800px !important; margin: 0 auto" vt-pdf-signable
+                        control-fn="controller.vtPDF" signer-info="Data.signerInfo" sign-text="Data.draft.signatureHtml"
+                        ng-init="Data.draft.signatureHtml=''"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

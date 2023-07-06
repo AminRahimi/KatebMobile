@@ -1,0 +1,85 @@
+<style>
+    /*#search-header{*/
+        /*display: none;*/
+    /*}*/
+    vt-dropdown-multi-string ul.tag-popup{
+        min-width: 280px;
+    } 
+</style>
+<div class="col-md-12 managementContainer not30">
+    <div class="panel panel-primary">
+        <div class="panel-heading">جستجو</div>
+        <div class="panel-body" style="padding: 10px 15px;">
+            <div class="row">
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'شماره نامه'" model="Data.searchQuery.query.number"></vt-dropdown-multi-string>
+                </div>
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'موضوع نامه'" model="Data.searchQuery.query.subject"></vt-dropdown-multi-string>
+                </div>
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'متن نامه'" model="Data.searchQuery.query.letterBody"></vt-dropdown-multi-string>
+                </div>
+                <div class="col-sm-1">
+                    <vt-cartable-date-interval label="'تاریخ رسمی'" model="Data.searchQuery.query.date"></vt-cartable-date-interval>
+                </div>
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'گیرنده'" model="Data.searchQuery.query.delivery"></vt-dropdown-multi-string>
+                    <!--<div dropdown is-open="Data.isOpenDeliveryDropdown" auto-close="outsideClick">-->
+                        <!--<span class="model-length" ng-if="Data.searchQuery.query.delivery.length">{{Data.searchQuery.query.delivery.length|EnToFaNumber}}</span>-->
+                        <!--<div id="single-button" dropdown-toggle>گیرنده <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>-->
+                        <!--<ul class="tag-popup dropdown-menu"  role="menu" aria-labelledby="single-button" style="padding: 8px;">-->
+                            <!--<li>-->
+                                <!--<multiselect-reciever model="Data.searchQuery.query.delivery"-->
+                                                      <!--search-fn="Func.getPuaList(Data.orgUid, Data.newOrganizationUid, query)"-->
+                                                      <!--ng-model="Data.searchQuery.query.delivery" name="letterDeliveryTo"-->
+                                                      <!--vt-array-required-->
+                                                      <!--is-edit-mode="true">-->
+                                <!--</multiselect-reciever>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+
+                    <!--</div>-->
+                </div>
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'فرستنده'" model="Data.searchQuery.query.sender"></vt-dropdown-multi-string>
+                    <!--<div dropdown is-open="Data.isOpenSenderDropdown" auto-close="outsideClick">-->
+                        <!--<span class="model-length" ng-if="Data.searchQuery.query.sender.length">{{Data.searchQuery.query.sender.length|EnToFaNumber}}</span>-->
+                        <!--<div id="single-button" dropdown-toggle>فرستنده <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>-->
+                        <!--<ul class="tag-popup dropdown-menu"  role="menu" aria-labelledby="single-button" style="padding: 8px;">-->
+                            <!--<li>-->
+                                <!--<multiselect-reciever model="Data.searchQuery.query.sender"-->
+                                                      <!--search-fn="Func.getPuaList(Data.orgUid, Data.newOrganizationUid, query)"-->
+                                                      <!--ng-model="Data.searchQuery.query.sender" name="lettersenderTo"-->
+                                                      <!--vt-array-required-->
+                                                      <!--is-edit-mode="true">-->
+                                <!--</multiselect-reciever>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+
+                    <!--</div>-->
+                </div>
+                <div class="col-sm-1">
+                    <vt-dropdown-multi-string label="'برچسب'" model="Data.searchQuery.query.tag"></vt-dropdown-multi-string>
+                    <!--<vt-typeahead api="Func.getTagList"-->
+                                  <!--model="Data.searchQuery.query.tag"-->
+                                  <!--is-edit-mode="true">-->
+                    <!--</vt-typeahead>-->
+                </div>
+                <div class="col-sm-1 pull-left">
+                    <a class="btn btn-sm btn-default h-32 p-t p-b pull-left exitBtn" style="margin-right: 3px;" type="button" ng-click="Func.onExitSearchModeClick()">
+                        <span class="flaticon-close-button" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-sm btn-default h-32 p-t p-b pull-left" type="button" ng-click="Func.onSearchClick()" style="margin-right: 3px;">
+                        <span class="flaticon-search" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-grid control-fn="Controller.listController" ng-if="Data.isQuery"></vt-grid>
+        </div>
+    </div>
+</div>

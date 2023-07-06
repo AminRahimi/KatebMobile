@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <h3 class="modal-title">ارسال</h3>
+</div>
+<div class="modal-body">
+    <div class="row rowForm">
+        <label class="col-sm-2">نحوه ارسال</label>
+        <div class="col-sm-3">
+            <select class="form-control" ng-model="Data.letter.type" name="receivingStyle">
+                <!--<option value="Post">پست</option>-->
+                <!--<option value="Fax">فکس</option>-->
+                <!--<option value="Courier">پیک</option>-->
+                <option value="Org">بین سازمان</option>
+                <!--<option value="Ece">ECEP</option>-->
+            </select>
+        </div>
+    </div>
+    <div class="row rowForm" ng-if="Data.letter.type == 'Courier'">
+        <label class="col-sm-2">نام پیک</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="Data.letter.courierName">
+        </div>
+    </div>
+    <div class="row rowForm" ng-if="Data.letter.type == 'Fax'">
+        <!--<label class="col-sm-2">انتخاب سازمان</label>
+		<div class="col-sm-4">
+			<select class="form-control" ng-model="Data.letter.organization" name="receivingStyle">
+				<option value="Post">پست</option>
+				<option value="Fax">فکس</option>
+				<option value="Courier">پیک</option>
+			</select>
+		</div>-->
+        <label class="col-sm-2">شماره فکس</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="Data.letter.faxNumber">
+        </div>
+    </div>
+    <div class="row rowForm" ng-if="Data.letter.type == 'Org'">
+        <label class="col-sm-2">انتخاب سازمان</label>
+        <div class="col-sm-3">
+            <select class="form-control"
+                    ng-model="Data.organization"
+                    name="organization"
+                    ng-change="Func.onOrganiztionChange(Data.organization)"
+                    ng-options="organization as organization.title for organization in Data.organizationList">
+            </select>
+        </div>
+        <label class="col-sm-2">انتخاب سمت</label>
+        <div class="col-sm-3">
+            <ui-select ng-model="Data.letter.reciverPostionUserAssignment">
+                <ui-select-match>
+                    <span ng-bind="$select.selected.title"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (Data.members | filter: $select.search) track by $index">
+                    <span ng-bind="item.title"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row rowForm" ng-if="Data.letter.type == 'Post'">
+        <label class="col-sm-2">کد مرسوله</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="Data.letter.boxNumber">
+        </div>
+        <label class="col-sm-2">کد پستی</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="Data.letter.postalCode">
+        </div>
+    </div>
+    <div class="row rowForm" ng-if="Data.letter.type == 'Ece'">
+        <label class="col-sm-2"></label>
+        <div class="col-sm-4">
+            <button class="btn btn-primary" type="button" ng-click="Func.onLetterDownloadClick()">دریافت نامه</button>
+        </div>
+    </div>
+    <div class="row rowForm">
+        <label class="col-sm-2">توضیحات</label>
+        <div class="col-sm-8">
+						<textarea type="text" class="form-control" name="description" rows="4"
+                                  ng-model="Data.letter.description"></textarea>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary pull-left"
+            type="button"
+            ng-click="Func.onSaveClick()" ng-disabled="Data.isLoadingSaveClick">ثبت ارسال</button>
+</div>

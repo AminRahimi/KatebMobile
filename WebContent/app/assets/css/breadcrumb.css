@@ -1,0 +1,153 @@
+/** The Magic **/
+.btn-breadcrumb span.btn:not(:last-child):after {
+  	border-bottom: 10px solid transparent;
+    border-right: 10px solid white;
+    border-top: 10px solid transparent;
+    content: " ";
+    display: block;
+    height: 0;
+    margin-top: -10px;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    width: 0;
+    z-index: 3;
+}
+.btn-breadcrumb span.btn:not(:last-child):before {
+  border-bottom: 10px solid transparent;
+    border-right: 10px solid #3498db;
+    border-top: 10px solid transparent;
+    content: " ";
+    display: block;
+    height: 0;
+    margin-right: 1px;
+    margin-top: -10px;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    width: 0;
+    z-index: 3;
+}
+
+/** The Spacing **/
+.btn-breadcrumb .btn {
+  padding:6px 12px 6px 24px;
+}
+.btn-breadcrumb .btn:first-child {
+  padding:6px 6px 6px 10px;
+}
+.btn-breadcrumb .btn:last-child {
+  padding:6px 18px 6px 24px;
+}
+
+/** Default button **/
+.btn-breadcrumb .btn.btn-default:not(:last-child):after {
+  border-left: 10px solid #fff;
+}
+.btn-breadcrumb .btn.btn-default:not(:last-child):before {
+  border-left: 10px solid #ccc;
+}
+.btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+  border-left: 10px solid #ebebeb;
+}
+.btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+  border-left: 10px solid #adadad;
+}
+
+/** Primary button **/
+.btn-breadcrumb .btn.btn-primary:not(:last-child):after {
+  border-right: 10px solid #008cba;
+}
+.btn-breadcrumb .btn.btn-primary:not(:last-child):before {
+  border-right: 10px solid #357ebd;
+}
+.btn-breadcrumb .btn.btn-primary:hover:not(:last-child):after,.btn-breadcrumb .btn.btn-primary:hover .btn.btn-primary:not(:last-child):after {
+  border-right: 10px solid #006687;
+}
+.btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before,.btn-breadcrumb .btn.btn-primary:hover .btn.btn-primary:not(:last-child):before {
+  border-right: 10px solid #285e8e;
+}
+
+
+
+/** Success button **/
+.btn-breadcrumb .btn.btn-success:not(:last-child):after {
+  border-right: 10px solid #43ac6a;
+}
+.btn-breadcrumb .btn.btn-success:not(:last-child):before {
+  border-right: 10px solid #497848;
+}
+.btn-breadcrumb .btn.btn-success:hover:not(:last-child):after ,.btn-breadcrumb .btn.btn-success:hover .btn.btn-success:not(:last-child):after{
+  border-right: 10px solid #358753;
+}
+.btn-breadcrumb .btn.btn-success:hover:not(:last-child):before ,.btn-breadcrumb .btn.btn-success:hover .btn.btn-success:not(:last-child):before{
+
+  border-right: 10px solid #497848;
+}
+
+/** Danger button **/
+.btn-breadcrumb .btn.btn-danger:not(:last-child):after {
+  border-left: 10px solid #d9534f;
+}
+.btn-breadcrumb .btn.btn-danger:not(:last-child):before {
+  border-left: 10px solid #d43f3a;
+}
+.btn-breadcrumb .btn.btn-danger:hover:not(:last-child):after {
+  border-left: 10px solid #d2322d;
+}
+.btn-breadcrumb .btn.btn-danger:hover:not(:last-child):before {
+  border-left: 10px solid #ac2925;
+}
+
+/** Warning button **/
+.btn-breadcrumb .btn.btn-warning:not(:last-child):after {
+  border-left: 10px solid #f0ad4e;
+}
+.btn-breadcrumb .btn.btn-warning:not(:last-child):before {
+  border-left: 10px solid #eea236;
+}
+.btn-breadcrumb .btn.btn-warning:hover:not(:last-child):after {
+  border-left: 10px solid #ed9c28;
+}
+.btn-breadcrumb .btn.btn-warning:hover:not(:last-child):before {
+  border-left: 10px solid #d58512;
+}
+
+/** Info button **/
+.btn-breadcrumb .btn.btn-info:not(:last-child):after {
+  border-left: 10px solid #5bc0de;
+}
+.btn-breadcrumb .btn.btn-info:not(:last-child):before {
+  border-left: 10px solid #46b8da;
+}
+.btn-breadcrumb .btn.btn-info:hover:not(:last-child):after {
+  border-left: 10px solid #39b3d7;
+}
+.btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
+  border-left: 10px solid #269abc;
+}
+
+.btn-group .btn + .btn, .btn-group .btn + .btn-group, .btn-group .btn-group + .btn, .btn-group .btn-group + .btn-group{
+	margin-right: 0px;
+	margin-left: :0px !important;
+}
+
+
+
+
+
+/*
+added
+*/
+
+.firstBreadcrumb{
+	display: block;
+    height: 21px;
+}
+
+.btn-set-current-topic{
+	background-color: #3498db;
+	color: white;
+	border-radius:2px;
+	margin-right: 10px;
+}

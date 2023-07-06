@@ -1,0 +1,144 @@
+<form name="Data.formName">
+<div class="row rowForm vt-Folder-Selector-Body">
+
+    <div class="col-sm-12">
+        <div class="row rowForm">
+            <div ng-show="!isEditMode && model.type" class="col-sm-4">نوع بایگانی</div>
+            <div ng-show="!isEditMode && !model.type" class="col-sm-8">
+                <span  style="margin-top: 7px;">سایر</span>
+            </div>
+            <div ng-show="!isEditMode && model.type" class="col-sm-8">
+                <span ng-show="model.type == 'GANJEH'">گنجه</span>
+                <span ng-show="model.type == 'SAMAN_SHAHR'">سامان شهر</span>
+                <span ng-show="model.type == 'DIDGAH'">دیدگاه</span>
+            </div>
+            <div ng-show="isEditMode" class="col-sm-12">
+                <select class="form-control" ng-change="Func.onArchivedTypesChange(Data.archivedType)"
+                        ng-model="Data.archivedType" ng-required={{required}}
+                        ng-options="archivedType as archivedType.value for archivedType in Data.archivedTypesList">
+                    <option value="">انتخاب نوع بایگانی ...</option>
+                </select>
+            </div>
+        </div>
+        <div ng-if="model.type == 'GANJEH'" class="row rowForm">
+            <div class="col-sm-12">
+                <div ng-show="!Data.isLogin && isEditMode" class="row rowForm align-elements">
+                    <div class="col-sm-8">ورود به گنجه جهت بایگانی</div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-default btn-block" ng-click="Func.onEnterToGanjehClick()">ورود</button>
+                    </div>
+                </div>
+                <div ng-show="Data.isLogin && isEditMode" class="row rowForm align-elements">
+                    <div class="col-sm-8">انتخاب فولدر بایگانی در گنجه</div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary btn-block" ng-click="Func.onChooseFolderClick()">انتخاب</button>
+                    </div>
+                </div>
+                <div ng-show="Data.isLogin && model.title" class="row rowForm align-elements">
+                    <span class="col-sm-12">فولدر انتخاب شده</span>
+                </div>
+                <div ng-show="Data.isLogin && model.title" class="row rowForm align-elements">
+                    <div class="col-sm-12">
+                        <span tooltip-template="'breadcrumbTooltip.html'" tooltip-class="breadcrumb-tooltip"
+                              tooltip-placement="top" tooltip-popup-delay="100"
+                              tooltip-trigger="mouseenter" tooltip-append-to-body="false">
+                            {{model.title}}
+                        </span>
+                        <script type="text/ng-template" id="breadcrumbTooltip.html">
+                            <ul id="breadcrumbs-one">
+                                <li ng-repeat="chooseFolderPath in model.path">
+                                    <a ng-show="chooseFolderPath" ng-class="{'current': $last}">{{chooseFolderPath}}</a>
+                                </li>
+                            </ul>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="model.type == 'SAMAN_SHAHR'" class="row rowForm">
+            <div class="col-sm-12">
+                <div class="row rowForm">
+                    <div class="col-sm-4">کد نوسازی</div>
+                    <div ng-show="!isEditMode" class="col-sm-8">{{model.rc | EnToFaNumber}}</div>
+                    <div ng-show="isEditMode" class="col-sm-8">
+                        <div class="row rowForm">
+                            <div class="radio">
+                                <label>
+                                    <input id="modernization-code" type="radio" name="modernizationCode"
+                                           value="modernizationCode" ng-model="Data.archiveType">
+                                    <label for="modernization-code">کد نوسازی</label>
+                                </label>
+                                <div class="modernizationPopoverParent"
+                                     ng-class="{'blur-element': Data.archiveType != 'modernizationCode', 'has-error':Data.formName.modernizationCodeInput.$invalid && Data.validationClicked &&  Data.archiveType == 'modernizationCode'}">
+                                    <div></div>
+                                    <input id="modernizationCodePopover" popover-template="'app/assets/js/directives/vtFolderSelector/popover/modernizationCodePopover.html'"
+                                           popover-placement="{{modernizationCodePlacement || 'top'}}" popover-append-to-body="false" readonly style="direction: ltr" ng-required="Data.archiveType == 'modernizationCode'" name="modernizationCodeInput"
+                                           popover-is-open="Data.modernizationCodePopoverIsOpen"
+                                           type="text" class="form-control" ng-model="Data.rcShow" ng-change="Func.setRCFeild()" ng-minlength="1" ng-maxlength="47">
+                                </div>
+                            </div>
+                            <!-- -------------------------------- -->
+                            <!-- Do not delete. commented for now -->
+                            <!-- -------------------------------- -->
+                            <!--<div class="radio">
+                                <label>
+                                    <input id="registry-number" type="radio" name="registryNumber"
+                                           value="registryNumber" ng-model="Data.archiveType">
+                                    <label for="registry-number">پلاک ثبتی</label>
+                                </label>
+                                <div ng-class="{'blur-element': Data.archiveType != 'registryNumber'}">
+                                    <div></div>
+                                    <input type="text" class="form-control" placeholder="پلاک ثبتی" ng-model="Pelak">
+                                </div>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input id="family-name" type="radio" name="familyName"
+                                           value="familyName" ng-model="Data.archiveType">
+                                    <label for="family-name">نام و نام خانوادگی</label>
+                                </label>
+                                <div ng-class="{'blur-element': Data.archiveType != 'familyName'}">
+                                    <div></div>
+                                    <input type="text" class="form-control" placeholder="نام و نام خانوادگی" ng-model="nam">
+                                </div>
+                            </div>-->
+                        </div>
+<!--                        <input class="form-control" type="text" ng-model="model.rc">-->
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <div class="col-sm-4">نوع سند</div>
+                    <div ng-show="!isEditMode" class="col-sm-8">{{model.systemTag | appEnum | EnToFaNumber}}</div>
+                    <div ng-show="isEditMode" class="col-sm-8">
+                        <div ng-class="{'has-error': Data.formName.systemTagsMap.$invalid && Data.validationClicked && Data.archiveType == 'modernizationCode'}">
+                            <select class="form-control" ng-model="model.systemTag " ng-required="Data.archiveType == 'modernizationCode'" name="systemTagsMap"
+                                    ng-options="systemTagKey as systemTagValue for (systemTagKey, systemTagValue) in Data.systemTagsMap">
+                                <option value="">انتخاب نوع سند ...</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="model.type == 'DIDGAH'" class="row rowForm">
+            <div class="col-sm-12">
+                <div class="row rowForm">
+                    <div class="col-sm-4">کد پرسنلی</div>
+                    <div ng-show="!isEditMode" class="col-sm-8">{{model.personnelNo | EnToFaNumber}}</div>
+                    <div ng-show="isEditMode" class="col-sm-8">
+                        <input class="form-control" type="text" ng-model="model.personnelNo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="isEditMode && hasUpload && (model.type == 'SAMAN_SHAHR' || model.type == 'DIDGAH')"
+             class="row rowForm">
+            <div class="col-sm-4 col-sm-offset-8">
+                <button class="btn btn-primary btn-block" ng-click="Func.onSubmitAndUploadClick()"  ng-disabled="Data.validationClicked && Data.formName.$invalid ">ثبت و آپلود</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

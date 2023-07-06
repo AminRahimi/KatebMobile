@@ -1,0 +1,59 @@
+<style>
+    strong {
+        color: #005fd5;
+        font-weight: normal;
+    }
+    .dropdown-menu>.active>a,
+    .dropdown-menu>.active>a:focus,
+    .dropdown-menu>.active>a:hover{
+        background-color: #80b7e6
+    }
+    #labelChooser input{
+        margin-bottom: 5px;
+    }
+    #labelChooser .label-list{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #labelChooser .label-list .label{
+        margin-bottom: 5px;
+        margin-left: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+    }
+    #labelChooser .label-list .label .label-name{
+        margin-left: 5px;
+        margin-right: 5px;
+        max-width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    #labelChooser .label-list .label .label-remove{
+        cursor: pointer;
+    }
+
+</style>
+<div id="labelChooser">
+    <input type="text"
+           class="form-control"
+           placeholder="{{label}}"
+           ng-model="Data.typeModel"
+           typeahead="label for label in Func.onSearch($viewValue)"
+           typeahead-min-length="2"
+           typeahead-editable="false"
+           typeahead-on-select="Func.onSelect($item, $model, $label, $event)"
+           typeahead-popup-template-url="app/assets/js/directives/labelChooser/labelChooserPopupTemplate.html"
+           typeahead-template-url="app/assets/js/directives/labelChooser/labelChooserPopup.html"
+           typeahead-append-to-body="false">
+    <div class="label-list">
+        <div class="label label-default" ng-repeat="label in model track by $index">
+            <i class="fa fa-tag" ng-style="{'color': label.color}"></i>
+            <div class="label-name">{{label.name}}</div>
+            <div ng-if="!docUids" class="label-remove" ng-click="Func.onRemove(label, $index, $event)">&times;</div>
+        </div>
+    </div>
+</div>
+
+

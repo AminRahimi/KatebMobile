@@ -1,0 +1,30 @@
+<div class="modernization-code">
+    <div>
+        <input id="region" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.region, 2)" name="region" ng-model="Data.modernizationCode.region" maxlength="2" vt-move-next-input parentClass="modernization-code" autocomplete="new-password" ng-disabled="Data.modernizationCodeRegionDisabled">
+        <label>منطقه</label>
+    </div>
+    <div>
+        <input id="district" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.district, 2)" name="district" ng-model="Data.modernizationCode.district" maxlength="2" vt-move-next-input parentClass="modernization-code" autocomplete="new-password">
+        <label>محله</label>
+    </div>
+    <div>
+        <input id="blocks" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.blocks, 5)" name="blocks" ng-model="Data.modernizationCode.blocks" maxlength="5" vt-move-next-input parentClass="modernization-code" autocomplete="new-password">
+        <label>بلوک</label>
+    </div>
+    <div>
+        <input id="house" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.house, 5)" name="house" ng-model="Data.modernizationCode.house" maxlength="5" vt-move-next-input parentClass="modernization-code" autocomplete="new-password">
+        <label>ملک</label>
+    </div>
+    <div>
+        <input id="building" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.building, 5)" name="building" ng-model="Data.modernizationCode.building" maxlength="5" vt-move-next-input parentClass="modernization-code" autocomplete="new-password">
+        <label>ساختمان</label>
+    </div>
+    <div>
+        <input id="apartment" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.apartment, 5)" name="apartment" ng-model="Data.modernizationCode.apartment" maxlength="5" vt-move-next-input parentClass="modernization-code" autocomplete="new-password">
+        <label>آپارتمان</label>
+    </div>
+    <div>
+        <input id="guild" type="text" class="form-control" vt-pattern-restrict="[^0-9]" ng-change="Func.onModernizationCodeChange()" ng-keypress="Func.onModernizationCodeKeypress($event, Data.modernizationCode.guild, 5)" name="guild" ng-model="Data.modernizationCode.guild" autocomplete="new-password">
+        <label>طبقه</label>
+    </div>
+</div>

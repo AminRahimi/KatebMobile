@@ -1,0 +1,53 @@
+<div class="modal-header">
+	<h3 class="modal-title" ng-if="mode==='ADD'">افزودن زیر موضوع جدید</h3>
+	<h3 class="modal-title" ng-if="mode==='EDIT_NAME'">ویرایش نام
+		موضوع</h3>
+	<h3 class="modal-title" ng-if="mode==='Delete'">حذف زیر درخت
+		{{selectedNode.name}}</h3>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" name="topicForm" role="form" novalidate
+		ng-if="mode !='Delete'" ng-class="{'has-error': topicForm.tempNodeName.$dirty && topicForm.tempNodeName.$invalid}">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">نام</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" focus-me="isFocus"
+					ng-required="true" name="tempNodeName" ng-model="tempNode.name"
+					ui-keypress="{ctrlKey && 13:'enterClick();'}">
+				<small class="text-danger"
+					ng-show="topicForm.tempNodeName.$dirty && topicForm.tempNodeName.$invalid">غیر
+					معتبر</small>
+				<p ng-class="{hidden:!viewNodeMode}" class="form-control-static">{{selectedNode.name}}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">سطح محرمانگی</label>
+			<div class="col-sm-6">
+			    <select class="form-control"   
+					 ng-model="tempNode.secretLevel"
+				     ng-options="level as level.name for level in secretLevels">
+				</select>
+			</div>
+		</div>
+	</form>
+	<!--    <label class="col-sm-8 control-label" ng-if="mode==='Delete'">آيا براي حذف زیردرخت انتخاب شده مطمئن هستيد؟ </label> -->
+	<div class="row">
+		<label class="control-label" ng-if="mode==='Delete'">
+			در صورت حذف موضوع، تمامی شناسنامه های موجود در آن حذف می شود.
+			<br>
+			آیا از حذف اطمینان دارید؟
+		</label>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-sm btn-danger pull-right"
+		ng-if="mode==='Delete'" ng-click="onYesClick()">بله</button>
+	<button class="btn btn-sm btn-default" ng-if="mode==='Delete'"
+		ng-click="cancel()">خیر</button>
+	<button class="btn btn-sm btn-success" ng-if="mode==='ADD'"
+		ng-click="saveNewNode()" ng-disabled="topicForm.$invalid">اضافه</button>
+	<button class="btn btn-sm btn-success" ng-if="mode==='EDIT_NAME'"
+		ng-click="saveEditedNode()" ng-disabled="topicForm.$invalid">ذخیره</button>
+	<button class="btn btn-sm btn-warning" ng-if="mode !='Delete'"
+		ng-click="cancel()">لغو</button>
+</div>

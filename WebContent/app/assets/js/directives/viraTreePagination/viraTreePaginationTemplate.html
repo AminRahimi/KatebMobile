@@ -1,0 +1,32 @@
+<script>
+
+function dropDownFixPosition(button){
+    button=$(button);
+    var dropdown= $(button).parent().find(".dropdown-menu")
+      var dropDownTop = button.offset().top + button.outerHeight();
+    if($(window).outerHeight() < dropDownTop + 190){
+        dropDownTop-=190;
+    }
+        dropdown.css('top', dropDownTop + "px");
+        dropdown.css('left', button.offset().left -50 + "px");
+        dropdown.css({'position':'fixed', 'min-width':'118px'});
+}
+
+</script>
+
+<style>
+/*.dropdown-menu{
+    position:fixed;
+    min-width: auto;
+}*/
+.treehorizontalScroll{
+ overflow: auto;
+}
+</style>
+
+<div class="tree treehorizontalScroll">
+   <span class="help-block col-sm-12" ng-if="!treeData.children.length">جستجو نتیجه ای در بر نداشت.</span>
+   <ul ng-include="treeItemRendererAddress" ng-if="treeData.children.length">
+   </ul>
+</div>
+

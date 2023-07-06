@@ -1,0 +1,5 @@
+<scanner class="scan-scanner" isolate-form model="originalModel[field]" api="controller.scanner" ng-if="isEditMode"></scanner>
+<letter-body model="originalModel[field]" ng-required="Data.scanedFile.hash" name="letterBody" ng-model="Data.letter.body"
+             is-edit-mode="isEditMode" api="controller.letterBody"
+             on-file-uploaded="loadPdfFn" pdf-url="Data.scanedFile" class="katebLetterBody">
+</letter-body>

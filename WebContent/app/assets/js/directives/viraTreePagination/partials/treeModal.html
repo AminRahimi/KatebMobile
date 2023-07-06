@@ -1,0 +1,21 @@
+
+
+
+
+
+
+
+<div class="modal-header">
+   <h3 class="modal-title" ng-if="mode==='ADD'">افزودن زیر موضوع جدید</h3>
+   <h3 class="modal-title" ng-if="mode==='EDIT_NAME'">ویرایش نام موضوع</h3>
+</div>
+<div class="modal-body">
+   <vira-tree ng-init="isEditable=false" is-editable="isEditable" class="" selected-node="selectedNode"
+      controller="viraTreeDirective.controller" is-full-tree="false" tree-data="fake"></vira-tree>
+
+</div>
+<div class="modal-footer">
+   <button class="btn btn-sm btn-primary" ng-click="onSaveClick()" ng-show="copyMode">کپی</button>
+   <button class="btn btn-sm btn-primary" ng-click="onSaveClick()" ng-hide="copyMode">ذخیره</button>
+   <button class="btn btn-sm btn-warning" ng-click="cancel()">لغو</button>
+</div>

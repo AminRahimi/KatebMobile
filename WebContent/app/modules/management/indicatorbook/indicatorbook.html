@@ -1,0 +1,192 @@
+<style>
+	td {
+		direction: ltr !important;
+	}
+	
+	.rule-display{
+		direction: ltr;
+	}
+</style>
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت دفتر اندیکاتوری</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_INDICATOR_BOOK">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.indicatorbookSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.indicatorbookListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_INDICATOR_BOOK" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_INDICATOR_BOOK"
+					ng-show="true" type="button"
+					ng-click="Func.onAddindicatorbookClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_INDICATOR_BOOK"
+					ng-show="Data.selectedindicatorbook.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditindicatorbookClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_INDICATOR_BOOK"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveindicatorbookClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="indicatorbookForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_INDICATOR_BOOK"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateindicatorbookClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="indicatorbookForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_INDICATOR_BOOK"
+					ng-show="Data.selectedindicatorbook.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onDeleteindicatorbookClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedindicatorbook.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="indicatorbookForm" role="form" novalidate>
+                <div class="row rowForm" ng-show="Data.mode=='view'" access-checker="SEE_ENTITY_UID">
+                    <label class="col-sm-5">شناسه</label>
+                    <div class="col-sm-7">
+                        {{Data.selectedindicatorbook.uid}}
+                    </div>
+                </div>
+				<div class="row rowForm" ng-class="{'has-error':indicatorbookForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedindicatorbook.name|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.selectedindicatorbook.name">
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">فعال</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedindicatorbook.enabled|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="enabled" 
+							ng-model="Data.selectedindicatorbook.enabled">
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">قانون</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7 rule-display" >
+						<span  style="float: right;">{{Data.selectedindicatorbook.format|EnToFaNumber}}</span>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="format" style="direction:ltr"
+							ng-model="Data.selectedindicatorbook.format">
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">نمایش در لیست همه نامه ها</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedindicatorbook.zeroInStartYear|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="zeroInStartYear" 
+							ng-model="Data.selectedindicatorbook.zeroInStartYear">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':indicatorbookForm.counter.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">شماره شروع</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedindicatorbook.counter|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="counter" required
+							ng-model="Data.selectedindicatorbook.counter">
+					
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3>فرمت های شماره گذاری</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>فرمت</th>
+                        <th>شماره گذاری</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{Y}</td>
+                        <td>سال</td>
+                    </tr>
+                    <tr>
+                        <td>{M}</td>
+                        <td>ماه</td>
+                    </tr>
+                    <tr>
+                        <td>{D}</td>
+                        <td>روز</td>
+                    </tr>
+                    <tr>
+                        <td>{S}</td>
+                        <td>سریال</td>
+                    </tr>
+                    <tr>
+                        <td>{O}</td>
+                        <td>کد سازمان</td>
+                    </tr>
+                    <tr>
+                        <td>{U}</td>
+                        <td>کد واحد سازمان</td>
+                    </tr>
+                    <tr>
+                        <td>{Us}</td>
+                        <td>کد واحد های سازمانی</td>
+                    </tr>
+                    <tr>
+                        <td>{P}</td>
+                        <td>کد فرآیند</td>
+                    </tr>
+                    <tr>
+                        <td>{R}</td>
+                        <td>عدد تصادفی</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>تعداد ارقام کد را بعد از هر حرف میتوانید مشخص نمایید<br>مثال: سال دو رقمی {Y2}</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_INDICATOR_BOOK" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.indicatorbookAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,123 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت سازمان‌ها</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_ORGANIZATION">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.organizationSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<div class="row" ng-repeat="nodeArray in Data.searchResults" ng-show="Data.showSearchResult">
+				<ul id="breadcrumbs-one" ng-click="Func.searchActions.onBreadcrumbSearchResultClick(nodeArray)">
+					<li ng-repeat="node in nodeArray"><a ng-class="{'current': $last}">{{node.title}}</a></li>
+				</ul>
+			</div>
+            <vira-tree is-editable="false" options="{displayLabelKey:'name'}"
+                       selected-node="Data.selectedNode" controller="Controller.viraTree"
+                       is-full-tree="false" tree-data="treeDataForTopicManagement.data"></vira-tree>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_ORGANIZATION">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_ORGANIZATION"
+					ng-show="true" type="button"
+					ng-click="Func.onAddorganizationClick('root')" ng-disabled="Data.mode=='add'">ایجاد ریشه</a>
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_ORGANIZATION"
+					ng-show="treeData.selectedNode.uid" type="button"
+					ng-click="Func.onAddorganizationClick('child')" ng-disabled="Data.mode=='add'">ایجاد فرزند</a>
+
+                          <a class="btn btn-sm btn-default btn-text"
+
+                    ng-show="treeData.selectedNode.uid" type="button"
+                    ng-click="Func.onChangeParentClick(treeData.selectedNode)" ng-disabled="Data.mode=='add'">تغییر پدر</a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_ORGANIZATION"
+					ng-show="treeData.selectedNode.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditorganizationClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_ORGANIZATION"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveorganizationClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="organizationForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_ORGANIZATION"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateorganizationClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="organizationForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_ORGANIZATION"
+					ng-show="treeData.selectedNode.uid && Data.mode=='view' && treeData.selectedNode.children.length==0"
+					type="button" ng-click="Func.onDeleteorganizationClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="treeData.selectedNode.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="organizationForm" role="form" novalidate>
+                <div class="row rowForm" ng-show="Data.mode=='view'" access-checker="SEE_ENTITY_UID">
+                    <label class="col-sm-5">شناسه</label>
+                    <div class="col-sm-7">
+                        {{treeData.selectedNode.uid}}
+                    </div>
+                </div>
+				<div class="row rowForm" ng-class="{'has-error':organizationForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{treeData.selectedNode.name|EnToFaNumber}}
+					</div>
+					<div ng-if="Data.mode=='edit'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="treeData.selectedNode.name">
+					</div>
+					<div ng-if="Data.mode=='add'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.neworganization.name">
+					</div>
+				</div>
+				<div class="row rowForm" ng-class="{'has-error':organizationForm.code.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">کد</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{treeData.selectedNode.code|EnToFaNumber}}
+					</div>
+					<div ng-if="Data.mode=='edit'" class="col-sm-7">
+						<input type="text" class="form-control" name="code" required
+							ng-model="treeData.selectedNode.code">
+					</div>
+					<div ng-if="Data.mode=='add'" class="col-sm-7">
+						<input type="text" class="form-control" name="code" required
+							ng-model="Data.neworganization.code">
+					</div>
+				</div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">فعال بودن</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{treeData.selectedNode.enabled|checkmark}}
+                    </div>
+                    <div ng-show="Data.mode=='edit'" class="col-sm-7">
+                        <input type="checkbox" class="" name="enabled"
+                               ng-model="treeData.selectedNode.enabled">
+                    </div>
+                    <div ng-show="Data.mode=='add'" class="col-sm-7">
+                        <input type="checkbox" class="" name="enabled"
+                               ng-model="Data.neworganization.enabled">
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+

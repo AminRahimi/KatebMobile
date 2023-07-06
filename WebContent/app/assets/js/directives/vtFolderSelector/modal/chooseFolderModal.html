@@ -1,0 +1,70 @@
+<div class="modal-header text-left d-flex" style="align-items: center;justify-content: space-between">
+    <div class="d-flex" style="align-items: center;">
+        <label ng-show="!Data.selectedNode" class="text-info" style="background: #def5f7; padding: 10px; border-radius: 4px !important;  font-size: 14px;">جهت انجام آرشیو، یک فولدر را از ساختار درختی انتخاب نمایید.</label>
+        <label ng-show="Data.selectedNode" class="text-info" style="background: #def7e5; padding: 7px; border-radius: 4px !important;  font-size: 14px;color: #139c3e">
+            فولدر انتخاب شده:
+        </label>
+        <div ng-show="Data.selectedNode">
+            <ul class="breadcrumbs-one" style="margin: 0">
+                <li ng-repeat="selectedNodePath in Data.selectedNodePathList">
+                    <span ng-show="selectedNodePath" ng-class="{'current': $last}">{{selectedNodePath}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-danger" ng-show="!Data.showLabelChooser" ng-click="Func.onCloseModalClick()">انصراف</button>
+        <button type="button" class="btn btn-default" ng-show="Data.showLabelChooser" ng-click="Data.showLabelChooser = false">بازگشت</button>
+        <button type="button" class="btn btn-default" ng-show="!Data.showLabelChooser" ng-click="Data.showLabelChooser = true"
+                ng-disabled="!Data.selectedNode || !Data.selectedNode.hasAccess">انتخاب دسته بندی</button>
+        <button type="button" class="btn btn-primary" ng-click="Func.onSubmitClick()"
+                ng-disabled="!Data.selectedNode || !Data.selectedNode.hasAccess">
+            {{Data.hasUpload ? "ثبت و آپلود" : "ثبت"}}
+        </button>
+    </div>
+</div>
+<div ng-show="!Data.showLabelChooser" class="modal-body vt-Folder-Selector-Body">
+    <div class="row rowForm">
+        <div class="col-sm-6" style="border-left: 1px solid #eee">
+            <div ng-show="Data.isShowTreeBox" class="search-result-box tree-box">
+                <!--<vira-tree class="vira-tree" is-editable="false" selected-node="Data.selectedNode"
+                           controller="Apis.viraTree" is-full-tree="false" tree-data="treeDataForTopicManagement.data"
+                           is-multi-select-mode="Data.isMultiSelectTree" upload-file="true">
+                </vira-tree>-->
+                <doc-list api="Apis.docList"></doc-list>
+            </div>
+        </div>
+        <div class="col-sm-6" >
+            <div class="input-group" style="max-width: 400px;">
+                <input type="text" class="form-control" ng-keypress="Func.onSearchKeypress($event)"
+                       ng-model="Data.searchFolder" placeholder="جستجو در ساختار درختی فولدرها ...">
+                <span ng-show="Data.isShowSearch" class="input-group-addon" ng-click="Func.onClearSearchClick()">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </span>
+                <span class="input-group-addon" ng-click="Func.onSearchFolderClick()"
+                      style="border-color: #d4d4d4;background-color: #36d47a; color: #fff;">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+            </div>
+            <div ng-show="Data.isShowSearch" style="max-height: calc(100vh - 400px);  overflow: auto;min-height: 450px;">
+                <label style="margin-top: 10px;" ng-show="Data.searchResults.length > 0" class="text-info">{{Data.searchResultsTotalSize|EnToFaNumber}} نتیجه یافت شد.</label>
+                <div ng-show="Data.searchResults.length > 0" class="row result-row d-flex" ng-repeat="nodeArray in Data.searchResults">
+                    <div  style="cursor: pointer">
+                        <img src="app/assets/img/folder-target.png" style="width: 30px;"
+                             ng-click="Apis.docList.onSelectFolderSearched(nodeArray)">
+                    </div>
+                    <div>
+                        <ul id="breadcrumbs-one" ng-class="{'selected-folder': nodeArray.isSelected}">
+                            <li ng-repeat="node in nodeArray"><a ng-class="{'current': $last}" ng-click="Apis.docList.onGoToFolder(node.uid); Apis.docList.onSelectFolderSearched(nodeArray, $index)">{{node.title}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <label ng-show="Data.searchResults.length == 0" class="text-info">موردی یافت نشد.</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="Data.showLabelChooser" class="modal-body" style="padding-bottom: 150px;">
+    <h6>دسته بندی های مربوط به فایل آرشیو را انتخاب نمایید:</h6>
+    <label-chooser label="'انتخاب دسته‌بندی...'" model="Data.selectedLabel" doc-uid="Data.selectedNode.uid"></label-chooser>
+</div>

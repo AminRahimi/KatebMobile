@@ -1,0 +1,18 @@
+<style>
+    .vt-pdf-error{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>
+<div class="loading-content text-center" ng-show="Data.isLoading && !controlFn.isLargeSizeError">
+    <img src="app/assets/img/loading.svg">
+</div>
+<div ng-if="Data.supportsPDFs == true && !controlFn.isLargeSizeError" ng-show="!Data.isLoading" id="{{Data.pdfContainerId}}" style="width: 100%; height: 100%; border: medium none;">{{Data.PDFObject}}</div>
+<iframe ng-if="Data.supportsPDFs == false && !controlFn.isLargeSizeError" ng-show="!Data.isLoading" id="vtPDF" src="{{Data.pdfViewerUrl}}" style="width: 100%; height: 100%; border: medium none;"></iframe>
+<div ng-show="controlFn.isLargeSizeError && !Data.isLoading" class="vt-pdf-error text-info">
+    <i class="fa fa-info-circle fa-4x"></i>
+    <h5>متاسفانه به دلیل حجم بالای فایل pdf امکان نمایش در مرورگر وجود ندارد.</h5>
+</div>

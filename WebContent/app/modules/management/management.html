@@ -1,0 +1,180 @@
+<style>
+    .col-lg-2.management-sidebar {
+        background: #f5f5f5;
+        padding: 20px 10px;
+        min-height: calc(100vh - 55px);
+    }
+
+    .ui-select-bootstrap > .ui-select-match > .btn {
+        border: 1px solid #dcdcdc;
+        padding-right: 10px;
+        text-align: right !important;
+    }
+
+    .ui-select-bootstrap .ui-select-match-text {
+        text-align: right;
+        padding: 0 0 0 10px;
+        float: right !important;
+    }
+
+    .ui-select-bootstrap .ui-select-toggle > .caret {
+        right: auto;
+        left: 10px;
+    }
+
+    .panel-group .panel.sideMenuTab,
+    .panel-group .panel.sideMenuTab > .panel-heading {
+        background: transparent;
+    }
+
+    .panel-group .panel.sideMenuTab > .panel-heading > h4,
+    .panel-group .panel.sideMenuTab > .panel-heading > h4 > a,
+    .panel-group .panel.sideMenuTab > .panel-heading > h4 > a > span {
+        width: 100%;
+    }
+
+    .panel-group .panel.sideMenuTab > .panel-heading > h4 > a > span {
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+    }
+
+    .management-sidebar :not(.activeTab) > a {
+        color: #999
+    }
+
+    .management-sidebar .activeTab > a {
+        color: #ff3d00;
+    }
+
+    .management-sidebar div[ng-repeat="item in menuItem.items"] > a,
+    .management-sidebar div[ng-repeat="item in sysadminMenuItem.items"] > a {
+        display: flex;
+        align-items: center;
+        margin: 0px 0 8px
+    }
+
+    .management-sidebar div[ng-repeat="item in menuItem.items"] > a::before,
+    .management-sidebar div[ng-repeat="item in sysadminMenuItem.items"] > a::before {
+        content: "";
+        width: 2px;
+        height: 10px;
+        background: #ff3d00;
+        display: none;
+        margin-left: 5px;
+    }
+
+    .management-sidebar div[ng-repeat="item in menuItem.items"].activeTab > a::before,
+    .management-sidebar div[ng-repeat="item in sysadminMenuItem.items"].activeTab > a::before {
+        display: block;
+    }
+
+    .panel-group .panel.sideMenuTab:nth-child(3) {
+/*
+        margin-top: 10px;
+        padding-top: 10px;
+        border-radius: 0;
+*/
+    }
+
+    accordion:first-of-type .panel-group {
+        background: rgba(0, 151, 167, 0.07);
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #dcdcdc;
+    }
+
+    accordion:first-of-type .panel-group .panel.sideMenuTab:nth-child(1)::before {
+        content: "قابل مشاهده فقط توسط مدیر سیستم";
+        color: #0097a7;
+        font-size: 13px;
+        border-bottom: 1px solid #0097a7;
+        width: 100%;
+        display: block;
+        padding-bottom: 10px;
+    }
+
+    accordion {
+        display: block;
+        margin: 10px 0 0;
+    }
+
+    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        padding-right: 5px;
+    }
+
+    [class^="flaticon-"]::before, [class*=" flaticon-"]::before, [class^="flaticon-"]::after, [class*=" flaticon-"]::after {
+        color: #bbb;
+    }
+
+    .table-striped > tbody > tr.selected {
+        background: #9af1ed
+    }
+    a.btn.btn-sm.btn-default.h-32.p-t.p-b.pull-left {
+    width: 41px;
+    text-overflow: clip;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    align-items: center;
+}
+a.btn.btn-sm.btn-default.h-32.p-t.p-b.pull-left span::before{
+	margin: 0;
+}
+</style>
+<div class="col-lg-2 management-sidebar">
+    <accordion ng-hide="Data.sysadminMenuListNotShowCount == Data.sysadminMenuList.length">
+        <div ng-if="!sysadminMenuItem.isNotShow" accordion-group
+             ng-repeat="sysadminMenuItem in Data.sysadminMenuList" class="panel-default sideMenuTab"
+             is-open="menuItem.open">
+            <accordion-heading>
+                    <span>
+                        <i class="flaticon-{{sysadminMenuItem.icon}} management-icon"></i>
+                        {{sysadminMenuItem.title}}
+                    </span>
+                <i class="pull-left glyphicon" ng-show="sysadminMenuItem.items.length > 0"
+                   ng-class="{'glyphicon-chevron-down': sysadminMenuItem.open, 'glyphicon-chevron-left': !sysadminMenuItem.open}">
+                </i>
+            </accordion-heading>
+            <div ng-repeat="item in sysadminMenuItem.items" ui-sref-active="activeTab" style="display: block;"
+                 access-checker="{{item.feature}}"
+                 ng-if="sysadminMenuItem.items.length > 0" ng-class="{'disable-element': item.uiSref=='#'}">
+                <a ui-sref="{{item.uiSref}}({orgUid: Data.selectedMenu.uid})">
+                    {{item.title}}
+                </a>
+            </div>
+        </div>
+    </accordion>
+<div ng-show="Data.isMultipleMenu" access-checker="API_LIST_ORGANIZATION">
+<ui-select ng-model="Data.selectedMenu" theme="bootstrap" on-select="Func.onSelectOraganizationSelect($item)">
+<ui-select-match class="ui-select-match" placeholder="جستجو ...">{{$select.selected.title}}</ui-select-match>
+    <ui-select-choices repeat="organization in Data.organizationList | filter: $select.search">
+        <div>{{organization.title}}</div>
+    </ui-select-choices>
+</ui-select>
+</div>
+    <h4 ng-show="!Data.isMultipleMenu" class="text-info">{{Data.selectedMenu.title}}</h4>
+    <accordion>
+        <div ng-if="!menuItem.isNotShow" accordion-group class="panel-default sideMenuTab"
+             ng-repeat="menuItem in Data.menuList"
+             is-open="menuItem.open">
+            <accordion-heading>
+                    <span>
+                        <i class="flaticon-{{menuItem.icon}} management-icon"></i>
+                        {{menuItem.title}}
+                    </span>
+                <i class="pull-left glyphicon" ng-show="menuItem.items.length > 0"
+                   ng-class="{'glyphicon-chevron-down': menuItem.open, 'glyphicon-chevron-left': !menuItem.open}">
+                </i>
+            </accordion-heading>
+            <div ng-repeat="item in menuItem.items" ui-sref-active="activeTab" style="display: block;"
+                 access-checker="{{item.feature}}"
+                 ng-if="menuItem.items.length > 0" ng-class="{'disable-element': item.uiSref=='#'}">
+                <a ui-sref="{{item.uiSref}}({orgUid: Data.selectedMenu.uid})">
+                    {{item.title}}
+                </a>
+            </div>
+        </div>
+    </accordion>
+</div>
+<div class="col-lg-10" ui-view="content"></div>

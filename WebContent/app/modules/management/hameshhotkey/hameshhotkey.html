@@ -1,0 +1,117 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت هامش</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_PUBLIC_HAMESH_HOTKEY">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.hameshhotkeySearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.hameshhotkeyListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_PUBLIC_HAMESH_HOTKEY" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_PUBLIC_HAMESH_HOTKEY"
+					ng-show="true" type="button"
+					ng-click="Func.onAddhameshhotkeyClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_PUBLIC_HAMESH_HOTKEY"
+					ng-show="Data.selectedhameshhotkey.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEdithameshhotkeyClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_PUBLIC_HAMESH_HOTKEY"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSavehameshhotkeyClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="hameshhotkeyForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_PUBLIC_HAMESH_HOTKEY"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdatehameshhotkeyClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="hameshhotkeyForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_PUBLIC_HAMESH_HOTKEY"
+					ng-show="Data.selectedhameshhotkey.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onDeletehameshhotkeyClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedhameshhotkey.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="hameshhotkeyForm" role="form" novalidate>
+				<div class="row rowForm">
+					<label class="col-sm-5">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedhameshhotkey.name|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" 
+							ng-model="Data.selectedhameshhotkey.name">
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">متن هامش</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedhameshhotkey.content|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="content" 
+							ng-model="Data.selectedhameshhotkey.content">
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">کلید میانبر</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedhameshhotkey.hotkey|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="hotkey" 
+							ng-model="Data.selectedhameshhotkey.hotkey">
+					
+					</div>
+				</div>	
+				<div class="row rowForm">
+					<label class="col-sm-5">ترتیب</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedhameshhotkey.order|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="order"
+							ng-model="Data.selectedhameshhotkey.order">
+					</div>
+				</div>	
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_PUBLIC_HAMESH_HOTKEY" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.hameshhotkeyAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

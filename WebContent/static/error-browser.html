@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>خطا</title>
+
+
+<script type="text/javascript" src="/Kateb/static/assets/js/error-browser.js"></script>
+<script type="text/javascript" src="/Kateb/static/assets/js/jquery.js"></script>
+<script type="text/javascript" src="/Kateb/static/assets/js/jquery.query-2.1.7.js"></script>
+<script type="text/javascript" src="/Kateb/static/assets/js/rainbows.js"></script>
+
+<link type="text/css" rel="stylesheet" href="/Kateb/static/assets/css/style.css" media="screen" />
+</head>
+<body>
+	<div id="main">
+		<div class="top">
+
+			<p class="p4">
+				<img src="/Kateb/static/assets/images/vira.png" style="width: 30px; margin-bottom: -10px;">
+				تولید شرکت <a href="http://viratech.ir/" style="border: 0px solid black;">ویراتک شریف <span
+					style="font-family: Arial">©</span> 1394
+				</a>
+			</p>
+
+		</div>
+		<div class="middle">
+			<div class="d1" style="width: 350px;">
+				<div>
+					<form id="LoginForm" action="j_spring_security_check" method="post">
+						<div class="input-box"
+							style="padding: 20px; width: 300px; background-color: rgba(255, 255, 255, 1); text-align: center;">
+							<div style="text-align: center">
+								<img src="/Kateb/static/assets/images/Logo.png">
+							</div>
+							<div>
+								<p id='alarm' class=""
+									style="font-size: 10px; color: red; text-align: right; visibility: hidden;">نام کاربری
+									و یا رمز عبور وارد شده اشتباه است</p>
+							</div>
+							<div id="username_input">امکان اجرای javascript در مرورگر شما وجود ندارد در صورت غیر
+								فعال کردن موتور javascript آنرا فعال کرده و در صورت قدیمی بودن نسخه مورورگرتان آنرا به روز
+								رسانی کرده و مججدا وارد سایت شوید</div>
+							<div id="submit">
+								<a href="/Kateb/" class="click i4 input-box" style="padding: 4px 8px;">بازگشت به صفحه اصلی</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function err() {
+			if (window.location.search == '?login_error=1') {
+				document.getElementById('alarm').style.visibility = 'visible';
+			}
+		};
+		err();
+	</script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<script src="../../lib/ckeditor/ckeditor.js"></script>
+<div class="col-sm-12">
+    <div class="panel panel-default panel-page-header">
+        <div class="panel-body">
+            مدیریت خبر
+
+            <div class="pull-left">
+                <button class="btn btn-sm btn-success btn-text"
+                        ng-if="Data.mode=='view'"
+                        ng-click="Func.onGoToEditModeClick()">
+                    ویرایش
+                </button>
+                <button class="btn btn-sm btn-success btn-text"
+                        ng-disabled="(Data.newsForm.$invalid && Data.validationClicked) || (!Data.ckeditor.isValid && Data.validationClicked)"
+                        ng-if="Data.mode=='add'" ng-click="Func.onAddNewsClick()">
+                    ثبت
+                </button>
+                <button class="btn btn-sm btn-success btn-text"
+                        ng-disabled="(Data.newsForm.$invalid && Data.validationClicked) || (!Data.ckeditor.isValid && Data.validationClicked)"
+                        ng-if="Data.mode=='edit'" ng-click="Func.onUpdateNewsClick()">
+                    ثبت تغییرات
+                </button>
+                <button class="btn btn-sm btn-warning btn-text"
+                        ng-if="Data.mode!='view'"
+                        ng-click="Func.onCancelClick()">
+                    انصراف
+                </button>
+                <a class="btn btn-sm btn-info btn-text" ui-sref="home.management.newsList({orgUid: Data.orgUid})"> بازگشت</a>
+            </div>
+        </div>
+    </div>
+</div>
+<form name="Data.newsForm">
+    <div class="col-md-9">
+        <div class="panel panel-default viraShadow">
+            <div class="panel-custom">
+                <div class="panel-heading">
+					<h5> افزودن/ ویرایش خبر</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="row rowForm">
+                        <div class="col-sm-3">
+                            <div class="text-center" ng-show="Data.mode!='view'">
+                                <span class="text-info">بارگذاری تصویر خبر</span>
+                            </div>
+                            <vt-photo ng-model="Data.currentNews.photo"
+                                      ratio="1" is-edit-mode="Data.mode!='view'"
+                                      no-title-description="true">
+                            </vt-photo>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row rowForm">
+                                <label class="col-sm-2 control-label text-left"
+                                       ng-class="{'required':Data.mode!='view'}">
+                                    عنوان:
+                                </label>
+                                <div class="col-sm-10" ng-show="Data.mode=='view'">
+                                    {{Data.currentNews.title}}
+                                </div>
+                                <div class="col-sm-10" ng-show="Data.mode!='view'">
+                                    <input type="text" class="form-control input-news-reference" name="source"
+                                           ng-model="Data.currentNews.title" placeholder="عنوان خبر"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label class="col-sm-2 control-label text-left">
+                                    منبع:
+                                </label>
+                                <div class="col-sm-10" ng-show="Data.mode=='view'">
+                                    {{Data.currentNews.reference}}
+                                </div>
+                                <div class="col-sm-10" ng-show="Data.mode!='view'">
+                                    <input type="text" class="form-control input-news-reference" name="reference"
+                                           ng-model="Data.currentNews.reference" placeholder="منبع خبر"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row rowForm">
+                                <label
+                                        class="col-sm-2 control-label text-left"
+                                        ng-class="{'required':Data.mode!='view'}">
+                                    چکیده:
+                                </label>
+                                <div class="col-sm-10" ng-show="Data.mode=='view'">
+                                    {{Data.currentNews.summary}}
+                                </div>
+                                <div class="col-sm-10" ng-show="Data.mode!='view'"
+                                     ng-class="{'has-error':Data.newsForm.abstract.$invalid && Data.validationClicked}">
+                                    <textarea rows="12" placeholder="شرح مختصر (چکیده)"
+                                              maxlength="480" class="form-control text-justify"
+                                              name="abstract" required ng-model="Data.currentNews.summary"
+                                              ng-bind="Data.currentNews.summary"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div clas="col-sm-12">
+                            <!--<div class="row rowForm">-->
+                            <div class="col-sm-12 blue-color">
+                                <label>توضیحات</label>
+                            </div>
+                            <!--</div>-->
+                            <div class="col-sm-12 ck-content" lang="fa" dir="rtl" ng-show="Data.mode=='view'"
+                                 ng-bind-html="Func.returnStyleCss(Data.currentNews.content)">
+                            </div>
+                            <div class="col-sm-12" ng-show="Data.mode!='view'"
+                                 id="ckeditorContainer">
+                                <input type="file" ngf-select="onFileSelect($files)" id="fileSelector"
+                                       class="filestyle hidden-file-selector ng-hide">
+                                <div class="panel-progress-attachment"
+                                     ng-show="Data.inlineFileUploadResultObj.progressActive">
+                                    <span class="attachment-name">{{Data.inlineFileUploadResultObj.name}}</span>
+                                    <div class="progress progress-attachment">
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                             aria-valuemin="0" aria-valuemax="100"
+                                             ng-style="{'width': Data.inlineFileUploadResultObj.progressPercentage+'%'}"></div>
+                                    </div>
+                                    <span class="attachment-size text-english">
+								        <span>{{(Data.inlineFileUploadResultObj.file.size * (Data.inlineFileUploadResultObj.progressPercentage/100))|EnToFaNumber}}</span>/
+								        <span>{{Data.inlineFileUploadResultObj.file.size|EnToFaNumber}}</span>
+							        </span>
+                                </div>
+                                <textarea name="content_ref" class="text-justify form-control"
+                                          id="editor1" rows="10" cols="80">
+                                </textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="panel panel-default viraShadow">
+                    <div class="panel-custom border-heading">
+                        <div class="panel-heading">
+                            تنظیمات
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <div class="row rowForm">
+                                    <label><input ng-disabled="Data.mode =='view'" type="radio"
+                                                  ng-model="Data.publishNow"
+                                                  name="publish"
+                                                  ng-value="true"
+                                                  style="opacity: 1;">انتشار
+                                        فوری</label>
+                                </div>
+                                <div class="row rowForm">
+
+                                    <label><input ng-disabled="Data.mode =='view'" type="radio" disabled="disabled"
+                                                  ng-model="Data.publishNow"
+                                                  name="publish"
+                                                  ng-value="false"
+                                                  style="opacity: 1;"> انتشار
+                                        در تاریخ
+                                        مشخص</label>
+                                </div>
+
+                                <div class="row rowForm" ng-show="Data.mode =='view'">
+                                    <div class="rowForm row" ng-show="!Data.publishNow">
+                                        <div class="col-sm-4" style="padding-top: 0;">
+                                            <label class="blue-color">
+                                                تاریخ انتشار
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            {{Data.currentNews.publishDate |
+                                            tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                        </div>
+                                    </div>
+                                    <div class="rowForm row">
+                                        <div class="col-sm-4" style="padding-top: 0;">
+                                            <label class="blue-color">
+                                                تاریخ انقضاء
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            {{Data.currentNews.expirationDate
+                                            |tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row rowForm" ng-show="!Data.publishNow && Data.mode!='view'">
+                                    <div class="col-sm-9" style="padding-top: 0;">
+                                        <vt-persian-date-picker name="publishDate" model="Data.currentNews.publishDate" min-date="Data.currentDate"></vt-persian-date-picker>
+                                        <!--<persian-interval-datepicker
+                                                name="intervalDate"
+                                                display="multiline"
+                                                start-date-placeholder="تاریخ انتشار"
+                                                end-date-placeholder="تاریخ انقضا"
+                                                start-date-model="Data.currentNews.publishDate"
+                                                end-date-model="Data.currentNews.expirationDate"
+                                                ng-model="Data.currentNews.intervalDate"
+                                                format="yyyy/MM/dd" current-date="Data.currentDate">
+                                        </persian-interval-datepicker>-->
+                                    </div>
+                                </div>
+                                <div class="row rowForm" ng-show="Data.mode != 'view'">
+                                    <label class="col-sm-12 blue-color" style="text-align: right;">
+                                        تاریخ انقضا
+                                    </label>
+                                    <div class="col-sm-9" style="padding-top: 0;">
+                                        <vt-persian-date-picker name="expirationDate" model="Data.currentNews.expirationDate" min-date="Data.currentNews.publishDate || Data.currentDate"></vt-persian-date-picker>
+                                    </div>
+                                </div>
+                                <!--<div class="row" ng-hide="Data.mode =='add'">
+                                    <label class="blue-color"><input ng-disabled="Data.mode =='view'" type="checkbox"
+                                                                     ng-model="Data.boxComment"
+                                                                     name="publish"
+                                                                     value="true"
+                                                                     style="opacity: 1;">
+                                        نمایش پنل نظرات
+                                    </label>
+                                </div>-->
+                                <div class="row rowForm">
+                                    <label><input ng-disabled="Data.mode =='view'" type="checkbox"
+                                                  ng-model="Data.currentNews.showPicture"
+                                                  name="publish"
+                                                  value="true"
+                                                  style="opacity: 1;">
+                                        نمایش تصویر خبر در صفحه پیش‌فرض
+                                    </label>
+                                </div>
+                                <div class="row rowForm">
+                                    <label><input ng-disabled="Data.mode =='view'" type="checkbox"
+                                                  ng-model="Data.currentNews.showSummary"
+                                                  name="publish"
+                                                  value="true"
+                                                  style="opacity: 1;">
+                                        نمایش چکیده در صفحه خبر
+                                    </label>
+                                </div>
+                                <div class="row rowForm" ng-show="Data.mode != 'add'">
+                                    <label class="col-sm-12 blue-color" style="text-align: right;">
+                                        نویسنده
+                                    </label>
+                                    <div class="col-sm-9" style="padding-top: 0;">
+                                        {{Data.currentNews.writer.title}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-default border-heading">
+                        <div class="panel-heading">
+                            برچسب‌های موضوعی
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <div ng-show="Data.mode=='view'">
+                                    <div ng-repeat="tag in Data.selectedNews.tags track by $index">
+                                        {{tag}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <ui-select multiple ng-model="Data.selectedNews.tags" title="برچسب موضوعی">
+                                        <ui-select-match placeholder="انتخاب برچسب موضوعی">{{$select.selected.title}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="tag in Data.availableTags"
+                                                           refresh="Func.refreshTags($select.search)">
+                                            <div ng-bind="tag.title"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-default border-heading">
+                        <div class="panel-heading">
+                            آمار
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <label class="col-sm-3 blue-color">
+                                    بازدید
+                                </label>
+                                <div class="col-sm-9">
+                                    {{Data.currentNews.viewCount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</form>

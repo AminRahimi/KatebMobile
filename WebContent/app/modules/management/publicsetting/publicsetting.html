@@ -1,0 +1,158 @@
+<div class="col-sm-4 col-sm-offset-4">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">تنظیمات عمومی</div>
+	</div>
+</div>
+<div class="col-md-4 col-sm-offset-4">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-primary btn-text"
+					ng-show="Data.mode=='view'" type="button"
+					ng-click="Func.onEditpublicsettingClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdatepublicsettingClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="publicsettingForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form name="publicsettingForm" role="form" novalidate>
+				<div class="row rowForm" ng-class="{'has-error':publicsettingForm.internalIndicatorBook.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">دفتر اندیکاتوری داخلی</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedpublicsetting.internalIndicatorBook.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.internalIndicatorBook" name="internalIndicatorBook" required
+							ng-change="Func.onSelectinternalIndicatorBook(Data.internalIndicatorBook)" 
+							ng-options="indicatorBook as indicatorBook.title for indicatorBook in Data.indicatorBookList">
+						</select>
+					</div>
+				</div>
+				<div class="row rowForm" ng-class="{'has-error':publicsettingForm.draftIndicatorBook.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">دفتر اندیکاتوری پیش‌نویس</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedpublicsetting.draftIndicatorBook.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.draftIndicatorBook" name="draftIndicatorBook" required
+							ng-change="Func.onSelectdraftIndicatorBook(Data.draftIndicatorBook)" 
+							ng-options="indicatorBook as indicatorBook.title for indicatorBook in Data.indicatorBookList">
+						</select>
+					</div>
+				</div>
+				<div class="row rowForm" ng-class="{'has-error':publicsettingForm.defaultSecretariat.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">دبیرخانه</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedpublicsetting.defaultSecretariat.title|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.defaultSecretariat" name="defaultSecretariat" required
+								ng-change="Func.onSecratariatChange(Data.defaultSecretariat)"
+								ng-options="secretariatList as secretariatList.title for secretariatList in Data.secretariatList">
+						</select>
+					</div>
+				</div>
+				<div class="row rowForm">
+					<label class="col-sm-5">ارسال پیام بین‌سازمانی</label>
+					<div ng-show="Data.mode=='view'"
+						 class="col-sm-7">
+						<div class="col-sm-7">
+							{{Data.selectedpublicsetting.messageToOtherOrgEnabled|checkmark}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'"
+						 class="col-sm-7">
+						<input type="checkbox"
+							   name="name"
+							   ng-model="Data.selectedpublicsetting.messageToOtherOrgEnabled"/>
+					</div>
+				</div>
+				<div class="row rowForm">
+                    <label class="col-sm-5">فعالسازی قوانین مکاتبات</label>
+                    <div ng-show="Data.mode=='view'"
+                         class="col-sm-7">
+                        <div class="col-sm-7">
+                            {{Data.selectedpublicsetting.enabledRule|checkmark}}
+                        </div>
+                    </div>
+                    <div ng-show="Data.mode!='view'"
+                         class="col-sm-7">
+                        <input type="checkbox"
+                               name="name"
+                               ng-model="Data.selectedpublicsetting.enabledRule"/>
+                    </div>
+                </div>
+				<div class="row rowForm">
+					<label class="col-sm-5">نمایش شمس</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						<div class="col-sm-7">
+							{{Data.selectedpublicsetting.shamsQRCodeEnabled|checkmark}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" name="shamsQRCodeEnabled" ng-model="Data.selectedpublicsetting.shamsQRCodeEnabled" />
+					</div>
+				</div>
+				<div class="row rowForm" access-checker="MANAGEMENT_FONT">
+					<label class="col-sm-5">فونت پیش‌فرض</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						<div class="col-sm-12" ng-if="Data.selectedFont">
+							{{Data.selectedFont.title}}
+						</div>
+						<div class="col-sm-12" ng-if="!Data.selectedFont">
+							{{Data.selectedpublicsetting.defaultFont.title || Data.fontList[0].title}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<ui-select ng-model="Data.selectedFont" theme="bootstrap">
+							<ui-select-match class="ui-select-match" placeholder="جستجو ...">{{$select.selected.title}}</ui-select-match>
+							<ui-select-choices repeat="font in Data.fontList | filter: $select.search">
+								<div>{{font.title}}</div>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+				<div class="row rowForm" ng-if="Data.selectedpublicsetting.shamsQRCodeEnabled">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">پست الکترونیک</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						<div class="col-sm-7">
+							{{Data.selectedpublicsetting.email}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input class="form-control" type="email" name="email" ng-model="Data.selectedpublicsetting.email" required />
+					</div>
+				</div>
+				<div class="row rowForm" ng-if="Data.selectedpublicsetting.shamsQRCodeEnabled">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">شناسه حقوقی</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						<div class="col-sm-7">
+							{{Data.selectedpublicsetting.legalId}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input class="form-control" type="text" name="legalId" ng-model="Data.selectedpublicsetting.legalId" required />
+					</div>
+				</div>
+				<div class="row rowForm" ng-if="Data.selectedpublicsetting.shamsQRCodeEnabled">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">شناسه حوزه صدور</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						<div class="col-sm-7">
+							{{Data.selectedpublicsetting.issueDepartmentId}}
+						</div>
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input class="form-control" type="text" name="issueDepartmentId" ng-model="Data.selectedpublicsetting.issueDepartmentId" required />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

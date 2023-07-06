@@ -1,0 +1,25 @@
+<div class="modal-header text-left">
+    <i class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="Func.onCloseModalClick()"></i>
+</div>
+<div class="modal-body">
+    <div ng-show="Data.archivedLetter.description" class="row rowForm">
+        <div class="col-sm-4 text-left">مسیر ذخیره سازی:</div>
+        <div class="col-sm-8" style="direction: ltr; text-align: right;">{{Data.archivedLetter.description}}</div>
+    </div>
+    <div ng-show="Data.archivedLetter.rc" class="row rowForm">
+        <div class="col-sm-4 text-left">کد نوسازی:</div>
+        <div class="col-sm-8">{{Data.archivedLetter.rc | EnToFaNumber}}</div>
+    </div>
+    <div ng-show="Data.archivedLetter.systemTag" class="row rowForm">
+        <div class="col-sm-4 text-left">نوع سند:</div>
+        <div class="col-sm-8">{{Data.archivedLetter.systemTag | appEnum | EnToFaNumber}}</div>
+    </div>
+    <div ng-show="Data.archivedLetter.personnelNo" class="row rowForm">
+        <div class="col-sm-4 text-left">کد پرسنلی:</div>
+        <div class="col-sm-8">{{Data.archivedLetter.personnelNo | EnToFaNumber}}</div>
+    </div>
+    <div ng-show="Data.archivedLetter.uploadDate" class="row rowForm">
+        <div class="col-sm-4 text-left">تاریخ ثبت:</div>
+        <div class="col-sm-8">{{Data.archivedLetter.uploadDate | tehranDate:'jDD-jMMMM-jYYYY' | EnToFaNumber}}</div>
+    </div>
+</div>

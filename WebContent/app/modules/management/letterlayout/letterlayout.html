@@ -1,0 +1,311 @@
+<div class="col-sm-12">
+	<div class="panel panel-default panel-page-header">
+		<div class="panel-body">مدیریت سربرگ نامه</div>
+	</div>
+</div>
+<div class="col-md-8" access-checker="API_LIST_LETTER_LAYOUT">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-search control-fn="Controller.letterlayoutSearchController"></vt-search>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<vt-grid control-fn="Controller.letterlayoutListController"></vt-grid>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_LETTER_LAYOUT" 
+	ng-hide="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body panel-management">
+			<div class="col-sm-12">
+				<a class="btn btn-sm btn-default btn-text"
+					access-checker="API_ADD_LETTER_LAYOUT"
+					ng-show="true" type="button"
+					ng-click="Func.onAddletterlayoutClick()" ng-disabled="Data.mode=='add'" ng-bind="'CREATE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-primary btn-text"
+					access-checker="API_EDIT_LETTER_LAYOUT"
+					ng-show="Data.selectedletterlayout.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onEditletterlayoutClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_ADD_LETTER_LAYOUT"
+					ng-show="Data.mode=='add'" type="button"
+					ng-click="Func.onSaveletterlayoutClick()" ng-bind="'SAVE'|EnToFaButton"
+					ng-disabled="letterlayoutForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-success btn-text"
+					access-checker="API_EDIT_LETTER_LAYOUT"
+					ng-show="Data.mode=='edit'" type="button"
+					ng-click="Func.onUpdateletterlayoutClick()" ng-bind="'UPDATE'|EnToFaButton"
+					ng-disabled="letterlayoutForm.$invalid && Data.validationClicked"></a>
+				<a class="btn btn-sm btn-warning btn-text"
+					ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+					ng-click="Func.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-danger btn-text"
+					access-checker="API_DELETE_LETTER_LAYOUT"
+					ng-show="Data.selectedletterlayout.uid && Data.mode=='view'" type="button"
+					ng-click="Func.onDeleteletterlayoutClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+				<a class="btn btn-sm btn-default pull-left"
+					ng-show="true" type="button"
+					ng-click="Func.onChangeSearchModeClick('advanced')">
+					<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="Data.selectedletterlayout.uid || Data.mode=='add'">
+		<div class="panel-body">
+			<form name="letterlayoutForm" role="form" novalidate>
+                <div class="row rowForm" ng-show="Data.mode=='view'" access-checker="SEE_ENTITY_UID">
+                    <label class="col-sm-5">شناسه</label>
+                    <div class="col-sm-7">
+                        {{Data.selectedletterlayout.uid}}
+                    </div>
+                </div>
+                <div class="row rowForm" ng-class="{'has-error':letterlayoutForm.name.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">نام</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.name|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="text" class="form-control" name="name" required
+							ng-model="Data.selectedletterlayout.name">
+					
+					</div>
+				</div>
+				
+				
+				<div class="row rowForm" >
+					<label class="col-sm-5">صفحه استاندارد</label>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<select class="form-control" ng-model="Data.standardPaperSize" ng-change="Func.onStandardPaperSizeSelect(Data.standardPaperSize)" name="standardPaperSize"  ng-options="standardPaperSize as standardPaperSize.name  for standardPaperSize in Data.standardPaperSizeList">
+						</select>
+					</div>
+				</div>
+
+
+
+				<div class="row rowForm">
+					<label class="col-sm-5">فعال</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.enabled|checkmark}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="checkbox" class="" name="enabled" 
+							ng-model="Data.selectedletterlayout.enabled">
+					</div>
+				</div>
+				<div class="row rowForm" ng-dblclick="Data.standardPaperSize=null" ng-class="{'has-error':letterlayoutForm.length.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">طول (میلیمتر)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.length|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="length" required
+							ng-model="Data.selectedletterlayout.length" ng-disabled="Data.standardPaperSize">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-dblclick="Data.standardPaperSize=null" ng-class="{'has-error':letterlayoutForm.width.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">عرض (میلیمتر)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.width|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="width" required
+							ng-model="Data.selectedletterlayout.width" ng-disabled="Data.standardPaperSize">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.datePositionX.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل تاریخ از چپ (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.datePositionX|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="datePositionX" required
+							ng-model="Data.selectedletterlayout.datePositionX">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.datePositionY.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل تاریخ از بالا (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.datePositionY|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="datePositionY" required
+							ng-model="Data.selectedletterlayout.datePositionY">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.attachmentPositionX.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل پیوست از چپ (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.attachmentPositionX|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="attachmentPositionX" required
+							ng-model="Data.selectedletterlayout.attachmentPositionX">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.attachmentPositionY.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل پیوست از بالا (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.attachmentPositionY|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="attachmentPositionY" required
+							ng-model="Data.selectedletterlayout.attachmentPositionY">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.numberPositionX.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل شماره از چپ (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.numberPositionX|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="numberPositionX" required
+							ng-model="Data.selectedletterlayout.numberPositionX">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.numberPositionY.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل شماره از بالا (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.numberPositionY|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="numberPositionY" required
+							ng-model="Data.selectedletterlayout.numberPositionY">
+					</div>
+				</div>
+				<div class="row rowForm" ng-if="Data.configObj.shamsQRCodeEnabled" ng-class="{'has-error':letterlayoutForm.qrCodePositionX.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل کد QR از چپ (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedletterlayout.qrCodePositionX|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="qrCodePositionX" required
+							ng-model="Data.selectedletterlayout.qrCodePositionX">
+					</div>
+				</div>
+				<div class="row rowForm"  ng-if="Data.configObj.shamsQRCodeEnabled" ng-class="{'has-error':letterlayoutForm.qrCodePositionY.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل کد QR از پایین (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+						{{Data.selectedletterlayout.qrCodePositionY|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="qrCodePositionY" required
+							ng-model="Data.selectedletterlayout.qrCodePositionY">
+					</div>
+				</div>
+                <div class="row rowForm" ng-class="{'has-error':letterlayoutForm.postscriptPositionY.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل پی‌نوشت از بالا (درصد)</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedletterlayout.postscriptPositionY|EnToFaNumber}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="number" class="form-control" name="postscriptPositionY" required
+                               ng-model="Data.selectedletterlayout.postscriptPositionY">
+                    </div>
+                </div>
+                <div class="row rowForm" ng-class="{'has-error':letterlayoutForm.postscriptPositionX.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">محل پی‌نوشت از چپ (درصد)</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedletterlayout.postscriptPositionX|EnToFaNumber}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="number" class="form-control" name="postscriptPositionX" required
+                               ng-model="Data.selectedletterlayout.postscriptPositionX">
+                    </div>
+                </div>
+                <div class="row rowForm" ng-class="{'has-error':letterlayoutForm.postscriptFontsize.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">اندازه فونت پی‌نوشت</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedletterlayout.postscriptFontsize|EnToFaNumber}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <input type="number" class="form-control" name="postscriptFontsize" required
+                               ng-model="Data.selectedletterlayout.postscriptFontsize">
+                    </div>
+                </div>
+                <div class="row rowForm">
+                    <label class="col-sm-5">متن پی‌نوشت</label>
+                    <div ng-show="Data.mode=='view'" class="col-sm-7">
+                        {{Data.selectedletterlayout.postscriptText|EnToFaNumber}}
+                    </div>
+                    <div ng-show="Data.mode!='view'" class="col-sm-7">
+                        <textarea type="text" class="form-control" name="postscriptText"
+                                  ng-model="Data.selectedletterlayout.postscriptText"></textarea>
+
+                    </div>
+                </div>
+                <div class="row rowForm" ng-class="{'has-error':letterlayoutForm.marginLeft.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">حاشیه چپ (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.marginLeft|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="marginLeft" required
+							ng-model="Data.selectedletterlayout.marginLeft">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.marginRight.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">حاشیه راست (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.marginRight|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="marginRight" required
+							ng-model="Data.selectedletterlayout.marginRight">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.marginUp.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">حاشیه بالا (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.marginUp|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="marginUp" required
+							ng-model="Data.selectedletterlayout.marginUp">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.marginDown.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">حاشیه پایین (درصد)</label>
+					<div ng-show="Data.mode=='view'" class="col-sm-7">
+				{{Data.selectedletterlayout.marginDown|EnToFaNumber}}
+					</div>
+					<div ng-show="Data.mode!='view'" class="col-sm-7">
+						<input type="number" class="form-control" name="marginDown" required
+							ng-model="Data.selectedletterlayout.marginDown">
+					</div>
+				</div>	
+				<div class="row rowForm" ng-class="{'has-error':letterlayoutForm.photo.$invalid && Data.validationClicked}">
+					<label class="col-sm-5" ng-class="{'required':Data.mode!='view'}">سربرگ</label>
+					<div class="col-sm-7">
+						<vt-photo ng-model="Data.selectedletterlayout.photo" 
+								ratio="Data.selectedletterlayout.width/Data.selectedletterlayout.length"
+								is-edit-mode="Data.mode!='view'" 
+								no-title-description="true">
+						</vt-photo>
+					</div>
+					
+				</div>
+				<div class="row rowForm" ng-show="Data.mode!='view' && Data.selectedletterlayout.photo.hash"  >
+					<div class="col-sm-12">
+						<button type="button" class="btn btn-primary btn-lg btn-block"  ng-click="Func.onShowEditLayoutModalClick(Data.selectedletterlayout.photo.hash)">ویرایش بصری</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4" access-checker="API_VIEW_LETTER_LAYOUT" ng-show="Data.searchMode=='advanced'">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<vt-search control-fn="Controller.letterlayoutAdvancedSearchController"></vt-search>
+			</div>
+		</div>
+	</div>
+</div>
+
+

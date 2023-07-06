@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <i class="flaticon-cancel pull-left" ng-click="Func.onClose()" style="cursor: pointer;"></i>
+    <h5 ng-show="Data.scannerStatus == 'oldVersion'" class="modal-title">نرم افزار اسکن نصب شده قدیمی است</h5>
+    <h5 ng-show="Data.scannerStatus == 'inactive'" class="modal-title">نرم افزار اسکن فعال نیست</h5>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <p ng-show="Data.scannerStatus == 'oldVersion'">لطفا نرم افزار اسکن قدیمی را از روی سیستم خود حذف کنید و فایل نسخه جدید نرم افزار را دانلود و نرم افزار را دوباره نصب و راه اندازی کنید. سپس این صفحه را دوباره بارگذاری نمایید.</p>
+            <p ng-show="Data.scannerStatus == 'inactive'">لطفا نرم افزار اسکن را اجرا کنید. در صورتی که نرم افزار اسکن بر روی سیستم شما نصب نمی باشد، فایل نرم افزار را دانلود کنید و پس از نصب و راه اندازی، این صفحه را دوباره بارگذاری نمایید.</p>
+            <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank" class="btn btn-success">دانلود نرم افزار</a>
+            <button type="button" ng-click="Func.onReloadPage()" class="btn btn-primary">بارگذاری دوباره صفحه</button>
+        </div>
+    </div>
+</div>

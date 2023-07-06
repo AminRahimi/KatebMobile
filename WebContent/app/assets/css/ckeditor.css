@@ -1,0 +1,24 @@
+/* html{ */
+	/* fix ckeditor bug in chrome maximize */
+	/* position: static !important; */
+/* } */
+.has-error .ck-editor{
+	 border: 1px solid #a94442;
+}
+
+/* ckeditor editor area */
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+
+/* default font family */
+.ck-content{
+	font-family: 'B Yagut, yagut';
+	font-size: 14px;
+	color: #000;
+}
+.ck-content *{
+	font-family:inherit;
+	font-size: inherit;
+	color: inherit;
+}

@@ -1,0 +1,25 @@
+<div class="col-sm-12 noSidePadding" ng-class="{hidden:!isEditMode}">
+     <div class="btn-group">
+          <button type='button' class='btn btn-xs btn-default' ng-click='openEntityMultiSelectorModal()' ng-if="!isAddOnly">
+               <i class='glyphicon glyphicon-search'></i>
+          </button>
+          <button type='button' class='btn btn-xs btn-default' ng-hide="schema.isCreateDisabled" ng-click="onOpenAddNewEntityModal()">
+               <i class='glyphicon glyphicon-plus'></i>
+          </button>
+     </div>
+</div>
+<div class="col-sm-12 noSidePadding" ng-show="model.length">
+          		<table class="table">
+	            	<thead><tr>
+	            		<th ng-repeat="key in jsonSchema.extents.list">{{jsonSchema.properties[key].label}}</th>
+	            		<th></th>
+	            	</tr></thead>
+		            <tbody><tr ng-repeat="item in model">
+		                <td ng-repeat="key in jsonSchema.extents.list">{{item[key]}}</td>
+		                <td>
+		                	<i class="fa fa-btn fa-times" ng-class="{hidden:!isEditMode}" ng-click="onRemoveEntityClick(item)"></i>
+		                	<i class="fa fa-btn fa-pencil" ng-click="openEntityInfoModal(item)"></i>
+		                </td>
+		            </tr></tbody>
+	            </table>
+</div>

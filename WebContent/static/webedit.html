@@ -1,0 +1,57 @@
+<html dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <title>در حال اتصال به ویرایشگر...</title>
+    <meta name="robots" content="noindex,nofollow">
+    <script src="../static/assets/js/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+            $.get('../api/config', function (configObj) {
+                var url = configObj.config.server.protocol + '://' + configObj.config.server.host;
+                if(configObj.config.server.port){
+                    url = url + ':' + configObj.config.server.port;
+                }
+                if(configObj.config.server.contextPath){
+                    url = url + '/' + configObj.config.server.contextPath;
+                }
+                $.ajax({
+                    url: 'http://localhost:45458/webedit/default_app',
+                    type: "POST",
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        'uid': getUrlVars()['state'],
+                        'code': getUrlVars()['code'],
+                        'server': url,
+                        'redirect_callback': url + '/static/webedit.html'
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    success: function () {
+                        window.close();
+                    },
+                    error: function (data){
+                        window.close();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="display: flex; align-items: center; justify-content: center;">
+    <img src="../static/assets/images/loader.gif" style="width: 50px; height: 50px; margin-left: 10px;">
+    <h4>در حال اتصال به ویرایشگر...</h4>
+</body>
+</html>

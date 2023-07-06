@@ -1,0 +1,60 @@
+@font-face {
+	font-family: DroidNaskh;
+	src: url(/Kateb/app/assets/font/DroidNaskh/DroidNaskh-Regular.ttf);
+}
+
+@font-face {
+	font-family: DroidNaskh;
+	font-weight: bold;
+	src: url(/Kateb/app/assets/font/DroidNaskh/DroidNaskh-Bold.ttf);
+}
+
+@font-face {
+	font-family: yekanRegular;
+	src: url(/Kateb/app/assets/font/yekanRegular/B-Yekan.ttf);
+}
+
+@font-face {
+	font-family: iranianSans;
+	src: url(/Kateb/app/assets/font/iranian-sans-web/iranian-sans-web.ttf);
+}
+@font-face {
+	font-family: yagut;
+	src: url(/Kateb/app/assets/font/yagut/BYagut.ttf);
+}
+@font-face {
+	font-family: lotus;
+	src: url(/Kateb/app/assets/font/lotus/BLotus.ttf);
+}
+@font-face {
+  font-family: iranyekanweb;
+  src: url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebregular.eot');
+  src: url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),
+       url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebregular.woff') format('truetype');
+       url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebregular.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: iranyekanwebbold;
+  src: url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebbold.eot');
+  src: url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),
+       url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebbold.woff') format('woff'),
+       url('/Kateb/app/assets/font/iranyekanweb/iranyekanwebbold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: IRANYekan;
+  src: url('/Kateb/app/assets/font/IRANYekanRegular/IRANYekanWebRegularFaNum.woff');
+}
+
+@font-face {
+    font-family: IRANSansX;
+    src: url(/Kateb/app/assets/font/IRANSansX/IRANSansXFaNum-Regular.woff);
+}
+
+@font-face {
+    font-family: "Times New Roman";
+    src: url(/Kateb/app/assets/font/TimesNewRoman/TimesNewRomanPSMT.woff);
+}

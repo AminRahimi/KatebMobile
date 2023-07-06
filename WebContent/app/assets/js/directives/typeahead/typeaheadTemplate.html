@@ -1,0 +1,40 @@
+<div class="btn-group vtTypeadheadDropDown" dropdown>
+
+    <button id="single-button" type="button" class="btn btn-primary dropdown-toggle-box" dropdown-toggle>
+        {{api.label?api.label:(isEditMode?'انتخاب کنید': 'نمایش')}}
+        <span ng-show="model.length>0" class="model-length">{{model.length|EnToFaNumber}}</span>
+        <i class="fa-btn glyphicon glyphicon-chevron-down"></i>
+    </button>
+    <div class="dropdown-menu" style="z-index: 99999; margin-top: 8px;padding: 6px; border-radius: 0px; font-family:iranyekanweb; width: 100%;" role="menu" aria-labelledby="single-button">
+        <div class="vtTypeahead">
+            <div ng-show="isEditMode">
+                <input type="text"
+                       placeholder="{{api.label?api.label:'...'}}"
+                       ng-model="asyncSelected"
+                       typeahead="item.title for item in getItemList($viewValue)"
+                       typeahead-loading="loadingItems"
+                       typeahead-no-results="noResults"
+                       typeahead-on-select="onSelect($item, $model)"
+                       class="form-control">
+                <i ng-show="loadingItems" class="glyphicon glyphicon-refresh"></i>
+                <div ng-show="noResults">
+                    <i class="glyphicon glyphicon-remove"></i> موردی یافت نشد.
+                </div>
+            </div>
+            <div ng-show="isMulti">
+                <label class="label label-default label-repeat full-width" ng-repeat="x in model track by $index"
+                        ng-click="onSelectedItemClick(x, $index)">
+                    <i class="caret pull-right caret-group" ng-show="isEditMode && x.type=='GROUP'"></i>
+                    <span class="pull-right" ng-class="{'name-group': x.type=='GROUP'}">{{x.title}}</span>
+                    <i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, x)" ng-show="isEditMode"></i>
+                </label>
+            </div>
+            <div ng-show="!isMulti">
+                <label ng-show="model.title" class="label label-default label-repeat col-sm-12"  ng-click="onSelectedItemClick(model, $index)">
+                    <span class="pull-right" ng-class="{'name-group': model.type=='GROUP'}">{{model.title}}</span>
+                    <i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, model)" ng-show="isEditMode"></i>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

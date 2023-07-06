@@ -1,0 +1,23 @@
+<ul>
+    <li class="tree-node" style="padding-left:0;" ng-repeat="treeData in treeData.children track by $index">
+       <span class="treeNode has-hover"
+             ng-class="{'bg-defualt':!treeData.originalInfo.ioaState.stateType,'bg-alarm':treeData.originalInfo.ioaState.stateType=='answered' && treeData.originalInfo.ioaState.qualificationStatus=='incompleteInfo','bg-success':treeData.originalInfo.ioaState.stateType == 'answered' && treeData.originalInfo.ioaState.qualificationStatus =='qualified','bg-danger':treeData.originalInfo.ioaState.stateType == 'answered' && treeData.originalInfo.ioaState.qualificationStatus =='disqualified','bg-primary':treeData.originalInfo.ioaState.stateType == 'assigned','bg-info':treeData.originalInfo.ioaState.stateType == 'unassigned','unreadNode':treeData.item.readCounter==0}"
+             style="position: relative;">
+            <i class="glyphicon" ng-class="{'glyphicon-plus':treeData.isCollapsed && treeData.childCount,
+                           'glyphicon-minus':!treeData.isCollapsed && treeData.childCount,
+                           'glyphicon-leaf':!treeData.childCount}"
+               style="position: absolute; top: 5.5px;"></i>
+            <div style="padding: 0px; min-height: 0px !important;
+                      display: inline-block; margin-bottom: 0px !important; margin-right: 15px;
+                      margin-left: 17px; left: 0px; word-break: break-word;">
+              <span style="border: medium none !important;">{{treeData.item.positionUserAssignment.title}} در {{treeData.item.officialDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+              <ul><li>{{treeData.item.hamesh}}</li></ul>
+            </div>
+  	    </span>
+        <ul class="treeChild" collapse="treeData.isCollapsed"
+            ng-include="treeItemRendererAddress">
+        </ul>
+    </li>
+</ul>
+
+

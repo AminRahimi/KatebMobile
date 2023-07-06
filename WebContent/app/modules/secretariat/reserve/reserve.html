@@ -1,0 +1,75 @@
+<style>
+    .c1{
+        margin-top:10px
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-body" style="border-bottom: 1px solid #ddd;">
+        <div class="col-sm-12">
+            <a class="btn btn-sm btn-text btn-icon" ng-show="true" type="button" ng-click="Func.onCloseClick()"><i
+                    class="flaticon-close-button"></i>بستن</a>
+            <button ng-click="Func.onSaveClick()" type="button" class="btn btn-sm btn-text btn-icon white-bg"
+                ng-disabled="form.$invalid">
+                <i class="flaticon-technology"></i> رزرو
+            </button>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <ul class="nav nav-tabs">
+                <li role="presentation" ng-class="{'active':tab.active}" ng-repeat="tab in Data.tabList"
+                    ng-click="Func.onTabClick(tab)"><a>{{tab.title}}</a></li>
+            </ul>
+            <form name="form" novalidate>
+                <div class="col-sm-12 form-flex" ng-show="Data.selectedTab.id == 0">
+                    <div class="c1">
+                        <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.reason.$invalid}">
+                            <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}"> دلیل رزرو </label>
+                            <div class="col-sm-8">
+                                <textarea type="text" class="form-control" name="reason" ng-model="Data.reserve.reason" >
+                                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.applicant.$invalid}">
+                            <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}"> درخواست دهنده</label>
+                            <div  class="col-sm-8">
+                                <ui-select name="applicant" ng-model="Data.reserve.applicant" required>
+                                    <ui-select-match>
+                                        <span ng-bind="$select.selected.title"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in (Data.puaList | filter: $select.search) track by $index">
+                                        <span ng-bind="item.title"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.actor.$invalid}">
+                            <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}"> اقدام کننده</label>
+                            <div  class="col-sm-8">
+                                <ui-select name="actor" ng-model="Data.reserve.actor" required>
+                                    <ui-select-match>
+                                        <span ng-bind="$select.selected.title"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in (Data.puaList | filter: $select.search) track by $index">
+                                        <span ng-bind="item.title"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.department.$invalid}">
+                            <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}">واحد درخواست کننده</label>
+                            <div  class="col-sm-8">
+                                <input type="text" class="form-control auto-size-input" name="department" ng-model="Data.reserve.department" required  />
+                            </div>
+                        </div>
+                        <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.subject.$invalid}">
+                            <label class="col-sm-4">موضوع</label>
+                            <div  class="col-sm-8">
+                                <input type="text" class="form-control auto-size-input" name="subject" ng-model="Data.reserve.subject" />
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

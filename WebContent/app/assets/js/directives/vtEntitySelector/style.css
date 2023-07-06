@@ -1,0 +1,11 @@
+.modal-XLarge .modal-dialog {
+    width: 80%;
+}
+
+
+.table-entity-view{
+	cursor: pointer;
+}
+.table-entity-view schema-form-field .rowForm > label{
+	display: none;
+}

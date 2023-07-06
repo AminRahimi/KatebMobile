@@ -1,0 +1,20 @@
+.vtTypeahead .caret-group{
+    margin-top: 5px;
+}
+.vtTypeahead .name-group{
+    margin-right: 5px;
+}
+
+.vtTypeadheadDropDown{
+    width: 100%;
+}
+.vtTypeadheadDropDown > button.btn{
+	overflow: visible;
+}
+.modal .vtTypeadheadDropDown > .dropdown-menu{
+	min-height: 75px;
+	overflow: auto;
+	left: 0;
+	right: auto;
+	top: -10px;
+}

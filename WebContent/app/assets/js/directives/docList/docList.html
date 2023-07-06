@@ -1,0 +1,39 @@
+<style>
+    #doc-list-scroll{
+        height: 500px;
+        max-height: 500px;
+        overflow: auto;
+    }
+</style>
+<div id="doc-list-scroll">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="Func.onGoToFolder(Data.docList.pathWay[Data.docList.pathWay.length - 2].uid)" ng-disabled="Data.docList.pathWay.length <= 1">
+                <i class="fa fa-arrow-right"></i>
+            </button>
+        </div>
+        <input type="text" class="form-control" ng-model="Data.docList.pathWay[Data.docList.pathWay.length - 1].path" disabled>
+    </div>
+    <!--<button type="button" ng-show="Data.docList.pathWay.length > 1" class="btn btn-default btn-sm"
+            ng-click="Func.onGoToFolder(Data.docList.pathWay[Data.docList.pathWay.length - 2].uid)"><i class="fa fa-arrow-right"></i></button>
+    <span>{{Data.docList.pathWay[Data.docList.pathWay.length - 1].path}}</span>-->
+    <table class="table table-hover" ng-if="Data.docList.length > 0">
+        <thead>
+        <th></th>
+        <th style="text-align: right;">عنوان</th>
+        <th style="text-align: center;">حجم</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="doc in Data.docList track by $index"
+            ng-click="Func.onSelectFolder(doc)" ng-dblclick="Func.onGoToFolder(doc.uid)" ng-class="{'active' : Data.selectedItem && doc.uid == Data.selectedItem.uid}">
+            <td style="width: 6%;"><img src="app/assets/img/folder.svg"></td>
+            <td style="width: 84%; text-align: right;">
+                <span ng-click="Func.onGoToFolder(doc.uid)">{{doc.title}}</span>
+            </td>
+            <td style="width: 10%; text-align: center;">{{doc.size | EnBMG}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-center text-muted" ng-show="!Data.docList.length && !Data.isLoading">موردی یافت نشد.</p>
+    <p class="text-center text-muted" ng-show="Data.isLoading">در حال بارگزاری...</p>
+</div>

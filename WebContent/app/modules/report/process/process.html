@@ -1,0 +1,42 @@
+<div>
+    <div class="panel panel-primary">
+        <div style="padding: 5px 0;; height:50px;" class="panel-heading">فرآیندها
+            <!--<button ng-click="Func.onExcelClick()" class="btn btn-default pull-left downloadReport">-->
+                <!--<img src="app/assets/img/excel.png">-->
+            <!--</button>-->
+            <!--<button ng-click="Func.onPdfClick()" class="btn btn-default pull-left downloadReport">-->
+                <!--<img src="app/assets/img/pdf.png">-->
+            <!--</button>-->
+            <!--
+                        <button class="btn btn-default pull-left downloadReport">
+                            <img src="app/assets/img/csv.png">
+                        </button>
+            -->
+        </div>
+        <div class="panel-body">
+            <cartable-search control-fn="Controller.searchController"></cartable-search>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-hover col-sm-12">
+                <thead>
+                <tr>
+                    <th>نام فرآیند</th>
+                    <th>تعداد کل فرآیندها</th>
+                    <th>فرآیندهای تمام شده</th>
+                    <th>فرآیندهای در حال اجرا</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="process in Data.processList">
+                    <td>{{process.name}}</td>
+                    <td>{{process.totalCount}}</td>
+                    <td>{{process.finishedCount}}</td>
+                    <td>{{process.unfinished}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

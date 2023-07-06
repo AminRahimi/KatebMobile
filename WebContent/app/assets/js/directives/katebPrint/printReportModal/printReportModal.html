@@ -1,0 +1,11 @@
+<div class="panel panel-default ">
+    <div class="panel-body">
+        <ol>
+            <li ng-repeat=" printReport in Data.printReport" class="text-center" style="margin-bottom: 15px">{{printReport.username}}</li>
+        </ol>
+        <div class="row text-center">
+            <p>تعداد دفعات چاپ:{{Data.printReport.length}}</p>
+            <button class="btn btn-danger " style="margin-top:20px " ng-click="Func.close()">بستن</button>
+        </div>
+    </div>
+</div>

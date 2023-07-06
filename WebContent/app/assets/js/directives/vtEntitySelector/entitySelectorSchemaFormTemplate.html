@@ -1,0 +1,7 @@
+<!--<div class="row rowForm" ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode}">-->
+     <!--<label for="{{field}}" class="control-label col-sm-4" ng-class="{'required':isEditMode && required}">{{label}}</label>-->
+     <!--<div class="col-sm-12 q13">-->
+          <vt-entity-selector ng-if="!schema.multiple" api="api" class="widget" ng-model="model[field]" model="model[field]" field="field" schema="schema" is-edit-mode="isEditMode"></vt-entity-selector>
+          <vt-multi-entity-selector ng-if="schema.multiple" api="api" class="widget multiSelector" ng-model="model[field]" model="model[field]" field="field" schema="schema" is-edit-mode="isEditMode"></vt-multi-entity-selector>
+     <!--</div>-->
+<!--</div>-->

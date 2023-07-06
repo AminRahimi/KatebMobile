@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<input class="form-control" ng-model="filter" ng-change="Func.onFilterTyping(filter)" placeholder="جستجو">
+		<table class="table table-striped table-hover col-sm-12" ng-show="Data.incommingLetterTemplateList.length>0">
+			<thead>
+				<tr>
+					<th style="color: #666666" class="listDirectiveTh">
+						<div class="col-sm-9">نام قالب</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="incommingLetterTemplate in Data.incommingLetterTemplateList"
+						style="cursor: pointer; cursor: hand; color: #666666"
+						ng-click="Func.onIncommingLetterTemplateClick(incommingLetterTemplate)"
+						ng-hide="incommingLetterTemplate.hidden">
+					<td class="listDirectiveTd">
+						<span>{{incommingLetterTemplate.name}}</span>
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+	</div>
+</div>

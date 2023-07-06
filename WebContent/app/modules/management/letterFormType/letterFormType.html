@@ -1,0 +1,72 @@
+<div class="col-sm-12">
+    <div class="panel panel-default panel-page-header">
+        <div class="panel-body">
+            مدیریت فرم نامه
+        </div>
+    </div>
+</div>
+
+<div class="col-md-8" access-checker="API_LIST_LETTER_FORM_TYPE">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-search control-fn="Apis.search"></vt-search>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <vt-grid control-fn="Apis.grid" options="{uinqeKeyProp:'name'}"></vt-grid>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4" access-checker="API_VIEW_LETTER_FORM_TYPE" ng-hide="Data.searchMode=='advanced'">
+    <div class="panel panel-default">
+        <div class="panel-body panel-management">
+            <div class="col-sm-12">
+                <a class="btn btn-sm btn-default btn-text" access-checker="API_ADD_LETTER_FORM_TYPE" ng-show="true"
+                    type="button" ng-click="Func.events.crud.onGotoAddClick()" ng-disabled="Data.mode=='add'"
+                    ng-bind="'CREATE'|EnToFaButton"></a>
+                <a class="btn btn-sm btn-primary btn-text" access-checker="API_EDIT_LETTER_FORM_TYPE"
+                    ng-show="Data.selected && Data.selected.uid && Data.mode=='view'" type="button"
+                    ng-click="Func.events.crud.onGotoEditClick()" ng-disabled="" ng-bind="'EDIT'|EnToFaButton"></a>
+
+                <a class="btn btn-sm btn-primary btn-text" access-checker="API_EDIT_LETTER_FORM_TYPE"
+                    ng-show="Data.selected && Data.selected.uid && Data.mode=='view'" type="button"
+                    ng-click="Func.events.onGotoDesignFormClick()">طراحی فرم</a>
+
+                <a class="btn btn-sm btn-success btn-text" access-checker="API_ADD_LETTER_FORM_TYPE"
+                    ng-show="Data.mode==='add'" type="button" ng-click="Func.events.crud.onSaveAddingClick()"
+                    ng-bind="'SAVE'|EnToFaButton"></a>
+
+                <a class="btn btn-sm btn-success btn-text" access-checker="API_EDIT_LETTER_FORM_TYPE"
+                    ng-show="Data.mode=='edit'" type="button" ng-click="Func.events.crud.onUpdateClick()"
+                    ng-bind="'UPDATE'|EnToFaButton"></a>
+
+                <a class="btn btn-sm btn-warning btn-text" ng-show="Data.mode=='edit' || Data.mode=='add'" type="button"
+                    ng-click="Func.events.crud.onCancelClick()" ng-disabled="" ng-bind="'CANCEL'|EnToFaButton"></a>
+
+                <a class="btn btn-sm btn-danger btn-text" access-checker="API_DELETE_LETTER_FORM_TYPE"
+                    ng-show="Data.selected && Data.selected.uid && Data.mode=='view'" type="button"
+                    ng-click="Func.events.crud.onDeleteClick()" ng-disabled="" ng-bind="'DELETE'|EnToFaButton"></a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-show="Data.selected.uid || Data.mode=='add'">
+        <div class="panel-body">
+            <form name="letterFormTypeForm" role="form" novalidate>
+                <entity-type-edit-add model="Data.selected.entityType" enabled="Data.selected.enabled"
+                    api="Apis.entityTypeCRUD" version-count="Data.selected.versionCount"></entity-type-edit-add>
+
+                <div class="row rowForm">
+                    <label class="col-sm-5">فعال</label>
+                    <div ng-show="Data.mode==='view'" class="col-sm-7">
+                        {{Data.selected.enabled|checkmark}}
+                    </div>
+                    <div ng-show="Data.mode!=='view'" class="col-sm-7">
+                        <input type="checkbox" class="" name="enabled" ng-model="Data.selected.enabled">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
