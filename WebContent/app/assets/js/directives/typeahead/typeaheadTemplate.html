@@ -22,18 +22,18 @@
                 </div>
             </div>
             <div ng-show="isMulti">
-                <label class="label label-default label-repeat full-width" ng-repeat="x in model track by $index"
+                <span class="kateb-label kateb-label--default-light  full-width" ng-repeat="x in model track by $index"
                         ng-click="onSelectedItemClick(x, $index)">
                     <i class="caret pull-right caret-group" ng-show="isEditMode && x.type=='GROUP'"></i>
                     <span class="pull-right" ng-class="{'name-group': x.type=='GROUP'}">{{x.title}}</span>
                     <i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, x)" ng-show="isEditMode"></i>
-                </label>
+                </span>
             </div>
             <div ng-show="!isMulti">
-                <label ng-show="model.title" class="label label-default label-repeat col-sm-12"  ng-click="onSelectedItemClick(model, $index)">
+                <span ng-show="model.title" class="kateb-label kateb-label--default-light  col-sm-12"  ng-click="onSelectedItemClick(model, $index)">
                     <span class="pull-right" ng-class="{'name-group': model.type=='GROUP'}">{{model.title}}</span>
                     <i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, model)" ng-show="isEditMode"></i>
-                </label>
+                </span>
             </div>
         </div>
     </div>

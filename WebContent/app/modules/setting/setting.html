@@ -1,6 +1,6 @@
 <div class="col-lg-2">
 	<div class="list-group">
-		<a ng-repeat="menu in Data.menuList" ui-sref="{{menu.uiSref}}"
+		<a ng-repeat="menu in Data.menuList" ui-sref="{{Func.getStateName(menu.uiSref)}}"
 			class="list-group-item"
 			ng-class="{active : ($state == menu.uiSref)}">
 			<label class="control-label">{{menu.title}}</label>

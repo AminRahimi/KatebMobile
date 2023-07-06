@@ -6,11 +6,24 @@ angular.module('ManagementModule', ['userModule','userroleModule','organizationM
 angular.module('ManagementModule').config(['$stateProvider', function($stateProvider) {
 	var ManagemenStates = [
 		{
-			state : "home.management",
+			state : "base.home.management",
 			config : {
 				url : "/management",
 				views : {
-					'mainContent@home' : {
+					'mainContent@base.home' : {
+						templateUrl : "app/modules/management/management.html",
+						controller : 'managementCtrl',
+					}
+				},
+				resolve : {}
+			}
+		},
+		{
+			state : "base.mobileHome.management",
+			config : {
+				url : "/management",
+				views : {
+					'mainContent@base.mobileHome' : {
 						templateUrl : "app/modules/management/management.html",
 						controller : 'managementCtrl',
 					}

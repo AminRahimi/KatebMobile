@@ -2,11 +2,23 @@ angular.module('allUserModule').config(['$stateProvider', function ($stateProvid
 
     var allUserStates = [
         {
-            state: "home.management.allUser",
+            state: "base.home.management.allUser",
             config: {
                 url: '/allUser',
                 views: {
-                    'content@home.management': {
+                    'content@base.home.management': {
+                        templateUrl: "app/modules/management/allUser/allUser.html",
+                        controller: 'allUserCtrl'
+                    }
+                }
+            }
+        },
+        {
+            state: "base.mobileHome.management.allUser",
+            config: {
+                url: '/allUser',
+                views: {
+                    'mainContent@base.mobileHome' : {
                         templateUrl: "app/modules/management/allUser/allUser.html",
                         controller: 'allUserCtrl'
                     }

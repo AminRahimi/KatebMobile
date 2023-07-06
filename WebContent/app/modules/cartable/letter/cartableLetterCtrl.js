@@ -22,21 +22,21 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 			listView: false,
 			listViewInfo: [],
 			events: [],
-			referenceTabSelected: false,
-			logTabSelected: false,
-			followTagUid: "",
-			isFollow: false,
-			organizationList: [],
-			currentDate: new Date(),
-			isLoadingSaveClick: false,
-			treeMode: 'full',
-			selectedFolder: "",
-			archivedLetter: [],
-			hasExternalArchives: configObj.externalArchives.length,
-			vtFolderSelectorForm: "",
-			shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
-			isShamsDisabled:false,
-			forwardIsDisabled: false,
+		referenceTabSelected: false,
+		logTabSelected: false,
+		followTagUid: "",
+		isFollow: false,
+        organizationList: [],
+        currentDate: new Date(),
+        isLoadingSaveClick: false,
+		treeMode: 'full',
+		selectedFolder: "",
+		archivedLetter: [],
+		hasExternalArchives: configObj.externalArchives.length,
+		vtFolderSelectorForm: "",
+		shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
+		isShamsDisabled:false,
+		forwardIsDisabled: false,
 			lastCachedVisitedCartableFilterList: cartableSrvc.getLastCachedVisitedCartableFilterList($state.params.cartableUid + $state.params.filter),
 			isNextDisabled: false,
 			isPrevDisabled: false,
@@ -152,13 +152,14 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				}
 
 				getLpaOrJustLetter().then(function(){
-					cartableSrvc.updateMenu();
+					cartableSrvc.publishTo("updateCartableMenu");
 					$scope.Func.checkHasFollow();
 					$scope.Data.isLoadingSaveClick = false;
 				},function(){
 					$scope.Data.isLoadingSaveClick = false;
 				});
 			},
+			
 			getLpa: function(){
 				return cartableKatebSrvc.getLpa($scope.Data.letterUid).then(function(res) {
 					$scope.Data.letter = res.data.originalElement.letter;
@@ -191,6 +192,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					return 
 				}
 				$scope.Data.forwardIsDisabled = true;
+
 				cartableKatebSrvc.sendForward($scope.Data.letterUid, $scope.Data.forward).then(function (res) {
 					$scope.Data.forwardIsDisabled = false;
 					$scope.Data.validationClicked = false;
@@ -198,26 +200,28 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					$scope.Func.getLetterForwardTree();
 					$scope.Func.reset();
 					cartableSrvc.setSelectedItems([]);
-					// $state.go('home.cartable.cartableList');
+					// $state.go('base.home.cartable.cartableList');
 				});
+            	
             },
 			onForwardAndArchiveClick: function () {
 				$scope.Data.validationClicked = true;
 				if (!$scope.Data.form.$valid) {
 					return 
 				}
-				$scope.Data.forwardIsDisabled = true;
-				cartableKatebSrvc.sendForward($scope.Data.letterUid, $scope.Data.forward).then(function (res) {
-					var uidList = [$scope.Data.letterUid];
-					$scope.Data.forwardIsDisabled = false;
-					$scope.Data.validationClicked = false;
-					cartableKatebSrvc.archiveLetter(uidList).then(function () {
-						katebSrvc.showNotification('forwardSucceded');
-						$scope.Func.getLetterForwardTree();
-						$scope.Func.reset();
+					$scope.Data.forwardIsDisabled = true;
+
+					cartableKatebSrvc.sendForward($scope.Data.letterUid, $scope.Data.forward).then(function (res) {
+						var uidList = [$scope.Data.letterUid];
+						$scope.Data.forwardIsDisabled = false;
+						$scope.Data.validationClicked = false;
+						cartableKatebSrvc.archiveLetter(uidList).then(function () {
+							katebSrvc.showNotification('forwardSucceded');
+							$scope.Func.getLetterForwardTree();
+							$scope.Func.reset();
 						$scope.Func.returnToCartableList();
-						cartableSrvc.setSelectedItems([]);
-					});
+                            cartableSrvc.setSelectedItems([]);
+						});
 				});
 			},
 			onAddToUserArchive: function () {
@@ -234,23 +238,24 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				if (!$scope.Data.form.$valid) {
 					return 
 				}
-				$scope.Data.forwardIsDisabled = true;
-				cartableKatebSrvc.sendForward($scope.Data.letterUid, $scope.Data.forward).then(function (res) {
-					$scope.Data.forwardIsDisabled = false;
-					$scope.Data.validationClicked = false;
-					$scope.Func.onGetNextLetterClick();
-					cartableSrvc.setSelectedItems([]);
-				});
+					$scope.Data.forwardIsDisabled = true;
+
+					cartableKatebSrvc.sendForward($scope.Data.letterUid, $scope.Data.forward).then(function (res) {
+						$scope.Data.forwardIsDisabled = false;
+						$scope.Data.validationClicked = false;
+						$scope.Func.onGetNextLetterClick();
+                        cartableSrvc.setSelectedItems([]);
+                    });
             },
 			onReturnClick: function(){
 
 				$scope.Func.returnToCartableList();
                 
-			},
+            },
 			returnToCartableList: function(){
-				if (!_.isEmpty($scope.Func.getLastSearchQuery()))
-					cartableKatebSrvc.setSearchMode(true);
-				$state.go('home.cartable.cartableList');
+                if (!_.isEmpty($scope.Func.getLastSearchQuery()))
+                    cartableKatebSrvc.setSearchMode(true);
+				$state.go('base.home.cartable.cartableList');
 			},
 			onPrintPDFClick: function(){
 				cartableKatebSrvc.openPDFModal($scope.Func.getPdfUrlWithSearchParams(true));
@@ -330,7 +335,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				});
 			},
 			onArchiveCb: function () {
-				$state.go('home.cartable.cartableList');
+				$state.go('base.home.cartable.cartableList');
                 cartableSrvc.setSelectedItems([]);
 			},
 			reset: function () {
@@ -375,7 +380,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 			},
 			getPdfFile: function () {
 				$scope.Data.pdfFile = `api/letter/pdf/${$scope.Data.letterUid}?type=${$state.params.cartableType==='letter'?'lpa':'all'}`;
-				$timeout(function () {1
+				$timeout(function () {
 					$scope.Controller.pdfFile.setPdfUrlWithInformation();
 				}, 1);
 			},
@@ -435,10 +440,10 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				$scope.Data.letter.tags = $scope.Data.letter.tags.concat(tagList);
 			},
             onReplyClick: function () {
-                $state.go('home.cartable.draft', {replyFromUid: $scope.Data.letterUid,orgUid:'CURRENT'});
+                $state.go('base.home.cartable.draft', {replyFromUid: $scope.Data.letterUid,orgUid:'CURRENT'});
             },
 			onGoToProcessClick: function (event) {
-				$state.go("home.process.processInstanceInfo", {uid: event.object.uid});
+				$state.go("base.home.process.processInstanceInfo", {uid: event.object.uid});
 			},
 			onShowFullnameClick: function (event) {
 				if (!event.tooltipContent) {
@@ -507,7 +512,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				}
 
 
-				$state.go('home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
+				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
 
 
 
@@ -535,8 +540,8 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					isLast: letterIndex >= ($scope.Data.lastCachedVisitedCartableFilterList.length -1),
 					isFirst: letterIndex<=0
 				}
-				
-			},
+
+            },
             onGetPreviousLetterClick: function () {
 
 
@@ -547,7 +552,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				}
 				
 
-				$state.go('home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
 
 
                 // cartableSrvc.getTask('previous').then(function (res) {
@@ -574,7 +579,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				$scope.Data.isLoadingSaveClick = true;
                 var sendData = $scope.Func.prepareSendData($scope.Data.letter);
                 cartableSrvc.saveIssued($scope.Data.letter.blankUid, sendData).then(function(){
-                    // $state.go('home.secretariat.issuedLetterList', {secUid: $scope.Data.secUid});
+                    // $state.go('base.home.secretariat.issuedLetterList', {secUid: $scope.Data.secUid});
 					$scope.Func.getLpaOrJustLetter();
                     vtShowMessageSrvc.showMassage('success','', 'نامه با موفقیت ارسال شد.');
                 }, function () {
@@ -650,7 +655,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 			},
 			doJobAndUpdateMenu: function (job){
 				job().then(function (){
-					cartableSrvc.updateMenu();
+					cartableSrvc.publishTo("updateCartableMenu");
 				});
 			},
 			setNextPrevDisablity: function(){
@@ -661,7 +666,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					$scope.Data.isNextPrevFeaturePossible = false;
 				}
 			}
-		};
+		}
 				
 
   	$scope.Controller = {

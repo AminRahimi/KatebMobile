@@ -1,8 +1,5 @@
 <style>
-    .panel-cartable-content > .panel-primary > .panel-body {
-        height: calc(100vh - 70px);
-        overflow: auto;
-    }
+    
 	.table-responsive{
 		background-color: #f8f8f8;
 	}
@@ -10,67 +7,193 @@
 		background-color: #fff;
 	}
 </style>
-<div class="well well-sm action-bar" style="background: #fff"
-     ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
-        <button  class="btn btn-sm btn-icon white-bg"
-                ng-click="Func.onRemoveLettersFromUserArchiveClick()">
-            بازگرداندن از آرشیو شخصی
+<s class="tw-font-bold"> </s>
+<script type="text/ng-template" id="send-action-button">
+    <span class="send-action-button" access-checker="SEND_TO_OTHER_ORG" ng-click="Func.openSendLetterModal()">
+        <!-- web view -->
+        <button class="btn btn-primary single-button hidden-xs">
+            <i class="flaticon-interface-2"></i>
+            ارسال
         </button>
-</div>
-<div class="well well-sm action-bar" style="background: #fff"
-     ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
+        <!-- mobile view -->
 
-         <tag-input
-                    external-data="Data.checkedItemList"
-                    ng-show="Data.checkedItemList.length>0">
+        <div class="visible-xs acction-icon" ng-include="'kateb-icon-paper-plane.svg'"></div>
+
+    </span>
+</script>
+<script type="text/ng-template" id="label-action-button">
+    <span>
+        <!-- web view -->
+        <tag-input
+                external-data="Data.checkedItemList"
+                ng-show="Data.checkedItemList.length>0">
         </tag-input>
+        <!-- mobile view -->
+<!--        <a class="visible-xs">ارسال </a>-->
+
+    </span>
+</script>
+<script type="text/ng-template" id="archive-action-button">
+    <span>
+        <!-- web view -->
         <description-dropdown style="vertical-align: super;"
                               uid-list="Data.checkedItemEntityUIdLis"
                               ng-show="Data.checkedItemEntityUIdLis.length>0"
                               cb="Func.onArchiveCb">
         </description-dropdown>
-        <button class="btn btn-primary single-button"
-                ng-click="Func.openForwardLetterModal()">
-         <i class="flaticon-arrows-1"></i>
-            ارجاع
+        <!-- mobile view -->
+        <!--        <a class="visible-xs">ارسال </a>-->
+
+    </span>
+</script>
+
+<script type="text/ng-template" id="forward-action-button">
+    <span ng-click="Func.openForwardLetterModal()">
+        <!-- web view -->
+        <button class="btn btn-primary single-button hidden-xs">
+            <i class="flaticon-arrows-1"></i>
+        ارجاع
         </button>
-        <button access-checker="USER_LETTER_ARCHIVE" class="btn btn-primary single-button"
-                ng-click="Func.onAddLettersToUserArchiveSuccess()">
-            انتقال به آرشیو شخصی
+        <!-- mobile view -->
+        <div class="action-icon  visible-xs" ng-include="'kateb-icon-reply'"></div>
+
+    </span>
+</script>
+
+
+<script type="text/ng-template" id="personal-archive-action-button">
+    <span access-checker="USER_LETTER_ARCHIVE" ng-click="Func.onAddLettersToUserArchiveSuccess()">
+        <!-- web view -->
+        <button  class="btn btn-primary single-button hidden-xs">
+        انتقال به آرشیو شخصی
         </button>
+        <!-- mobile view -->
+        <a class="visible-xs">انتقال به آرشیو شخصی </a>
+
+    </span>
+</script>
+
+
+<script type="text/ng-template" id="remove-from-persoanl-archive-action-button">
+    <span ng-click="Func.onRemoveLettersFromUserArchiveClick()">
+        <!-- web view -->
+        <button  class="btn btn-primary single-button hidden-xs" >
+            بازگرداندن از آرشیو شخصی
+        </button>
+        <!-- mobile view -->
+        <a class="visible-xs">بازگرداندن از آرشیو شخصی </a>
+    </span>
+</script>
+
+
+
+<script type="text/ng-template" id="follow-action-button">
+    <span >
+        <!-- web view -->
         <label class="dropdown">
-            <button class="btn btn-primary single-button dropdown-toggle" type="button"
+
+            <!-- web view -->
+            <button class="btn btn-primary single-button dropdown-toggle hidden-xs" type="button"
                     id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 نیاز به پیگیری
                 <span class="caret"></span>
             </button>
+
+            <div class="action-icon dropdown-toggle visible-xs" ng-include="'kateb-icon-level-up-alt.svg'"
+             id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></div>
+
+            <!-- mobile view -->
+
+
+
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li ng-click="Func.onFollowClick()"><a>پیگیری</a></li>
                 <li><a ng-click="Func.onUnfollowClick()">عدم پیگیری</a></li>
             </ul>
         </label>
-        <button class="btn btn-primary single-button" access-checker="SEND_TO_OTHER_ORG"
-                ng-click="Func.openSendLetterModal()">
-            <i class="flaticon-interface-2"></i>
-            ارسال
-        </button>
-        <button class="btn btn-primary" ng-click="Func.readTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter &&
-                                                                   ($parent.Data.selectedFilter.filter.uid.indexOf('letter.unread')>-1 || $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1)">خوانده شده</button>
-        <button class="btn btn-warning" ng-click="Func.unreadTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter && $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1">خوانده نشده</button>
+        <!-- mobile view -->
+<!--        <a class="visible-xs">انتقال به آرشیو شخصی </a>-->
+
+    </span>
+</script>
+
+<script type="text/ng-template" id="read-action-button">
+    <span ng-click="Func.readTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter &&
+                                                               ($parent.Data.selectedFilter.filter.uid.indexOf('letter.unread')>-1 || $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1)">
+        <!-- web view -->
+        <button class="btn btn-primary hidden-xs" >خوانده شده</button>
+        <!-- mobile view -->
+        <a class="visible-xs">خوانده شده </a>
+
+    </span>
+</script>
+
+<script type="text/ng-template" id="unread-action-button">
+    <span ng-click="Func.unreadTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter && $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1">
+        <!-- web view -->
+       <button class="btn btn-warning hidden-xs" >خوانده نشده</button>
+        <!-- mobile view -->
+        <a class="visible-xs">خوانده نشده </a>
+
+    </span>
+</script>
 
 
-    <!-- <a id="archive-btn"
-        class="btn btn-primary"
-        ng-show="Data.checkedItemList.length>0">
-       <i class="flaticon-folder-1"></i> بایگانی</a> -->
-    <!--<a id="refer-btn" class="btn btn-primary" ng-click="Func.onActionbarItemClick('inventoryCheck');"
-       ng-click="Func.onActionbarItemClick('inventoryCheck');" ng-show="Data.checkedItemList.length>0">
-        <i class="fa flaticon-interface-2"></i> ارجاع</a>
-    <a id="move-out" class="btn btn-primary" ng-click="Func.onActionbarItemClick('exit');"
-       ng-click="Func.onActionbarItemClick('exit');">
-        <i class="flaticon-log-out"></i> خروج از کارتابل</a> -->
+
+<div class="mobile-action-bar hidden-md" >
+
+<!-- FIXME: repeated ng-show expression >>  ng-show="Data.checkedItemList.length>0...-->
+
+    <div class="tw-flex tw-flex-grow tw-items-center" ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
+        <span ng-include="'remove-from-persoanl-archive-action-button'"></span>
+    </div>
+
+    <div class="tw-flex tw-flex-grow tw-items-center" ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
+
+        <span ng-include="'label-action-button'"></span>
+        <span ng-include="'archive-action-button'"></span>
+        <span ng-include="'forward-action-button'"></span>
+        <span ng-include="'personal-archive-action-button'"></span>
+        <span ng-include="'follow-action-button'"></span>
+        <span ng-include="'send-action-button'"></span>
+        <span ng-include="'read-action-button'"></span>
+        <span ng-include="'unread-action-button'"></span>
+    </div>
+
+
 </div>
-<cartable-list directive-is-ready="Func.listDirectiveIsReady()"
-               process-task-fn="Func.onProcessTaskClick(task, cartable)"
-               api="Controller.api" options="Controller.options">
-</cartable-list>
+
+
+
+<div class="well well-sm action-bar hidden-xs" style="background: #fff"
+     ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
+
+    <span ng-include="'remove-from-persoanl-archive-action-button'"></span>
+</div>
+
+
+<div class="well well-sm action-bar hidden-xs" style="background: #fff"
+     ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
+
+    <span ng-include="'label-action-button'"></span>
+    <span ng-include="'archive-action-button'"></span>
+    <span ng-include="'forward-action-button'"></span>
+    <span ng-include="'personal-archive-action-button'"></span>
+    <span ng-include="'follow-action-button'"></span>
+    <span ng-include="'send-action-button'"></span>
+    <span ng-include="'read-action-button'"></span>
+    <span ng-include="'unread-action-button'"></span>
+
+
+</div>
+<div class="main-content">
+
+    <!-- FIXME: refactor  route-state-name (it's not needed that directive be aware about state) -->
+    <cartable-list directive-is-ready="Func.listDirectiveIsReady()"
+                   process-task-fn="Func.onProcessTaskClick(task, cartable)"
+                   api="Controller.api" options="Controller.options" 
+                   subscribe-for="selectedCartableFilterChanged"
+                   >
+    </cartable-list>
+
+</div>

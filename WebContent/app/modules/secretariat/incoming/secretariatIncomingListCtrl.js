@@ -11,7 +11,7 @@ angular.module('secretariatModule').controller('secretariatIncomingListCtrl', fu
 			
 			
 			
-			//$state.go('home.secretariat.incoming', {secUid: $scope.Data.secUid});
+			//$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid});
 			
 			
 			
@@ -23,7 +23,7 @@ angular.module('secretariatModule').controller('secretariatIncomingListCtrl', fu
 				size: 'md'
 			});
 			modalInstance.result.then(function (incommingLetterTemplate) {
-					$state.go('home.secretariat.incoming', {secUid: $scope.Data.secUid, tmpUid: incommingLetterTemplate.uid});
+					$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid, tmpUid: incommingLetterTemplate.uid});
 			});
 			
 			
@@ -35,7 +35,7 @@ angular.module('secretariatModule').controller('secretariatIncomingListCtrl', fu
 		},
 		
 		onIncomingClick: function(incoming){
-			$state.go('home.secretariat.incoming', {secUid: $scope.Data.secUid, incUid: incoming.uid});
+			$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid, incUid: incoming.uid});
 		},
         onIncomingDeleteClick: function (incoming) {
             secretariatSrvc.deleteIncoming($scope.Data.secUid, incoming.uid).then(function (res) {

@@ -58,3 +58,17 @@
     font-family: "Times New Roman";
     src: url(/Kateb/app/assets/font/TimesNewRoman/TimesNewRomanPSMT.woff);
 }
+
+
+
+
+:root{
+    --weak-font-size:10px;
+    --main-font-size:11px;
+    --middle-font-size:13px;
+    --strong-1-font-size:14px;
+    --strong-2-font-size:15px;
+
+    --main-font-weight:500;
+    --middle-font-weight:700;
+}

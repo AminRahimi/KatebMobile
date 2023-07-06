@@ -200,6 +200,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 						$scope.Data.editorType = 'File';
 						// }, 0);
 					}
+					$scope.Func.onEditorTypeChange($scope.Data.editorType);
 					$scope.Data.draft.deliveryTo.forEach(function (item) {
 						if (item.type == "THROUGH_SECRETARIAT") {
 							$scope.Data.counter = 1;
@@ -288,7 +289,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 					$scope.Data.isSaving = true;
 					cartableKatebSrvc.saveDraft($scope.Func.removeExtraFields($scope.Data.draft, true), $scope.Data.newOrganizationUid).then(function (response) {
 						$scope.Data.draft.uid = response.data.uid;
-						$state.go('home.cartable.draft', { draftUid: $scope.Data.draft.uid, orgUid: null, duplicateUid: null });
+						$state.go('base.home.cartable.draft', { draftUid: $scope.Data.draft.uid, orgUid: null, duplicateUid: null });
 						$scope.Data.isSaving = false;
 						//$scope.Data.mode = 'view';
 					}, function(err){
@@ -323,7 +324,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				cartableKatebSrvc.updateDraft($scope.Func.removeExtraFields($scope.Data.draft, true), $scope.Data.newOrganizationUid).then(function (res) {
 					$scope.Data.isSaving = false;
 					if (!$scope.Data.draftUid) {
-						$state.go('home.cartable.draft', ({ draftUid: res.data.uid, replyFromUid: null, orgUid: null, duplicateUid: null }));
+						$state.go('base.home.cartable.draft', ({ draftUid: res.data.uid, replyFromUid: null, orgUid: null, duplicateUid: null }));
 					} else {
 						$timeout(function () {
 							$scope.Func.getDraft();
@@ -335,8 +336,8 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 			},
 			onDeleteClick: function () {
 				cartableKatebSrvc.deleteDraft($scope.Data.draft.uid).then(function (res) {
-					cartableSrvc.updateMenu();
-					$state.go('home.cartable.cartableList');
+					cartableSrvc.publishTo("updateCartableMenu");
+					$state.go('base.home.cartable.cartableList');
 				});
 			},
 
@@ -522,8 +523,8 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				draftCp.textBody = $scope.Func.correctLetterTextBody(draftCp.textBody);
 				cartableKatebSrvc.sendDraft(draftCp, $scope.Data.newOrganizationUid).then(function (response) {
 					vtShowMessageSrvc.showMassage('success', 'نامه شماره ' + response.data.internalNumber, 'نامه با موفقیت ثبت شد.');
-					cartableSrvc.updateMenu();;
-					$state.go('home.cartable.cartableList');
+					cartableSrvc.publishTo("updateCartableMenu");;
+					$state.go('base.home.cartable.cartableList');
 				}, function (response) {
 					if (response.status === 403 && response.data.key && response.data.key === 'ganjeh_token_expired') {
 						// TODO call -> letterAttachmentCtrl.Func.onEnterToGanjehClick();
@@ -568,8 +569,8 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 					draftCp.textBody = $scope.Func.correctLetterTextBody(draftCp.textBody);
 					cartableKatebSrvc.sendParaph(draftCp, $scope.Data.newOrganizationUid).then(function (response) {
 						vtShowMessageSrvc.showMassage('success', ' شماره ' + response.data.number, 'پاراف با موفقیت ثبت شد.');
-						cartableSrvc.updateMenu();;
-						$state.go('home.cartable.cartableList');
+						cartableSrvc.publishTo("updateCartableMenu");;
+						$state.go('base.home.cartable.cartableList');
 					}, function () {
 						$scope.Data.disableSendBtn = false;
 					});
@@ -613,7 +614,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 
 					$timeout(function () {
 						cartableKatebSrvc.transferDraft($scope.Data.draft, data.selectedUser.uid, data.text, $scope.Data.newOrganizationUid).then(function () {
-							$state.go('home.cartable.cartableList');
+							$state.go('base.home.cartable.cartableList');
 						})
 					}, 1000);
 				});
@@ -628,11 +629,11 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				if ($scope.Data.mode === 'edit') {
 					katebSrvc.notificationModal('onExitDraft').then(function (result) {
 						if (result === 'ok') {
-							$state.go('home.cartable.cartableList');
+							$state.go('base.home.cartable.cartableList');
 						}
 					});
 				} else {
-					$state.go('home.cartable.cartableList');
+					$state.go('base.home.cartable.cartableList');
 				}
 			},
 			OnReclaimClick: function () {
@@ -780,17 +781,6 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				if (result.textBodyHashcode && $state.params.duplicateUid) {
 					delete result.textBodyHashcode;
 				}
-
-
-				if(result.bodyType==='File'){
-					delete result.textBody;
-				}else{
-					//body type is Editor(CKEditor)
-					delete result.fileBody;
-					delete result.webEditFileUid
-				}
-				
-
 				if (shouldChange) {
 					$scope.Data.draft = angular.copy(result);
 				}
@@ -831,18 +821,18 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 					});*/
 				});
 			},
-			onRemoveSenderClick: function (item) {
-				if (item == "sender") {
-					$scope.Data.draft.sender = null;
-				} else if (item == "actor") {
-					$scope.Data.draft.actor = null;
-				} else if (item == "topicCategory") {
-					$scope.Data.topicCategory = null;
-				} else if(item == "layout")
-				{
-					$scope.Data.letterLayout = null;
-				}
-			},
+			// onRemoveSenderClick: function (item) {
+			// 	if (item == "sender") {
+			// 		$scope.Data.draft.sender = null;
+			// 	} else if (item == "actor") {
+			// 		$scope.Data.draft.actor = null;
+			// 	} else if (item == "topicCategory") {
+			// 		$scope.Data.topicCategory = null;
+			// 	} else if(item == "layout")
+			// 	{
+			// 		$scope.Data.letterLayout = null;
+			// 	}
+			// },
 			initiateSender: function () {
 				$scope.Data.sender = null;
 				if (_.isObject($scope.Data.draft.sender)) {
@@ -1120,6 +1110,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				// return textBodyCp.prop('outerHTML');
 			},
 			getReplyFromData: function () {
+				// $scope.Func.onEditorTypeChange('file');
 				$scope.Data.editorType = 'File'
 				cartableKatebSrvc.getLpa($scope.Data.replyFromUid).then(function (res) {
 					// $scope.Data.replyFromData = res.data.originalElement.letter;
@@ -1169,7 +1160,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				}
 
 
-				$state.go('home.cartable.draft', { draftUid: $scope.Data.lastCachedVisitedCartableFilterList[currentDraftIndexObj.index +1].uid });
+				$state.go('base.home.cartable.draft', { draftUid: $scope.Data.lastCachedVisitedCartableFilterList[currentDraftIndexObj.index +1].uid });
 
 				// FIXME: remove this function (getTask) if not used!
 				
@@ -1187,7 +1178,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				}
 				
 
-				$state.go('home.cartable.draft', { draftUid: $scope.Data.lastCachedVisitedCartableFilterList[currentDraftIndexObj.index-1].uid });
+				$state.go('base.home.cartable.draft', { draftUid: $scope.Data.lastCachedVisitedCartableFilterList[currentDraftIndexObj.index-1].uid });
 
 				// FIXME: remove this function (getTask) if not used!
 
@@ -1222,16 +1213,9 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 					$scope.Data.signerInfo = res.data;
 				});
 			},
-			onEditDocxWhitSystemEdit: function () {
+			onCreateDocxTemplate: function () {
 				let draft = $scope.Data.draft;
-				if (!draft.letterLayout || !draft.letterLayout.uid){
-					return 
-				}
-				if(draft.webEditFileUid || (draft.fileBody && draft.fileBody.name && draft.fileBody.name.split('.').pop()==='docx')){
-					// edit prev docx
-					$scope.Func.SystemEdit();
-				}else{
-				// edit default temp docx
+				if (draft.letterLayout && draft.letterLayout.uid)
 					cartableKatebSrvc.getDraftDocxTemplate(draft.letterLayout.uid).then(
 						function (res) {
 							draft.fileBody = {
@@ -1242,7 +1226,6 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 							$scope.Func.SystemEdit();
 						}
 					);
-				}
 			},
 			removeFileBodyCallBack: function () {
 				let draft = $scope.Data.draft;
@@ -1253,6 +1236,10 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 			},
 			deleteWebEditFile: function (draft) {
 				cartableKatebSrvc.deleteWebEditFile(draft.webEditFileUid)
+			},
+			getWebEditFileInfo: function (draft) {
+				if (draft.webEditFileUid)
+					console.log()
 			},
 			SystemEdit: function() {
 				let draft = $scope.Data.draft;
@@ -1340,7 +1327,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 
 				if($scope.Data.isNextDisabled && $scope.Data.isPrevDisabled){
 					$scope.Data.isNextPrevFeaturePossible = false;
-				}
+			}
 			}
 
 
@@ -1392,9 +1379,11 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 			// $scope.Func.getSenderList();
 			if ($state.params.duplicateUid) {
 				$scope.Data.draftUid = $state.params.duplicateUid;
-			}			
+			}
+
 			$scope.Func.onTabClick($scope.Data.tabList[0]);
 
+			
 			CKEditor5.editorClassic.ClassicEditor.create(document.querySelector( '#editor1' ),
 				angular.module('app').ckeditorConfig).then(function(editor){
 				$scope.Data.ckeditor = editor;
@@ -1404,7 +1393,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 
 				if ($scope.Data.draftUid) {
 					$timeout(function () {
-					    $scope.Func.getDraft();
+						$scope.Func.getDraft();
 					}, 0);
 				} else {
 					$scope.Data.mode = 'add';

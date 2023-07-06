@@ -2,11 +2,11 @@ angular.module('processModule', []);
 angular.module('processModule').config(['$stateProvider', function ($stateProvider) {
     var processStates = [
         {
-            state: "home.process",
+            state: "base.home.process",
             config: {
                 url: '/process',
                 views: {
-                    'mainContent@home': {
+                    'mainContent@base.home': {
                         templateUrl: "app/modules/process/process.html",
                         controller: 'processCtrl'
                     }
@@ -14,11 +14,20 @@ angular.module('processModule').config(['$stateProvider', function ($stateProvid
             }
         },
         {
-            state: "home.process.processTaskList",
+            state: "base.mobileHome.process",
             config: {
-                url: '/taskList',
+                url: '/process',
+            }
+        },
+
+
+
+        {
+            state: "base.home.process.processTaskList",
+            config: {
+                url: '/taskList?:cartableUid?:filter',
                 views: {
-                    'processContainer@home.process': {
+                    'processContainer@base.home.process': {
                         templateUrl: "app/modules/process/taskList/processTaskList.html",
                         controller: "processTaskListCtrl"
                     }
@@ -26,11 +35,48 @@ angular.module('processModule').config(['$stateProvider', function ($stateProvid
             }
         },
         {
-            state: "home.process.processList",
+            state: "base.home.process.processTaskList.filter",
+            config: {
+                url: '?page',
+               
+            }
+        },
+        {
+            state: "base.mobileHome.process.processTaskList",
+            config: {
+                url: '/taskList?:cartableUid?:filter',
+                views: {
+                    'mainContent@base.mobileHome': {
+                        templateUrl: "app/modules/process/taskList/processTaskList.html",
+                        controller: "processTaskListCtrl"
+                    }
+                }
+            }
+        },
+        {
+            state: "base.mobileHome.process.processTaskList.filter",
+            config: {
+                url: '?page',
+               
+            }
+        },
+
+
+
+
+
+
+
+
+
+
+
+        {
+            state: "base.home.process.processList",
             config: {
                 url: '/processList',
                 views: {
-                    'processContainer@home.process': {
+                    'processContainer@base.home.process': {
                         templateUrl: "app/modules/process/processList/processList.html",
                         controller: "processListCtrl"
                     }
@@ -38,11 +84,30 @@ angular.module('processModule').config(['$stateProvider', function ($stateProvid
             }
         },
         {
-            state: "home.process.processInfo",
+            state: "base.mobileHome.process.processList",
+            config: {
+                url: '/processList',
+                views: {
+                    'mainContent@base.mobileHome': {
+                        templateUrl: "app/modules/process/processList/processList.html",
+                        controller: "processListCtrl"
+                    }
+                }
+            }
+        },
+
+
+
+
+
+
+
+        {
+            state: "base.home.process.processInfo",
             config: {
                 url: '/processInfo/:uid/:mode',
                 views: {
-                    'processContainer@home.process': {
+                    'processContainer@base.home.process': {
                         templateUrl: "app/modules/process/processInfo/processInfo.html",
                         controller: "processInfoCtrl"
                     }
@@ -50,11 +115,45 @@ angular.module('processModule').config(['$stateProvider', function ($stateProvid
             }
         },
         {
-            state: "home.process.processInstanceInfo",
+            state: "base.mobileHome.process.processInfo",
+            config: {
+                url: '/processInfo/:uid/:mode',
+                views: {
+                    'mainContent@base.mobileHome': {
+                        templateUrl: "app/modules/process/processInfo/processInfo.html",
+                        controller: "processInfoCtrl"
+                    }
+                }
+            }
+        },
+
+
+
+
+
+
+
+
+
+
+        {
+            state: "base.home.process.processInstanceInfo",
             config: {
                 url: '/processInstanceInfo/:uid',
                 views: {
-                    'processContainer@home.process': {
+                    'processContainer@base.home.process': {
+                        templateUrl: "app/modules/process/processInstanceInfo/processInstanceInfo.html",
+                        controller: "processInstanceInfoCtrl"
+                    }
+                }
+            }
+        },
+        {
+            state: "base.mobileHome.process.processInstanceInfo",
+            config: {
+                url: '/processInstanceInfo/:uid',
+                views: {
+                    'mainContent@base.mobileHome': {
                         templateUrl: "app/modules/process/processInstanceInfo/processInstanceInfo.html",
                         controller: "processInstanceInfoCtrl"
                     }

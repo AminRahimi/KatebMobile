@@ -2,8 +2,8 @@ angular.module('messageModule').controller('messageCtrl', function($scope, $stat
 
 	$scope.Data = {
 		menuList: [
-			{title: 'دریافت شده', uiSref: 'home.message.inbox'},
-			{title: 'ارسال شده', uiSref: 'home.message.send'}
+			{title: 'دریافت شده', uiSref: 'base.home.message.inbox'},
+			{title: 'ارسال شده', uiSref: 'base.home.message.send'}
 		]
 	};
 	

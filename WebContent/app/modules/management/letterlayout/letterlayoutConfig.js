@@ -1,11 +1,11 @@
 angular.module('letterlayoutModule').config(['$stateProvider', function($stateProvider) {
 	var letterlayoutStates = [
 		{
-			state: "home.management.letterlayout",
+			state: "base.home.management.letterlayout",
 			config: {
 				url: '/:orgUid/letterlayout/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
 						templateUrl: "app/modules/management/letterlayout/letterlayout.html",
 						controller: 'letterlayoutCtrl'
 					}

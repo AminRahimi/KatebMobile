@@ -1,5 +1,57 @@
-          <input ng-class="{hidden:!isEditMode}" ng-if="schema.widgetParams.forceLanguage && schema.widgetParams.forceLanguage=='en'" focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" type="text" class="form-control widget" ng-pattern="/^[a-zA-Z0-9- ]*$|^[a-zA-Z0-9- ]*(\_[a-zA-Z0-9- ]*)*?$/"></input>
-          <input ng-class="{hidden:!isEditMode}" ng-if="schema.widgetParams.forceLanguage && schema.widgetParams.forceLanguage=='fa'" focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" type="text" class="form-control widget" ng-pattern="/^[\u0627-\u06CC\u06F0-\u06F90-9]*((\_)*(\-)*(\s)*[\u0627-\u06CC\u06F0-\u06F90-9]*)*$/"></input>
-          <input ng-class="{hidden:!isEditMode}" ng-if="!schema.widgetParams.forceLanguage" focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" type="text" class="form-control widget"></input>
+
+
+          <div class="md-input-main" ng-class="{hidden:!isEditMode}"
+               ng-if="schema.widgetParams.forceLanguage && schema.widgetParams.forceLanguage=='en'" >
+              <div class="md-input-box">
+
+                  <input
+                         focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" type="text" class="widget md-input" ng-pattern="/^[a-zA-Z0-9- ]*$|^[a-zA-Z0-9- ]*(\_[a-zA-Z0-9- ]*)*?$/"></input>
+                  <!--    <label for="fullName" class="md-label">Full Name</label>-->
+                  <div class="md-input-underline" >
+                  </div>
+              </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="md-input-main"
+               ng-class="{hidden:!isEditMode}"
+               ng-if="schema.widgetParams.forceLanguage && schema.widgetParams.forceLanguage=='fa'" >
+              <div class="md-input-box">
+                  <input
+                         focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" type="text" class="md-input widget"
+                         ng-pattern="/^[\u0627-\u06CC\u06F0-\u06F90-9]*((\_)*(\-)*(\s)*[\u0627-\u06CC\u06F0-\u06F90-9]*)*$/"></input>
+
+                  <!--    <label for="fullName" class="md-label">Full Name</label>-->
+                  <div class="md-input-underline" >
+                  </div>
+              </div>
+          </div>
+
+
+
+
+
+          <div class="md-input-main"
+               ng-if="!schema.widgetParams.forceLanguage"
+               ng-class="{hidden:!isEditMode}"  >
+              <div class="md-input-box">
+                  <input
+                         focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]"
+                         type="text" class="md-input widget"></input>
+
+                  <!--    <label for="fullName" class="md-label">Full Name</label>-->
+                  <div class="md-input-underline" >
+                  </div>
+              </div>
+          </div>
+
+
+
+
           <p class="form-control-static fildsetTextPadding" ng-class="{hidden:isEditMode || (model[field]=='false' || model[field]=='true')}">{{model[field]}}</p>
           <span class='glyphicon ' ng-class="{hidden:isEditMode || (model[field]!='false' || model[field]!='true'),'glyphicon-ok text-success':model[field]==='true','glyphicon-remove text-danger':model[field]==='false'}"></span>

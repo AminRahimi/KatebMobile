@@ -39,7 +39,7 @@
 			// var value = date['get' + name]();
 			var value = PersianDateService['get' + name](date);
 
-			var get = angular.uppercase(shortForm ? ('SHORT' + name) : name);
+			var get = angular.$$uppercase(shortForm ? ('SHORT' + name) : name);
 
 			return formats[get][value];
 		};

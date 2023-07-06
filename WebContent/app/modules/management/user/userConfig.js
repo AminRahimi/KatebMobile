@@ -1,11 +1,23 @@
 angular.module('userModule').config(['$stateProvider', function($stateProvider) {
 	var userStates = [
 		{
-			state: "home.management.user",
+			state: "base.home.management.user",
 			config: {
 				url: '/:orgUid/user/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/user/user.html",
+						controller: 'userCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.user",
+			config: {
+				url: '/:orgUid/user/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/user/user.html",
 						controller: 'userCtrl'
 					}

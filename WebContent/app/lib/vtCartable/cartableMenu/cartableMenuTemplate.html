@@ -1,55 +1,89 @@
-<div  class="col-sm-2 panel-cartable-menu" style="overflow: auto;">
-	<accordion class="accordion cartable-accordion" close-others="false">
-		<a ui-sref="{{config.addTaskBtnState}}"
-			class="btn btn-block btn-primary "
-			style="margin-bottom: 12px; margin-top: 1px;"
-			ng-if="!config.isDisabledAddTask"
-            ng-class="{'addTask-disabled':settings.taskSettings.isDisabledAddTask}"
-			ng-disabled="settings.taskSettings.isDisabledAddTask">
-			<i class="{{config.addTaskBtnIcon}}"></i>
-			{{config.addTaskBtnLabel}}
-		</a>
-        <a ng-repeat="extraBtn in config.extraBtns" ui-sref="{{extraBtn.btnState}}"
-           class="btn btn-block btn-primary "
-           style="margin-bottom: 12px; margin-top: 1px;" access-checker="{{extraBtn.feature}}"
-           ng-if="!config.isDisabledAddTask"
-           ng-class="{'addTask-disabled':settings.taskSettings.isDisabledAddTask}"
-           ng-disabled="settings.taskSettings.isDisabledAddTask">
-            <i class="{{extraBtn.btnIcon}}"></i>
-            {{extraBtn.btnLabel}}
-        </a>
-		<accordion-group class="border-accordion-group" ng-repeat="cartable in Data.cartableList track by $index" is-open="cartable.open">
-			<accordion-heading>
-				{{cartable.title}}
-				<i class="pull-left"
-				   ng-class="{'flaticon-up-arrow-2 arrow-rotate-revert': cartable.open, 'flaticon-up-arrow-2 arrow-rotate': !cartable.open}"></i>
-				<h6 style="color: rgb(135, 135, 135); margin-bottom: -5px;">{{cartable.subtitle}}</h6>
-			</accordion-heading>
-			<a class="list-group-item" ng-repeat="filter in cartable.filters track by $index" ng-click="Func.onFilterClick(cartable, filter)" ng-class="{'active': filter.active}">
-				<i class="fa fa-circle" aria-hidden="true"></i>
-				<h6>{{filter.title}}</h6>
-				<span ng-style="{'background-color':filter.badgeColor}" ng-if="filter.badgeColor"
-					class="badge pull-left text-info"
-					style="margin-top: 5px; background-color: rgb(0, 131, 143); color: #fff;">
+<accordion class="page-menu" close-others="false">
+	<a ui-sref="{{config.addTaskBtnState}}"
+		class="btn btn-block btn-primary "
+		style="margin-bottom: 12px; margin-top: 1px;"
+		ng-if="!config.isDisabledAddTask"
+		ng-class="{'addTask-disabled':settings.taskSettings.isDisabledAddTask}"
+		ng-disabled="settings.taskSettings.isDisabledAddTask"
+		ng-click="onBtnsClick()"
+		>
+		<i class="{{config.addTaskBtnIcon}}"></i>
+		{{config.addTaskBtnLabel}}
+	</a>
+	<a ng-repeat="extraBtn in config.extraBtns" ui-sref="{{extraBtn.btnState}}"
+		class="btn btn-block btn-primary "
+		style="margin-bottom: 12px; margin-top: 1px;" access-checker="{{extraBtn.feature}}"
+		ng-if="!config.isDisabledAddTask"
+		ng-class="{'addTask-disabled':settings.taskSettings.isDisabledAddTask}"
+		ng-disabled="settings.taskSettings.isDisabledAddTask"
+		ng-click="onBtnsClick()">
+		<i class="{{extraBtn.btnIcon}}"></i>
+		{{extraBtn.btnLabel}}
+	</a>
+	<accordion-group class="" ng-repeat="cartable in Data.cartableList track by $index" is-open="cartable.open">
+		<accordion-heading class="">
+
+			<div class="tw-flex">
+
+				<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-left.svg'" ng-show="!cartable.open">
+				</div>
+				<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-down.svg'" ng-show="cartable.open">
+				</div>
+
+				<div>
+					{{cartable.title}}
+					<span class="page-menu__subtitle" ng-show="cartable.subtitle">({{cartable.subtitle}})</span>
+				</div>
+
+			</div>
+
+
+
+		</accordion-heading>
+		<a class="page-menu__menu-item-cnt" ng-repeat="filter in cartable.filters track by $index" ng-click="Func.onFilterClick(cartable, filter)" ng-class="{'active': filter.active}">
+			<h6 class="page-menu__menu-item-text">{{filter.title}}</h6>
+			<span class="page-menu__menu-item-counter" ng-style="{'background-color':filter.badgeColor}" ng-if="filter.badgeColor">
+				<span class="page-menu__menu-item-counter-number">
 					{{filter.unreadCount|EnToFaNumber}}
 				</span>
+			</span>
+		</a>
+	</accordion-group>
+
+	<div access-checker="SEE_ALL_LETTER_MENU">
+		<accordion-group class="" is-open="Data.status.open" ng-if="settings.customCartable">
+			<accordion-heading>
+
+				<div class="tw-flex">
+
+					<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-left.svg'" ng-show="!Data.status.open">
+					</div>
+					<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-down.svg'" ng-show="Data.status.open">
+					</div>
+	
+					<div>
+						{{settings.customCartable.title}}
+					</div>
+	
+				</div>
+
+
+				
+			</accordion-heading>
+			<a class="page-menu__menu-item-cnt" ng-repeat="cartable in settings.customCartable.list track by $index" ui-sref="{{Func.getStateName(cartable.uiSref)}}"
+				ng-class="{'active': cartable.active}" ng-click="Func.onFilterAllLetterClick(cartable)">
+				<h6 class="page-menu__menu-item-text">{{cartable.title}}</h6>
 			</a>
 		</accordion-group>
-		
-		<div access-checker="SEE_ALL_LETTER_MENU">
-            <accordion-group class="border-accordion-group" is-open="Data.status.open" ng-if="settings.customCartable">
-                <accordion-heading>
-                    {{settings.customCartable.title}}
-                    <i class="pull-left"
-                       ng-class="{'flaticon-up-arrow-2 arrow-rotate-revert': Data.status.open, 'flaticon-up-arrow-2 arrow-rotate': !Data.status.open}"></i>
-                </accordion-heading>
-                <a class="list-group-item" ng-repeat="cartable in settings.customCartable.list track by $index" ui-sref="{{cartable.uiSref}}"
-                   ng-class="{'active': cartable.active}" ng-click="Func.onFilterAllLetterClick(cartable)">
-                    <i class="fa fa-circle" aria-hidden="true"></i>
-                    <h6>{{cartable.title}}</h6>
-                </a>
-            </accordion-group>
-        </div>
-	</accordion>
-	
-</div>
+	</div>
+</accordion>
+
+
+
+			
+
+
+
+
+
+

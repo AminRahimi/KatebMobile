@@ -1,39 +1,74 @@
 <div ng-show="isEditMode">
-	<ui-select ng-model="selectedItem" on-select="onSelect($item, $model)">
-	    <ui-select-match></ui-select-match>
-	    <ui-select-choices refresh="onRefresh($select.search)"
-					refresh-delay="0" minimum-input-length="2"
-					repeat="item in (options | filter: $select.search) track by $index"
-					on-select="onSelect($item, $model)">
-	        <span ng-bind="item.title"></span>
-	    </ui-select-choices>
+
+	<ui-select multiple
+			   on-remove="onRemove($item)"
+			   on-model-item-select="onModelItemSelect($item)"
+			   ng-model="model"  sortable="true" ng-disabled="disabled"  >
+		<ui-select-match placeholder="">
+				{{$item.title}}
+		</ui-select-match>
+		<ui-select-choices refresh="onRefresh($select.search)"
+						   refresh-delay="0" minimum-input-length="2"
+						   repeat="item in (options | filter: $select.search) track by $index"
+			   on-select="onSelect($item, $model)">
+			<span >{{item.title}}</span>
+		</ui-select-choices>
 	</ui-select>
+
+	<div ng-show="selectedFromModel" class="tw-relative">
+		<div ng-if="hasDescription"
+			 style="
+			 	padding: 10px 0;
+			 	line-height: 20px;
+    			text-align: right;">
+			<label style="cursor: pointer" ng-click="toggleDescEditMode(true, selectedFromModel)">توضیحات:</label>
+			<p ng-show="!selectedFromModel.descEditMode" ng-click="toggleDescEditMode(true, selectedFromModel)">
+				{{selectedFromModel.description}}
+			</p>
+			<div ng-show="(selectedFromModel.descEditMode)">
+				<textarea type="text" class="form-control" ng-model="selectedFromModel.description"
+						  style="
+    				font-weight: normal;" maxlength="250">توضیحات رونوشت</textarea>
+				<i class="fa fa-check"
+				   style="
+						left: 22px;
+						position: absolute;
+						top: 56px;
+				   		color: #41a264;"
+				   tooltip="ثبت توضیحات" ng-click="saveDesc(selectedFromModel)"></i>
+			</div>
+		</div>
+
+	</div>
 </div>
-<div style="display: flex; justify-content: flex-start;flex-wrap: wrap;">
-	<label class="label label-default label-repeat" ng-repeat="item in model" style="width: 100%;position: relative;" >
+
+
+
+
+
+<div style="display: flex; justify-content: flex-start;flex-wrap: wrap;" ng-show="!isEditMode">
+	<span class="kateb-label kateb-label--default-light " ng-repeat="item in model" >
 		<span>
 			<i class="fa fa-caret-down fa-btn" ng-click="onOpenClick($index, item)" ng-show="item.type=='GROUP'"></i>
 			{{item.title}}
 		</span>
-		<i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, item); $event.stopPropagation();" ng-show="isEditMode"></i>
+<!--		<i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove($index, item); $event.stopPropagation();" ng-show="isEditMode"></i>-->
 		<br>
-		<div ng-if="(isEditMode) ? hasDescription : item.description"
+		<div ng-if="item.description"
 			 style="
 			 	padding: 10px 0;
 			 	line-height: 20px;
     			text-align: right;">
 			<label style="cursor: pointer" ng-click="toggleDescEditMode(true, item)">توضیحات:</label>
-			<p ng-show="!isEditMode || !item.descEditMode" ng-click="toggleDescEditMode(true, item)">
+			<p  ng-click="toggleDescEditMode(true, item)">
 				{{item.description}}
 			</p>
 			<div ng-show="(item.descEditMode && isEditMode)">
 				<textarea type="text" class="form-control" ng-model="item.description"
 				style="
-					font-size: 12px;
     				font-weight: normal;" maxlength="250">توضیحات رونوشت</textarea>
 				<i class="fa fa-check"
 				   style="
-				   		font-size: 20px;
 						left: 22px;
 						position: absolute;
 						top: 80px;
@@ -41,5 +76,5 @@
 				   tooltip="ثبت توضیحات" ng-click="saveDesc(item)"></i>
 			</div>
 		</div>
-	</label>
+	</span>
 </div>

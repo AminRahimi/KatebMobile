@@ -17,18 +17,18 @@
                </div>
                <div class="row rowForm haveMargin">
                     <label class="col-sm-5">نوع </label>
-                    <select class="form-control col-md-5" ng-change="Func.onSelectType()" ng-model="Data.newProperty.typeComponent" ng-options="type as type.typePersianName for type in Data.components" style="font-size: 12px;">
+                    <select class="form-control col-md-5" ng-change="Func.onSelectType()" ng-model="Data.newProperty.typeComponent" ng-options="type as type.typePersianName for type in Data.components" style="">
                     </select>
                </div>
                <div class="row rowForm haveMargin" ng-hide="widgets.length<2" ng-class="{'has-error':hasError_widget}">
                     <label class="col-sm-5 pull-right">نام ویجت </label>
-                    <select class="form-control col-md-5" ng-change="Func.onSelectWidget()" ng-model="Data.selectedWidget" ng-options="widget as widget.persianName for widget in widgets|filter:{ isHidden : false }" style="font-size: 12px;">
+                    <select class="form-control col-md-5" ng-change="Func.onSelectWidget()" ng-model="Data.selectedWidget" ng-options="widget as widget.persianName for widget in widgets|filter:{ isHidden : false }" style="">
                     </select>
                </div>
                
                <div class="row rowForm haveMargin" ng-show="Data.newProperty.typeComponent.type=='entitySelector'">
                     <label class="col-sm-5">نوع موجودیت </label>
-                    <select class="form-control col-md-5" ng-change="Func.onSelectEntityType()" ng-model="Data.selectedEntityType" ng-options="type as type.name for type in typeList" style="font-size: 12px;">
+                    <select class="form-control col-md-5" ng-change="Func.onSelectEntityType()" ng-model="Data.selectedEntityType" ng-options="type as type.name for type in typeList" style="">
                     </select>
                </div>
                

@@ -3,5 +3,5 @@ angular.module('vtCartable').constant('CARTABLE_CONFIG', {
     showGridMultiselector: true,
     showFilterManager: true,
     //cartable menu niceScroll configuration object
-    niceScrollMenuConfig: null
+    //niceScrollMenuConfig: null
 });

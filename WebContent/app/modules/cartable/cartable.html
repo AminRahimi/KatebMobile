@@ -12,8 +12,19 @@
 	}
 </style>
 
-<cartable-menu api="Controller.api" 
-	on-filter-click="Func.cartableListMenuIndermidiariFn"
-	settings="Controller.cartableMenu.settings">
-</cartable-menu>
-<div ui-view="cartableContainer" style="height:100%" ></div>
+<!-- TODO:refactor cartable-menu-with-setting to better name and solution if possible -->
+
+
+
+
+
+<div  class="col-sm-2 panel-cartable-menu" style="overflow: auto;">
+
+
+	
+		<cartable-menu-for-cartable></cartable-menu-for-cartable>
+
+		
+	
+</div>
+<div ui-view="cartableContainer" style="height:100%" class="col-sm-10 col-sm-offset-2 panel-cartable-content" ></div>

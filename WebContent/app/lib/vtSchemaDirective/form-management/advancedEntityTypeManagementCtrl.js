@@ -45,8 +45,11 @@ angular.module('schemaForm').controller(
 				parentsList : [],
 			};
 			$scope.Func = {
+				getStateName: function (stateName) {
+					return homeSrvc.getStateName(stateName);
+				},
 				onFormDesignClick : function() {
-					$state.go("home.management.formManage", {
+					$state.go($scope.Func.getStateName("base.home.management.formManage"), {
 						entityTypeKey : $scope.Data.newEntityType.entityKey
 					});
 				},

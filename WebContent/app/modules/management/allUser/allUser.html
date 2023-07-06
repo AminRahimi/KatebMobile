@@ -224,7 +224,7 @@
                         {{Data.selectedallUser.organization.title | EnToFaNumber}}
                     </div>
                     <div ng-show="Data.mode == 'add'" class="col-sm-7">
-                        <ui-select ng-model="Data.selectedallUser.organization" theme="bootstrap">
+                        <ui-select ng-model="Data.selectedallUser.organization" >
                         <ui-select-match class="ui-select-match" placeholder="جستجو ...">{{$select.selected.title}}</ui-select-match>
                             <ui-select-choices repeat="organization in Data.organizationList | filter: $select.search">
                                 <div>{{organization.title}}</div>

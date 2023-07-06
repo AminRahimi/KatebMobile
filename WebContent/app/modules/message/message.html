@@ -1,10 +1,10 @@
 <div style="display: flex;margin-top: 20px; height: calc(100vh - 90px);  overflow: hidden;">
     <div class="col-sm-2 panel-right-secretariat">
         <div class="list-group col-sm-12" >
-            <a ui-sref="home.message.compose" class="btn btn-icon btn-sm btn-text composeMessage">
+            <a ui-sref="Func.getStateName('base.home.message.compose')" class="btn btn-icon btn-sm btn-text composeMessage">
                 <i class="flaticon-letter" style="position: static; margin-left: 15px;"></i> نوشتن پیام جدید
             </a>
-            <a ng-repeat="menu in Data.menuList" ui-sref="{{menu.uiSref}}"
+            <a ng-repeat="menu in Data.menuList" ui-sref="{{Func.getStateName(menu.uiSref)}}"
                ui-sref-active="active" ng-click="Func.onRefreshPageClick()"
                class="list-group-item col-sm-12">
                 <h6 class="control-label">

@@ -21,7 +21,7 @@
                     ng-click="Func.onTabClick(tab)"><a>{{tab.title}}</a></li>
             </ul>
             <form name="form" novalidate>
-                <div class="col-sm-12 form-flex" ng-show="Data.selectedTab.id == 0">
+                <div class="col-sm-12 " ng-show="Data.selectedTab.id == 0">
                     <div class="c1">
                         <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && form.reason.$invalid}">
                             <label class="col-sm-4" ng-class="{'required':Data.mode!='view'}"> دلیل رزرو </label>

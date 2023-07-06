@@ -54,7 +54,7 @@
                     <!-- <input type="text" class="form-control" ng-model="Data.relation.destination"> -->
                     <entity-selector required  class="widget" ng-show="Func.isSelectedEntityType(Data.selectedDestinationEntityType) && Data.isEntityTypeChangeable" name="destRelation" ng-model="Data.relation.destination" model="Data.relation.destination" field="" schema="Data.schemaOFDestination" is-edit-mode="mode=='EDIT'  && relationDirection=='forward'" ng-if="mode=='EDIT'"></entity-selector>
                     
-                    <label ng-show="mode=='VIEW'" style="padding: 10px; margin: 2px; cursor: pointer;" class="label label-default pull-right">
+                    <label ng-show="mode=='VIEW'" style="padding: 10px; margin: 2px; cursor: pointer;" class="kateb-label kateb-label--default-light pull-right">
                          <a  class="form-control-static" style="color: black;" ng-click="Func.onOpenViewEntityModalClick()"> {{Data.relation.destEntityData._displayString}} </a>
                     </label>
                     

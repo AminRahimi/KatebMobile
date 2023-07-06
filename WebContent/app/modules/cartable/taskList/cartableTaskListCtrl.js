@@ -1,16 +1,27 @@
+
+// FIXME:duplicate code in cartableTaskList and processTaskList
 angular.module('cartableModule').controller('cartableTaskListCtrl', function ($scope, $location, $rootScope, $modal, $state,
-                                   $window, modalPoolSrvc, katebSrvc, cartableSrvc, cartableKatebSrvc, Restangular,$q) {
+                                   $window, modalPoolSrvc, katebSrvc, cartableSrvc, cartableKatebSrvc, Restangular,$q,homeSrvc) {
     $scope.Data = {
         checkedItemList: [],
         checkedItemEntityUIdLis: [],
         selectedLetters: [],
+        selectedFilter:null
     };
+
 
 
     $scope.Func = {
 
         isInFilter :function (filterName){
-            return $scope.$parent.Data && $scope.$parent.Data.selectedFilter && $scope.$parent.Data.selectedFilter.cartable && $scope.$parent.Data.selectedFilter.cartable.taskType.indexOf(filterName)>-1;
+            return $state.params.cartableUid && $state.params.cartableUid.indexOf(filterName)>-1;
+        },
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
+        setDraftButtonDisablity:function (disablity){
+            // TODO : refactor this
+            cartableSrvc.publishTo("isDisabledAddTask", disablity);
         },
         readTask: function () {
             if(!$scope.Data.checkedItemList || $scope.Data.checkedItemList.length===0){
@@ -44,7 +55,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     if(response.archive) {
                         cartableKatebSrvc.archiveLetter(ids).then(function () {
                             katebSrvc.showNotification('forwardSucceded');
-                            cartableSrvc.publishTo("cartableListDirective", $scope.$parent.Data.selectedFilter);
+                            cartableSrvc.publishTo("selectedCartableFilterChanged", $scope.Data.selectedFilter);
                         });
                     }
                     else {
@@ -76,7 +87,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     if(response.archive) {
                         cartableKatebSrvc.archiveLetter(ids).then(function () {
                             katebSrvc.showNotification('sendSucceded');
-                            cartableSrvc.publishTo("cartableListDirective", $scope.$parent.Data.selectedFilter);
+                            cartableSrvc.publishTo("selectedCartableFilterChanged", $scope.Data.selectedFilter);
                         });
                     }
                     else {
@@ -91,14 +102,14 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 if (!task) {
                     return
                 }
-                $scope.$parent.Controller.cartableMenu.settings.taskSettings.isDisabledAddTask = false;
+                $scope.Func.setDraftButtonDisablity(false);
                 
                 if ($scope.Func.isInFilter('draft')) {
-                    $scope.$parent.Controller.cartableMenu.settings.taskSettings.isDisabledAddTask = true;
-                    $state.go('home.cartable.draft', {
+                    $scope.Func.setDraftButtonDisablity(true);
+                    $state.go($scope.Func.getStateName('base.home.cartable.draft'), {
                         draftUid: task.uid,
                         cartableUid:cartable.taskType,
-                        filter:$scope.$parent.Data.selectedFilter ?$scope.$parent.Data.selectedFilter.filter.uid :null
+                        filter:$scope.Data.selectedFilter ?$scope.Data.selectedFilter.filter.uid :null
                     });
                     return
                 }
@@ -118,22 +129,22 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }
                 
 
-                $state.go('home.cartable.letter', {
+                $state.go($scope.Func.getStateName('base.home.cartable.letter'), {
                     letterUid: letterUid,
                     userArchiveUid:userArchiveUid,
                     cartableType:cartableType,
                     cartableUid:cartable.taskType,
-                    filter:$scope.$parent.Data.selectedFilter ? $scope.$parent.Data.selectedFilter.filter.uid : null
+                    filter:$scope.Data.selectedFilter ? $scope.Data.selectedFilter.filter.uid : null
                 });
             }
 
             gotoViewer();
             
-            cartableSrvc.updateMenu();;
+            cartableSrvc.publishTo("updateCartableMenu");
         },
         listDirectiveIsReady: function () {
-            if ($scope.$parent.Data.selectedFilter) {
-                cartableSrvc.publishTo("cartableListDirective", $scope.$parent.Data.selectedFilter);
+            if ($scope.Data.selectedFilter) {
+                cartableSrvc.publishTo("selectedCartableFilterChanged", $scope.Data.selectedFilter);
             }
         },
         OnCheckedItemCb: function (checkedItem, isCheckedAll) {
@@ -188,7 +199,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     removeSelectedItems($scope.Data.selectedLetters);
                     // $scope.Data.selectedLetters = [];
                 }
-            }
+            } 
             $scope.Data.checkedItemList = [];
             $scope.Data.checkedItemEntityUIdLis = [];
             $scope.Data.checkedItemEntityCUIdLis = [];
@@ -200,7 +211,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
             cartableSrvc.setSelectedItems($scope.Data.selectedLetters);
         },
         onArchiveCb: function () {
-            cartableSrvc.publishTo("cartableListDirective", $scope.$parent.Data.selectedFilter);
+            cartableSrvc.publishTo("selectedCartableFilterChanged", $scope.Data.selectedFilter);
             cartableSrvc.setSelectedItems([]);
         },
         onCheckedItemClick: function (checkedItem, e, isCheckedAll) {
@@ -209,7 +220,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
         },
         onOpenLetterInNewTabClick: function (checkedItem, e) {
             e.stopPropagation();
-            $window.open($state.href('home.cartable.letter', {
+            $window.open($state.href('base.home.cartable.letter', {
                 letterUid: checkedItem.content.uid,
                 cartableUid:$state.params.cartableUid,
                 filter:$state.params.filter
@@ -239,7 +250,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
             job().then(function (){
                 cartableSrvc.setSelectedItems([]);
                 $scope.Controller.api.listController.refreshList(true);
-                cartableSrvc.updateMenu();
+                cartableSrvc.publishTo("updateCartableMenu");
             });
         }
     };
@@ -331,7 +342,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                         "key": "officialDate",
                         "label": "تاریخ رسمی",
-                        "format": "jDD-jMMMM-jYYYY"
+                        "format": "jDD jMMMM jYYYY",
                     },
                     {
                         "key": "dirType"
@@ -373,50 +384,83 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     "label": "متن پیش‌نویس",
                     "key": "body"
                 }],
-                headers: [
-                    {
-                        "key": "number"
-                    }, {
-                        "key": "sender.title",
-                        "type": "string",
-                        "hasTooltip": true
-                    }, {
-                        "key": "subject",
-                        "hasTooltip": true
-                    }, {
-                        "key": "modificationDate",
-                        "label": "تاریخ رسمی",
-                        "format": "jDD-jMMMM-jYYYY"
-                    }, {
-                        "key": 'sender.title',
-                        "label": '',
-                        "type": 'action2',
-                        "actionName": 'ایجاد نامه مشابه',
-                        "action": function (item, event) {
-                            if (!$scope.Data.isDisableCreateSimilarLetter) {
-                                $scope.Data.isDisableCreateSimilarLetter = true;
-                                event.preventDefault();
-                                event.stopPropagation();
-                                cartableKatebSrvc.duplicateDraft($rootScope.currentUserOrg.uid, item.uid).then(function (res) {
-                                    $state.go('home.cartable.draft', {draftUid: res.data.originalElement.uid});
-                                    $scope.Data.isDisableCreateSimilarLetter = false;
-                                }, function(err){
-                                    $scope.Data.isDisableCreateSimilarLetter = false;
-                                });
-                            }
-                            // duplicateUid param have to remove in future
-                            //$state.go('home.cartable.draft', {orgUid: 'CURRENT', duplicateUid: item.uid});
+                headers:{
+                    mobile:[
+                        {
+                            "key": "subject",
+                            "hasTooltip": true,
+                            "label":"",
+                            styleClass:"kateb-text-2 tw-text-black "
                         },
-                        // "isHide": function () {
-                        //     return getParameterByName('filter') === 'static_cartable.letterDraft.history' || getParameterByName('filter') === 'static_cartable.letterDraft.sent';
-                        // }
-                    }, {
-                        "key": "letterNumber",
-                        "type":"string",
-                        "isHide": function () {
-                          return getParameterByName('filter') === 'static_cartable.letterDraft.completting' || getParameterByName('filter') === 'static_cartable.letterDraft.toOtherOrg';
+                        {
+                            "key": "sender.title",
+                            "type": "string",
+                            "hasTooltip": true,
+                            label:"فرستنده:",
+                            styleClass:"kateb-text-2 tw-text-gray",
+                            labelClass:""
+                        },
+                        {
+                            "key": "number",
+                            label:"شماره:",
+                            styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                            labelClass:"tw-text-black"
+                        },   {
+                            // FIXME:modificationDate type not found
+                            "key": "modificationDate",
+                            "label": "تاریخ:",
+                            "format": "jDD jMMMM jYYYY",
+                            styleClass:"kateb-text-2 tw-float-left  tw-text-primary-light",
+                            labelClass:"tw-text-black"
                         }
-                    }]
+                    ],
+                    desktop: [
+                        {
+                            "key": "number"
+                        }, {
+                            "key": "sender.title",
+                            "type": "string",
+                            "hasTooltip": true
+                        }, {
+                            "key": "subject",
+                            "hasTooltip": true
+                        }, {
+                            "key": "modificationDate",
+                            "label": "تاریخ رسمی",
+                            "format": "jDD jMMMM jYYYY",
+                        }, {
+                            "key": 'sender.title',
+                            "label": '',
+                            "type": 'action2',
+                            "actionName": 'ایجاد نامه مشابه',
+                            "action": function (item, event) {
+                                if (!$scope.Data.isDisableCreateSimilarLetter) {
+                                    $scope.Data.isDisableCreateSimilarLetter = true;
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    cartableKatebSrvc.duplicateDraft($rootScope.currentUserOrg.uid, item.uid).then(function (res) {
+                                        $state.go($scope.Func.getStateName('base.home.cartable.draft'), {draftUid: res.data.originalElement.uid});
+                                        $scope.Data.isDisableCreateSimilarLetter = false;
+                                    }, function(err){
+                                        $scope.Data.isDisableCreateSimilarLetter = false;
+                                    });
+                                }
+                                // duplicateUid param have to remove in future
+                                //$state.go('base.home.cartable.draft', {orgUid: 'CURRENT', duplicateUid: item.uid});
+                            },
+                            // "isHide": function () {
+                            //     return getParameterByName('filter') === 'static_cartable.letterDraft.history' || getParameterByName('filter') === 'static_cartable.letterDraft.sent';
+                            // }
+                        }, {
+                            "key": "letterNumber",
+                            "type":"string",
+                            "isHide": function () {
+                                return getParameterByName('filter') === 'static_cartable.letterDraft.completting' || getParameterByName('filter') === 'static_cartable.letterDraft.toOtherOrg';
+                            }
+                        }]
+
+                }
+
             },
             letter: {
                 searchableFieldInfo: [
@@ -579,122 +623,170 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     "label": "گیرندگان",
                     "key": "content.deliveryTo"
                 }],
-                headers: [
-                    {
-                    "type": "checkbox3",
-                    "label": "",
-                    "sortable": false,
-                    "display": true,
-                    "action": $scope.Func.onCheckedItemClick
-                },
-        
-                    {
-                    "key": "content.internalNumber"
-                    },
-                    {
-                        "key": "content.initiation.sender.title",
-                        "hasTooltip": true
-                    },
-                    {
-                    "key": "content.subject",
-                    "width": "30%",
-                    "hasTooltip": true
-                    },
-                    {
-                        "key": "content.officialDate",
-                        "label" : "تاریخ دریافت نامه",
-                        "format": "jDD-jMMMM-jYYYY"
-                    },
-                    {
-                    "key": "content.dirType"
-                    },
-                    {
-                        "key": "content.isForwarded",
-                        "label": "ارجاع توسط شما",
-                        "type": "isForwarded",
-                        "sortable": true,
-                    },
-                    {
-                    "key": "content.forwarder.title"
-                    },
+                headers:{
+                    mobile:[
+                        {
+                            type: "checkbox3",
+                            label: "",
+                            sortable: false,
+                            display: true,
+                            action: $scope.Func.onCheckedItemClick
+                        },
+                        {
+                            key: "content.subject",
+                            width: "30%",
+                            hasTooltip: true,
+                            label:"",
+                            styleClass:"kateb-text-2 tw-text-black "
+                        },
+                        {
+                            key: "content.initiation.sender.title",
+                            hasTooltip: true,
+                            label:"فرستنده:",
+                            styleClass:"kateb-text-2 tw-text-gray",
+                            labelClass:""
+                        },
+                        {
+                            key: "content.internalNumber",
+                            label:"شماره:",
+                            styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                            labelClass:"tw-text-black"
+                        },
+                        {
+                            key: "content.officialDate",
+                            label: "تاریخ:",
+                            "format": "jDD jMMMM jYYYY",
+                            styleClass:"kateb-text-2 tw-w-[9em] tw-float-left  tw-text-primary-light",
+                            labelClass:"tw-text-black"
+                        },
+                    ],
+                    desktop:  [
+                        {
+                            "type": "checkbox3",
+                            "label": "",
+                            "sortable": false,
+                            "display": true,
+                            "action": $scope.Func.onCheckedItemClick
+                        },
+                        {
+                            "key": "content.internalNumber"
+                        },
+                        {
+                            "key": "content.initiation.sender.title",
+                            "hasTooltip": true
+                        },
+                        {
+                            "key": "content.subject",
+                            "width": "30%",
+                            "hasTooltip": true
+                        },
+                        {
+                            "key": "content.officialDate",
+                            "label" : "تاریخ دریافت نامه",
+                            "format": "jDD jMMMM jYYYY",
+                        },
+                        {
+                            "key": "content.dirType"
+                        },
+                        {
+                            "key": "content.isForwarded",
+                            "label": "ارجاع توسط شما",
+                            "type": "isForwarded",
+                            "sortable": true,
+                        },
+                        {
+                            "key": "content.forwarder.title"
+                        },
 
-                    {
-                    "key": "content.hamesh",
-                    "width": "15%",
-                    "hasTooltip": true
-                    },
-                    {
-                    "key": "content.letterOfficialDate",
-                    "type": "timestamp",
-                    "label": 'تاریخ رسمی',
-                    "format": "jDD-jMMMM-jYYYY",
-                    "width": "15%",
-                    "sortable": true,
-                    "hasTooltip": true,
-                    "display": true,
-                    
-                    },
-                    {
-                    "key": "content.initiation.externalNumber"
-                    },
-               
-                    {
-                    "key": "content.priority"
-                    },
+                        {
+                            "key": "content.hamesh",
+                            "width": "15%",
+                            "hasTooltip": true
+                        },
+                        {
+                            "key": "content.letterOfficialDate",
+                            "type": "timestamp",
+                            "label": 'تاریخ رسمی',
+                            "format": "jDD jMMMM jYYYY",
+                            "width": "15%",
+                            "sortable": true,
+                            "hasTooltip": true,
+                            "display": true,
 
-                    {
-                    "key": "content.confidentialityLevel"
-                }, {
-                    "key": "content.deliveryTo"
-                }, {
-                    "type": "link",
-                    "label": "",
-                    "sortable": false,
-                    "display": true,
-                    "action": $scope.Func.onOpenLetterInNewTabClick
-                }, {
-                    "key": "content.responded",
-                    "type": "tag",
-                    "if": "item[field.key] == false",
-                    "label": "",
-                    "sortable": false,
-                    "display": true
-                    }
-                    ,
-                {
-                "type": "edited",
-                "label": "",
-                "key": "edited",
-                "sortable": false,
-                "display": true
-                },
-                {
-                "type": "img",
-                "label": "",
-                "key": "content.attachments",
-                "if": "item[field.key].length>0",
-                "trueIcon": "fa fa-paperclip",
-                "falseIcon": "fa",
-                "sortable": false
-                }, {
-                    "type": "img",
-                    "label": "",
-                    "key": "content.forwarder",
-                    "if": "item[field.key].uid",
-                    "trueIcon": "fa fa-arrow-circle-left",
-                    "falseIcon": "fa",
-                    "sortable": false
-                }]
+                        },
+                        {
+                            "key": "content.initiation.externalNumber"
+                        },
+
+                        {
+                            "key": "content.priority"
+                        },
+
+                        {
+                            "key": "content.confidentialityLevel"
+                        }, {
+                            "key": "content.deliveryTo"
+                        }, {
+                            "type": "link",
+                            "label": "",
+                            "sortable": false,
+                            "display": true,
+                            "action": $scope.Func.onOpenLetterInNewTabClick
+                        }, {
+                            "key": "content.responded",
+                            "type": "tag",
+                            "if": "item[field.key] == false",
+                            "label": "",
+                            "sortable": false,
+                            "display": true
+                        },
+                        {
+                            "type": "edited",
+                            "label": "",
+                            "key": "edited",
+                            "sortable": false,
+                            "display": true
+                        },
+                        {
+                            "type": "img",
+                            "label": "",
+                            "key": "content.attachments",
+                            "if": "item[field.key].length>0",
+                            "trueIcon": "fa fa-paperclip",
+                            "falseIcon": "fa",
+                            "sortable": false
+                        }, {
+                            "type": "img",
+                            "label": "",
+                            "key": "content.forwarder",
+                            "if": "item[field.key].uid",
+                            "trueIcon": "fa fa-arrow-circle-left",
+                            "falseIcon": "fa",
+                            "sortable": false
+                        }]
+                }
+
             }
         }
     };
-    $scope.$parent.Controller.cartableMenu.settings.taskSettings.isDisabledAddTask = false;
+    
 
     var Run = function () {
         cartableKatebSrvc.resetOrgLetterState();
         cartableKatebSrvc.resetArchiveLetterState();
         cartableSrvc.registerOnCheckedItemCb($scope.Func.OnCheckedItemCb);
         // $location.search({page: cartableSrvc.getCurrentPage()});
+
+        var subId = cartableSrvc.subscribeOn("selectedCartableFilterChanged",(selectedFilter) =>{
+            $scope.Data.selectedFilter = selectedFilter;
+        });
+        $scope.$on('$destroy',()=> {
+            cartableSrvc.unSubscribeOn("selectedCartableFilterChanged", subId);
+        });
+
+
+
+        $scope.Func.setDraftButtonDisablity(false);
     };
 
     Run();

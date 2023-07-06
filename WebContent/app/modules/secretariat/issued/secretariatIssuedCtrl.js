@@ -96,7 +96,7 @@ angular.module('secretariatModule').controller('secretariatIssuedCtrl',
 				$scope.Data.isLoadingSaveClick = true;
                 var sendData = $scope.Func.prepareSendData(recepiant);
 				secretariatSrvc.saveIssued($scope.Data.secUid, sendData).then(function(){
-					//$state.go('home.secretariat.issued', {secUid: $scope.Data.secUid, incUid: $scope.Data.incUid});
+					//$state.go('base.home.secretariat.issued', {secUid: $scope.Data.secUid, incUid: $scope.Data.incUid});
                     $scope.Func.getIssuedLetter();
                     $scope.Data.isLoadingSaveClick = false;
 					if(recepiant.dispatches.type === 'Fax'){

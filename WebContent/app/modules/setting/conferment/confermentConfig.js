@@ -1,7 +1,7 @@
 angular.module('confermentModule').config(['$stateProvider', function($stateProvider) {
 	var confermentStates = [
 		{
-			state: "home.setting.conferment",
+			state: "base.home.setting.conferment",
 			config: {
 				url: '/conferment/',
 				views: {

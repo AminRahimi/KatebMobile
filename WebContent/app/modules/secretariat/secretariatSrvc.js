@@ -21,7 +21,7 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
 	var lastPage = 1;
 	var backButton = undefined;
 
-	return{
+	const SecretariatSrvc = {
 		getGetIncommingLetterTemplateList:function(){
 			return Restangular.all('/incomming_letter_template/actives').getList();
 		},
@@ -29,7 +29,10 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
 			return Restangular.one('/incomming_letter_template/items',uid).get();
 		},
 		getSideMenuSecretariat: function(){
-			return Restangular.all('/org/current/secretariat/availables').getList();
+			return Restangular.all('/org/current/secretariat/availables').getList().then(function (response){
+				SecretariatSrvc.setFeatureList(response.data);
+				return response;
+			});
 		},
 
 		setFeatureList: function (features) {
@@ -304,5 +307,6 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
 			return Restangular.one("ganjeh/move_to_kateb?node_uid=" + file.uid + "&name=" + file.name + "&extention=" + file.extension).get();
 		},
 	}
+	return SecretariatSrvc;
 
 }]);

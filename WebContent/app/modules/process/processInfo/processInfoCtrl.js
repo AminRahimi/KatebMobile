@@ -115,12 +115,12 @@ angular.module('processModule').controller('processInfoCtrl', function ($scope, 
             },
             onStartProcessClick: function () {
                 processKatebSrvc.startProcess($scope.Data.processInfoUid, $scope.Func.correctData()).then(function (res) {
-                    $state.go("home.process.processTaskList");
+                    $state.go("base.home.process.processTaskList");
                 });
             },
             onCompleteProcessClick: function () {
                 processKatebSrvc.completeProcess($scope.Data.processInfoUid, $scope.Func.correctData()).then(function (res) {
-                    $state.go("home.process.processTaskList");
+                    $state.go("base.home.process.processTaskList");
                 });
             },
             getLetterList: function () {

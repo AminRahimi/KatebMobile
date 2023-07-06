@@ -114,12 +114,12 @@ angular.module('processModule').controller('processInstanceInfoCtrl', function (
             },
             onStartProcessClick: function () {
                 processKatebSrvc.startProcess($scope.Data.processInstanceInfoUid, $scope.Func.correctData()).then(function (res) {
-                    $state.go("home.process.processTaskList");
+                    $state.go("base.home.process.processTaskList");
                 });
             },
             onCancelClick: function () {
                 processKatebSrvc.cancelProcess($scope.Data.processInstanceInfoUid).then(function (res) {
-                    $state.go("home.process.processTaskList");
+                    $state.go("base.home.process.processTaskList");
                 });
             },
             getLetterList: function () {
@@ -154,11 +154,11 @@ angular.module('processModule').controller('processInstanceInfoCtrl', function (
                 return katebSrvc.getFileURL(id, "uid");
             },
             onBackToInstanceListClick: function () {
-                $state.go("home.process.processTaskList");
+                $state.go("base.home.process.processTaskList");
             },
             onActiveClick: function () {
                 processKatebSrvc.acitveProcess($scope.Data.processInstanceInfoUid).then(function (res) {
-                    $state.go("home.process.processTaskList");
+                    $state.go("base.home.process.processTaskList");
                 });
             },
             onWordDownloadClick: function () {

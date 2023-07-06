@@ -1,9 +1,9 @@
 <style>
     .modal-footer > button{
-        width: 200px;
         border-radius: 4px !important;
         height: 40px;
         font-size: 13px;
+        flex-grow: 1;
     }
 </style>
 <div class="modal-header">
@@ -12,7 +12,7 @@
 <div class="modal-body">
 	<span>{{notificationBody}}</span>
 </div>
-<div class="modal-footer">
+<div class="modal-footer" style="display: flex;">
     <button class="btn btn-primary" type="button" ng-click="ok()">بلی</button>
-    <button class="btn btn-warning" style=" margin-left: 80px;" type="button" ng-click="cancel()">خیر</button>
+    <button class="btn btn-warning" style="" type="button" ng-click="cancel()">خیر</button>
 </div>

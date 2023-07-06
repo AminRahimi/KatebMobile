@@ -67,14 +67,7 @@ angular.module("vtFile", []).directive('vtFile', function() {
 					$scope.uploadingFile.upload.abort();
 				}
 			}
-			$scope.downloadFile = function(){
-				linkDownload = $("<iframe style='display:none;'>", {
-					id : 'idown',
-					src : null
-				}).hide().appendTo('body');
-				if ($scope.model.hash)
-					linkDownload.attr('src', fileSrvc.getFileURLForDownload($scope.model.hash, $scope.model.name, $scope.model.id));
-			}
+			
 			$scope.deleteFile = function(){
 				$scope.model = null;
 				if(_.isFunction($scope.removeCallbackFn)){

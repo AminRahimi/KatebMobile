@@ -1,11 +1,19 @@
-angular.module('processModule').controller('processTaskListCtrl', function ($scope, $location, $rootScope, $modal, $state, cartableSrvc, modalPoolSrvc, katebSrvc, processKatebSrvc) {
+angular.module('processModule').controller('processTaskListCtrl', function ($scope, $location, $rootScope, $modal,
+     $state, cartableSrvc, modalPoolSrvc, katebSrvc, processKatebSrvc,homeSrvc) {
     $scope.Data = {
         checkedItemList: [],
         checkedItemEntityUIdLis: [],
-        selectedLetters: []
+        selectedLetters: [],
+        selectedFlter:null
     };
 
     $scope.Func = {
+        isInFilter :function (filterName){
+            return $state.params.cartableUid && $state.params.cartableUid.indexOf(filterName)>-1;
+        },
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
         openForwardLetterModal: function () {
             modalPoolSrvc.showModal('forwardLetters').then(function (data) {
                 var ids = _.map($scope.Data.checkedItemEntityUIdLis, 'uid');
@@ -14,20 +22,35 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
                 });
             });
         },
+        setDraftButtonDisablity:function (disablity){
+            // TODO : refactor this
+            cartableSrvc.publishTo("isDisabledAddTask", disablity);
+        },
         onProcessTaskClick: function (task, process) {
             if (task) {
-                $scope.$parent.Controller.processMenu.settings.taskSettings.isDisabledAddTask = true;
+                $scope.Func.setDraftButtonDisablity(false);
                 if (process.taskType.split('_')[0] == 'bpmsProcessInstance') {
-                    $state.go('home.process.processInstanceInfo', {uid: task.uid});
+                    $state.go($scope.Func.getStateName('base.home.process.processInstanceInfo'), 
+                    {
+                        uid: task.uid,
+                        cartableUid:process.taskType,
+                        filter:$scope.Data.selectedFilter ?$scope.Data.selectedFilter.filter.uid :null
+                    });
                 } else {
-                    $state.go('home.process.processInfo', {uid: task.uid, mode: 'view'});
+                    $state.go($scope.Func.getStateName('base.home.process.processInfo'), 
+                    {
+                        uid: task.uid, 
+                        mode: 'view',
+                        cartableUid:process.taskType,
+                        filter:$scope.Data.selectedFilter ?$scope.Data.selectedFilter.filter.uid :null
+                    });
                 }
             }
-            cartableSrvc.publishTo("processMenuDirective");
+            cartableSrvc.publishTo("updateProcessMenu");
         },
         listDirectiveIsReady: function () {
-            if ($scope.$parent.Data.selectedFilter) {
-                cartableSrvc.publishTo("cartableListDirective", $scope.$parent.Data.selectedFilter);
+            if ($scope.Data.selectedFilter) {
+                cartableSrvc.publishTo("selectedProcessFilterChanged", $scope.Data.selectedFilter);
             }
         },
         OnCheckedItemCb: function (checkedItem) {
@@ -52,7 +75,8 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
             });
         },
         onArchiveCb: function () {
-            cartableSrvc.publishTo("processListDirective", $scope.$parent.Data.selectedFilter);
+            // FIXME $parent
+            cartableSrvc.publishTo("processListDirective", $scope.Data.selectedFilter);
         }
     };
 
@@ -83,10 +107,37 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
                     "label": "کد رهگیری",
                     "key": "trackingNumber"
                 }],
-                headers: [{ "key": "name" }, { "key": "formData._bpmsData.processModel.title" }, { "key": "description", "hasTooltip": true }, {"key": "trackingNumber"}, {
-                    "key": "createTime",
-                    "format": "jDD-jMMMM-jYYYY (HH:mm)"
-                }, {"key": "formData._bpmsData.createTime", "format": "jDD-jMMMM-jYYYY (HH:mm)"}]
+                headers: {
+                    mobile:[
+                        { "key": "name" },
+                        { "key": "formData._bpmsData.processModel.title" },
+                        { "key": "description", "hasTooltip": true }, 
+                        {"key": "trackingNumber"}, 
+                        {
+                            "key": "createTime",
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }, 
+                        {
+                            "key": "formData._bpmsData.createTime", 
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }
+                    ],
+                    desktop:[
+                        { "key": "name" },
+                        { "key": "formData._bpmsData.processModel.title" },
+                        { "key": "description", "hasTooltip": true }, 
+                        {"key": "trackingNumber"}, 
+                        {
+                            "key": "createTime",
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }, 
+                        {
+                            "key": "formData._bpmsData.createTime", 
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }
+                    ]
+                    
+                }
             },
             bpmsProcessInstance: {
                 searchableFieldInfo: [{
@@ -105,17 +156,51 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
                     "label": "عنوان",
                     "key": "title"
                 }],
-                headers: [{ "key": "formData._bpmsData.processModel.title" }, { "key": "formData.letter.title" }, { "key": "description", "hasTooltip": true }, {
-                    "key": "formData._creationdDate",
-                    "format": "jDD-jMMMM-jYYYY (HH:mm)"
-                }, {"key": "trackingNumber"}, {"key": "formData._bpmsData.starter.user.title"}]
+                headers: {
+                    mobile:[
+                        { "key": "formData._bpmsData.processModel.title" }, 
+                        { "key": "formData.letter.title" }, 
+                        { "key": "description", "hasTooltip": true }, 
+                        {
+                            "key": "formData._creationdDate",
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }, 
+                        {"key": "trackingNumber"}, 
+                        {"key": "formData._bpmsData.starter.user.title"}
+                    ],
+                    desktop:[
+                        { "key": "formData._bpmsData.processModel.title" }, 
+                        { "key": "formData.letter.title" }, 
+                        { "key": "description", "hasTooltip": true }, 
+                        {
+                            "key": "formData._creationdDate",
+                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                        }, 
+                        {"key": "trackingNumber"}, 
+                        {"key": "formData._bpmsData.starter.user.title"}
+                    ]
+                    
+                }
             }
         }
     }
-    $scope.$parent.Controller.processMenu.settings.taskSettings.isDisabledAddTask = false;
+    // $scope.$parent.Controller.processMenu.settings.taskSettings.isDisabledAddTask = false;
 
     var Run = function () {
         processKatebSrvc.registerOnCheckedItemCb($scope.Func.OnCheckedItemCb);
+
+
+
+        var subId = cartableSrvc.subscribeOn("selectedProcessFilterChanged",(selectedFilter) =>{
+            $scope.Data.selectedFlter = selectedFilter;
+        });
+        $scope.$on('$destroy',()=> {
+            cartableSrvc.unSubscribeOn("selectedProcessFilterChanged", subId);
+        });
+
+
+        $scope.Func.setDraftButtonDisablity(false);
+
         // $location.search({page: processKatebSrvc.getCurrentPage()});
     };
 

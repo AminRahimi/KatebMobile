@@ -1,0 +1,177 @@
+<style>
+
+
+
+	/* FIXME:fsdf color vars in colors file */
+
+
+	:root{
+		--main-menu-header-height: 50px;
+		--main-menu-header-padding-right:50px;
+	}
+
+	.m-main-menu {
+		position: absolute;
+		width: 100vw;
+		right: -100vw;
+		transition: right .2s cubic-bezier(0.4,0,0.2,1),bottom 0.5s cubic-bezier(0.4,0,0.2,1);
+		/*FIXME:use color vars in colors */
+		background: #FFF;
+		z-index: 11;
+		height: 100vh;
+		overflow: auto;
+	}
+	.m-main-menu__main-nav {
+	}
+	.m-main-menu__header-nav{
+		height: var(--main-menu-header-height);
+		padding-right: var(--main-menu-header-padding-right);
+		display: flex;
+		align-items: center;
+	}
+
+
+	.m-main-menu.open{
+		right: 0;
+	}
+
+
+
+
+
+
+
+	/* right-main-menu */
+
+
+
+	.right-main-menu .right-main-menu__group {
+		background: var(--light-gray);
+
+	}
+	.right-main-menu .accordion-group__title {
+		margin: 0;
+	}
+	.right-main-menu .accordion-group__title-text{
+		color: var(--gray);
+	}
+	.right-main-menu .accordion-group__heading {
+		padding: 10px;
+		border-bottom: 1px solid var(--gray);
+	}
+
+
+
+
+	/* page-menu :menu for per pages */
+
+	:root{
+		--page-menu-counter-font-size:0.8rem;
+	}
+	.page-menu {
+		display: block;
+		background: var(--just-white);
+	}
+	.page-menu .accordion-group__title-text {
+		color: var(--just-black);
+	}
+
+
+
+	.page-menu__menu-item-cnt  {
+		display: block;
+		padding: 5px;
+		padding-right: 50px;
+		border-bottom: 1px solid var(--gray);
+	}
+
+	.page-menu__menu-item-cnt.active{
+		background: var(--primary-light);
+	}
+	.page-menu__menu-item-cnt.active .page-menu__menu-item-text{
+		color: var(--just-white);
+	}
+
+	.page-menu__menu-item-text {
+		color: var(--gray);
+		display: inline-block;
+	}
+
+
+	.page-menu__menu-item-counter {
+        font-size: var(--page-menu-counter-font-size);
+		border-radius: 50%;
+		height: 2.2em;
+		width: 2.2em;
+		color: var(--just-white);
+		display: inline-flex;
+		align-items: center;
+		background-color: var(--warn-ligth);
+	}
+
+	.page-menu__menu-item-counter-number{
+		flex-grow: 1;
+		text-align: center;
+	}
+
+
+
+
+</style>
+
+
+<aside class="m-main-menu">
+	<nav class="m-main-menu__header-nav">
+		<logged-in-user-menu></logged-in-user-menu>
+	</nav>
+
+
+	<nav class="m-main-menu__main-nav">
+		<!-- TODO: refactor cartable-accordion to better name  -->
+		<accordion class="right-main-menu all-menu" close-others="true">
+
+			<accordion-group class="right-main-menu__group" ng-repeat="headerMenuItem in Data.headerMenuItems track by $index" is-open="headerMenuItem.open">
+				<accordion-heading>
+					<div class="tw-flex">
+
+						<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-left.svg'" ng-show="!headerMenuItem.open">
+						</div>
+						<div class="menu-toggle-icon" ng-include="'kateb-icon-caret-down.svg'" ng-show="headerMenuItem.open">
+						</div>
+	
+						<div>
+							{{headerMenuItem.title}}
+							
+						</div>
+
+					</div>
+
+					
+
+				</accordion-heading>
+
+
+				<!--TODO:refactor to dynamic if prefer-->
+				<cartable-menu-for-cartable ng-if="headerMenuItem.title==='مکاتبات'" on-menu-item-click="Func.onMenuItemClick()" ></cartable-menu-for-cartable>
+				<cartable-menu-for-process ng-if="headerMenuItem.title==='فرآیند'" on-menu-item-click="Func.onMenuItemClick()"></cartable-menu-for-process>
+				<secretariat-menu ng-if="headerMenuItem.title==='دبیرخانه'" on-menu-item-click="Func.onMenuItemClick()"></secretariat-menu>
+				<management-menu ng-if="headerMenuItem.title==='مدیریت'" on-menu-item-click="Func.onMenuItemClick()"></management-menu>
+
+				<span ng-if="headerMenuItem.title==='گزارش'" class="page-menu">
+
+					<a class="page-menu__menu-item-cnt"
+					   ng-repeat="report in headerMenuItem.childItems track by $index"
+					   access-checker="{{report.feature}}"
+					   ui-sref="{{Func.getStateName(report.uiSref)}}"
+					   ng-click="Func.onMenuItemClick()">
+					  <h6 class="page-menu__menu-item-text">{{report.title}}</h6>
+					</a>
+
+				</span>
+
+
+				
+			</accordion-group>
+		</accordion>
+	</nav>
+</aside>

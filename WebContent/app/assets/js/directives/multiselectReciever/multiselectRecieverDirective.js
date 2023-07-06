@@ -7,16 +7,19 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
              scope: {
                  model: "=",
                  isEditMode: "=",
-                 searchFn: "&",
+                 searchFn: "&?",
                  onSelectFn: "&",
                  onRemoveFn: "&",
                  hasDescription: "=",
-                 notShowModel: "=",
+		initOptions:"=",
+		notShowModel: "=",
              },
              templateUrl: 'app/assets/js/directives/multiselectReciever/multiselectRecieverTemplate.html?v=2',
              controller: function($scope, multiselectRecieverSrvc) {
                  $scope.model = [];
-                 $scope.options = [];
+                 $scope.options = $scope.initOptions || [];
+                 $scope.selectedFromModel = null;
+
 
             	 var isDuplicateModel = function(model){
             		 for ( var int = 0; int < $scope.model.length; int++) {
@@ -24,15 +27,21 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
         							return true;
         					}
             		return false;
-            	 }
+            	 };
+
+
+                 $scope.onModelItemSelect = function (modelItem){
+                     $scope.selectedFromModel = modelItem;
+                 };
 
                  $scope.onRefresh = function (query) {
+                     if(!$scope.searchFn){return false;}
                  if(query && query.length >= 2){
                      $scope.searchFn({ query: query }).then(function (response) {
                      $scope.options = response.data.originalElement;
                    });
                  }
-               }
+                 };
 
             	 $scope.onSelect = function(item, model){
                      if(!$scope.model)
@@ -67,11 +76,12 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
                                     $scope.model.push(new_item);
                                 }
                             });
-                        })
-                 }
+                        });
+                 };
 
-            	 $scope.onRemove = function(index, item){
-            		$scope.model.splice(index, 1);
+            	 $scope.onRemove = function(item){
+            		// $scope.model.splice(index, 1);
+                    $scope.model = $scope.model.filter((modelItem)=>item.uid===modelItem.uid);
                     if($scope.onRemoveFn){
                         $scope.onRemoveFn({item: item});
                     }

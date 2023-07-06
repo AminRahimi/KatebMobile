@@ -1,4 +1,4 @@
-angular.module("vtCartable", ['vtCartableGrid', 'cartableSearch']).factory('cartableSrvc', [ 'Restangular', '$q', '$rootScope', '$state', 'vtShowMessageSrvc', 'cartableNotificationHandlerConst',
+angular.module("vtCartable", ['vtCartableGrid', 'cartableSearch']).factory('cartableSrvc',
 /**
  * @memberOf vtCartable
  * @ngdoc service
@@ -9,7 +9,7 @@ angular.module("vtCartable", ['vtCartableGrid', 'cartableSearch']).factory('cart
  * @description
  * cartable service for handling resources
  */
-function(Restangular, $q, $rootScope, $state, vtShowMessageSrvc, cartableNotificationHandlerConst) {
+function(Restangular, $q, $rootScope, $state,homeSrvc, vtShowMessageSrvc, cartableNotificationHandlerConst) {
 
     this.OnCheckedItemCb = undefined;
     this.selectedItems = [];
@@ -32,6 +32,8 @@ function(Restangular, $q, $rootScope, $state, vtShowMessageSrvc, cartableNotific
 	var registeredFilterArchiveSearchQueries = {};
 	var registeredShowFilterArchiveSearchQueries = {};
 
+    var latestPublishedObject={};
+
     var SEC = function(secUid){
         return 'sec/'+secUid;
     }
@@ -42,11 +44,12 @@ function(Restangular, $q, $rootScope, $state, vtShowMessageSrvc, cartableNotific
          * @method getCartableList
          */
 		/* ******* cartable ******** */
-		getCartableList : function(){
+		getCartableList : function(type){
 			var query = "";
-			if($state.current.name.indexOf("home.cartable") != -1){
+            // TODO implement for process state
+			if(type==="CARTABLE" ){
 				query += "?menu=draft&menu=letter&menu=user-letter-archive";
-			}else if($state.current.name.indexOf("home.process") != -1){
+			}else if(type==="PROCESS"){
 				query += "?menu=bpmsTask&menu=bpmsProcessInstance";
 			}
 			var t=new Date().getTime();
@@ -274,22 +277,35 @@ function(Restangular, $q, $rootScope, $state, vtShowMessageSrvc, cartableNotific
 		},
 
         //***************** cartableMenuListSubscriber **************//
-        publishTo: function (key, filter) {
-            if (subscribers[key]) {
-                filter ? subscribers[key](filter) : subscribers[key]();
+        publishTo: function (eventName, payloadObj) {
+            latestPublishedObject[eventName] = payloadObj;
+            if (subscribers[eventName]) {
+				angular.forEach(subscribers[eventName],function (subscribeMap){
+					payloadObj ? subscribeMap.observerFn(payloadObj) : subscribeMap.observerFn();
+				});
             }
         },
-        subscribeOn: function (key, observable) {
-            subscribers[key] = observable;
+        getLatestPublishedObject: function (eventName) {
+            return latestPublishedObject[eventName]
+        },
+        subscribeOn: function (eventName, observer) {
+			subscribers[eventName] = subscribers[eventName] || [];
+            var observerId = _.uniqueId();
+			subscribers[eventName].push({observerId:observerId,observerFn:observer});
+            return observerId;
+            // subscribers[key] = observable;
+        },
+        unSubscribeOn: function (eventName, observerId) {
+            subscribers[eventName] = subscribers[eventName].filter(function(subscribeMap){return subscribeMap.observerId!==observerId})
         },
 
-        // UpdateMenu
-		setMenuUpdater: function (menu) {
-            updateMenu = menu;
-        },
-        updateMenu: function () {
-            updateMenu();
-        },
+        // // UpdateMenu
+		// setMenuUpdater: function (menu) {
+        //     updateMenu = menu;
+        // },
+        // updateMenu: function () {
+        //     updateMenu();
+        // },
 
         showNotification: function(notificationKey){
             var notification = cartableNotificationHandlerConst()[notificationKey];
@@ -327,4 +343,4 @@ function(Restangular, $q, $rootScope, $state, vtShowMessageSrvc, cartableNotific
         }
 	}
 
-} ]);
+} );

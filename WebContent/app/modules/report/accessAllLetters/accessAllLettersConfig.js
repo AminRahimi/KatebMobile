@@ -1,11 +1,11 @@
 angular.module('accessAllLettersModule', []).config(['$stateProvider', function ($stateProvider) {
     var ReportStatus = [
         {
-			state: "home.report.accessAllLetters",
+			state: "base.home.report.accessAllLetters",
 			config: {
 				url: "/accessAllLetters",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/accessAllLetters/accessAllLetters.html",
 						controller: 'accessAllLettersCtrl'
 					}
@@ -13,11 +13,11 @@ angular.module('accessAllLettersModule', []).config(['$stateProvider', function 
 			}
 		},
 		{
-			state: "home.report.accessAllLettersForOrgUsers",
+			state: "base.home.report.accessAllLettersForOrgUsers",
 			config: {
 				url: "/accessAllLettersForOrgUsers",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/accessAllLetters/accessAllLettersForOrgUsers/accessAllLettersForOrgUsers.html",
 						controller: 'accessAllLettersForOrgUsersCtrl'
 					}

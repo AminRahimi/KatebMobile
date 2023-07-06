@@ -5,9 +5,14 @@
 		<li>
 			<input class="form-control" ng-model="input"
 				ui-keypress="{13:'add(input)'}" placeholder="{{label}}" ng-click="$event.stopPropagation();">
+			<i class="fa fa- fa-btn fa-plus" ng-click="add(input); $event.stopPropagation();" style="
+    position: absolute;
+    left: 15px;
+    top: 20px;
+"></i>
 		</li>
 		<li>
-			<label class="label label-default label-repeat full-width" ng-repeat="tag in model track by $index">
+			<label class="kateb-label kateb-label--default-light  full-width" ng-repeat="tag in model track by $index">
 				<span>{{tag}}</span>
 				<i class="fa fa-times fa-btn" ng-click="remove($index); $event.stopPropagation();"></i>
 			</label>

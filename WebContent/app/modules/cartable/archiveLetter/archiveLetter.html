@@ -1,7 +1,7 @@
-<div class="col-sm-10 col-sm-offset-2 panel-cartable-content">
-    <div class="panel panel-default">
-        <div class="panel-body" style="border-bottom: 1px solid #ddd">
-            <div class="col-sm-12">
+<div class="">
+    <div class="">
+        <div class="" style="border-bottom: 1px solid #ddd">
+            <div class="">
                 <a class="btn btn-sm btn-text btn-icon" ng-show="true" type="button" ng-click="Func.onReturnClick()"
                 ><i class="flaticon-close-button"></i>بستن</a>
                 <button ng-click="Func.onGetPreviousLetterClick()"
@@ -20,15 +20,15 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-primary">
-        <div class="panel-body">
+    <div class="">
+        <div class="">
             <ul class="nav nav-tabs">
                 <li role="presentation" ng-class="{'active':tab.active}"
                     ng-repeat="tab in Data.tabList"
                     ng-click="Func.onTabClick(tab)" access-checker="{{tab.feature}}"><a>{{tab.title}}</a></li>
             </ul>
 
-            <div class="col-sm-12 form-flex" ng-show="Data.selectedTab.id == 0">
+            <div class="col-sm-12 " ng-show="Data.selectedTab.id == 0">
 
                 <div class="c1">
                     <!--<div class="row rowForm" access-checker="ACCESS_RESET_CACHE">
@@ -143,31 +143,31 @@
                     <div class="row rowForm">
                         <label class="col-sm-5">گیرندگان</label>
                         <div class="col-sm-7 receiver">
-                            <label class="label label-default label-repeat" ng-repeat="pua in Data.letter.deliveryTo">
+                            <span class="kateb-label kateb-label--default-light " ng-repeat="pua in Data.letter.deliveryTo">
                                 <div>{{pua.title}}</div>
                                 <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
                                 <div ng-show="pua.description">{{pua.description}}</div>
-                            </label>
+                            </span>
                         </div>
                     </div>
                     <div class="row rowForm">
                         <label class="col-sm-5">رونوشت</label>
                         <div class="col-sm-7 receiver">
-                            <label class="label label-default label-repeat" ng-repeat="pua in Data.letter.deliveryCc">
+                            <span class="kateb-label kateb-label--default-light " ng-repeat="pua in Data.letter.deliveryCc">
                                 <div>{{pua.title}}</div>
                                 <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
                                 <div ng-show="pua.description">{{pua.description}}</div>
-                            </label>
+                            </span>
                         </div>
                     </div>
                     <div class="row rowForm" ng-show="Data.letter.deliveryBcc.length>0">
                         <label class="col-sm-5">رونوشت پنهان</label>
                         <div class="col-sm-7 receiver">
-                            <label class="label label-default label-repeat" ng-repeat="pua in Data.letter.deliveryBcc">
+                            <span class="kateb-label kateb-label--default-light " ng-repeat="pua in Data.letter.deliveryBcc">
                                 <div>{{pua.title}}</div>
                                 <hr style="border-color: rgb(0, 151, 167); margin: 6px;" ng-show="pua.description">
                                 <div ng-show="pua.description">{{pua.description}}</div>
-                            </label>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                                        ng-class="{'glyphicon-chevron-down': relatedLetters.open, 'glyphicon-chevron-right': !relatedLetters.open}"></i>
                                 </accordion-heading>
                                 <div>
-                                    <div class="row is-view-attachment"
+                                    <div class="row "
                                          ng-repeat="letter in Data.relatedLetterList track by $index">
                                         <h4 class="col-sm-12">{{letter.dirType|appEnum:letterType}}</h4>
                                         <div class="col-sm-2" style="text-align:center">
@@ -251,7 +251,7 @@
                                                 </div>
                                             </div>
                                             <a class="btn pull-left"
-                                               ui-sref="home.cartable.orgLetter({letterUid: letter.uid})"
+                                               ui-sref="base.home.cartable.orgLetter({letterUid: letter.uid})"
                                                target="_blank">نمایش نامه</a>
                                         </div>
                                     </div>

@@ -1,22 +1,37 @@
 angular.module('reportModule', []).config(['$stateProvider', function($stateProvider) {
 	var ReportStatus = [
 		{
-			state: "home.report",
+			state: "base.home.report",
 			config: {
 				url: "/report",
 				views: {
-					'mainContent@home': {
+					'mainContent@base.home': {
 						templateUrl: "app/modules/report/report.html"
 					}
 				}
 			}
 		},
 		{
-			state: "home.report.incomingIssuedLetter",
+			state: "base.mobileHome.report",
+			config: {
+				url: "/report",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/report.html"
+					}
+				}
+			}
+		},
+
+
+
+
+		{
+			state: "base.home.report.incomingIssuedLetter",
 			config: {
 				url: "/incomingIssuedLetter",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/incomingIssuedLetter/incomingIssuedLetter.html",
 						controller: 'incomingIssuedLetterCtrl'
 					}
@@ -24,11 +39,29 @@ angular.module('reportModule', []).config(['$stateProvider', function($stateProv
 			}
 		},
 		{
-			state: "home.report.letterSecretary",
+			state: "base.mobileHome.report.incomingIssuedLetter",
+			config: {
+				url: "/incomingIssuedLetter",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/incomingIssuedLetter/incomingIssuedLetter.html",
+						controller: 'incomingIssuedLetterCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+
+
+		{
+			state: "base.home.report.letterSecretary",
 			config: {
 				url: "/letterSecretary",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/letterSecretary/letterSecretary.html",
 						controller: 'letterSecretaryCtrl'
 					}
@@ -36,11 +69,31 @@ angular.module('reportModule', []).config(['$stateProvider', function($stateProv
 			}
 		},
 		{
-			state: "home.report.incomingIssuedUserLetter",
+			state: "base.mobileHome.report.letterSecretary",
+			config: {
+				url: "/letterSecretary",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/letterSecretary/letterSecretary.html",
+						controller: 'letterSecretaryCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+
+
+
+
+		{
+			state: "base.home.report.incomingIssuedUserLetter",
 			config: {
 				url: "/incomingIssuedUserLetter",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/incomingIssuedLetterUser/incomingIssuedLetterUserReport.html",
 						controller: 'incomingIssuedLetterUserReportCtrl'
 					}
@@ -48,23 +101,64 @@ angular.module('reportModule', []).config(['$stateProvider', function($stateProv
 			}
 		},
 		{
-			state: "home.report.correspondenceUnit",
+			state: "base.mobileHome.report.incomingIssuedUserLetter",
+			config: {
+				url: "/incomingIssuedUserLetter",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/incomingIssuedLetterUser/incomingIssuedLetterUserReport.html",
+						controller: 'incomingIssuedLetterUserReportCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+
+
+
+		{
+			state: "base.home.report.correspondenceUnit",
 			config: {
 				url: "/correspondenceUnit",
 				views: {
-					'reportContainer@home.report': {
+					'reportContainer@base.home.report': {
 						templateUrl: "app/modules/report/correspondenceUnit/correspondenceUnit.html",
 						controller: 'correspondenceUnitCtrl'
 					}
 				}
 			}
 		},
+		{
+			state: "base.mobileHome.report.correspondenceUnit",
+			config: {
+				url: "/correspondenceUnit",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/correspondenceUnit/correspondenceUnit.html",
+						controller: 'correspondenceUnitCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+
+
+
+
+
+
         {
-            state: "home.report.process",
+            state: "base.home.report.process",
             config: {
                 url: "/process",
                 views: {
-                    'reportContainer@home.report': {
+                    'reportContainer@base.home.report': {
                         templateUrl: "app/modules/report/process/process.html",
                         controller: 'processReportCtrl'
                     }
@@ -72,17 +166,50 @@ angular.module('reportModule', []).config(['$stateProvider', function($stateProv
             }
 		},
 		{
-            state: "home.report.reserveList",
+			state: "base.mobileHome.report.process",
+			config: {
+				url: "/process",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/process/process.html",
+						controller: 'processReportCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+
+		{
+            state: "base.home.report.reserveList",
             config: {
                 url: "/reserveListReport",
                 views: {
-                    'reportContainer@home.report': {
+                    'reportContainer@base.home.report': {
                         templateUrl: "app/modules/report/reserveList/reserveList.html",
                         controller: 'reserveListReportCtrl'
                     }
                 }
             }
-        }
+        },
+		{
+			state: "base.mobileHome.report.reserveList",
+			config: {
+				url: "/reserveListReport",
+				views: {
+					'mainContent@base.mobileHome': {
+						templateUrl: "app/modules/report/reserveList/reserveList.html",
+						controller: 'reserveListReportCtrl'
+					}
+				}
+			}
+		}
+
+
+
+
 	];
 	ReportStatus.forEach(function(state) {
 		$stateProvider.state(state.state, state.config);

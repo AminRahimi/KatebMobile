@@ -16,26 +16,29 @@ angular.module('vtCartable').directive('cartableMenu',
             templateUrl: 'app/lib/vtCartable/cartableMenu/cartableMenuTemplate.html',
             scope: {
                 onFilterClick: "=",
-                settings: "="
+                onFilterAllLetterClick:"&",
+                onBtnsClick:"&",
+                settings: "=",
+                type: "@"
             },
-            controller: function ($scope, $state, $location, cartableSrvc, CARTABLE_CONFIG) {
+            controller: function ($scope, $state, $location, cartableSrvc,CARTABLE_CONFIG,$element,homeSrvc) {
                 $scope.settings = !_.isEmpty($scope.settings) ? $scope.settings : {taskSettings: {}};
                 $scope.config = {
                     isDisabledAddTask: ($scope.settings.taskSettings && $scope.settings.taskSettings.isDisabledAddTask === false) ? $scope.settings.taskSettings.isDisabledAddTask : true,
-                    addTaskBtnState: $scope.settings.taskSettings.state || 'home.cartable.cartableList',
+                    addTaskBtnState: $scope.settings.taskSettings.state || $scope.Func.getStateName('base.home.cartable.cartableList'),
                     addTaskBtnLabel: $scope.settings.taskSettings.btnLable || 'لیست کارتابل',
                     addTaskBtnIcon: $scope.settings.taskSettings.btnIcon || 'flaticon-pencil-and-paper',
                     extraBtns: _.isArray($scope.settings.taskSettings.extraBtns) ? $scope.settings.taskSettings.extraBtns : undefined
                 };
 
-                $(".panel-cartable-menu").niceScroll(CARTABLE_CONFIG.niceScrollMenuConfig ? CARTABLE_CONFIG.niceScrollMenuConfig : {
-                    cursorcolor: "#048EA0", // change cursor color in hex
-                    cursoropacitymin: 0.5, // change opacity when cursor is inactive (scrollabar "hidden" state), range from 1 to 0
-                    cursoropacitymax: 1, // change opacity when cursor is active (scrollabar "visible" state), range from 1 to 0
-                    cursorwidth: "8px",
-                    cursorborderradius: "0",
-                    railalign: "left"
-                });
+                // $(".panel-cartable-menu").niceScroll(CARTABLE_CONFIG.niceScrollMenuConfig ? CARTABLE_CONFIG.niceScrollMenuConfig : {
+                //     cursorcolor: "#048EA0", // change cursor color in hex
+                //     cursoropacitymin: 0.5, // change opacity when cursor is inactive (scrollabar "hidden" state), range from 1 to 0
+                //     cursoropacitymax: 1, // change opacity when cursor is active (scrollabar "visible" state), range from 1 to 0
+                //     cursorwidth: "8px",
+                //     cursorborderradius: "0",
+                //     railalign: "left"
+                // });
                 $scope.Data = {
                     status: {
                         open: true,
@@ -46,22 +49,35 @@ angular.module('vtCartable').directive('cartableMenu',
                 var findFilterCartableInCartableList = function(catableUid,filterUid,cartableList){
                     let foundCartable = cartableList.find((_cartable)=>_cartable.taskType === catableUid);
                     if(!foundCartable){
-                        return
+                        return {
+                            filter: null,
+                            cartable: null
+                        } 
                     }
                     let foundFilter = foundCartable.filters.find((_filter)=>_filter.uid===filterUid);
                     return {
-                        filter: foundFilter || {},
-                        cartable: foundCartable || {}
+                        filter: foundFilter,
+                        cartable: foundCartable
                     }
                 }
 
                 $scope.Func = {
+                    // toggleCollapseMenu:function (){
+                    //
+                    //     $element[0].querySelector('.panel-cartable-menu').classList.toggle('open');
+                    // },
+                    // onToggleMenuClick:function (){
+                    //     $scope.Func.toggleCollapseMenu();
+                    // },
+                    getStateName: function (stateName) {
+                        return homeSrvc.getStateName(stateName);
+                    },
                     getCartableList: function () {
-                        if ($state.current.name !== "home.secretariat.orgLetterList") {
-                            cartableSrvc.getCartableList().then(function (response) {
+                        if ($state.current.name !== $scope.Func.getStateName("base.home.secretariat.orgLetterList")) {
+                            cartableSrvc.getCartableList($scope.type).then(function (response) {
                                 $scope.Data.cartableList = response.data;
                                 var validUid,
-                                    urlFilter = $location.search()['filter'];
+                                    urlFilter = $state.params.filter;
                                 if (urlFilter) {
                                     updateCartableListWithFilter()
                                 }
@@ -74,21 +90,9 @@ angular.module('vtCartable').directive('cartableMenu',
                                     if(filter){
                                         cartable.open = true;
                                         validUid = true;
-                                        if($state.current.name == 'home.cartable.cartableList'){
-                                            $scope.Func.onFilterClick(cartable, filter);
-                                        }
+                                        $scope.Func.onFilterClick(cartable, filter);
                                     }
 
-                                    // for (var int = 0; int < $scope.Data.cartableList.length; int++) {
-                                    //     for (var jnt = 0; jnt < $scope.Data.cartableList[int].filters.length; jnt++) {
-                                    //         if ($scope.Data.cartableList[int].filters[jnt]['uid'] == urlFilter) {
-                                    //             validUid = true;
-                                    //             if($state.current.name == 'home.cartable.cartableList')
-                                    //                 $scope.Func.onFilterClick($scope.Data.cartableList[int], $scope.Data.cartableList[int].filters[jnt]);
-                                    //         }
-                                    //     }
-                                    //     $scope.Data.cartableList[int].open = true;
-                                    // }
                                 }
 
                                 function updateCartableListWithoutFilter() {
@@ -104,8 +108,7 @@ angular.module('vtCartable').directive('cartableMenu',
                                         }
                                         $scope.Data.cartableList[int].open = true;
                                     }
-                                    if($state.current.name == 'home.cartable.cartableList')
-                                        $scope.Func.onFilterClick(cartable, filter);
+                                    $scope.Func.onFilterClick(cartable, filter);
                                 }
                             });
                         }
@@ -120,6 +123,7 @@ angular.module('vtCartable').directive('cartableMenu',
                         $scope.Data.selectedCartable = cartable;
                         $scope.Data.selectedFilter = filter;
                         $scope.onFilterClick({cartable: cartable, filter: filter});
+                        // $scope.Func.toggleCollapseMenu();
                     },
                     onFilterAllLetterClick: function (filter) {
                         if ($scope.Data.prevMenu)
@@ -127,10 +131,16 @@ angular.module('vtCartable').directive('cartableMenu',
                         filter.active = true;
                         $scope.Data.prevMenu = filter;
                         $scope.Data.selectedFilter = filter;
+
+                        if(angular.isFunction($scope.onFilterAllLetterClick)){
+
+                            $scope.onFilterAllLetterClick()
+                        }
+                        // $scope.Func.toggleCollapseMenu();
                     },
-                    getCartableListMenu: function () {
-                        if ($state.current.name !== "home.secretariat.orgLetterList") {
-                            cartableSrvc.getCartableList().then(function (response) {
+                    updateMenu: function () {
+                        if ($state.current.name !== $scope.Func.getStateName("base.home.secretariat.orgLetterList")) {
+                            cartableSrvc.getCartableList($scope.type).then(function (response) {
                                 $scope.Data.cartableList = response.data;
                                 for (var int = 0; int < $scope.Data.cartableList.length; int++) {
                                     $scope.Data.cartableList[int].open = true;
@@ -146,14 +156,44 @@ angular.module('vtCartable').directive('cartableMenu',
                             });
                         }
                     }
-                }
+                };
 
-                
+
 
                 var Run = function () {
-                    $scope.Func.getCartableList();
-                    cartableSrvc.setMenuUpdater($scope.Func.getCartableListMenu);
+                $scope.Func.getCartableList();
+
+
+                    // If device is mobile
+                    // Generate header menu items here
+                    if(homeSrvc.screenSizeDetector.isSmall || homeSrvc.screenSizeDetector.isExtraSmall){
+
+                        $scope.Data.headerMenuItems = homeSrvc.generateMenuData();
+
+                        // homeSrvc.generateMenuDataWithDynamicChildItems().then(function (headerMenuItems){
+                        //     $scope.Data.headerMenuItems = headerMenuItems;
+                        // });
+                    }
+
+
+                    // FIXME: handle process menu and cartable menu needs!
+                    if($scope.type==='CARTABLE'){
+                        var subId = cartableSrvc.subscribeOn("updateCartableMenu", $scope.Func.updateMenu);
+                        $scope.$on('$destroy',()=> {
+                            cartableSrvc.unSubscribeOn("updateCartableMenu", subId);
+                        });
+                    }else if($scope.type==='PROCESS'){
+                        var subId = cartableSrvc.subscribeOn("updateProcessMenu", $scope.Func.updateMenu);
+                        $scope.$on('$destroy',()=> {
+                            cartableSrvc.unSubscribeOn("updateProcessMenu", subId);
+                        });
+                    }
+                    
+
+
                 };
+
+
 
                 Run();
             },

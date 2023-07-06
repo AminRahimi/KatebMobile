@@ -263,8 +263,8 @@ angular.module('vtGrid', []).directive("vtGrid", function($http) {
 					});
 					//Create Header of Table
 					_.each($scope.controlFn.headers, function(header) {
-						if (header.key && $scope.controlFn.listItems.fields) {
-							var fieldOfKey = _.find($scope.controlFn.listItems.fields, function(field) {
+						if (header.key && $scope.controlFn.fieldsInfo) {
+							var fieldOfKey = _.find($scope.controlFn.fieldsInfo, function(field) {
 								return field.key == header.key;
 							});
 							if (!fieldOfKey) {

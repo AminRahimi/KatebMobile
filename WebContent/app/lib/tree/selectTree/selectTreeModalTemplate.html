@@ -4,7 +4,7 @@
 			<ul ng-include="privateData.treeItemRendererAddress" ng-if="treeData[privateData.childrenKey].length"></ul>
 		</div>
 		<div class="selected-node">
-			<label class="label label-default label-repeat" ng-repeat="node in selectedNodeList">
+			<label class="kateb-label kateb-label--default-light " ng-repeat="node in selectedNodeList">
 				{{node.name}}
 				<i class="flaticon-close-button" ng-click="remove($index)" style="cursor: pointer;"></i>
 			</label>

@@ -21,7 +21,8 @@ angular.module('letterTabModule').directive('letterBody', [
                 onFileUploaded: "=",
                 api: "=?",
                 pdfFile: "=",
-                type: "="
+                type: "=",
+                hideLabel:"="
             },
             templateUrl: 'app/assets/js/directives/letterTab/letterBodyTemplate.html?vtPreventCache=' + new Date().getTime(),
             controller: function ($scope, fileSrvc, $sce, scannerSrvc, configObj) {
@@ -87,22 +88,37 @@ angular.module('letterTabModule').directive('letterAttachment', [
                 isEditMode: "="
             },
             templateUrl: 'app/assets/js/directives/letterTab/letterAttachmentTemplate.html?vtPreventCache=' + new Date().getTime(),
-            controller: function ($scope, $modal, secretariatSrvc, katebSrvc, fileSrvc, $rootScope, $interval, configObj, $q, $timeout) {
+            controller: function ($scope,$state, $modal, secretariatSrvc, katebSrvc, fileSrvc, $rootScope, $interval, configObj, $q, $timeout) {
 
                 $scope.Data = {
-                    attachmentType: 'Turn',
+                    attachmentTypeList:[
+                        {key:'Turn',title:'عطف'},
+                        {key:'Follow',title:'پیرو'},
+                        {key:'Appendix',title:'پیوست'},
+                        {key:'Relation',title:'ارتباط'}
+                    ],
+                    attachFromList:[
+                        {key:'COMPUTER',title:'فایل از کامپیوتر'},
+                        {key:'SCAN',title:'فایل از نرم افزار اسکن'},
+                        {key:'GANJEH',title:'فایل از گنجه'},
+                        {key:'LETTER',title:'نامه'}
+                    ],
                     letter: {},
                     validationClicked: false,
                     attachmentList: [],
                     letterBodyType: "doc,docx,xls,xlsx,pdf,png,jpg,jpeg,rar,zip,txt,dwg,dxf,dwf,DOC,DOCX,XLS,XLSX,PDF,PNG,JPG,JPEG,RAR,ZIP,TXT,DWG,DXF,DWF",
-                    chooseLetterType: 'COMPUTER',
                     scanerStatus: "",
                     lastScannerVersion: "",
                     isLogin: configObj.userConfig.connectedToGanjeh,
-                    ganjehFiles: null
+                    ganjehFiles: null,
                 };
 
+                
+
                 $scope.Func = {
+                    getHref: function(sref,params){
+                        return $state.href(sref,params);
+                    },
                     onAddAttachments: function () {
                         if ($scope.letterAttachementForm.$invalid) {
                             $scope.Data.validationClicked = true;
@@ -114,10 +130,10 @@ angular.module('letterTabModule').directive('letterAttachment', [
                                     $scope.Data.file = file;
                                 }
                                 attachments = {
-                                    type: $scope.Data.chooseLetterType == 'LETTER' ? 'LETTER' : 'FILE',
-                                    relationTypeKey: $scope.Data.attachmentType,
-                                    fileBody: $scope.Data.chooseLetterType != 'LETTER' ? $scope.Data.file : null,
-                                    letterBody: ($scope.Data.chooseLetterType == 'LETTER' && $scope.Data.attachLetter) ? {
+                                    type: $scope.Data.chooseLetterType.key == 'LETTER' ? 'LETTER' : 'FILE',
+                                    relationTypeKey: $scope.Data.attachmentType.key,
+                                    fileBody: $scope.Data.chooseLetterType.key != 'LETTER' ? $scope.Data.file : null,
+                                    letterBody: ($scope.Data.chooseLetterType.key == 'LETTER' && $scope.Data.attachLetter) ? {
                                         uid: $scope.Data.attachLetter.uid,
                                         title: $scope.Data.attachLetter.internalNumber + '-' + $scope.Data.attachLetter.subject
                                     } : null,
@@ -136,13 +152,17 @@ angular.module('letterTabModule').directive('letterAttachment', [
                                 setAttachments(null);
                             }
                             $scope.Data.attachmentList.push($scope.Data.attachLetter);
-                            $scope.Data.chooseLetterType = 'COMPUTER';
-                            $scope.Data.attachmentType = 'Turn';
+                            $scope.Func.setDefaults();
+                           
                             $scope.Data.file = null;
                             $scope.Data.description = null;
                             $scope.Data.attachLetter = null;
                             $scope.Data.ganjehFiles = null;
                         }
+                    },
+                    setDefaults: function(){
+                        $scope.Data.chooseLetterType = $scope.Data.attachFromList[0];
+                        $scope.Data.attachmentType = $scope.Data.attachmentTypeList[0];
                     },
                     onReception: function (file) {
                         katebSrvc.downloadByLink('files/?mode=download&fcode=' + file.hash );
@@ -308,6 +328,13 @@ angular.module('letterTabModule').directive('letterAttachment', [
                     letterBody: {}
                 };
 
+
+                const Run=function(){
+                    $scope.Func.setDefaults();
+                }
+
+                Run()
+
                 $scope.controller.scanner.onScanClick = function () {
                     $scope.controller.letterBody.setPdfUrl(undefined);
                 };
@@ -315,7 +342,7 @@ angular.module('letterTabModule').directive('letterAttachment', [
                 $scope.Func.checkGanjehLogin();
 
             }
-        }
+         }
     }])
     .controller('letterAttachedPreviewCtrlModal', function ($scope, pdfUrl, $timeout) {
         $scope.api = {

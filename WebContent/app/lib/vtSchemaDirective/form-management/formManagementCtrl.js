@@ -278,7 +278,7 @@ angular.module("vtFormManagement").controller(
 					});
 					/*
 					 * questionnaireSrvc.updatequestionnaire($scope.Data.newEntityType).then(function() {
-					 * $state.go("home.management.questionnaire", {}); });
+					 * $state.go("base.home.management.questionnaire", {}); });
 					 */
 				},
 				onReturnClick : function() {

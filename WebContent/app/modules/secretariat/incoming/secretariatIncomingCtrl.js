@@ -125,7 +125,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 							$scope.Apis.schemaFormApi.prepareLetterFormTypeForSave();
 						}
 						secretariatSrvc.saveIncoming($scope.Data.secUid, $scope.Func.removeExtraFields($scope.Data.letter, true)).then(function () {
-							$state.go('home.secretariat.incomingList', {secUid: $scope.Data.secUid});
+							$state.go('base.home.secretariat.incomingList', {secUid: $scope.Data.secUid});
 							$scope.Data.validationClicked = false;
 						});
 					}
@@ -175,8 +175,8 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 
 				},
 				onReturnClick: function () {
-					// $state.go("home.secretariat.unapprovedIncomming", {secUid: $scope.Data.secUid});
-					$state.go("home.secretariat.incomingList", {secUid: $scope.Data.secUid});
+					// $state.go("base.home.secretariat.unapprovedIncomming", {secUid: $scope.Data.secUid});
+					$state.go("base.home.secretariat.incomingList", {secUid: $scope.Data.secUid});
 					// $state.go(secretariatSrvc.getBackButton(), {secUid: $scope.Data.secUid});
 				},
 				onResetClick: function () {
@@ -311,7 +311,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 					}
 				},
 				onDuplicateClick: function (letter) {
-					var url = $state.href('home.cartable.orgLetter', {letterUid: letter.uid});
+					var url = $state.href('base.home.cartable.orgLetter', {letterUid: letter.uid});
 					window.open(url, '_blank');
 				},
 				removeExtraFields: function (data, shouldChange) {

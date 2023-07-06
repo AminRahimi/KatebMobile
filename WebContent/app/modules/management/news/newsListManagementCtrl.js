@@ -3,14 +3,14 @@ angular.module('newsModule').controller('newsListManagementCtrl', function ($sco
     $scope.Data = {};
     $scope.Func = {
         onAddNewsClick: function () {
-            $state.go('home.management.news',
+            $state.go('base.home.management.news',
                 {
                     orgUid: $stateParams.orgUid,
                     mode: 'add'
                 });
         },
         onSelectNews: function (selectedNews) {
-            $state.go('home.management.news',
+            $state.go('base.home.management.news',
                 {
                     orgUid: $stateParams.orgUid,
                     mode: 'view',

@@ -13,7 +13,7 @@ angular
             $scope.Func.setLastPage(
               $scope.Controller.listController.currentPage
             );
-            $state.go("home.secretariat.issuedLetter", {
+            $state.go("base.home.secretariat.issuedLetter", {
               secUid: $scope.Data.secUid,
               incUid: issued.uid,
               letterUid: issued.letter.uid,

@@ -111,7 +111,7 @@
 						</div>
 					</div>
 					<div ng-show="Data.mode!='view'" class="col-sm-7">
-						<ui-select ng-model="Data.selectedFont" theme="bootstrap">
+						<ui-select ng-model="Data.selectedFont">
 							<ui-select-match class="ui-select-match" placeholder="جستجو ...">{{$select.selected.title}}</ui-select-match>
 							<ui-select-choices repeat="font in Data.fontList | filter: $select.search">
 								<div>{{font.title}}</div>

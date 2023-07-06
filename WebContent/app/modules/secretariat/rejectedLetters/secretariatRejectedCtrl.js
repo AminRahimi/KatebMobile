@@ -115,7 +115,7 @@ angular.module('secretariatModule').controller('secretariatRejectedCtrl',
 				// 		}
                 //
 				// 		secretariatSrvc.saveIncoming($scope.Data.secUid, $scope.Func.removeExtraFields($scope.Data.letter, true)).then(function () {
-				// 			$state.go('home.secretariat.incomingList', {secUid: $scope.Data.secUid});
+				// 			$state.go('base.home.secretariat.incomingList', {secUid: $scope.Data.secUid});
 				// 			$scope.Data.validationClicked = false;
 				// 		});
 				// 	}
@@ -159,7 +159,7 @@ angular.module('secretariatModule').controller('secretariatRejectedCtrl',
                 //
 				// },
 				onReturnClick: function () {
-					$state.go('home.secretariat.rejectedLetters', {secUid: $scope.Data.secUid});
+					$state.go('base.home.secretariat.rejectedLetters', {secUid: $scope.Data.secUid});
 				},
 				// onResetClick: function () {
 				// 	$scope.Data.letter = {
@@ -288,7 +288,7 @@ angular.module('secretariatModule').controller('secretariatRejectedCtrl',
 					}
 				},
 				onDuplicateClick: function (letter) {
-					var url = $state.href('home.cartable.orgLetter', {letterUid: letter.uid});
+					var url = $state.href('base.home.cartable.orgLetter', {letterUid: letter.uid});
 					window.open(url, '_blank');
 				},
 				removeExtraFields: function (data, shouldChange) {

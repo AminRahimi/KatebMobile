@@ -1,7 +1,7 @@
 angular.module('privatehameshhotkeyModule').config(['$stateProvider', function($stateProvider) {
 	var hameshhotkeyStates = [
 		{
-			state: "home.setting.hameshhotkey",
+			state: "base.home.setting.hameshhotkey",
 			config: {
 				url: '/hameshhotkey/',
 				views: {

@@ -9,10 +9,10 @@ angular.module('secretariatModule').controller('returnedLettersListCtrl', functi
 
 	$scope.Func = {
 		onAddClick: function(){
-			$state.go('home.secretariat.issuedAdd', {secUid: $scope.Data.secUid});
+			$state.go('base.home.secretariat.issuedAdd', {secUid: $scope.Data.secUid});
 		},
 		onIssuedClick: function(issued){
-			$state.go('home.secretariat.issued', {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
+			$state.go('base.home.secretariat.issued', {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
 		},
         onChangeSearchModeClick: function(mode){
             $scope.Data.searchMode = mode;

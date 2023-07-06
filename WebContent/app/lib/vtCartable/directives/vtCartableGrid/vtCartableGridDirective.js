@@ -5,10 +5,12 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
         templateUrl: "app/lib/vtCartable/directives/vtCartableGrid/vtCartableGridTemplate.html",
         scope: {
             controlFn: '=',
-            visibleHeaders: "="
+            visibleHeaders: "=",
+            options: "=?"
         },
         // && (controlFn.searchQuery.orders && controlFn.searchQuery.orders.length)||(Data.cartableState.filter.orders && Data.cartableState.filter.orders.length)
-        controller: function ($scope, $element, $location, $attrs, $injector, $q, cartableSrvc, $timeout) {
+        controller: function ($scope, $element, $location, $attrs, $injector, $q, cartableSrvc, $timeout,Restangular) {
+
 
             $scope.Data = {
                 selectedItem: null,
@@ -16,7 +18,7 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                 checked: {},
                 tempTaskType: undefined,
                 cartableState: cartableSrvc.getCartableState(),
-                isLoading:false
+                isLoading: false
             };
 
             $scope.Controller = {
@@ -54,18 +56,51 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                         $scope.Controller.customPagination.totalPages =  Math.ceil($scope.Controller.customPagination.totalItems/$scope.Controller.customPagination.count);
                         cartableSrvc.current = $scope.controlFn.currentPage;
                         cartableSrvc.setCurrentPage($scope.Controller.customPagination.currentPage);
-                        return $scope.Func.getItemsPerCondition(true);
+                        return $scope.Func.getItemsPerCondition();
                     }
                 }
             };
 
             $scope.Func = {
                 /* ******************************** Main Functions ******************************** */
-                getItemsPerCondition: function () {
-                    // if($scope.Data.isLoading){
-                    //     return  $q.resolve();
-                    // }
-                    $scope.Data.isLoading=true;
+
+                activateInfinitScroll:function (){
+                    const observer = new IntersectionObserver((entries, observer) => {
+                        // Loop through the entries
+                        for (const entry of entries) {
+                            // Check if the entry is intersecting the viewport
+                            if (entry.isIntersecting) {
+                                // Load more content
+                                $scope.Func.loadMore();
+                            }
+                        }
+                    });
+
+                    const scrollSentinel = $($element).find('.scroll-sentinel')[0];
+
+                    observer.observe(scrollSentinel);
+                },
+                loadMore: function (){
+                    if($scope.Data.isLoading){
+                        return false;
+                    }
+                    if(!$scope.Controller.customPagination.choices) {
+                        $scope.Controller.pagination.currentPage++;
+                    }else{
+                        $scope.Controller.customPagination.currentPage++;
+                    }
+                    $scope.Data.isLoading = true;
+                    try {
+                        return $scope.Func.getItemsPerCondition(true);
+                    } catch (e) {
+
+                    } finally {
+                        $scope.Data.isLoading = false;
+                    }
+
+                },
+                getItemsPerCondition: function (isInfinityScrollOrigin) {
+			$scope.Data.isLoading=true;		
                     $scope.controlFn.currentPage = $location.search()['page'] || $scope.Controller.pagination.currentPage;
 
                     var start, pageLen;
@@ -83,51 +118,50 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                     cartableSrvc.setCartableState($scope.Data.cartableState);
 
 
-                        if ($scope.searchMode) {
-                            return $scope.Func.search($scope.controlFn.searchQuery, start, pageLen).then(function (data){
+                    if ($scope.searchMode) {
+                            return $scope.Func.search($scope.controlFn.searchQuery, start, pageLen,isInfinityScrollOrigin).then(function (data){
                                 $scope.Data.isLoading=false
                                 return data;
                             });
-                        } else {
-                            return $scope.Func.getItems(start, pageLen).then(function (data){
+                    } else {
+                            return $scope.Func.getItems(start, pageLen,isInfinityScrollOrigin).then(function (data){
                                 $scope.Data.isLoading=false
                                 return data;
                             });
-                        }
+                    }
                 },
-                search: function (query, start, len) {
+                search: function (query, start, len,isInfinityScrollOrigin) {
                     var defer = $q.defer();
                     if ($scope.controlFn.searchFunction) {
                         //(len +1)=> get one more  for handling that next page is exist or not
                         $scope.controlFn.searchFunction($scope.controlFn.ctrlData.taskType, query, start, len +1).then(function (response) {
-                            $scope.Func.processListResponse(response, defer, true,start, len);
+                            $scope.Func.processListResponse(response, defer, true,start, len,isInfinityScrollOrigin);
                         });
                     }else{
                         defer.reject();
                     }
                     return defer.promise;
                 },
-                getItems: function (start, len) {
+                getItems: function (start, len,isInfinityScrollOrigin) {
                     var defer = $q.defer();
                     if ($scope.controlFn.getList) {
                         //(len +1)=> get one more  for handling that next page is exist or not
                         $scope.controlFn.getList(start, len+1).then(function (response) {
-                            $scope.Func.processListResponse(response, defer, false,start, len);
+                            $scope.Func.processListResponse(response, defer, false,start, len,isInfinityScrollOrigin);
                         });
                     }else{
                         defer.reject();
                     }
                     return defer.promise;
                 },
-                processListResponse: function (response, defer, isSort,start, len) {
+                processListResponse: function (response, defer, isSort,start, len,isInfinityScrollOrigin) {
+
                     var totalItemsHandlerOnPagination = function(totalItems){
                         totalItems = start + response.data.length
                         return totalItems;
                     }
 
                     if(!$scope.Controller.customPagination.choices) {
-                        
-                        
                         $scope.Controller.pagination.totalItems = totalItemsHandlerOnPagination($scope.Controller.pagination.totalItems);
 
                     }
@@ -139,9 +173,14 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                     if(response.data.length > len){
 						// remove on added for detecting that next page is exist
 						response.data.pop();
-					}
+                    }
 
-                    $scope.controlFn.listItems = response.data;
+                    if(isInfinityScrollOrigin){
+                        $scope.controlFn.listItems = $scope.controlFn.listItems || [];
+                        $scope.controlFn.listItems = $scope.controlFn.listItems.concat(Restangular.stripRestangular(response.data));
+                    }else{
+                        $scope.controlFn.listItems = Restangular.stripRestangular(response.data);
+                    }
 
                     $scope.controlFn.fieldsInfo = response.data.fields;
                     $scope.Data.visibleFields = [];
@@ -151,8 +190,8 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                     });
                     //Create Header of Table
                     _.each($scope.controlFn.headers, function (header) {
-                        if (header.key && $scope.controlFn.listItems.fields) {
-                            var fieldOfKey = _.find($scope.controlFn.listItems.fields, function (field) {
+                        if (header.key && $scope.controlFn.fieldsInfo) {
+                            var fieldOfKey = _.find($scope.controlFn.fieldsInfo, function (field) {
                                 return field.key == header.key;
                             });
                             if (!fieldOfKey) {
@@ -193,8 +232,10 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                         });
                     });
 
-                    
-                    
+                    defer.resolve($scope.controlFn.listItems);
+                    if (_.isFunction($scope.controlFn.callHook)) {
+                        $scope.controlFn.callHook($scope.Data.cartableState , $scope.controlFn.listItems);
+                    }
                     $scope.selectFiledCnt.selectedFromMultiselectOptions = [];
 
                     // $scope.Data.cartableState = cartableSrvc.getCartableState();
@@ -397,7 +438,10 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                     if ($scope.controlFn.onChangeSelectedList)
                         $scope.controlFn.onChangeSelectedList();
                 },
-               
+                resetSelectedItems: function () {
+                    $scope.Data.checked = {};
+                    $scope.controlFn.selectedItems = [];
+                },
 
                 /* ******************************** Auxiliary Functions ******************************** */
                 isFirstFetchingList: function () {
@@ -471,6 +515,7 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
             $scope.controlFn.listItems = [];
             $scope.controlFn.selectedItems = [];
             $scope.controlFn.fieldsInfo = [];
+            $scope.controlFn.resetSelectedItems = $scope.Func.resetSelectedItems;
             $scope.controlFn.refreshList = function (searchMode) {
                 // $scope.Controller.pagination.currentPage = 1;
                 $scope.searchMode = (searchMode == undefined) ? $scope.searchMode : searchMode;
@@ -492,6 +537,9 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
             /* ******************************** RUN ******************************** */
             if (!$scope.controlFn.isDisableInit) {
                 $scope.Func.getItemsPerCondition();
+            }
+            if($scope.options.infinitScroll){
+                $scope.Func.activateInfinitScroll();
             }
             $timeout(function () {
                 $scope.Data.cartableState.visibleHeaders = $scope.visibleHeaders;

@@ -1,7 +1,7 @@
 angular.module('templateModule').config(['$stateProvider', function($stateProvider) {
 	var templateStates = [
 		{
-			state: "home.setting.template",
+			state: "base.home.setting.template",
 			config: {
 				url: '/template/',
 				views: {

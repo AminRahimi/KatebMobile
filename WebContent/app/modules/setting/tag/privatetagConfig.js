@@ -1,7 +1,7 @@
 angular.module('privatetagModule').config(['$stateProvider', function($stateProvider) {
 	var tagStates = [
 		{
-			state: "home.setting.tag",
+			state: "base.home.setting.tag",
 			config: {
 				url: '/tag/',
 				views: {

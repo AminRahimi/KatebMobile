@@ -34,7 +34,7 @@ angular.module('newsModule').controller('newsManagementCtrl', function ($scope, 
             });
         },
         onGoToListClick: function () {
-            $state.go("home.newsList");
+            $state.go("base.home.newsList");
         },
         onGoToNewModeClick: function () {
             $('#imageId').removeAttr('src');
@@ -53,7 +53,7 @@ angular.module('newsModule').controller('newsManagementCtrl', function ($scope, 
             $timeout(function () {
                 $('#editor1').val($scope.Data.currentNews.content);
             }, 1);
-            $state.go("home.management.news", {
+            $state.go("base.home.management.news", {
                 mode: "edit",
                 newsId: $scope.Data.currentNews.uid
             });
@@ -137,12 +137,12 @@ angular.module('newsModule').controller('newsManagementCtrl', function ($scope, 
         },
         prepareShowData: function () {
             if ($stateParams.mode === "add") {
-                $state.go("home.management.news", {
+                $state.go("base.home.management.news", {
                     mode: "view",
                     newsId: $scope.Data.currentNews.uid
                 });
             } else if ($stateParams.mode === "edit") {
-                $state.go("home.management.news", {
+                $state.go("base.home.management.news", {
                     mode: "view",
                     newsId: $scope.Data.currentNews.uid
                 });
@@ -158,12 +158,12 @@ angular.module('newsModule').controller('newsManagementCtrl', function ($scope, 
         },
         onCancelClick: function () {
             if ($state.params.mode == "add") {
-                $state.go("home.management.newsList",{orgUid: $stateParams.orgUid});
+                $state.go("base.home.management.newsList",{orgUid: $stateParams.orgUid});
             } else if ($state.params.mode == "edit") {
                 $scope.Data.currentNews = angular.copy($scope.Data.cloneNewsInfo);
                 $scope.Data.mode = "view";
                 $scope.Func.resetForm();
-                $state.go("home.management.news", {
+                $state.go("base.home.management.news", {
                     mode: "view",
                     newsId: $scope.Data.currentNews.uid
                 });

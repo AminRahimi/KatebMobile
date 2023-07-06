@@ -1,3 +1,22 @@
+/*TODO:use this in all placed that need*/
+
+/* isExtraSmall */
+@media only screen and (max-width: 767px) {}
+
+/* isSmall */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* isMedium*/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}
+
+/* isLarge */
+@media only screen and (min-width: 1200px) {}
+
+
+
+
+
+
 .label-bg {
 	color: #fff !important;
 	/*background-color: #00A1B5 !important;*/
@@ -30,15 +49,44 @@
 
 /* panel-cartable-menu */
 
+
 .panel-cartable-menu{
-	position: fixed;
-	top: 0px;
-	bottom: 5px;
-	right: 0px;
 	background-color: #FAFAFA;
 	margin: 50px 0 0 0 !important;
-    padding: 0;
+	padding: 0;
 	box-shadow: 0 0 6px -3px #000;
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	z-index: 999;
+}
+
+
+
+.menu-toggle-btn{
+	position: absolute;
+	top: 7px;
+	right: 10px;
+	padding: 5px;
+	border-radius: 4px;
+	z-index: 50;
+}
+
+
+
+/* TODO:remove or check using of this ruleset */
+@media (max-width: 768px) {
+	.panel-cartable-menu{
+		width: 0;
+		/*position: absolute;*/
+		/*margin: 0 !important;*/
+		transition: 0.15s ease-in-out;
+	}
+	.panel-cartable-menu.open{
+		width: 100%;
+	}
+	
 }
 
 .panel-cartable-menu .cartable-accordion {
@@ -48,8 +96,8 @@
     padding-top: 50px;
 
 }
-.panel-cartable-menu .cartable-accordion .panel-group > a {
-   	justify-content: center;
+.panel-cartable-menu .cartable-accordion .panel-group  a.btn {
+	justify-content: center;
     border-radius: 3px !important;
     color: #00acc1;
     font-size: 100%;
@@ -115,10 +163,6 @@
 
 /* panel-cartable-content */
 
-.panel-cartable-content{
-	margin-top:5px;
-	height: 81%;
-}
 
 .panel-cartable-content .page-header {
 	border-bottom: 2px solid #eee;
@@ -132,13 +176,14 @@
     overflow-y: auto !important;
     height: calc(100vh - 125px);*/
 /*	overflow-x: hidden;*/
-    height: 100%;
 }
 .panel-cartable-content > .panel-primary > .panel-body {
-	height: calc(100vh - 130px);
-    overflow: auto;
 	box-shadow: 0 0 46px -27px rgba(0, 0, 0, 0.4);
 	padding: 0 10px 10px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+	overflow: auto;
 }
 
 .panel-cartable-content .panel-primary>.panel-heading {
@@ -157,7 +202,6 @@
 	margin-bottom: 0;
 	margin-top: 0;
 	padding: 9px 0;
-	font-size: 18px;
 }
 
 .panel-cartable-content :first-child.panel.panel-default{
@@ -186,21 +230,144 @@
 	 transform: scale(1.1);
 }*/
 
-.panel-filter .btn.btn-default i,.panel-filter .vt-search .btn.btn-default span{
-	/* color: #999; */
-	font-size: 1.5em;
-}
+
 
 .action-bar {
-	margin-bottom: 0;
-    margin-right: calc(16.66666667% + 15px);
-    width: calc(83.333% - 30px);
+	margin-bottom: 5px;
+    /*margin-right: calc(16.66666667% + 15px);*/
+    /*width: calc(83.333% - 30px);*/
     display: flex;
     align-content: center;
     align-items: center;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main-content {
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+/*FIXME:separate these in appropriate  css file */
+:root{
+	/* FIXME:do it tailwind way! */
+	--mobile-action-bar-height: 60px;
+}
+
+
+
+
+
+.letter-draft-view-header-menu{
+	overflow-x: scroll;
+	flex-shrink: 0;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+	background: 
+		/* Shadow covers */  
+		linear-gradient(90deg, #f2f2f2 30%, rgba(255, 255, 255, 0)), 
+		linear-gradient(90deg,rgba(255, 255, 255, 0), #f2f2f2 70%)100% 0 , 
+		/* Shadows */ 
+		linear-gradient(90deg, #b2b2b2 0%, rgba(255, 255, 255, 0)), 
+		linear-gradient(90deg,rgba(255, 255, 255, 0), #b2b2b2 100%) 100% 0;
+	background-attachment:local, local, scroll, scroll;
+	background-size: 40px 100% , 40px 100% , 3px 100% , 3px 100%;
+	background-repeat:no-repeat;
+	/* FIXME: use tailwind config */
+	background-color: var(--light-gray);
+
+	/* for background shadow issue */
+	direction: ltr;
+
+}
+.letter-draft-view-header-menu::-webkit-scrollbar {
+	display: none;
+}
+.letter-draft-view-header-menu__nav{
+	min-width: 100%;
+	width: max-content;
+	list-style: none;
+}
+.letter-draft-view-header-menu__nav-item{
+	float: right;
+	/*FIXME: Reuse padding in everywhere*/
+	padding: var(--padding-light);
+	padding-left: 15px;
+	padding-right: 0;
+}
+
+.letter-draft-view-header-menu__nav-item-text{
+	color: var(--gray);
+}
+.letter-draft-view-header-menu__nav-item.active .letter-draft-view-header-menu__nav-item-text{
+	color: var(--deep);
+	border-bottom: 3px solid var(--deep);
+}
+
+
+
+
+
+
+
+
+
+.cartable-list {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+
+.cartable-list__list {
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .action-bar button {
-font-size: 12px !important;
 display: flex;
 max-width: 200px;
 min-width: 70px;
@@ -216,17 +383,10 @@ margin: 0 5px;
 margin: 0 5px;
 }
 .action-bar .single-button > .flaticon-arrows-3::before,.action-bar .single-button > .flaticon-arrows-3::before{
-    font-size: 10px;
 margin-right: 5px;
 }
 tag-input.col-sm-1 + description-dropdown > #descriptionDropDown > #single-button{
     display: block;
-}
-/*end panel-filter*/
-.table > thead > tr > th > div > div.col-sm-1:first-child,
-.table > thead > tr > th > div > div.col-sm-9:last-child{
-    padding: 0;
-    font-weight: normal;
 }
 
 .arrow-rotate-revert{
@@ -239,29 +399,9 @@ tag-input.col-sm-1 + description-dropdown > #descriptionDropDown > #single-butto
 	transition: all 0.5s;
 }
 
-.cartable-accordion .flaticon-up-arrow-2::before,
-.cartable-accordion .flaticon-up-arrow-2::before,
-.cartable-accordion .flaticon-up-arrow-2::after,
-.cartable-accordion .flaticon-up-arrow-2::after {
-	font-size: 12px !important;
-	margin-left: 0 !important;
-}
 
-.cartable-grid .table>tbody>tr {
-	background-color: #f8f8f8;
-	color: #a3a3a3;
-}
 
-/*
-.cartable .dropdown-toggle.ng-binding.btn.btn-default {
-	display: none;
-}*/
-
-.table-head-cartable { 
-  background: #DBF4FB none repeat scroll 0% 0%;
-}
 .searchFilterBox .ui-select-match-item.btn.btn-default.btn-xs {
-	font-size: 6px !important;
 	background-color: #e7e7e7;
     border-radius: 3px !important;
 	height: auto;

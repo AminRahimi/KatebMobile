@@ -2,8 +2,8 @@
 	<p class="input-group">
 		<input name="{{name}}" type="text" readonly="readonly" ng-required="{{required}}"
 			class="form-control not-radius" ng-model="model.name" />
-		<span class="input-group-btn">
-			<button class="btn btn-default not-radius" type="button"
+		<span >
+			<button class="btn btn-default not-radius" style="white-space: unset;" type="button"
 				ngf-select 
 				ngf-multiple="multiple"
 				ngf-change="uploadFile($files)">
@@ -29,9 +29,15 @@
 	</div>
 </div>
 <div ng-hide="hideDownload" ng-if="model.name!=null && model.name!=''">
-	<div class="alert alert-default">
+
+	<span class="tw-w-[290px]">
+		<kateb-attach-view attachment-type="FILE" attachment="model" attachment-link="" on-remove="deleteFile($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+	</span>
+	
+
+	<!-- <div class="alert alert-default">
 		<a class="btn" ng-click="downloadFile()"><i class="glyphicon glyphicon-arrow-down"></i></a>
 		<span class="control-label">{{model.name|splitString:15}}</span>
 		<span class="flaticon-close-button" ng-if="isEditMode" ng-click="deleteFile()"></span>
-	</div>
+	</div> -->
 </div>

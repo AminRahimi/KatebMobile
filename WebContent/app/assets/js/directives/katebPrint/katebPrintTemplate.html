@@ -1,82 +1,84 @@
-<div class="row rowForm" ng-hide="config.hideSign">
-      <label class="col-sm-5">چاپ امضا</label>
-     <div class="col-sm-7">
-         <input type="checkbox" ng-model="isPrintWithSignature" ng-disabled="disableCheckbox?true:false">
-     </div>
-</div>
-<div class="row rowForm">
-      <label class="col-sm-5">چاپ سربرگ</label>
-     <div class="col-sm-7">
-         <input type="checkbox" ng-model="isPrintWithHeader" ng-disabled="disableCheckbox?true:false">
-     </div>
-</div>
-<div class="row rowForm">
-      <label class="col-sm-5">شماره اندیکاتور</label>
-     <div class="col-sm-7">
-         <input type="checkbox" ng-model="indecatorNumber" ng-disabled="disableCheckbox?true:false">
-     </div>
-</div>
-
-<div class="row rowForm" id="ccCollapse" ng-if="model.deliveryCc">
-    <label class="col-sm-5">
-        <a data-toggle="collapse" data-parent="#ccCollapse" href="#ccContainer"
-           style="
-            text-decoration: none;
-            color: inherit">نمایش همه رونوشت ها</a>
-    </label>
-    <input type="checkbox" ng-model="Data.deliverycc" ng-change="Func.onChangeDeliveryCc()"
-           style="margin-right: 15px" ng-disabled="disableCheckbox?true:false">
-    <div id="ccContainer" class="collapse col-sm-12 in" ng-if="!config.hideCcList">
-        <div class="row" ng-repeat="cc in model.deliveryCc" style="text-align: left">
-            <label class="col-sm-7" style="color: #FF9800;" tooltip="{{cc.description}}">{{cc.title}}</label>
-            <input class="col-sm-2" id="ccChecked{{$index}}" type="checkbox" ng-model="Data.ccSelectedList[cc.uid]" ng-disabled="disableCheckbox?true:false || Data.deliverycc">
+<div class="saad-form">
+    <div class="saad-form__row" ng-hide="config.hideSign">
+          <label class="saad-form__label">چاپ امضا</label>
+         <div class="saad-form__value">
+             <input type="checkbox" ng-model="isPrintWithSignature" ng-disabled="disableCheckbox?true:false">
+         </div>
+    </div>
+    <div class="saad-form__row">
+          <label class="saad-form__label">چاپ سربرگ</label>
+         <div class="saad-form__value">
+             <input type="checkbox" ng-model="isPrintWithHeader" ng-disabled="disableCheckbox?true:false">
+         </div>
+    </div>
+    <div class="saad-form__row">
+          <label class="saad-form__label">شماره اندیکاتور</label>
+         <div class="saad-form__value">
+             <input type="checkbox" ng-model="indecatorNumber" ng-disabled="disableCheckbox?true:false">
+         </div>
+    </div>
+    
+    <div class="saad-form__row" id="ccCollapse" ng-if="model.deliveryCc">
+        <label class="saad-form__label">
+            <a data-toggle="collapse" data-parent="#ccCollapse" href="#ccContainer"
+               style="
+                text-decoration: none;
+                color: inherit">نمایش همه رونوشت ها</a>
+        </label>
+        <input type="checkbox" ng-model="Data.deliverycc" ng-change="Func.onChangeDeliveryCc()"
+               style="margin-right: 15px" ng-disabled="disableCheckbox?true:false">
+        <div id="ccContainer" class="collapse col-sm-12 in" ng-if="!config.hideCcList">
+            <div class="saad-form__row" ng-repeat="cc in model.deliveryCc" style="text-align: left">
+                <label class="saad-form__label" style="color: #FF9800;" tooltip="{{cc.description}}">{{cc.title}}</label>
+                <input class="saad-form__value" id="ccChecked{{$index}}" type="checkbox" ng-model="Data.ccSelectedList[cc.uid]" ng-disabled="disableCheckbox?true:false || Data.deliverycc">
+            </div>
         </div>
     </div>
-</div>
-<div class="row rowForm" id="bccCollapse" ng-if="model.deliveryBcc" access-checker="SEE_DELIVERY_BCC">
-    <label class="col-sm-5">
-        <a data-toggle="collapse" data-parent="#bccCollapse" href="#bccContainer"
-           style="
-            text-decoration: none;
-            color: inherit">نمایش همه رونوشت های پنهان</a>
-    </label>
-    <input type="checkbox" ng-model="Data.deliverybcc"  ng-change="Func.onChangeDeliveryBcc()"
-           style="margin-right: 15px" ng-disabled="disableCheckbox?true:false">
-    <div id="bccContainer" class="collapse col-sm-8 in" ng-if="!config.hideBccList">
-        <div class="row" ng-repeat="bcc in model.deliveryBcc" style="text-align: left">
-            <label  class="col-sm-7" style="color: #FF9800;" tooltip="{{bcc.description}}">{{bcc.title}}</label>
-            <input class="col-sm-2" id="bccChecked{{$index}}" type="checkbox" ng-model="Data.bccSelectedList[bcc.uid]" ng-disabled="disableCheckbox?true:false || Data.deliverybcc">
+    <div class="saad-form__row" id="bccCollapse" ng-if="model.deliveryBcc" access-checker="SEE_DELIVERY_BCC">
+        <label class="saad-form__label">
+            <a data-toggle="collapse" data-parent="#bccCollapse" href="#bccContainer"
+               style="
+                text-decoration: none;
+                color: inherit">نمایش همه رونوشت های پنهان</a>
+        </label>
+        <input type="checkbox" ng-model="Data.deliverybcc"  ng-change="Func.onChangeDeliveryBcc()"
+               style="margin-right: 15px" ng-disabled="disableCheckbox?true:false">
+        <div id="bccContainer" class="collapse col-sm-8 in" ng-if="!config.hideBccList">
+            <div class="saad-form__row" ng-repeat="bcc in model.deliveryBcc" style="text-align: left">
+                <label  class="saad-form__label" style="color: #FF9800;" tooltip="{{bcc.description}}">{{bcc.title}}</label>
+                <input class="saad-form__value" id="bccChecked{{$index}}" type="checkbox" ng-model="Data.bccSelectedList[bcc.uid]" ng-disabled="disableCheckbox?true:false || Data.deliverybcc">
+            </div>
         </div>
     </div>
-</div>
-<div class="row rowForm" ng-hide="config.hideParaphers">
-    <label class="col-sm-5">نمایش پاراف کنندگان</label>
-    <div class="col-sm-7">
-        <input type="checkbox" ng-model="paraphers" ng-disabled="disableCheckbox?true:false">
-    </div>
-</div>
-<div class="row rowForm"  ng-if="Data.configObj.shamsQRCodeEnabled">
-    <label class="col-sm-5">نمایش QR کد</label>
-    <div class="col-sm-7">
-        <input type="checkbox" ng-model="Data.showQRCode" >
-    </div>
-</div>
-<div class="row rowForm text-center" style="margin-top:30px">
-        <div access-checker="DOCX_DOWNLOAD">
-            <button style="margin-left: 5px" ng-click="Func.onDownloadWordClick()" type="button" class="btn btn-print" ng-if="wordEnable &&  (type =='FromInside' || type =='FromSecretariatByOtherOrg' )">
-                <img src="app/assets/img/word.png" style="width:14px;" />
-                فایل word
-            </button>
+    <div class="saad-form__row" ng-hide="config.hideParaphers">
+        <label class="saad-form__label">نمایش پاراف کنندگان</label>
+        <div class="saad-form__value">
+            <input type="checkbox" ng-model="paraphers" ng-disabled="disableCheckbox?true:false">
         </div>
-      <button style="margin-left: 5px" ng-click="Func.onDownloadPDFClick()" type="button" class="btn btn-print">
-        <i class="fa fa-download" aria-hidden="true"></i>
-        دانلود
-    </button>
- </div>
- <div class="row text-center"  >
-    <button ng-click="Func.onPrintPDFClick()" type="button" class="btn btn-print">
-        <i class="fa fa-print" aria-hidden="true"></i>
-        چاپ</button>
-    <button ng-hide="config.hidePrintLog" ng-click="Func.openPrintReportModal(letterUid)" type="button" class="btn btn-print" access-checker="SEE_PRINT_LOG">
-        گزارش چاپ  </button>
- </div>
+    </div>
+    <div class="saad-form__row"  ng-if="Data.configObj.shamsQRCodeEnabled">
+        <label class="saad-form__label">نمایش QR کد</label>
+        <div class="saad-form__value">
+            <input type="checkbox" ng-model="Data.showQRCode" >
+        </div>
+    </div>
+    <div class="saad-form__row text-center" style="margin-top:30px">
+            <div access-checker="DOCX_DOWNLOAD">
+                <button style="margin-left: 5px" ng-click="Func.onDownloadWordClick()" type="button" class="btn btn-print" ng-if="wordEnable &&  (type =='FromInside' || type =='FromSecretariatByOtherOrg' )">
+                    <img src="app/assets/img/word.png" style="width:14px;" />
+                    فایل word
+                </button>
+            </div>
+          <button style="margin-left: 5px" ng-click="Func.onDownloadPDFClick()" type="button" class="btn btn-print">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            دانلود
+        </button>
+     </div>
+     <div class="saad-form__row text-center"  >
+        <button ng-click="Func.onPrintPDFClick()" type="button" class="btn btn-print">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            چاپ</button>
+        <button ng-hide="config.hidePrintLog" ng-click="Func.openPrintReportModal(letterUid)" type="button" class="btn btn-print" access-checker="SEE_PRINT_LOG">
+            گزارش چاپ  </button>
+     </div>
+</div>

@@ -32,7 +32,7 @@ angular.module('vtCartable').directive('vtCartableFilter', function () {
                     sendData.extraData.searchableFieldInfo = JSON.stringify($scope.Controller.searchController.searchableFieldInfo);
                     cartableSrvc.saveTaskFilter(sendData, $scope.Data.selectedCartable.taskType, $scope.Data.selectedFilter.uid).then(function () {
                         cartableSrvc.showNotification('filterSaved');
-                        cartableSrvc.updateMenu();;
+                        cartableSrvc.publishTo("updateCartableMenu");;
                     });
                 },
                 onSaveasFilterClick: function () {
@@ -56,7 +56,7 @@ angular.module('vtCartable').directive('vtCartableFilter', function () {
                     data.extraData.searchableFieldInfo = JSON.stringify($scope.Controller.searchController.searchableFieldInfo);
                     cartableSrvc.saveAsFilter($scope.Data.selectedCartable.taskType, data).then(function (res) {
                         cartableSrvc.showNotification('filterSaved');
-                        cartableSrvc.updateMenu();;
+                        cartableSrvc.publishTo("updateCartableMenu");;
                     });
                 }, onRenameFilterClick: function () {
                     var data = {
@@ -67,7 +67,7 @@ angular.module('vtCartable').directive('vtCartableFilter', function () {
                     data.query.orders = $scope.Data.selectedFilter.query.orders;
                     cartableSrvc.renameFilter($scope.Data.selectedCartable.taskType, data, $scope.Data.selectedFilter.uid).then(function (res) {
                         cartableSrvc.showNotification('templateRenamed');
-                        cartableSrvc.updateMenu();;
+                        cartableSrvc.publishTo("updateCartableMenu");;
                     });
                 }, onRemoveFilterClick: function () {
                     cartableSrvc.removeFilter($scope.Data.selectedCartable.taskType, $scope.Data.selectedFilter.uid).then(function (res) {
@@ -76,7 +76,7 @@ angular.module('vtCartable').directive('vtCartableFilter', function () {
                         $scope.Controller.listController.searchQuery = {};
                         // $scope.Data.selectedFilter.query.restrictions = [{"field":"content.archive","type":"ne","value":true},{"field":"read","type":"eq","value":false}];
                         $scope.Controller.searchController.exitSearchApi();
-                        cartableSrvc.updateMenu();;
+                        cartableSrvc.publishTo("updateCartableMenu");;
 //                        $scope.Controller.searchController.searchQuery = {};
 //                        $scope.Controller.listController.refreshList(true);
 

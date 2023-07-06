@@ -10,7 +10,7 @@ kateb.internalDependency = [ 'vtCommon', 'appFilter', 'treeModule', 'vtMedia',  
 							'vtTypeahead', 'katebPrint', 'vtNotification','optionSelectWebservice',
 							'vtDropdownTaginputDirective', 'vtDateInterval', 'vtCartableDateInterval', 'scan', 'scannerCMModule',
 							'letterTabCMModule', 'vtDropdownMultiStringModule', 'deleteButton', 'deleteModule', 'deleteFromArchive', 'viraTree', 'viraTreePagination', 'docList', 'vtFolderSelector',
-							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser'];
+							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser','mMainMenu','headerMenu','loggedInUserMenu','katebPriorityLabel','katebAttachView'];
 kateb.modulesDependency = [ 'katebConfigModule', 'HomeModule', 'ManagementModule', 'SettingModule', 'katebModule', 'schemaForm',
                             'secretariatModule', 'cartableModule', 'logModule', 'messageModule',
 							'vtAttachment', 'reportModule','accessAllLettersModule', 'processModule', 'incomingLettertemplateModule', 'globallettertemplateModule',
@@ -204,8 +204,8 @@ var BOOTSTRAP_ANGULAR = function() {
 
 	function fetchData() {
 		var $http = angular.injector([ 'ng' ]).get('$http');
-		return $http.get('api/config').success(function(data, status, headers, config) {
-
+		return $http.get('api/config').then(function(data, status, headers, config) {
+			data = data.data;
 			var features = data.userConfig.features;
 			var obj = {};
 			angular.forEach(features, function(feature) {
@@ -226,15 +226,17 @@ var BOOTSTRAP_ANGULAR = function() {
 				document.head.appendChild(chooserJsPath);
 		}
 
-		, function(errorResponse) { // Handle error case 
-		}).error(function(response,errorCode){
-			switch (errorCode) {
+		, function(res){
+			
+			switch (res.status) {
 				case 401:
 					window.location = "static/login.html";
 					break;
 				default:
 					break;
 			}
+		}).catch(function (err) {
+			
 		});
 	}
 

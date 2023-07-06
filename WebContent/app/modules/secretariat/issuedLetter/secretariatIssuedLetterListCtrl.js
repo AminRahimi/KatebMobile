@@ -9,7 +9,7 @@ angular.module('secretariatModule').controller('secretariatIssuedLetterListCtrl'
 	$scope.Func = {
 		onIssuedClick: function(issued){
             $scope.Func.setLastPage($scope.Controller.listController.currentPage);
-			$state.go('home.secretariat.issuedLetter', {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
+			$state.go('base.home.secretariat.issuedLetter', {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
 		},
 
 		onChangeSearchModeClick: function(mode){

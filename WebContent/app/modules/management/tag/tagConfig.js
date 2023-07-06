@@ -1,11 +1,23 @@
 angular.module('tagModule').config(['$stateProvider', function($stateProvider) {
 	var tagStates = [
 		{
-			state: "home.management.tag",
+			state: "base.home.management.tag",
 			config: {
 				url: '/:orgUid/tag/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/tag/tag.html",
+						controller: 'tagCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.tag",
+			config: {
+				url: '/:orgUid/tag/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/tag/tag.html",
 						controller: 'tagCtrl'
 					}

@@ -8,7 +8,6 @@
         position: absolute;
         left: 20px;
         top: 7px;
-        font-size: 16px;
         z-index: 10;
     }
     /*.viraDateBox.searchFilterBox .col-sm-10.twoCalContainer .sideCalender tr td button span.text-muted{
@@ -38,7 +37,7 @@
                     api="DateIntervalApi">
             </vt-date-interval>
             <div class="12">
-                <span class="label label-default label-repeat"
+                <span class="kateb-label kateb-label--default-light "
                       ng-repeat="date in model track by $index"
                       ng-click="Func.onRemoveDate($index)">
                     {{Func.viewModelItem(date).startDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}

@@ -8,11 +8,11 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 			isPrintWithSignature:false,
             isPrintWithHeader:false,
 			query: cartableKatebSrvc.getSearchQeury(),
-            archivedLetter: [],
-            selectedFolder: "",
-            hasExternalArchives: configObj.externalArchives.length,
-            shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
-            isShamsDisabled:false,
+        archivedLetter: [],
+        selectedFolder: "",
+        hasExternalArchives: configObj.externalArchives.length,
+        shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
+        isShamsDisabled:false,
             vtFolderSelectorForm: "",
             lastCachedVisitedCartableFilterList:cartableSrvc.getLastCachedVisitedCartableFilterList($state.params.filter),
 			isNextDisabled: false,
@@ -186,13 +186,13 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 
             },
             onGoToProcessClick: function (event) {
-                $state.go("home.process.processInstanceInfo", {uid: event.object.uid});
+                $state.go("base.home.process.processInstanceInfo", {uid: event.object.uid});
             },
             onReturnClick: function () {
                 if (!_.isEmpty($scope.Func.getLastSearchQuery()))
                     cartableKatebSrvc.setSearchMode(true);
-                if ($state.current.name === "home.secretariat.orgLetter") {
-                    $state.go('home.secretariat.orgLetterList'
+                if ($state.current.name === "base.home.secretariat.orgLetter") {
+                    $state.go('base.home.secretariat.orgLetterList'
                         // , {
                         // subject: $scope.Data.query.subject,
                         // letterNumber: $scope.Data.query.letterNumber,
@@ -202,7 +202,7 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
                         // }
                     );
                 } else {
-                    $state.go('home.cartable.orgLetterList'
+                    $state.go('base.home.cartable.orgLetterList'
                         // , {
                         // subject: $scope.Data.query.subject,
                         // letterNumber: $scope.Data.query.letterNumber,
@@ -231,12 +231,12 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 				}
 
 
-				$state.go('home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
-                if ($state.current.name === "home.secretariat.orgLetter") {
-                    $state.go('home.secretariat.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });;
-                } else {
-                    $state.go('home.cartable.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });;
-                }
+				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
+                    if ($state.current.name === "home.secretariat.orgLetter") {
+                    $state.go('base.home.secretariat.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });;
+                    } else {
+                    $state.go('base.home.cartable.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });;
+                    }
 
                 // cartableKatebSrvc.getNextLetter('next').then(function (res) {
                 //     if ($state.current.name === "home.secretariat.orgLetter") {
@@ -257,12 +257,12 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 				}
 				
 
-				$state.go('home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
                 if ($state.current.name === "home.secretariat.orgLetter") {
-                    $state.go('home.secretariat.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
-                } else {
-                    $state.go('home.cartable.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
-                }
+                    $state.go('base.home.secretariat.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+                    } else {
+                    $state.go('base.home.cartable.orgLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+                    }
 
 
 
@@ -290,7 +290,7 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 					isFirst: letterIndex<=0
 				}
 				
-			},
+            },
             getArchivedLetterList: function () {
                 if ($scope.Data.archivedLetter.length == 0) {
                     $scope.Controller.archivedLetterListApi.getArchivedLetterListFn = function () {
@@ -313,7 +313,7 @@ angular.module('cartableModule').controller('cartableOrgLetterCtrl',
 				var indexObjInCachedList =  $scope.Func.calcIndexOfLetterInCachedList($state.params.letterUid);
 				$scope.Data.isNextDisabled = indexObjInCachedList.index <0 ||  indexObjInCachedList.isLast;
 				$scope.Data.isPrevDisabled = indexObjInCachedList.index <0 || indexObjInCachedList.isFirst;
-			}
+            }
         }
 
 		$scope.Controller = {

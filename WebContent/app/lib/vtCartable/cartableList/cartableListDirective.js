@@ -15,7 +15,7 @@ angular.module("vtCartable").directive('cartableList',
      */
     function () {
         return {
-            restrict: 'EAC',
+            restrict: 'EA',
             templateUrl: 'app/lib/vtCartable/cartableList/cartableListTemplate.html',
             scope: {
                 processTaskFn: "&",
@@ -23,10 +23,10 @@ angular.module("vtCartable").directive('cartableList',
                 //for dependency injection such as button names, user this object
                 //notice that default value for each dependency needed
                 api: "=",
-                options: "="
+                options: "=",
+                subscribeFor:"@",
             },
-            controller: function ($scope, $modal, cartableSrvc, vtCartableSearchSrvc, $timeout,
-                                  $modalStack, $location, CARTABLE_CONFIG,$q) {
+            controller: function ($scope, $modal, cartableSrvc, vtCartableSearchSrvc, $timeout, $modalStack, $location, CARTABLE_CONFIG,homeSrvc,$state,$q) {
                 $scope.api = $scope.api || {};
 
                 $scope.visibleHeader = [];
@@ -36,7 +36,8 @@ angular.module("vtCartable").directive('cartableList',
                     taskField: [],
                     searchableFieldKey: [],
                     selectedFilterTemp: {},
-                    modeler:false
+                    modeler:false,
+                    isMobileView: homeSrvc.screenSizeDetector.isMobile()
                 };
 
                 $scope.Func = {
@@ -46,7 +47,7 @@ angular.module("vtCartable").directive('cartableList',
                             // $timeout(function () {
                                 $scope.Controller.searchController.searchableFieldInfo = [];
                                 $scope.Controller.searchController.searchableFieldInfo = angular.copy($scope.options[cartable.taskType.split("_")[0]].searchableFieldInfo);
-                                $scope.Controller.listController.headers = angular.copy($scope.options[cartable.taskType.split("_")[0]].headers);
+                                $scope.Controller.listController.headers = angular.copy($scope.options[cartable.taskType.split("_")[0]].headers[$scope.Data.isMobileView?'mobile':'desktop']);
                                 if (filter.extraData && angular.isString(filter.extraData.searchQuery)) {
                                     $scope.Controller.searchController.searchQuery = JSON.parse(filter.extraData.searchQuery);
                                 }
@@ -96,7 +97,7 @@ angular.module("vtCartable").directive('cartableList',
                             };
                         // visible fields for table dropdown
                         $scope.Controller.listController.visibleFields = $scope.Data.selectedCartable.extents.list;
-                        $location.search(angular.extend({filter: data.filter.uid}, $location.search()));
+                        // $location.search(angular.extend({filter: data.filter.uid}, $location.search()));
                     },
                     onSearchClick: function (doNotRegister, filterSearchQuery, showSearchableFieldInfo) {
                         var defer = $q.defer();
@@ -169,7 +170,7 @@ angular.module("vtCartable").directive('cartableList',
                         $scope.processTaskFn({task: task, cartable: $scope.Data.selectedCartable});
                     }
                 };
-                cartableSrvc.subscribeOn("cartableListDirective", $scope.Func.notifyOnChangeFilter);
+
 
                 $scope.Controller = {
                     listController: {
@@ -193,6 +194,7 @@ angular.module("vtCartable").directive('cartableList',
                 }
 
                 var Run = function () {
+
                     $modalStack.dismissAll();
                     $('#saveAsCom').bind('click', function (e) {
                         e.stopPropagation();
@@ -210,6 +212,21 @@ angular.module("vtCartable").directive('cartableList',
                     }
 
                     $scope.api.listController = $scope.Controller.listController;
+
+
+                    var subId = cartableSrvc.subscribeOn($scope.subscribeFor, $scope.Func.notifyOnChangeFilter);
+
+                    $scope.$on('$destroy',()=> {
+                        cartableSrvc.unSubscribeOn($scope.subscribeFor, subId);
+                    });
+
+                    var  currentCartableFilterObj = cartableSrvc.getLatestPublishedObject($scope.subscribeFor);
+                    if(currentCartableFilterObj){
+                        $scope.Func.notifyOnChangeFilter(currentCartableFilterObj);
+                    }
+                    
+
+
                 }
 
                 Run();

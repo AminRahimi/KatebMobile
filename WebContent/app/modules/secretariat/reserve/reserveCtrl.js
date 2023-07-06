@@ -29,12 +29,12 @@ angular.module('secretariatModule').controller('reserveCtrl',
 					tab.active = true;
 			},
 			onCloseClick: function () {
-				$state.go("home.secretariat")
+				$state.go("base.home.secretariat")
 			},
 			onSaveClick: function () {
 				reserveSrvc.SaveReservation( $scope.Data.reserve).then(function (response) {
 					$scope.Data.reserve = null;
-					$state.go("home.secretariat.reserveList")
+					$state.go("base.home.secretariat.reserveList")
 				})
 			}
 		}

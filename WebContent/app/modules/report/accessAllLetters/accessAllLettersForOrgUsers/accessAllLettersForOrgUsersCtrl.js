@@ -6,6 +6,9 @@ angular.module('accessAllLettersModule').controller('accessAllLettersForOrgUsers
         excelLink:""
     }
     $scope.Func = {
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
         getAllAccessLetters: function (orguid) {
             accessAllLettersSrvc.getAllAccessLetters(orguid).then(function (response) {
                 $scope.Data.allAccessLetters = response.data;
@@ -19,7 +22,7 @@ angular.module('accessAllLettersModule').controller('accessAllLettersForOrgUsers
         },
         onSelectOraganizationSelect: function (item) {
             localStorage.selectedManagementMenu = JSON.stringify(item);
-            if ($state.current.name != "home.management") {
+            if ($state.current.name != $scope.Func.getStateName("base.home.management")) {
                 $state.go($state.current.name, {orgUid: item.uid});
             };
             $scope.Func.getAllAccessLetters($scope.Data.selectedMenu.uid)

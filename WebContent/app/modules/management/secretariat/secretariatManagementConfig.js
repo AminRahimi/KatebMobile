@@ -1,11 +1,23 @@
 angular.module('secretariatManagementModule').config(['$stateProvider', function($stateProvider) {
 	var secretariatStates = [
 		{
-			state: "home.management.secretariat",
+			state: "base.home.management.secretariat",
 			config: {
 				url: '/:orgUid/secretariat/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/secretariat/secretariatManagement.html",
+						controller: 'secretariatManagementCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.secretariat",
+			config: {
+				url: '/:orgUid/secretariat/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/secretariat/secretariatManagement.html",
 						controller: 'secretariatManagementCtrl'
 					}

@@ -1,16 +1,17 @@
-<div class="row">
-    <label class="col-sm-5 letter-body-label" style="margin-bottom: 25px" ng-class="{'required':isEditMode}">نامه</label>
-    <div class="col-sm-7" style="max-width: 410px;">
-        <vt-file required="false"
-            is-edit-mode="isEditMode" type="type"
-            model="model"
+<div class="saad-form">
+	<div class="saad-form__row">
+	    <label class="saad-form__label letter-body-label" ng-hide="hideLabel" ng-class="{'required':isEditMode}">نامه</label>
+	    <div class="saad-form__value" style="max-width: 410px;">
+		<vt-file required="false"
+		    is-edit-mode="isEditMode" type="type"
+		    model="model"
             hide-download="true"
-            callback-fn="onFileUploaded"
-            remove-callback-fn="onRemoveFile">
-        </vt-file>
-    </div>
-</div>
-<div class="row col-sm-12" ng-if="pdfUrl">
+		    callback-fn="onFileUploaded"
+		    remove-callback-fn="onRemoveFile">
+		</vt-file>
+	    </div>
+	</div>
+<div class="saad-form__row" ng-if="pdfUrl">
     <div class="wrappre" ng-if="!isEditMode" ng-hide="pdfUrl">
         <div class="sk-cube-grid">
           <div class="sk-cube sk-cube1"></div>
@@ -37,4 +38,5 @@
             <!--allowfullscreen mozallowfullscreen webkitallowfullscreen>-->
         </iframe>
     </div>
+</div>
 </div>

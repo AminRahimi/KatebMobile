@@ -12,11 +12,11 @@ angular.module('logModule').config(['$stateProvider', function($stateProvider) {
 		// 	}
 		// },
 		{
-			state: "home.management.eventLog",
+			state: "base.home.management.eventLog",
 			config: {
 				url: '/event_log',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
 						templateUrl: "app/lib/eventLogUI/log.html",
 						controller: 'logCtrl'
 					}
@@ -24,11 +24,39 @@ angular.module('logModule').config(['$stateProvider', function($stateProvider) {
 			}
 		},
 		{
-			state: "home.management.objectLog",
+			state: "base.mobileHome.management.eventLog",
+			config: {
+				url: '/event_log',
+				views: {
+					'mainContent@base.mobileHome' : {
+						templateUrl: "app/lib/eventLogUI/log.html",
+						controller: 'logCtrl'
+					}
+				}
+			}
+		},
+
+
+
+
+		{
+			state: "base.home.management.objectLog",
 			config: {
 				url: '/object_log',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/lib/eventLogUI/objectLog.html",
+						controller: 'objectLogCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.objectLog",
+			config: {
+				url: '/object_log',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/lib/eventLogUI/objectLog.html",
 						controller: 'objectLogCtrl'
 					}

@@ -19,7 +19,7 @@ angular.module('vtPhoto', [ 'vtNgCropper' ]).directive('vtPhoto',function($timeo
 			ratio : "=",
 			isEditMode : "=",
 			noTitleDescription : "@",
-			hasLargeSize: "=",
+			hasLargeSize: "=?",
 			templateMode :"=?"
 			
 		},

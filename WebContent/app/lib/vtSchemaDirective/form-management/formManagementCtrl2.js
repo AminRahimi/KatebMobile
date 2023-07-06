@@ -1,4 +1,4 @@
-angular.module('vtFormManagement').controller('FormManagementCtrl2', function($scope, $rootScope, $state, $modal, toaster, entitySrvc, baseSelectSrvc, hotkeys, $location, $timeout) {
+angular.module('vtFormManagement').controller('FormManagementCtrl2', function($scope, $rootScope, $state, $modal, toaster, entitySrvc, baseSelectSrvc, hotkeys, $location, $timeout,homeSrvc) {
 	$rootScope.pageTitle = 'طراحی فرم';
 	$scope.Data = {
 		mode : "none",
@@ -22,6 +22,9 @@ angular.module('vtFormManagement').controller('FormManagementCtrl2', function($s
 	}
 
 	$scope.Func = {
+		getStateName: function (stateName) {
+			return homeSrvc.getStateName(stateName);
+		},
 		onShowIconTextClick : function() {
 			$scope.Data.showIconText = true
 		},
@@ -331,11 +334,11 @@ angular.module('vtFormManagement').controller('FormManagementCtrl2', function($s
 			$scope.Data.newEntityType.schema = JSON.stringify($scope.Data.formItem);
 			entitySrvc.updateEntityType($scope.Data.newEntityType).then(function() {
 				entitySrvc.removeEntityTypeFromCache($scope.Data.newEntityType.entityKey);
-				$state.go("home.management.advancedEntityType", {});
+				$state.go($scope.Func.getStateName("base.home.management.advancedEntityType"), {});
 			});
 		},
 		onReturnClick : function() {
-			$state.go("home.management.advancedEntityType", {});
+			$state.go($scope.Func.getStateName("base.home.management.advancedEntityType"), {});
 		},
 
 		/*
