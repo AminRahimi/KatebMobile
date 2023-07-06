@@ -1,6 +1,6 @@
 angular.module('newsModule').config(['$stateProvider', function ($stateProvider) {
     var moduleStates = [{
-        state: "home.newsList",
+        state: "base.home.newsList",
         config: {
             url: '/newsList',
             views: {
@@ -11,7 +11,7 @@ angular.module('newsModule').config(['$stateProvider', function ($stateProvider)
             }
         }
     }, {
-        state: "home.newsList.newsDetails",
+        state: "base.home.newsList.newsDetails",
         config: {
             url: '/newsDetails/:newsUid',
             views: {

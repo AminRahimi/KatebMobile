@@ -3,7 +3,7 @@
     برچسب <span class="caret"></span>
   </button>
   <div class="dropdown-menu" role="menu" aria-labelledby="single-button">
-    <ui-select multiple tagging tagging-label="false" ng-model="Data.tags" theme="bootstrap" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a color">
+    <ui-select multiple tagging tagging-label="false" ng-model="Data.tags" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a color">
         <ui-select-match placeholder="انتخاب برچسب...">{{$item.title?$item.title:$item}}</ui-select-match>
         <ui-select-choices repeat="item in Data.tagList | filter:$select.search">
           {{item.title}}

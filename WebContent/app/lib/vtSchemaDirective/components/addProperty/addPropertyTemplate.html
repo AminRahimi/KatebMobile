@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+     <div class="panel-body">
+          <ng-form name="Data.mainForm">
+          <div class="col-md-12 row">
+               <div class="row haveMargin" ng-class="{'has-error':Data.mainForm.englishTitle.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5 pull-right">کلید (انگلیسی) </label>
+                    <input type="text" class="form-control col-sm-5" name="englishTitle" ng-model="Data.newProperty.title" style="direction: ltr;" ng-pattern="/^[a-zA-Z0-9]*$|^[a-zA-Z0-9]*(\_[a-zA-Z0-9]*)*?$/" required>
+                    <div class="col-sm-5"></div>
+                    <label class="text-danger" ng-show="Data.hasError_validProp">کلید وارد شده معتبر نمی‌باشد</label>
+                    <label class="text-danger" ng-show="Data.hasError_duplicateProp">کلید وارد شده تکراری می‌باشد</label>
+               </div>
+               <div class="row haveMargin" ng-class="{'has-error':Data.mainForm.persianLabel.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5 pull-right">برچسب (فارسی) </label>
+                    <input type="text" class="form-control col-sm-5" ng-model="Data.newProperty.label" name="persianLabel" required>
+               </div>
+               <div class="row haveMargin" ng-show="Data.dragItem.widget=='popupSelector'">
+                    <label class="col-sm-5 pull-right"></label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectEntityType(entityType)" ng-model="entityType" ng-options="entityType as entityType.name for entityType in Data.entityTypeList">
+                    </select>
+               </div>
+               <div class="row haveMargin" ng-show="Data.dragItem.type=='relation'">
+                    <label class="col-sm-5 pull-right"></label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectEntityType(entityType)" ng-model="entityTypeForRelation" ng-options="entityType as entityType.name for entityType in Data.entityTypeList">
+                    </select>
+               </div>
+               <div class="row haveMargin" ng-if="Data.dragItem.type=='enum'" ng-class="{'has-error':Data.mainForm.baseSelector.$invalid && Data.validationClicked}">
+                    <label class="col-sm-5 pull-right">نام انتخابگر پایه </label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectEnumType()" name="baseSelector" ng-model="Data.newProperty.enumType" ng-options="enumType as enumType.label for enumType in Data.baseSelectorList" required>
+                    </select>
+               </div>
+               <div class="row haveMargin">
+                    <a class="btn btn-default btm-sm" style="margin-right: 10px" type="button" ng-disabled="Data.mainForm.$invalid && Data.validationClicked" ng-click="Func.onAddPropertyClick()">افزودن</a>
+                    <a class="btn btn-default btm-sm" style="margin-right: 10px" type="button" ng-click="Func.onCancelClick()">لغو</a>
+               </div>
+          </div>
+          </ng-form>
+     </div>
+</div>

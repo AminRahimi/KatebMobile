@@ -19,8 +19,9 @@ angular.module('isolateForm').directive('isolateForm', [
                 }
 
                 // Do a copy of the controller
-                var ctrlCopy = {};
-                angular.copy(ctrl, ctrlCopy);
+                var ctrlCopy = _.cloneDeep(ctrl);
+
+                // angular.copy(ctrl, ctrlCopy);
 
                 // Get the parent of the form
                 var parent = elm.parent().controller('form');

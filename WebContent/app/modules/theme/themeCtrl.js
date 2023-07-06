@@ -23,6 +23,9 @@ angular.module('themeModule').controller('themeCtrl', function($scope, $state, t
     }
 	
 	$scope.Func = {
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
         loadCss: function (theme){
             $scope.Data.themeObj = angular.copy(theme);
             if (theme.name === "default") {
@@ -48,7 +51,7 @@ angular.module('themeModule').controller('themeCtrl', function($scope, $state, t
                 $scope.Data.isChangedTheme = true;
                 themeSrvc.setCurrentName($scope.Data.themeObj.name);
                 vtShowMessageSrvc.showMassage("success","","شما رنگ بندی " + $scope.Data.themeObj.persianName + " را به عنوان تم اصلی انتخاب کردید.");
-                $state.go('home.cartable');
+                $state.go($scope.Func.getStateName('base.home.cartable'));
             });
         }
     }

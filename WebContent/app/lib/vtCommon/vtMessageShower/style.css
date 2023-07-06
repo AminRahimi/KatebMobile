@@ -1,0 +1,76 @@
+.waiting-dialog {
+   background-color: rgba(204, 230, 255, 0.73);
+   border: 1px solid #cce6ff;
+   border-radius: 10px;
+   box-shadow: 0 0 7px #49535b;
+   left: 50%;
+   margin-left: -125px;
+   padding: 10px;
+   position: fixed;
+   top: 65px;
+   width: 250px;
+    z-index: 2000;
+}
+/*
+    background-color: #00a1b5b3;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 7px -2px #49535b;
+    left: 50%;
+    margin-left: 0;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    width: 300px;
+    z-index: 2000;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    background-image: url("/Kateb/app/assets/img/menuBackground.png");
+    height: 150px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background-repeat: repeat;
+    background-position: 10px 0px;
+    background-size: 50px;
+}
+.waiting-dialog > img{
+    position: absolute;
+    opacity: 0.7;
+    animation-name: flow;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-timing-function: ease-in;
+}
+#flower1{
+    top: 16px;
+    left: 33px;
+    animation-delay: 0.8s;
+    animation-direction: alternate-reverse;
+    animation-duration: 3s;
+}
+#flower2{
+    top: 16px;
+    left: 83px;
+    animation-delay: 0.5s;
+    animation-direction: alternate-reverse;
+    animation-duration: 3.5s;
+}
+#flower3{
+    top: 16px;
+    left: 129px;
+    animation-delay: 0.1s;
+    animation-direction: alternate-reverse;
+    animation-duration: 2.2s;
+}
+@keyframes flow{
+    from{
+        opacity: 0.7
+    }
+    to{
+        opacity: 0.1
+    }
+}*/

@@ -1,11 +1,23 @@
 angular.module('userroleModule').config(['$stateProvider', function($stateProvider) {
 	var userroleStates = [
 		{
-			state: "home.management.userrole",
+			state: "base.home.management.userrole",
 			config: {
 				url: '/userrole/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/userrole/userrole.html",
+						controller: 'userroleCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.userrole",
+			config: {
+				url: '/userrole/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/userrole/userrole.html",
 						controller: 'userroleCtrl'
 					}

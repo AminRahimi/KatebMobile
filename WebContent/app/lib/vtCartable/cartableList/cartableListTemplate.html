@@ -1,0 +1,40 @@
+<style>
+    .tooltip-inner {
+    max-width: 530px;
+}
+.panel-cartable-content > .panel-primary > .panel-body {
+    /* height: calc(100vh - 120px);
+    overflow: hidden; */
+}
+.customClass{
+	position: fixed !important;
+}
+.pagination{
+    margin: 2px !important;
+}
+#custom-pagination-container{
+        margin-bottom: 0px !important;
+}
+.custom-pagination-total-items , .total-items-pagination{
+    top:-12px
+}
+</style>
+<div class="cartable-list">
+    <div class="cartable-list__title  hidden-xs"  >
+        <!-- {{Data.selectedCartable.title}}  -->
+        {{Data.selectedFilter.title}}
+        <a ng-if="Data.selectedFilter.description" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-class="customClass"
+         tooltip-placement="left" tooltip-popup-delay="500"
+         tooltip={{Data.selectedFilter.description}}><img src="app/assets/img/information-button.png" style="" /></a>
+    </div>
+    <div class="cartable-list__search hidden-xs" >
+        <cartable-search class=""
+                      control-fn="Controller.searchController" options="Controller.searchOptions">
+        </cartable-search>
+        <vt-cartable-filter  data="Data" visible-header="visibleHeader"
+                            controller="Controller" ng-if="showFilterManager"></vt-cartable-filter>
+    </div>
+    <div class="cartable-list__list" >
+        <vt-cartable-grid control-fn="Controller.listController" options="{isMobileView:Data.isMobileView,infinitScroll:Data.isMobileView}" visible-headers="visibleHeader" style=""></vt-cartable-grid>
+    </div>
+</div>

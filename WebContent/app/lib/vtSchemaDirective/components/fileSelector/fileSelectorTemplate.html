@@ -1,0 +1,8 @@
+<span ng-if="isEditMode">
+     <input type="file" ngf-select="onFileSelect($files)" class="filestyle file" ng-init="initFileStyle()">
+</span>
+<span class=" glyphicon glyphicon-remove" ng-show="model && isEditMode" style="cursor: pointer; cursor: hand; position: absolute; z-index: 2; left: 56px; top: 18px; color: red" data-placement="top" title="پاک کردن" ng-click="removeFile();" class="remove"> </span>
+<span ng-if="!isEditMode">
+     <label ng-hide="model.downloadLink">فایلی آپلود نشده است</label>
+     <a ng-show="model.downloadLink" href="{{getDownloadLink(model)}}" target="_blank">دانلود فایل</a>
+</span>

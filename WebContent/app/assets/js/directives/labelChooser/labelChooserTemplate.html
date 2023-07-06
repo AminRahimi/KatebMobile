@@ -48,7 +48,7 @@
            typeahead-template-url="app/assets/js/directives/labelChooser/labelChooserPopup.html"
            typeahead-append-to-body="false">
     <div class="label-list">
-        <div class="label label-default" ng-repeat="label in model track by $index">
+        <div class="kateb-label kateb-label--default-light" ng-repeat="label in model track by $index">
             <i class="fa fa-tag" ng-style="{'color': label.color}"></i>
             <div class="label-name">{{label.name}}</div>
             <div ng-if="!docUids" class="label-remove" ng-click="Func.onRemove(label, $index, $event)">&times;</div>

@@ -1,4 +1,4 @@
-angular.module('searchModule').controller('searchCtrl', function($scope, $rootScope, $modal, $state, $window, searchSrvc) {
+angular.module('searchModule').controller('searchCtrl', function($scope, $rootScope, $modal, $state, $window, searchSrvc,homeSrvc) {
     $scope.Data = {
         orgUid: $rootScope.currentUserOrg.uid,
         isQuery:$state.params.q,
@@ -14,6 +14,9 @@ angular.module('searchModule').controller('searchCtrl', function($scope, $rootSc
     var searchQuery = {};
 
     $scope.Func = {
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
         onSearchClick: function () {
             searchSrvc.setSearchQuery($scope.Data.searchQuery);
             $rootScope.$broadcast('searchQueryHeaderUpdate');
@@ -38,7 +41,7 @@ angular.module('searchModule').controller('searchCtrl', function($scope, $rootSc
             $scope.Controller.listController.refreshList();
         },
         prepareSearchQuery: function () {
-            $state.go('home.search', {q: encodeURIComponent(JSON.stringify(angular.copy($scope.Data.searchQuery)))});
+            $state.go($scope.Func.getStateName('base.home.search'), {q: encodeURIComponent(JSON.stringify(angular.copy($scope.Data.searchQuery)))});
             
 
             searchQuery = searchSrvc.prepareSearchQuery($scope.Data.searchQuery.query);
@@ -51,11 +54,11 @@ angular.module('searchModule').controller('searchCtrl', function($scope, $rootSc
         onListItemSelect: function (item) {
             var url;
             if(item.type === 'lpa'){
-                url = $state.href('home.cartable.letter', {letterUid: item.uid});
+                url = $state.href($scope.Func.getStateName('base.home.cartable.letter'), {letterUid: item.uid});
             } else if(item.type === 'draft'){
-                url = $state.href('home.cartable.draft', {draftUid: item.uid});
+                url = $state.href($scope.Func.getStateName('base.home.cartable.draft'), {draftUid: item.uid});
             } else if(item.type === 'lc'){
-                url = $state.href('home.cartable.orgLetter', {letterUid: item.uid});
+                url = $state.href($scope.Func.getStateName('base.home.cartable.orgLetter'), {letterUid: item.uid});
             }
             $window.open(url,'_blank');
         }

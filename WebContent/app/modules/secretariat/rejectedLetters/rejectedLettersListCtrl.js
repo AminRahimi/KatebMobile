@@ -6,7 +6,7 @@ angular.module('secretariatModule').controller('rejectedLettersListCtrl', functi
 	
 	$scope.Func = {
 		onIncomingClick: function(incoming){
-			$state.go('home.secretariat.rejected', {secUid: $scope.Data.secUid, incUid: incoming.uid});
+			$state.go('base.home.secretariat.rejected', {secUid: $scope.Data.secUid, incUid: incoming.uid});
 		},
         onIncomingDeleteClick: function (incoming) {
             secretariatSrvc.deleteIncoming($scope.Data.secUid, incoming.uid, true).then(function (res) {

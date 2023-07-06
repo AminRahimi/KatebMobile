@@ -1,0 +1,7 @@
+<div class="modal-header">
+    <h3 class="modal-title">مشخصات فرم</h3></div>
+<div class="modal-body  haveFormRows clearfix">
+    <div class="row rowForm haveMargin" ng-class="{'has-error':hasError_id}"> <label class="col-sm-5 pull-right required">نام انگلیسی</label> <input type="text" class="form-control col-sm-5" ng-model="viewGroup.id" ui-keypress="{'ctrlKey && 13':'create();'}"> </div>
+    <div class="row rowForm haveMargin" ng-class="{'has-error':hasError_name}"> <label class="col-sm-5 pull-right required">نام فارسی</label> <input type="text" class="form-control col-sm-5" ng-model="viewGroup.name" ui-keypress="{'ctrlKey && 13':'create();'}"> </div>
+</div>
+<div class="modal-footer"> <button class="btn btn-sm btn-sm btn-success" ng-click="create()" ng-show="!editFlag">افزودن</button> <button class="btn btn-sm btn-sm btn-success" ng-click="create()" ng-show="editFlag">ذخیره</button> <button class="btn btn-sm btn-sm btn-warning pull-left" ng-click="onReturnClick()">بازگشت</button></div>

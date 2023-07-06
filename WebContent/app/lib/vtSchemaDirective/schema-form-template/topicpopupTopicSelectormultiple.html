@@ -1,0 +1,6 @@
+<div class="row rowForm" ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode && api.validationClicked}">
+     <label for="{{field}}" class="control-label col-sm-4" ng-class="{'required':isEditMode && required}">{{label}}</label>
+     <div class="col-sm-8 q16">
+          <multi-topic-selector api="api" class="widget isMulti multiSelector"  ng-model="model[field]" model="model[field]" field="field" schema="schema" is-edit-mode="isEditMode"></multi-topic-selector>
+     </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="row rowForm" ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode && api.validationClicked}">
+     <label for="{{field}}" class="control-label col-sm-4" ng-class="{'required':isEditMode && required}">{{label}}</label>
+     <div class="col-sm-4 q10">
+          <input ng-class="{hidden:!isEditMode}" ng-min="schema.typeParams.min" ng-max="schema.typeParams.max" focus-me="isFocused[field]" id="{{field}}" ng-model="model[field]" class="form-control widget" type="number" step="any" ng-pattern="/^([0-9]*[.])?[0-9]*$/"></input>
+          <small class="error" ng-show="formState['{{field}}-{{suffix}}'].$invalid && isEditMode">غیر معتبر</small>
+          <p class="form-control-static" ng-class="{hidden:isEditMode || (model[field]=='false' || model[field]=='true')}">{{model[field]}}</p>
+          <span class='glyphicon ' ng-class="{hidden:isEditMode || (model[field]!='false' || model[field]!='true'),'glyphicon-ok text-success':model[field]==='true','glyphicon-remove text-danger':model[field]==='false'}"></span>
+     </div>
+</div>

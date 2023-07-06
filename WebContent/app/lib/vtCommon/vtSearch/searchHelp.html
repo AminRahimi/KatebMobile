@@ -1,0 +1,141 @@
+<div class="row" ng-if="!controlFn.advanced">
+	<div ng-repeat="field in controlFn.searchableFieldInfo"
+		ng-switch on="field.type" >
+		
+		<div class="col-lg-2 searchFilterBox string-width" ng-switch-when="string">
+			<input type="text" class="form-control search-input" name="{{field.key}}"
+				ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
+		</div>
+		<div class="col-lg-2 searchFilterBox" ng-switch-when="multiSelectReciever">
+				<div dropdown is-open="Data.isOpenDeliveryDropdown" auto-close="outsideClick" class="dropdown form-control search-input">
+					<span class="model-length"
+						ng-if="controlFn.searchQuery[field.key].length">{{controlFn.searchQuery[field.key].length|EnToFaNumber}}</span>
+					<div id="single-button" dropdown-toggle>{{field.label}} <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>
+					<ul class="tag-popup dropdown-menu" role="menu" aria-labelledby="single-button" style="padding: 8px;">
+						<li>
+							<multiselect-reciever model="controlFn.searchQuery[field.key]"
+								search-fn="field.searchFn(query)"
+								ng-model="controlFn.searchQuery[field.key]" name="reciever" vt-array-required
+								is-edit-mode="true">
+							</multiselect-reciever>
+						</li>
+					</ul>
+				
+				</div>
+		</div>
+		<div class="col-lg-2 searchFilterBox" ng-switch-when="integer">
+			<input type="integer" class="form-control" name="{{field.key}}"
+				ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
+		</div>
+		<div class="col-lg-6 searchFilterBox" ng-switch-when="date">
+			<div class="col-lg-6">
+				<label class="col-lg-1">از</label>
+				<vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].gt"></vt-persian-date-picker>
+			</div>
+			<div class="col-lg-6">
+				<label class="col-lg-1">تا</label>
+				<vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].lt"></vt-persian-date-picker>
+			</div>
+		</div>
+		<div class="col-lg-6 searchFilterBox" ng-switch-when="timestamp">
+			<div class="col-lg-6">
+				<label class="col-lg-1">از</label>
+				<vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].gt"></vt-persian-date-picker>
+			</div>
+			<div class="col-lg-6">
+				<label class="col-lg-1">تا</label>
+				<vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].lt"></vt-persian-date-picker>
+			</div>
+		</div>
+		<div class="col-lg-2 searchFilterBox" ng-switch-when="bool">
+			<label class="col-lg-6">{{field.label}}</label>
+			<div class="col-lg-5">
+				<input type="checkbox" class="checkbox"
+					ng-model="controlFn.searchQuery[field.key]">
+			</div>
+		</div>
+		<div class="col-lg-2 searchFilterBox" ng-switch-when="enum">
+			<select class="form-control search-input" ng-change="onSelectEnum()"
+				ng-model="controlFn.searchQuery[field.key]"
+				ng-options="item.title for item in field.itemList">
+			</select>
+		</div>
+	</div>
+	<div class="col-lg-2 pull-left">
+		<a class="btn btn-sm btn-default pull-left" style="margin-right: 3px;"
+			type="button" ng-click="onExitSearchModeClick()">
+			<span class="flaticon-close-button" aria-hidden="true"></span>
+		</a>
+		<a class="btn btn-sm btn-default pull-left"
+			type="button" ng-click="onSearchClick()">
+			<span class="flaticon-search" aria-hidden="true"></span>
+		</a>
+	</div>
+</div>
+<!-- ----------------------------------------------- ADVANCED SEARCH ------------------------------------------------------ -->
+<div class="row" ng-if="controlFn.advanced">
+	<div class="row rowForm" 
+		ng-repeat="field in controlFn.searchableFieldInfo"
+		ng-switch on="field.type" >
+			
+		<label class="col-lg-5">{{field.label}}</label>
+			
+		<div class="col-lg-7" ng-switch-when="string">
+			<input type="text" class="form-control" name="{{field.key}}"
+				ng-model="controlFn.searchQuery[field.key]">
+		</div>
+		<div class="col-lg-7" ng-switch-when="integer">
+			<input type="integer" class="form-control" name="{{field.key}}"
+				ng-model="controlFn.searchQuery[field.key]">
+		</div>
+		<div class="col-lg-7" ng-switch-when="date">
+			<div class="col-lg-6">
+				<label class="col-lg-1">از</label>
+				<vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].gt"></vt-persian-date-picker>
+			</div>
+			<div class="col-lg-6">
+				<label class="col-lg-1">تا</label>
+				<vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].lt"></vt-persian-date-picker>
+			</div>
+		</div>
+		<div class="col-lg-7" ng-switch-when="timestamp">
+			<div class="col-lg-6">
+				<label class="col-lg-1">از</label>
+				<vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].gt"></vt-persian-date-picker>
+			</div>
+			<div class="col-lg-6">
+				<label class="col-lg-1">تا</label>
+				<vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-lg-10"
+					model="creationDate[{{$index}}].lt"></vt-persian-date-picker>
+			</div>
+		</div>
+		<div class="col-lg-7" ng-switch-when="bool">
+			<input type="checkbox" class="checkbox"
+				ng-model="controlFn.searchQuery[field.key]">
+		</div>
+		<div class="col-lg-7" ng-switch-when="enum">
+			<select class="form-control" ng-change="onSelectEnum()"
+				ng-model="controlFn.searchQuery[field.key]"
+				ng-options="item.title for item in field.itemList">
+			</select>
+		</div>
+	</div>
+	<hr>
+	<div class="row rowForm">
+		<a class="btn btn-sm btn-default"
+			type="button" ng-click="onSearchClick()">
+			<span class="flaticon-search" aria-hidden="true"></span>
+		</a>
+		<a class="btn btn-sm btn-default"
+			type="button" ng-click="onExitSearchModeClick()">
+			<span class="flaticon-close-button" aria-hidden="true"></span>
+		</a>
+	</div>
+</div>

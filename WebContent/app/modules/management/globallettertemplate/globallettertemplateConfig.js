@@ -1,11 +1,23 @@
 angular.module('globallettertemplateModule').config(['$stateProvider', function($stateProvider) {
 	var globallettertemplateStates = [
 		{
-			state: "home.management.globallettertemplate",
+			state: "base.home.management.globallettertemplate",
 			config: {
 				url: '/globallettertemplate/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/globallettertemplate/globallettertemplate.html",
+						controller: 'globallettertemplateCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.globallettertemplate",
+			config: {
+				url: '/globallettertemplate/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/globallettertemplate/globallettertemplate.html",
 						controller: 'globallettertemplateCtrl'
 					}

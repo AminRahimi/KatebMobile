@@ -1,0 +1,7 @@
+          <p class='input-group noPadding' ng-class="{hidden:!isEditMode}">
+               <input id="{{field}}" datepicker-popup='yyyy/MM/dd' is-open='opened' ng-model="model[field]" type="text" class="form-control widget"></input>
+               <span class="input-group-addon" ng-click='open($event)' style="cursor: pointer; cursor: hand;">
+                    <span class="flaticon-icon-1078"></span>
+               </span>
+          </p>
+          <p class="form-control-static" ng-class="{hidden:isEditMode}">{{model[field] |date:'yyyy/MM/dd'||EnToFaNumber}}</p>

@@ -18,20 +18,20 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "تمامی کاربران",
-                            uiSref: "home.management.allUser",
+                            uiSref: "base.home.management.allUser",
                             feature: "MANAGEMENT_GLOBAL_USER"
                         }, {
                             title: "سازمان ها",
-                            uiSref: "home.management.organization",
+                            uiSref: "base.home.management.organization",
                             feature: "MANAGEMENT_ORGANIZATION"
                         }, {
                             title: "نقش ها",
-                            uiSref: "home.management.userrole",
+                            uiSref: "base.home.management.userrole",
                             feature: "MANAGEMENT_ROLE"
                         }, {
 
                             title: "قالب نامه بین سازمانی",
-                            uiSref: "home.management.globallettertemplate",
+                            uiSref: "base.home.management.globallettertemplate",
                             feature: "MANAGEMENT_GLOBAL_LETTER_TEMPLATE"
                         }
                     ]
@@ -42,11 +42,11 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "وقایع",
-                            uiSref: "home.management.eventLog",
+                            uiSref: "base.home.management.eventLog",
                             feature: "eventLog_access"
                         }, {
                             title: "تاریخچه عناصر",
-                            uiSref: "home.management.objectLog",
+                            uiSref: "base.home.management.objectLog",
                             feature: "eventLog_access"
                         }
                     ]
@@ -57,7 +57,7 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "انتخاب تصویر",
-                            uiSref: "home.management.loginSetting",
+                            uiSref: "base.home.management.loginSetting",
                             feature: "*"
                         },
                     ]
@@ -71,32 +71,32 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "کاربران",
-                            uiSref: "home.management.user",
+                            uiSref: "base.home.management.user",
                             feature: "MANAGEMENT_USER"
                         }, {
                             title: "گروه ها",
-                            uiSref: "home.management.group",
+                            uiSref: "base.home.management.group",
                             feature: "MANAGEMENT_PUBLIC_GROUP"
                         }, {
                             title: "سمت های داخلی",
-                            uiSref: "home.management.position",
+                            uiSref: "base.home.management.position",
                             feature: "MANAGEMENT_POSITION"
                         }, {
                             title: "واحد سازمانی",
-                            uiSref: "home.management.department",
+                            uiSref: "base.home.management.department",
                             feature: "MANAGEMENT_DEPARTMENT"
                         }, {
                             title: "دبیرخانه",
-                            uiSref: "home.management.secretariat",
+                            uiSref: "base.home.management.secretariat",
                             feature: "MANAGEMENT_SECRETARIAT"
                         }, {
                             title: "سازمان های مرتبط",
-                            uiSref: "home.management.externalorganization",
+                            uiSref: "base.home.management.externalorganization",
                             feature: "MANAGEMENT_EXTERNAL_ORGANIZATION"
                         },
                         {
                             title: "مدیریت فرم نامه",
-                            uiSref: "home.management.letterFormType",
+                            uiSref: "base.home.management.letterFormType",
                             feature: "MANAGEMENT_LETTER_FORM_TYPE"
                         }
                     ]
@@ -107,38 +107,38 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "دفتر اندیکاتور",
-                            uiSref: "home.management.indicatorbook",
+                            uiSref: "base.home.management.indicatorbook",
                             feature: "MANAGEMENT_INDICATOR_BOOK"
                         },
                         {
                             title: "سربرگ نامه",
-                            uiSref: "home.management.letterlayout",
+                            uiSref: "base.home.management.letterlayout",
                             feature: "MANAGEMENT_LETTER_LAYOUT"
                         },
                         {
                             title: "فونت",
-                            uiSref: "home.management.systemFont",
+                            uiSref: "base.home.management.systemFont",
                             feature: "MANAGEMENT_FONT"
                         },
                         {
                         	 title: "قالب نامه",
-                             uiSref: "home.management.lettertemplate",
+                             uiSref: "base.home.management.lettertemplate",
                              feature: "MANAGEMENT_PUBLIC_LETTER_TEMPLATE"
                          }, { 
                         	 title: "قالب نامه وارده",
-                             uiSref: "home.management.incomingLettertemplate",
+                             uiSref: "base.home.management.incomingLettertemplate",
                              feature: "MANAGEMENT_INCOMMING_LETTER_TEMPLATE"
                          }, {
                             title: "هامش",
-                            uiSref: "home.management.hameshhotkey",
+                            uiSref: "base.home.management.hameshhotkey",
                             feature: "MANAGEMENT_PUBLIC_HAMESH_HOTKEY"
                         }, {
                             title: "برچسب",
-                            uiSref: "home.management.tag",
+                            uiSref: "base.home.management.tag",
                             feature: "MANAGEMENT_PUBLIC_TAG"
                         }, {
                             title: "قوانین مکاتبات",
-                            uiSref: "home.management.rule",
+                            uiSref: "base.home.management.rule",
                             feature: "MANAGEMENT_LETTER_RULE"
                         }
                     ]
@@ -149,11 +149,11 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "تنظیمات عمومی سازمان",
-                            uiSref: "home.management.publicsetting",
+                            uiSref: "base.home.management.publicsetting",
                             feature: "MANAGEMENT_PUBLIC_SETTING"
                         }, {
                             title: "اخبار و اعلانات",
-                            uiSref: "home.management.newsList",
+                            uiSref: "base.home.management.newsList",
                             feature: "MANAGEMENT_NEWS"
                         }
                     ]
@@ -164,7 +164,7 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     items: [
                         {
                             title: "فرآیندها",
-                            uiSref: 'home.management.process',
+                            uiSref: 'base.home.management.process',
                             feature: "MANAGEMENT_VIRA_PROCESS_MODEL"
                         }
                     ]
@@ -218,7 +218,7 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
                     $scope.Data.isMultipleMenu = false;
                 } else {
                     $scope.Data.isMultipleMenu = true;
-                    if ($state.current.name != "home.management") {
+                    if ($state.current.name != "base.home.management") {
                         $scope.Func.setMenuByUrlParams($scope.Data.organizationList, $state.params.orgUid);
                     } else if (localStorage.selectedManagementMenu) {
                         $scope.Data.selectedMenu = angular.copy(JSON.parse(localStorage.selectedManagementMenu));
@@ -228,7 +228,7 @@ angular.module('ManagementModule').controller('managementCtrl', function ($scope
         },
         onSelectOraganizationSelect: function (item) {
             localStorage.selectedManagementMenu = JSON.stringify(item);
-            if ($state.current.name != "home.management") {
+            if ($state.current.name != "base.home.management") {
                 $state.go($state.current.name, {orgUid: item.uid});
             }
         },

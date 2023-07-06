@@ -1,0 +1,21 @@
+{
+  "name": "vtTriStateCheckbox",
+  "authors": [
+    "viratech <www.viratech.ir>"
+  ],
+  "description": "",
+  "main": "vtTriStateCheckbox.js",
+  "license": "",
+  "dependencies": {
+    "angular": "*"
+  },
+  "_release": "6f1e289ef4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6f1e289ef49c600b1d82141bfd73d268ff607919"
+  },
+  "_source": "http://gitlab.viradev.ir:6480/clientproject/vtindeterminate.git",
+  "_target": "*",
+  "_originalSource": "http://gitlab.viradev.ir:6480/clientproject/vtindeterminate.git"
+}

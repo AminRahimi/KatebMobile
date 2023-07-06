@@ -1,0 +1,9 @@
+vt-file > div > .alert{
+	width: 200px;
+	height: 34px;
+	border-radius: 0;
+	padding: 0;
+}
+vt-file > div > .alert-default{
+	background-color: #ddd;
+}

@@ -1,0 +1,83 @@
+<style>
+body {
+	overflow: auto;
+}
+</style>
+<div class="mainContent">
+     <div class="col-sm-5">
+          <div class="panel panel-default">
+               <div class="panel-body">
+                    <a class="btn btn-default btn-sm btn-text" ng-disabled="Data.mode=='add'" type="button" ng-click="Func.onReturnClick()">بازگشت</a>
+                    <!-- 					<a class="btn btn-primary btn-sm btn-text" ng-disabled="Data.mode=='add'" type="button" -->
+                    <!-- 						ng-click="Func.helpForDrag()">راهنما</a> -->
+               </div>
+          </div>
+          <div class="panel panel-default">
+               <div class="panel-heading">کامپوننت‌های فرم</div>
+               <div class="panel-body">
+                    <div class='row' ng-repeat="comp in Data.components">
+                         <!-- 					<div  ng-repeat="comp in Data.components" class="col-sm-5 widget" ng-class="comp.directiveName"  -->
+                         <!-- 						ng-model="comp.model" model="comp.model" field="comp.field" is-edit-mode="true" -->
+                         <!-- 						jqyoui-draggable="{animate:true,onStart:'Func.test(comp)'}"  -->
+                         <!-- 						data-jqyoui-options="{revert: 'invalid'}" data-drag="true"></div> -->
+                         <div ng-repeat="widget in comp.widgets" ng-hide="widget.isHidden">
+                              <label class="control-label col-sm-4 ">{{widget.persianName}}</label>
+                              <img ng-src="{{widget.picPath}}" class="col-sm-7" jqyoui-draggable="{animate:true,onStart:'Func.onStartDragFunction(comp, widget)'}" data-jqyoui-options="{revert: true}" data-drag="true" style="">
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <!-- --------------------------------------------------------------------------------------------- -->
+     <div class="col-sm-7">
+          <div class="panel panel-default">
+               <div class="panel-body">
+                    <div class="row">
+                         <div class="col-md-12">
+                              <a class="btn btn-sm btn-success btn-text" type="button" ng-click="Func.onSaveFormClick()" ng-disabled="Data.formItem.properties['addProp']">ذخیره</a>
+                              <a class="btn btn-sm btn-warning btn-text" type="button" ng-click="Func.onReturnClick()">انصراف</a>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="panel panel-default">
+               <div class="panel-heading">فرم
+				<button ng-click="Func.onRemoveViewGroupClick(tabActiveIndex)" ng-hide="tabActiveIndex==Data.formItem.viewGroups.length" type="button" class="btn btn-xs btn-danger btn-text pull-left">حذف</button>
+			   </div>
+               <div class="panel-body">
+                    <div class="">
+                         <div class="row noSideMargin">
+                              <div class="">
+                                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
+                                        <div class="list-group">
+                                            <span ui-sortable="Data.viewGroupListsortableOptions" class="viewGroupListCnt" ng-model="Data.formItem.viewGroups">
+                                        		<div class="viewGroup-cnt"  ng-repeat="viewGroup in Data.formItem.viewGroups">
+		                                             <a  class="list-group-item text-center" ng-class="{'active':tabActiveIndex==$index}" ng-click="Func.changeTab($index);">
+		                                                  {{viewGroup.name}}
+		                                                  <span class="glyphicon glyphicon-edit" aria-hidden="true" style="cursor: pointer;" ng-click="Func.onEditGroupClick(viewGroup)"></span>
+		                                             </a>
+		                                             <div class="viewGroup-handle  glyphicon glyphicon-move" ></div>
+	                                             </div>
+                                             </span>
+                                             <div>
+                                                  <a ng-click="Func.onAddGroupClick();" class="list-group-item text-center">
+                                                       <span class="glyphicon glyphicon-plus" aria-hidden="true" style="cursor: pointer;" ng-show="Data.formItem.viewGroups.length"></span>
+                                                       <label ng-show="!Data.formItem.viewGroups.length">افزودن فرم</label>
+                                                  </a>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
+                                        <div class="bhoechie-tab-content" ng-class="{'active':tabActiveIndex==$index}" ng-repeat="viewGroup in Data.formItem.viewGroups" style="padding-left: 10px; min-height: 300px;" jqyoui-droppable="droppable" data-jqyoui-options data-drop="true">
+                                             <form name="example" class="form-horizontal" role="form" ng-init="Func.onInitSchemaField($index)">
+                                                  <schema-form-fields ng-init="isEditMode=true" is-edit-mode="isEditMode" api="Data.apis[$index]" schema="Data.formItem" model="model" is-col-7="true"></schema-form-fields>
+                                             </form>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>

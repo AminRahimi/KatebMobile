@@ -16,20 +16,20 @@
 
 	 </div>
 	<div ng-if="schema.multiple">
-		<label class="label label-default label-repeat" ng-repeat="item in model">
+		<span class="kateb-label kateb-label--default-light " ng-repeat="item in model">
 			<span ng-if="!schema.typeParams.link" class="pull-right">{{item.title}}</span>
 			<a href="#{{schema.typeParams.link.replace('${uid}', item.uid)}}" ng-if="schema.typeParams.link" target="_blank">{{item.title}}</a>
 			<i class="flaticon-close-button fa-btn pull-left" ng-click="onRemove(item); $event.stopPropagation();" ></i>
-		</label>
+		</span>
 
 	</div>
 </span>
 <span ng-show="!isEditMode">
 	<span ng-if="schema.multiple">
-		<label class="label label-default label-repeat" ng-repeat="item in model">
+		<span class="kateb-label kateb-label--default-light " ng-repeat="item in model">
 			<span ng-if="!schema.typeParams.link" class="pull-right">{{item.title}}</span>
 			<a href="#{{schema.typeParams.link.replace('${uid}', item.uid)}}" ng-if="schema.typeParams.link" target="_blank">{{item.title}}</a>
-		</label>
+		</span>
 
 
 	</span>

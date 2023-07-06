@@ -1,0 +1,17 @@
+# IDEA artifacts and output dirs
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea/workspace.xml
+#Gnu/Linux temporary files
+*~
+/velocity.log
+node_modules
+/node_modules
+/npm-debug.log
+/.directory
+/.ant-targets-build.xml
+/out
+out/
+/WebContent/WEB-INF/lib

@@ -1,0 +1,18 @@
+{
+    "name": "media",
+    "version": "0.2.5",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "media components that have uploaded and saved with hash code like file, photo and video (in future)",
+    "main": [
+        "mediaModule.js"
+    ],
+    "homepage": "index.html",
+    "dependencies": {
+        "angular" : "*",
+        "ng-file-upload": "*",
+        "cropper": "*"
+    },
+    "devDependencies": {}
+}

@@ -1,11 +1,23 @@
 angular.module('positionModule').config(['$stateProvider', function($stateProvider) {
 	var positionStates = [
 		{
-			state: "home.management.position",
+			state: "base.home.management.position",
 			config: {
 				url: '/:orgUid/position/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/position/position.html",
+						controller: 'positionCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.position",
+			config: {
+				url: '/:orgUid/position/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/position/position.html",
 						controller: 'positionCtrl'
 					}

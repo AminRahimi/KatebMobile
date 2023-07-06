@@ -1,0 +1,7 @@
+<span ng-show="isEditMode">
+     <select class="form-control col-md-12" ng-change="onSelect()" ng-model="selected" ng-options="opt as opt.label for opt in options[schema.typeParams.enumType || 'op']">
+     </select>
+</span>
+<span ng-show="!isEditMode">
+     <label>{{model.label}}</label>
+</span>

@@ -1,157 +1,140 @@
-<div class="row is-view-attachment" ng-repeat="item in model track by $index">
-    <span>نوع ضمیمه  : {{item.relationTypeKey|appEnum:attachmentType}}</span>
-    <div ng-show="item.type=='FILE'">
-        <div class="img-type-attachment fa" ng-class="{
-    			'fa-file-pdf-o bg-pdf':Func.checkFileType(item.fileBody)=='pdf', 
-    			'fa-file-word-o bg-word':Func.checkFileType(item.fileBody)=='doc', 
-    			'fa-file-excel-o bg-excel':Func.checkFileType(item.fileBody)=='xls', 
-    			'fa-file-image-o bg-image':Func.checkFileType(item.fileBody)=='img', 
-    			'fa-file-audio-o bg-audio':Func.checkFileType(item.fileBody)=='mp3', 
-                'fa-file-text-o bg-file':Func.checkFileType(item.fileBody)=='none'}"></div>
-                <label>نام فایل :</label>
-        <div class="title-attachment">
-            {{item.fileBody.name|splitString:40}}
+<div class=" " ng-repeat="item in model track by $index">
+
+    <div ng-if="item.type=='FILE'" class="tw-w-full">
+        <!-- FIXME:filetype (PDF,TXT,...) -->
+        <kateb-attach-view attachment-type="FILE" attachment="{name:item.fileBody.name,fileType:item.fileBody,hash:item.fileBody.hash}"  on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+    </div>
+    <div ng-if="item.type=='LETTER'" class="tw-w-full">
+        <kateb-attach-view attachment-type="LETTER" attachment="{name:item.letterBody.title}" attachment-link="Func.getHref(Func.getStateName('base.home.cartable.orgLetter'),{letterUid: item.letterBody.uid})" on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+    </div>
+
+
+    <div class="saad-form">
+        <div class="saad-form__row">
+            <label class="saad-form__label">
+                نوع ضمیمه : 
+            </label>
+            <div class="saad-form__value">
+                {{item.relationTypeKey|appEnum:attachmentType}}
+            </div>
+        </div>
+
+        <div class="saad-form__row">
+            <label class="saad-form__label">
+                توضیحات : 
+            </label>
+            <div class="saad-form__value">
+                <span>{{item.description}}</span>
+                <span ng-show="!item.description">توضیحاتی برای این ضمیمه نوشته نشده است.</span>
+            </div>
         </div>
     </div>
-    <div ng-show="item.type=='LETTER'">
-        <div class="img-type-attachment fa fa-envelope-o bg-letter"></div>
-        <div class="title-attachment">{{item.letterBody.title|splitString:15}}</div>
-    </div>
-    <div class="actions">
-        <a class="btn" ng-show="item.type=='FILE'" ng-click='Func.onReception(item.fileBody)'>دریافت</a>
-        <a class="btn text-danger" ng-show="isEditMode" ng-click='Func.onRemove($index)'>حذف</a>
-        <a ng-show="item.letterBody" class="btn col-sm-12"
-           ui-sref="home.cartable.orgLetter({letterUid: item.letterBody.uid})" target="_blank">نمایش نامه</a>
-    </div>
-    <div class="description-attachment">
-        <div>{{item.description}}</div>
-        <div ng-show="!item.description">توضیحاتی برای این ضمیمه نوشته نشده است.</div>
-    </div>
+    
 </div>
 <div ng-show="isEditMode" class="is-edit-attachment">
     <ng-form name="letterAttachementForm" isolate-form novalidate>
         <i class="text-on-el">ضمیمه جدید</i>
-        <div class="row rowForm horizontal-align-items"
-             ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
-            <label class="col-sm-2" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
-            <div ng-show="isEditMode" class="col-sm-4">
-                <select class="form-control" ng-model="Data.attachmentType" name="attachmentType" required style="max-width: 300px; border-radius: 3px;">
-                    <option value="Turn">عطف</option>
-                    <option value="Follow">پیرو</option>
-                    <option value="Appendix">پیوست</option>
-                    <option value="Relation">ارتباط</option>
-                </select>
+
+        <div class="saad-form__row" 
+            ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
+            <label class="saad-form__label" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
+            <div class="saad-form__value" ng-show="isEditMode">
+                <ui-select  ng-model="Data.attachmentType" required name="attachmentType">
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.title"></span>
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="attachmentType in (Data.attachmentTypeList) track by $index">
+                        <span ng-bind="attachmentType.title"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
+
+
+
         </div>
-        <div class="row rowForm horizontal-align-items">
-            <label class="col-sm-2">توضیحات</label>
-            <div ng-show="isEditMode" class="col-sm-9">
+        
+        <div class="saad-form__row ">
+            <label class="saad-form__label">توضیحات</label>
+            <div ng-show="isEditMode" class="saad-form__value">
                 <textarea type="text" class="form-control" name="description" ng-model="Data.description"
                           rows="4" style="max-width: 300px; border-radius: 3px;">
                 </textarea>
             </div>
         </div>
-        <div class="row rowForm horizontal-align-items">
-            <label class="col-sm-2">انتخاب ضمیمه</label>
-            <div class="col-sm-9">
-                <label class="radio-inline" style="padding-top: 0;">
-                    <input id="chooseFromComputer" ng-model="Data.chooseLetterType" type="radio" name="chooseLetterType"
-                           value="COMPUTER" style="opacity: 1;" ng-change="Func.onChooseLetterTypeChange('COMPUTER')">
-                    <label for="chooseFromComputer">فایل از کامپیوتر</label>
-                </label>
-                <label class="radio-inline" style="padding-top: 0;">
-                    <input id="chooseFromScanSoftware" ng-model="Data.chooseLetterType" type="radio"
-                           name="chooseLetterType" value="SCAN" style="opacity: 1;"
-                           ng-change="Func.onChooseLetterTypeChange('SCAN')">
-                    <label for="chooseFromScanSoftware">فایل از نرم افزار اسکن</label>
-                </label>
-                <label class="radio-inline" style="padding-top: 0;">
-                    <input id="chooseFromGanjeh" ng-model="Data.chooseLetterType" type="radio" name="chooseLetterType"
-                           value="GANJEH" style="opacity: 1;" ng-change="Func.onChooseLetterTypeChange('GANJEH')">
-                    <label for="chooseFromGanjeh">فایل از گنجه</label>
-                </label>
-                <label class="radio-inline" style="padding-top: 0;">
-                    <input id="chooseLetter" ng-model="Data.chooseLetterType" type="radio" name="chooseLetterType"
-                           value="LETTER" style="opacity: 1;" ng-change="Func.onChooseLetterTypeChange('LETTER')">
-                    <label for="chooseLetter">نامه</label>
-                </label>
+        <div class="saad-form__row ">
+            <label class="saad-form__label">انتخاب ضمیمه</label>
+            <div class="saad-form__value">
+
+
+                <ui-select  ng-model="Data.chooseLetterType"  
+                    name="attachFrom" 
+                    on-select="Func.onChooseLetterTypeChange()">
+
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.title"></span>
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="attachFrom in (Data.attachFromList) track by $index">
+                        <span ng-bind="attachFrom.title"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+
             </div>
         </div>
-        <div class="row rowForm" ng-if="Data.chooseLetterType=='COMPUTER'" style="display: flex; align-items: center">
-            <label class="col-sm-2" ng-class="{'required':isEditMode}">فایل</label>
-            <div class="col-sm-7"
+        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='COMPUTER'" style="">
+            <label class="saad-form__label" ng-class="{'required':isEditMode}">فایل</label>
+            <div class="saad-form__value"
                  ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">
                 <letter-body class="katebLetterBody" model="Data.file" ng-required="!Data.file.hash" name="file"
                              ng-model="Data.file"
                              is-edit-mode="isEditMode" api="controller.letterBody"
                              type="Data.letterBodyType"
-                             on-file-uploaded="loadPdfFn" pdf-url="Data.file">
+                             on-file-uploaded="loadPdfFn" 
+                             hide-label="true"
+                             pdf-url="Data.file">
                 </letter-body>
             </div>
         </div>
-        <div class="row rowForm" ng-if="Data.chooseLetterType=='SCAN'">
-            <div class="col-sm-9 col-sm-offset-2" ng-show="isEditMode"
+        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='SCAN'">
+            <div class="" ng-show="isEditMode"
                  ng-class="{'has-error':Data.validationClicked && letterAttachementForm.scanner.$invalid}">
-                <!-- <div ng-show="!Data.isSoftwareReady" class="text-center">
-                    <img src="app/assets/img/loader.gif" style="width:35px;"/>
-                    <div>در حال بررسی نرم افزار اسکن ...</div>
-                </div> -->
-                <!-- <p ng-if="Data.isSoftwareReady && !Data.scanerStatus" class="alert alert-info"
-                   style="position: relative; padding-left: 35px;">
-                    نرم افزار اسکن سامانه کاتب بر روی سیستم شما نصب نمی باشد.<br/>
-                    لطفا نرم افزار را از لینک زیر دانلود کنید و پس از نصب و راه اندازی این صفحه را دوباره بارگذاری نماید<br/><br/>
-                    <span class="col-sm-12 text-center" style="font-weight: bold">
-                    <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">دانلود نرم افزار</a>
-                </span>
-                    <img class="pull-left" src="app/assets/img/information-button.svg"
-                         style="width: 20px; margin-top: -10px; position: absolute; top: 50%; left: 9px;">
-                </p> -->
-                <!-- <p ng-if="Data.isSoftwareReady && Data.scanerStatus && (Data.scanerStatus.data.version < Data.lastScannerVersion)"
-                   class="alert alert-info"
-                   style="position: relative; padding-left: 35px;">
-                    نرم افزار اسکن سامانه‌ی کاتب بر روی سیستم شما بروز نمی‌باشد.<br/>
-                    لطفا نرم افزار را از لینک زیر بروزرسانی کنید و سپس دوباره صفحه را بارگذاری نماید<br/><br/>
-                    <span class="col-sm-12 text-center" style="font-weight: bold">
-                    <a href="/Kateb/download/ViratechAutomationOfficeInstall.msi" target="_blank">بروزرسانی نرم
-                        افزار</a>
-                </span>
-                    <img class="pull-left" src="app/assets/img/information-button.svg"
-                         style="width: 20px; margin-top: -10px; position: absolute; top: 50%; left: 9px;">
-                </p> -->
+             
                 <scanner required ng-model="Data.file" name="scanner"
                          class="scan-scanner" options="controller.scanner.options" isolate-form
                          model="Data.file" api="controller.scanner" >
                 </scanner>
             </div>
         </div>
-        <div class="row rowForm"
-             ng-if="Data.chooseLetterType=='GANJEH'">
-            <label ng-show="!Data.isLogin && isEditMode" class="col-sm-2">ورود به گنجه جهت بایگانی</label>
-            <div ng-show="!Data.isLogin && isEditMode" class="col-sm-10">
+        <div class="saad-form__row"
+             ng-if="Data.chooseLetterType.key=='GANJEH'">
+            <label ng-show="!Data.isLogin && isEditMode" class="saad-form__label">ورود به گنجه جهت بایگانی</label>
+            <div ng-show="!Data.isLogin && isEditMode" class="saad-form__value">
                 <button class="btn btn-default" ng-click="Func.onEnterToGanjehClick()">ورود</button>
             </div>
-            <label ng-show="Data.isLogin && isEditMode" class="col-sm-2">انتخاب فولدر بایگانی در گنجه</label>
-            <div ng-show="Data.isLogin && isEditMode" class="col-sm-1" ng-model="Data.ganjehFiles" required>
+            <label ng-show="Data.isLogin && isEditMode" class="saad-form__label">انتخاب فولدر بایگانی در گنجه</label>
+            <div ng-show="Data.isLogin && isEditMode" class="saad-form__value" ng-model="Data.ganjehFiles" required>
                 <button class="btn btn-primary btn-block" ng-click="Func.onChooseFileClick()">انتخاب</button>
             </div>
-            <div ng-if="Data.isLogin && isEditMode && Data.ganjehFiles.length > 0" class="col-sm-9">
+            <div ng-if="Data.isLogin && isEditMode && Data.ganjehFiles.length > 0" class=" ">
                 <h4 ng-repeat="file in Data.ganjehFiles"><span class="label label-warning">{{file.name}}</span></h4>
             </div>
         </div>
-        <div class="row rowForm horizontal-align-items" ng-if="Data.chooseLetterType=='LETTER'"
+        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='LETTER'"
              ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachLetter.$invalid}">
-            <label class="col-sm-2" ng-class="{'required':isEditMode}">نامه</label>
-            <div class="col-sm-10">
+            <label class="saad-form__label" ng-class="{'required':isEditMode}">نامه</label>
+            <div class="saad-form__value">
                 <a class="btn btn-cs btn-default" ng-click="Func.onSelectLetter()">انتخاب</a>
                 <label ng-show="Data.attachLetter">نامه انتخاب شده: </label>
-                <span ng-show="Data.attachLetter" style="font-size: 13px;" class="label label-info"
+                <span ng-show="Data.attachLetter" style="" class="label label-info"
                       ng-model="Data.attachLetter" required name="attachLetter">
                     {{Data.attachLetter.internalNumber}} - {{Data.attachLetter.subject}}
                 </span>
             </div>
         </div>
-        <div class="row rowForm">
-            <div class="col-sm-4 col-sm-offset-5">
+        <div class="saad-form__row">
+            <div class="">
                 <button class="btn btn-primary pull-left btn-cs" ng-click="Func.onAddAttachments()"
                         ng-disabled="letterAttachementForm.$invalid && Data.validationClicked">افزودن
                 </button>

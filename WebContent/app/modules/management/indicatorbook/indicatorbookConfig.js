@@ -1,11 +1,23 @@
 angular.module('indicatorbookModule').config(['$stateProvider', function($stateProvider) {
 	var indicatorbookStates = [
 		{
-			state: "home.management.indicatorbook",
+			state: "base.home.management.indicatorbook",
 			config: {
 				url: '/:orgUid/indicatorbook/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/indicatorbook/indicatorbook.html",
+						controller: 'indicatorbookCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.indicatorbook",
+			config: {
+				url: '/:orgUid/indicatorbook/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/indicatorbook/indicatorbook.html",
 						controller: 'indicatorbookCtrl'
 					}

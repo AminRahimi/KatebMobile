@@ -1,0 +1,114 @@
+<div class="modal-header">
+	<h3 class="modal-title">ایجاد ارتباط جدید</h3>
+</div>
+<div class="modal-body   haveFormRows">
+	<form name="Data.mainForm" class="form-horizontal" role="form">
+		<div class="form-group" ng-class="{'has-error':Data.mainForm.title.$invalid}">
+			<label class="control-label col-sm-4">عنوان ارتباط</label>
+			<div class="col-sm-5">
+				<!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+				<input type="text" ng-show="mode=='EDIT'" class="form-control" name="title" ng-model="Data.relation.title" required>
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.title}}</p>
+			</div>
+			<div class="col-sm-3">
+				<input id="toggle-one" checked data-toggle="toggle" data-onstyle="default" ng-model="Data.relation.relationDirection" data-on='<img  ng-init="onInitInput(this)"  data-toggle="tooltip"    data-placement="top"      title="یک طرفه"  style="position: relative; height: 31px; width: 36px; right: -8px; top: -3px;" src="assets/img/one-way.png">'
+					data-off='<img ng-init="onInitInput(this)"  data-toggle="tooltip"    data-placement="top"      title="دو طرفه" style="position: relative; height: 31px; width: 36px; right: -8px; top: -3px;" src="app/assets/img/tow-way.png">' type="checkbox">
+				<script>
+					$('#toggle-one').bootstrapToggle();
+				</script>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{'has-error':Data.mainForm.destRelation.$invalid}">
+			<label class="control-label col-sm-4">مقصد ارتباط</label>
+			<div class="col-sm-4" ng-if="Data.isEntityTypeChangeable">
+				<select class="form-control" ng-show="mode=='EDIT'" ng-change="Func.onSelectEntityType(entityType)" ng-model="Data.selectedEntityType" ng-options="entityType as entityType.name for entityType in Data.entityTypes" style="margin-right: 5px;">
+				</select>
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.selectedEntityType.name}}</p>
+			</div>
+			<div class="" ng-class="{'col-sm-4':Data.isEntityTypeChangeable,'col-sm-8':!Data.isEntityTypeChangeable}">
+				<!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+				<!-- <input type="text" class="form-control" ng-model="Data.relation.destination"> -->
+				<entity-selector class="widget" ng-model="Data.relation.destination" name="destRelation" model="Data.relation.destination" field="Data.relation.destination.type" schema="Data.schema" is-edit-mode="mode=='EDIT'" required></entity-selector>
+
+
+			</div>
+		</div>
+		<!-- <div class="form-group" ng-class="{'has-error':Data.mainForm.relationDirection.$invalid}">
+			<label class="control-label col-sm-4">جهت ارتباط</label>
+			<div class="col-sm-8">
+				<p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p>
+				<input type="text" class="form-control" ng-model="Data.relation.relationDirection">
+				<select class="form-control" ng-show="mode=='EDIT'" name="relationDirection"
+					ng-change="onSelect()" ng-model="Data.relation.relationDirection" required="required">
+					<option value='1'>یک طرفه</option>
+					<option value='2'>دو طرفه</option>
+				</select>
+
+				<p ng-show="mode=='VIEW' && Data.relation.relationDirection=='1'" class="form-control-static">یک
+					طرفه</p>
+				<p ng-show="mode=='VIEW' && Data.relation.relationDirection=='2'" class="form-control-static">دو
+					طرفه</p>
+			</div>
+		</div> -->
+		<div class="form-group" ng-class="{'has-error':Data.mainForm.widget.$invalid}">
+			<label class="control-label col-sm-4">وزن</label>
+			<div class="col-sm-8">
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.relationWeight}}</p>
+				<input ng-show="mode=='EDIT'" name="widget" ng-model="Data.relation.relationWeight" type="number" ng-pattern="/^[0-9]$|^10$/" class="form-control"></input>
+				<span class="help-block" ng-show="Data.mainForm.widget.$invalid">عدد بین 0 تا 10</span>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label col-sm-4">توضیحات</label>
+			<div class="col-sm-8">
+				<!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+				<input type="text" ng-show="mode=='EDIT'" class="form-control" ng-model="Data.relation.description">
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.description}}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4">ضمايم</label>
+			<div class="col-sm-8">
+				<!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+				<!-- <input type="text" class="form-control" ng-model="Data.relation.attachments"> -->
+				<attach-file-multiple class="widget" ng-model="Data.relation.attachments" model="Data.relation.attachments" field="v" schema="{}" is-edit-mode="mode=='EDIT'"></attach-file-multiple>
+
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4">تاریخ شروع</label>
+			<div class="col-sm-8">
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.fromDate|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</p>
+				<p class="input-group" ng-show="mode=='EDIT'">
+					<span class="input-group-addon">از</span>
+					<input style="" type="text" class="form-control" max-date="Data.relation.toDate" datepicker-popup-persian="yyyy/MM/dd" ng-model="Data.relation.fromDate" is-open="date.isOpen.from" close-text="Close" ng-change="date.onChange('from')" />
+					<span class="input-group-addon btn btn-default" ng-click="date.open($event,'from')">
+						<span ng-click="open($event)" class="flaticon-icon-1078"></span>
+					</span>
+				</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4">تاریخ پایان</label>
+			<div class="col-sm-8">
+				<p ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.toDate|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</p>
+
+				<p class="input-group" ng-show="mode=='EDIT'">
+					<span class="input-group-addon">تا</span>
+					<input style="" type="text" class="form-control" min-date="Data.relation.fromDate"  datepicker-popup-persian="yyyy/MM/dd" ng-model="Data.relation.toDate" is-open="date.isOpen.to" close-text="Close" ng-change="date.onChange('to')" />
+					<span class="input-group-addon btn btn-default" ng-click="date.open($event,'to')">
+						<span ng-click="open($event)" class="flaticon-icon-1078"></span>
+					</span>
+				</p>
+			</div>
+		</div>
+	</form>
+
+
+</div>
+<div class="modal-footer">
+	<button class="btn btn-xs btn-xs btn-primary" ng-disabled="!Data.relation.title || Data.mainForm.widget.$invalid || Data.mainForm.$invalid" ng-show="mode=='EDIT'" ng-click="Func.ok()">تاييد</button>
+	<button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="Func.cancel()">لغو</button>
+</div>

@@ -3,7 +3,7 @@ angular.module('SettingModule', ['confermentModule', 'privatehameshhotkeyModule'
 angular.module('SettingModule').config(['$stateProvider', function ($stateProvider) {
     var SettingStates = [
         {
-            state: "home.setting",
+            state: "base.home.setting",
             config: {
                 url: "/setting",
                 views: {

@@ -96,7 +96,7 @@ angular.module('secretariatModule').controller('secretariatIssuedAddCtrl',
 			}
 		},
 		onReturnClick: function(){
-			$state.go('home.secretariat.issuedList',{secUid:$scope.Data.secUid});
+			$state.go('base.home.secretariat.issuedList',{secUid:$scope.Data.secUid});
 		},
 
 		onSenderRefresh: function(query){

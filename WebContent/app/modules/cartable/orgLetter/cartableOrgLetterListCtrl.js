@@ -19,11 +19,11 @@ angular.module('cartableModule').controller('cartableOrgLetterListCtrl', functio
             //mode: $scope.Data.searchMode
             //});
             cartableKatebSrvc.setSearchQeury('', $scope.Controller.listController.currentPage);
-            cartableSrvc.updateMenu();;
-            if ($state.current.name === "home.secretariat.orgLetterList") {
-                $window.open($state.href('home.secretariat.orgLetter', {letterUid: letter.uid,filter:'all_letters'}), '_blank');
+            cartableSrvc.publishTo("updateCartableMenu");;
+            if ($state.current.name === "base.home.secretariat.orgLetterList") {
+                $window.open($state.href('base.home.secretariat.orgLetter', {letterUid: letter.uid,filter:'all_letters'}), '_blank');
             } else {
-                $window.open($state.href('home.cartable.orgLetter', {letterUid: letter.uid,filter:'all_letters'}), '_blank');
+                $window.open($state.href('base.home.cartable.orgLetter', {letterUid: letter.uid,filter:'all_letters'}), '_blank');
             }
         },
 
@@ -204,7 +204,7 @@ angular.module('cartableModule').controller('cartableOrgLetterListCtrl', functio
         },
         onOpenLetterInNewTabClick: function (checkedItem, e) {
             e.stopPropagation();
-            $window.open($state.href('home.cartable.orgLetter', {letterUid: checkedItem.uid,filter:'all_letters'}), '_blank');
+            $window.open($state.href('base.home.cartable.orgLetter', {letterUid: checkedItem.uid,filter:'all_letters'}), '_blank');
         },
         getIndicatorBookList: function() {
             cartableKatebSrvc.getIndicatorBookList().then(function (response) {

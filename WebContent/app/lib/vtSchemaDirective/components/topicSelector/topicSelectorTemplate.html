@@ -1,0 +1,6 @@
+<p class='input-group noPadding' ng-class="{hidden:!isEditMode}">
+     <input id="{{field}}" ng-readonly="true" ng-attr-name="{{field}}" ng-model="model._displayString[model._displayString.length-1]" type="text" class="form-control"></input>
+     <span class='input-group-addon btn btn-default' ng-click='openTopicSelectorModal()'>
+          <i class='glyphicon glyphicon-search'></i>
+     </span>
+</p>

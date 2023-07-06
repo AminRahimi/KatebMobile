@@ -1,0 +1,17 @@
+<div class="modal-body">
+   <div class="row">
+   		<div class="tree">
+			<ul ng-include="privateData.treeItemRendererAddress" ng-if="treeData[privateData.childrenKey].length"></ul>
+		</div>
+		<div class="selected-node">
+			<label class="kateb-label kateb-label--default-light " ng-repeat="node in selectedNodeList">
+				{{node.name}}
+				<i class="flaticon-close-button" ng-click="remove($index)" style="cursor: pointer;"></i>
+			</label>
+		</div>
+   </div>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-sm btn-sm btn-primary" ng-click="ok()">تاييد</button>
+   <button class="btn btn-sm btn-sm btn-warning pull-left" ng-click="cancel()">لغو</button>
+</div>

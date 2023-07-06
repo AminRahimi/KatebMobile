@@ -2,7 +2,7 @@ angular.module('searchModule', []);
 angular.module('searchModule').config(['$stateProvider', function($stateProvider) {
     var searchStates = [
         {
-            state: "home.search",
+            state: "base.home.search",
             config : {
                 url : "/search?q",
                 views: {

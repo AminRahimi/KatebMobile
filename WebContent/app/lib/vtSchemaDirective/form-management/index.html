@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>فرم ساز</title>
+
+<!-- bower:css -->
+<link href="app/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="app/lib/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+<link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="app/lib/vtCommon1/vtDatePicker/style.css" rel="stylesheet">
+<link href="app/lib/vtCommon1/vtSearch/style.css" rel="stylesheet">
+<link href="app/lib/vtCommon1/vtMessageShower/style.css" rel="stylesheet">
+<link href="app/lib/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+
+<link href="app/lib/vtSchemaDirective/style.css" rel="stylesheet">
+<link href="app/lib/vtSchemaDirective/form-management/style.css" rel="stylesheet">
+<link href="app/lib/vtSchemaDirective/form-manage-font-icon/font/flaticon.css" rel="stylesheet">
+<link href="app/lib/vtSchemaDirective/form-manage-font-icon/font/flaticon-theme.css" rel="stylesheet">
+<!-- endbower -->
+<!-- ------------------------------------------ ADD ALL CSS FILE OF PROJECT HERE ------------------------------------------------ -->
+<!-- build:css style.css -->
+<link href="app/assets/css/font.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/tab.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/cartabl.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/base.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/breadcrumb.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/public.css" rel="stylesheet" media="screen">
+<!-- <link href="app/assets/font/poll/font/flaticon.css" rel="stylesheet" media="screen"> -->
+<link href="app/assets/font/poll/font/flaticon-theme.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/poll-management-theme.css" rel="stylesheet" media="screen">
+<link href="app/modules/pollManagement/directives/tree/tree.css" rel="stylesheet" media="screen">
+
+<!-- endbuild -->
+
+
+<!-- bower:js -->
+<script src="app/lib/jquery/dist/jquery.min.js"></script>
+<script src="app/lib/jquery-ui/jquery-ui.js"></script>
+<script src="app/lib/angular/angular.js"></script>
+<script src="app/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="app/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="app/lib/angular-hotkeys/build/hotkeys.min.js"></script>
+<script src="app/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/lib/lodash/dist/lodash.compat.min.js"></script>
+<script src="app/lib/restangular/dist/restangular.min.js"></script>
+<script src="app/lib/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
+<script src="app/lib/angular-animate/angular-animate.min.js"></script>
+<script src="app/lib/AngularJS-Toaster/toaster.min.js"></script>
+<script src="app/lib/momentjs/min/moment.min.js"></script>
+<script src="app/lib/moment-jalaali/build/moment-jalaali.js"></script>
+<!-- commons -->
+<script src="app/lib/vtCommon1/vtFilter/checkmarkFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/EnToFaNumberFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/EnToFaButtonFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/FaToEnNumberFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/jalaliDateFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/jalaliDateJustDateFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/jalaliDatePastFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/sliceFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/stringFilter.js"></script>
+<script src="app/lib/vtCommon1/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon1/vtSearch/searchModule.js"></script>
+<script src="app/lib/vtCommon1/vtSearch/searchSrvc.js"></script>
+<script src="app/lib/vtCommon1/vtSearch/searchDirective.js"></script>
+<script src="app/lib/vtCommon1/vtGrid/gridDirective.js"></script>
+<script src="app/lib/vtCommon1/vtMessageShower/vtMessageShower.js"></script>
+<script src="app/lib/vtCommon1/vtPersianDatePicker/vtPersianDatePickerDirective.js"></script>
+<script src="app/lib/vtCommon1/vtDatePicker/persian-datepicker-tpls.js"></script>
+<script src="app/lib/vtCommon1/vtDatePicker/persiandate.js"></script>
+<script src="app/lib/vtCommon1/vtDirectives/accessChecker/accessCheckerDirective.js"></script>
+<script src="app/lib/vtCommon1/vtCommons.js"></script>
+
+<script src="app/lib/formvalidators/vtnumbervalidator/vtNumberValidator.js"></script>
+<script src="app/lib/formvalidators/vtarrayrequired/vtArrayRequired.js"></script>
+
+
+<script src="app/lib/vtSchemaDirective/schema-form.js"></script>
+<!-- components -->
+<script src="app/lib/vtSchemaDirective/components/multiText/multiTextDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiTextarea/multiTextareaDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/fileSelector/fileSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/imageSelector/imageSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/imageSelector/imageModalCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiFileSelector/multiFileSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/bigText/bigTextDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/bigText/bigTextModalCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/integer/integerDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/optionSelector/optionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/multiOptionSelector/multiOptionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/radioOptionSelector/radioOptionSelectorDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/addProperty/addPropertyDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/attachFileSingle/attachFileSingleDirective.js"></script>
+<script src="app/lib/vtSchemaDirective/components/attachFileMultiple/attachFileMultipleDirective.js"></script>
+<!-- form management -->
+<script src="app/lib/vtSchemaDirective/form-management/entitySrvc2.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/vtFormManagementDirective.js"></script>
+<!-- <script src="app/lib/vtSchemaDirective/form-management/formManagementCtrl.js"></script> -->
+<script src="app/lib/vtSchemaDirective/form-management/advancedEntityTypeManagementCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/baseSelectSrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formManagementSrvc.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formViewCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/help.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/addViewGroupCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/editPropCtrl.js"></script>
+<script src="app/lib/vtSchemaDirective/components/autoCompleteTagInput/autoCompleteTagInputDirective.js"></script>
+
+<script src="app/lib/vtSchemaDirective/form-management/editProp/editProp.directive.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/editViewGroup/editViewGroup.directive.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/widgetDirectives/addProperty/fileWidgetParam.js"></script>
+
+
+<link href="app/lib/angular-hotkeys/build/hotkeys.min.css" rel="stylesheet"/>
+<script src="app/lib/angular-dragdrop/src/angular-dragdrop.js"></script>
+<script src="app/lib/angular-ui-sortable/sortable.js"></script>
+<script src="app/lib/ng-file-upload/angular-file-upload.min.js"></script>
+<script src="app/lib/ng-file-upload-new/ng-file-upload.js"></script>
+<script src="app/lib/ng-tags-input/ng-tags-input.min.js"></script>
+
+
+<!-- endbower -->
+
+<!-- ------------------------------------------ ADD ALL JS FILE OF PROJECT HERE ------------------------------------------------ -->
+<!-- build:js assets/lib.js -->
+<!-- FILTERS -->
+ <script src="app/assets/js/filters/filterModule.js"></script> 
+ <script src="app/assets/js/filters/appEnum.js"></script>
+ 
+ 
+ <!-- INTERNAL DIRECTIVES -->
+ <script src="app/assets/js/directives/vtIndeterminateCheckbox/vtIndeterminateCheckbox.js"></script>
+<script src="app/modules/pollManagement/directives/tree/viraTreeDirective.js"></script>
+<script src="app/modules/pollManagement/directives/tree/viraTreeSrvc.js"></script>
+<script src="app/modules/pollManagement/directives/tree/treeNodeModalCtrl.js"></script>
+<script src="app/modules/pollManagement/directives/tree/treeModalCtrl.js"></script>
+ 
+<script src="app/modules/pollManagement/directives/selectorFromTreeOrList/selectorFromTreeOrList.directive.js"></script>
+<script src="app/modules/pollManagement/directives/selectorFromTreeOrList/listModal.ctrl.js"></script>
+<script src="app/modules/pollManagement/directives/selectorFromTreeOrList/treeModal.ctrl.js"></script>
+
+
+<script src="app/modules/pollManagement/directives/entityTypeEditAdd/entityTypeEditAdd.directive.js"></script>
+
+<script src="app/modules/pollManagement/directives/entityTypeSelector/entityTypeSelector.directive.js"></script>
+<script src="app/modules/pollManagement/directives/entityTypeSelector/entityTypeListModal.ctrl.js"></script>
+<script src="app/modules/pollManagement/directives/entityTypeSelector/entityTypeAddEditModal.ctrl.js"></script>
+
+
+
+<script src="app/modules/pollManagement/directives/entityTypeList/entityTypeList.directive.js"></script>
+
+
+
+<!--  CONFIGURATION  -->
+<script src="app/modules/pollManagement/config/config.js"></script>
+<script src="app/modules/pollManagement/config/run.js"></script>
+<script src="app/modules/pollManagement/config/configMenuConst.js"></script>
+<script src="app/modules/pollManagement/config/configRouteConst.js"></script>
+<script src="app/modules/pollManagement/config/configSrvc.js"></script>
+<script src="app/modules/pollManagement/config/configStateConst.js"></script>
+<script src="app/modules/pollManagement/config/configModule.js"></script>
+<script src="app/modules/pollManagement/pollManagementSrvc.js"></script>
+
+
+<!-- HOME -->
+<script src="app/modules/home/homeSrvc.js"></script>
+<script src="app/modules/home/homeCtrl.js"></script>
+<script src="app/modules/home/changePassword/changePasswordCtrl.js"></script>
+<script src="app/modules/home/homeConfig.js"></script>
+<!-- cartabl -->
+<script src="app/modules/cartabl/cartablSrvc.js"></script>
+<script src="app/modules/cartabl/cartablCtrl.js"></script>
+<script src="app/modules/cartabl/cartablConfig.js"></script>
+<!-- MANAGEMENT -->
+<script src="app/modules/management/managementConfig.js"></script>
+<script src="app/modules/management/managementCtrl.js"></script>
+<!-- userrole -->
+<script src="app/modules/management/userrole/userroleSrvc.js"></script>
+<script src="app/modules/management/userrole/userroleConfig.js"></script>
+<script src="app/modules/management/userrole/userroleCtrl.js"></script>
+<!-- user -->
+<script src="app/modules/management/user/userSrvc.js"></script>
+<script src="app/modules/management/user/userConfig.js"></script>
+<script src="app/modules/management/user/userCtrl.js"></script>
+<!-- poll -->
+<script src="app/modules/management/poll/pollSrvc.js"></script>
+<script src="app/modules/management/poll/pollConfig.js"></script>
+<script src="app/modules/management/poll/pollCtrl.js"></script>
+<!-- questionnaire -->
+<script src="app/modules/management/questionnaire/questionnaireSrvc.js"></script>
+<script src="app/modules/management/questionnaire/questionnaireConfig.js"></script>
+<script src="app/modules/management/questionnaire/questionnaireCtrl.js"></script>
+
+
+<!-- position -->
+<script src="app/modules/management/position/positionSrvc.js"></script>
+<script src="app/modules/management/position/positionCtrl.js"></script>
+<script src="app/modules/management/position/positionConfig.js"></script>
+<script src="app/modules/management/position/positionSelector/positionSelector.directive.js"></script>
+
+
+<!-- position group -->
+<script src="app/modules/management/positionGroup/positionGroupSrvc.js"></script>
+<script src="app/modules/management/positionGroup/positionGroupCtrl.js"></script>
+<script src="app/modules/management/positionGroup/positionConfig.js"></script>
+
+
+<!-- geoRegion -->
+<script src="app/modules/management/geoRegion/geoRegionSrvc.js"></script>
+<script src="app/modules/management/geoRegion/geoRegionCtrl.js"></script>
+<script src="app/modules/management/geoRegion/geoRegionConfig.js"></script>
+<script src="app/modules/management/geoRegion/directives/geoRegionSelector/geoRegionSelector.directive.js"></script>
+
+<!-- form management -->
+
+<script src="app/modules/management/formManagement/formManagementConfig.js"></script>
+<script src="app/lib/vtSchemaDirective/form-management/formManagementCtrl2.js"></script>
+
+<script src="app/app.js"></script>
+
+
+<!-- endbuild -->
+
+</head>
+<body ui-view class="not-show-ui-until-ready-angular" ng-class="{'show-ui-after-ready-angular' : true}"></body>
+</html>

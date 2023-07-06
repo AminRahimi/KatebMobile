@@ -1,0 +1,10 @@
+.cartable-grid{
+    height: 100%;
+    overflow: scroll;
+}
+
+
+.cartable-grid__table {
+    overflow: hidden;
+}
+

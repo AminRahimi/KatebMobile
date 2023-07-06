@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TriStateCheckbox demo</title>
+	<script src="angular.js"></script>
+	<script src="vtTriStateCheckbox.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('mainApp', ['triStateModule']);
+		app.controller('testCtrl', function($scope){
+			$scope.state = null;
+			$scope.AlertMe = function(){
+				alert($scope.state);
+			}
+		});
+	</script>
+</head>
+<body ng-app="mainApp" ng-controller="testCtrl">
+		<input type="checkbox" name="state" ng-model="state" indeterminate />
+		<button ng-click="AlertMe();">outPut</button>
+</body>
+</html>

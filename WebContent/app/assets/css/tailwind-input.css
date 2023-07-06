@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+    body, html,h1,h2,h3,h4,h5,h6 {
+        font-family: theme('fontFamily.base');
+    }
+    body, html{
+        font-size: theme('fontSize.base');
+        color:  theme('colors.black');
+    }
+}
+
+
+
+/*FIXME:separate in css files*/
+@layer components {
+
+
+
+    .md-input-main {
+        @apply tw-font-sans tw-text-xl tw-w-full;
+    }
+    .md-input-box {
+        @apply tw-relative;
+        position: relative;
+    }
+    .md-input {
+        @apply tw-w-full;
+        outline: none;
+        /*height: 50px;*/
+    }
+    .md-label {
+        @apply tw-absolute tw-pointer-events-none tw-block;
+        transform-origin: top left;
+        transform: translate(0, -40px) scale(1);
+        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    }
+    .md-label-focus {
+        @apply tw-text-black;
+        transform: translate(0, -65px) scale(0.75);
+        transform-origin: top left;
+    }
+    .md-input-underline {
+        @apply tw-border-b tw-border-solid tw-border-light-gray
+    }
+    .md-input-underline:after {
+        @apply tw-absolute tw-left-0 tw-right-0 tw-pointer-events-none tw-border-b-black tw-border tw-border-solid;
+        bottom: -0.05rem;
+        content: "";
+        transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        transform: scaleX(0);
+    }
+    .md-input:focus ~ .md-input-underline:after {
+        transform: scaleX(1);
+    }
+    .md-input:focus + .md-label, .md-input:not(:placeholder-shown) + .md-label {
+        @apply md-label-focus;
+    }
+    /* enable to leave border-bottom in modified color when the field is populated */
+    /*
+    .md-input:not(:placeholder-shown) ~ .md-input-underline:after {
+          transform: scaleX(1);
+    }
+    */
+
+
+/*   Chips */
+    .chips {
+        @apply tw-inline-flex tw-flex-row-reverse  tw-p-0 tw-ml-1 tw-mb-1;
+    }
+    .chips__close{
+        @apply tw-border-r tw-border-solid tw-border-white tw-text-white tw-p-1 tw-flex tw-items-center;
+    }
+
+
+
+/* Bootstrap overwrite */
+
+
+
+
+
+    .chips.chips-default{
+        @apply tw-border-gray tw-bg-gray tw-text-white tw-rounded;
+    }
+    .btn.btn-primary, .label.label-primary,.chips.chips-primary {
+        @apply tw-border-hard tw-bg-hard tw-text-white tw-rounded;
+    }
+
+
+
+    .modal-dialog , .modal-content{
+        @apply tw-h-full sm:tw-h-auto ;
+    }
+    .modal-dialog{
+        @apply tw-m-mobileModalMargin sm:tw-mr-auto sm:tw-ml-auto sm:tw-m-8  
+        tw-h-[calc(100vh-(2*theme('margin.mobileModalMargin')))] sm:tw-h-auto
+    }
+
+    .modal-content{
+        @apply tw-flex tw-flex-col;
+    }
+    .modal-footer{
+        @apply tw-mt-auto;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Custom class */
+
+
+    .saad-forms{
+        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-rowGap;
+    }
+
+    .saad-form{
+        @apply tw-flex tw-flex-col tw-gap-y-rowGap tw-max-w-full;
+    }
+
+    .saad-form__row{
+        @apply   tw-flex tw-gap-colGap;
+    }
+    .saad-form__label{
+        @apply tw-text-gray tw-flex-shrink-0 tw-relative tw-w-formLabelWidth;
+    }
+    .saad-form__value{
+        @apply tw-text-black;
+    }
+
+
+    
+
+    .saad-checkbox-group{
+        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-rowGap;
+    }
+    .saad-checkbox{
+        @apply tw-inline-flex tw-gap-x-checkboxLabel
+    }
+
+
+
+
+
+
+
+    .menu-toggle-icon{
+        @apply tw-w-em-2;
+
+    }
+
+
+    .saad-icon{
+        @apply tw-w-em-3  tw-text-hard;
+    }
+
+    .action-icon{
+        @apply tw-w-em-4 tw-ml-2 tw-text-hard;
+    }
+
+
+
+
+    
+
+
+
+
+
+
+
+    /* Labels */
+
+    .kateb-label {
+        @apply tw-text-xs tw-inline-flex tw-items-center tw-rounded tw-p-1 tw-mb-1 tw-ml-1;
+    }
+    .kateb-label__icon{
+        @apply tw-ml-1;
+    }
+
+    .kateb-label.kateb-label--default-light {
+        @apply tw-text-black tw-bg-light-gray;
+    }
+    .kateb-label.kateb-label--default-deep {
+        @apply tw-text-white tw-bg-gray;
+    }
+
+    .kateb-label.kateb-label--warning-light {
+        @apply tw-text-white tw-bg-warn-light;
+
+    }
+    .kateb-label.kateb-label--warning-deep {
+        @apply tw-text-white tw-bg-warn-deep;
+    }
+    .kateb-label.kateb-label--danger {
+        @apply tw-text-white tw-bg-danger;
+    }
+
+
+
+
+
+
+
+
+    .mobile-action-bar{
+        @apply tw-flex tw-flex-grow-0 tw-flex-shrink-0 tw-items-center tw-bg-white tw-h-mobileActionBarHeight;
+    }
+
+
+
+
+    .letter-draft-view{
+        @apply tw-flex tw-flex-col tw-bg-light-gray tw-p-content-padding tw-overflow-hidden tw-flex-grow;
+    }
+
+    .letter-draft-view__header-summary{
+        @apply tw-mb-2;
+    }
+
+    .letter-draft-view__content{
+        @apply tw-p-content-padding tw-bg-white tw-overflow-scroll tw-flex-grow;
+    }
+
+
+
+
+
+
+
+
+
+/* TODO: change in  tailwind config way if is better */
+    .kateb-text-2{
+        @apply tw-text-right tw-text-sm tw-font-thin;
+    }
+
+
+
+}
+

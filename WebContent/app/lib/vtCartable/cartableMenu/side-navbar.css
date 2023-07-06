@@ -1,0 +1,16 @@
+
+
+
+
+@media (max-width:767px){
+    .navbar.side-navbar{
+        transition: all 0.35s ease-in-out;
+    }
+    .navbar-collapse.side-navbar.collapse{
+        width: 0%;
+    }
+    .navbar-collapse.side-navbar.collapse.in{
+        width: 100%;
+    }
+
+}

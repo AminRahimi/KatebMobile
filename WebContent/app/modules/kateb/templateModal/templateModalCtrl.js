@@ -1,4 +1,4 @@
-angular.module('katebModule').controller('templateModalCtrl', function ($scope, $modalInstance, templateModalSrvc, $state, orgUid, katebSrvc) {
+angular.module('katebModule').controller('templateModalCtrl', function ($scope, $modalInstance, templateModalSrvc, $state, orgUid,homeSrvc,katebSrvc) {
 
 	$scope.Data = {
 		orgUid: orgUid,
@@ -8,6 +8,9 @@ angular.module('katebModule').controller('templateModalCtrl', function ($scope, 
 	}
 	
 	$scope.Func = {
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
 		onSelectTemplate: function(template, model){
 		    if($scope.Data.orgUid === 'EXTERNAL'){
                 if($scope.Data.selectedOrg) {
@@ -24,7 +27,7 @@ angular.module('katebModule').controller('templateModalCtrl', function ($scope, 
 		},
 		onCancelClick: function() {
 			$modalInstance.dismiss('cancel');
-			$state.go('home.cartable.cartableList');
+			$state.go($scope.Func.getStateName('base.home.cartable.cartableList'));
         },
         searchTemplateList: function (query) {
             console.log(query)
@@ -55,7 +58,7 @@ angular.module('katebModule').controller('templateModalCtrl', function ($scope, 
                 $modalInstance.close({selectedTemplate: $scope.Data.selectedTemplate, orgUid: model.uid});
             }
             /*if(item.uid == configObj.userConfig.organization.uid){
-                $state.go('home.cartable.draft', {orgUid: "CURRENT"});
+                $state.go('base.home.cartable.draft', {orgUid: "CURRENT"});
             }*/
         },
 	}

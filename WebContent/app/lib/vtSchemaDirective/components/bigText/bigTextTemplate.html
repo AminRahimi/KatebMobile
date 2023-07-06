@@ -1,0 +1,9 @@
+<div>
+     <span class='btn btn-default hidden-print' ng-click='openBigTextModal()'>
+          <i class='glyphicon glyphicon-zoom-in'></i>
+     </span>
+     <label class="" ng-show="model!=''">
+          <p ng-if="model.length>25" style="direction: {{direction">{{model.substring(0,25)}}...</p>
+          <p ng-if="model.length<25" style="direction: {{direction">{{model}}</p>
+     </label>
+</div>

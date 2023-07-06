@@ -122,59 +122,8 @@ a.btn.btn-sm.btn-default.h-32.p-t.p-b.pull-left span::before{
 	margin: 0;
 }
 </style>
-<div class="col-lg-2 management-sidebar">
-    <accordion ng-hide="Data.sysadminMenuListNotShowCount == Data.sysadminMenuList.length">
-        <div ng-if="!sysadminMenuItem.isNotShow" accordion-group
-             ng-repeat="sysadminMenuItem in Data.sysadminMenuList" class="panel-default sideMenuTab"
-             is-open="menuItem.open">
-            <accordion-heading>
-                    <span>
-                        <i class="flaticon-{{sysadminMenuItem.icon}} management-icon"></i>
-                        {{sysadminMenuItem.title}}
-                    </span>
-                <i class="pull-left glyphicon" ng-show="sysadminMenuItem.items.length > 0"
-                   ng-class="{'glyphicon-chevron-down': sysadminMenuItem.open, 'glyphicon-chevron-left': !sysadminMenuItem.open}">
-                </i>
-            </accordion-heading>
-            <div ng-repeat="item in sysadminMenuItem.items" ui-sref-active="activeTab" style="display: block;"
-                 access-checker="{{item.feature}}"
-                 ng-if="sysadminMenuItem.items.length > 0" ng-class="{'disable-element': item.uiSref=='#'}">
-                <a ui-sref="{{item.uiSref}}({orgUid: Data.selectedMenu.uid})">
-                    {{item.title}}
-                </a>
-            </div>
-        </div>
-    </accordion>
-<div ng-show="Data.isMultipleMenu" access-checker="API_LIST_ORGANIZATION">
-<ui-select ng-model="Data.selectedMenu" theme="bootstrap" on-select="Func.onSelectOraganizationSelect($item)">
-<ui-select-match class="ui-select-match" placeholder="جستجو ...">{{$select.selected.title}}</ui-select-match>
-    <ui-select-choices repeat="organization in Data.organizationList | filter: $select.search">
-        <div>{{organization.title}}</div>
-    </ui-select-choices>
-</ui-select>
-</div>
-    <h4 ng-show="!Data.isMultipleMenu" class="text-info">{{Data.selectedMenu.title}}</h4>
-    <accordion>
-        <div ng-if="!menuItem.isNotShow" accordion-group class="panel-default sideMenuTab"
-             ng-repeat="menuItem in Data.menuList"
-             is-open="menuItem.open">
-            <accordion-heading>
-                    <span>
-                        <i class="flaticon-{{menuItem.icon}} management-icon"></i>
-                        {{menuItem.title}}
-                    </span>
-                <i class="pull-left glyphicon" ng-show="menuItem.items.length > 0"
-                   ng-class="{'glyphicon-chevron-down': menuItem.open, 'glyphicon-chevron-left': !menuItem.open}">
-                </i>
-            </accordion-heading>
-            <div ng-repeat="item in menuItem.items" ui-sref-active="activeTab" style="display: block;"
-                 access-checker="{{item.feature}}"
-                 ng-if="menuItem.items.length > 0" ng-class="{'disable-element': item.uiSref=='#'}">
-                <a ui-sref="{{item.uiSref}}({orgUid: Data.selectedMenu.uid})">
-                    {{item.title}}
-                </a>
-            </div>
-        </div>
-    </accordion>
-</div>
+
+<management-menu></management-menu>
+
+
 <div class="col-lg-10" ui-view="content"></div>

@@ -14,11 +14,11 @@ angular.module('cartableModule').controller('archiveLetterListCtrl', function ($
             cartableKatebSrvc.registerCurrentArchiveLetterState('page', $scope.Controller.listController.currentPage);
             cartableKatebSrvc.registerCurrentArchiveLetterState('totalCount', $scope.Controller.listController.listItems.totalCount);
             cartableKatebSrvc.setArchiveSearchQeury('', $scope.Controller.listController.currentPage);
-            cartableSrvc.updateMenu();;
+            cartableSrvc.publishTo("updateCartableMenu");;
             // if ($state.current.name === "home.secretariat.orgLetterList") {
             //     $state.go('home.secretariat.orgLetter', {letterUid: letter.uid});
             // } else {
-            $state.go('home.cartable.archiveLetter', {letterUid: letter.uid,filter:'all_archived_letters'});
+            $state.go('base.home.cartable.archiveLetter', {letterUid: letter.uid,filter:'all_archived_letters'});
             // }
         },
 
@@ -138,7 +138,7 @@ angular.module('cartableModule').controller('archiveLetterListCtrl', function ($
         },
         onOpenLetterInNewTabClick: function (checkedItem, e) {
             e.stopPropagation();
-            $window.open($state.href('home.cartable.archiveLetter', {letterUid: checkedItem.uid,filter:'all_archived_letters'}), '_blank');
+            $window.open($state.href('base.home.cartable.archiveLetter', {letterUid: checkedItem.uid,filter:'all_archived_letters'}), '_blank');
         }
     }
 

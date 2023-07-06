@@ -9,8 +9,8 @@
             <div ng-class="{'col-sm-8': $first && Data.itemsPagination.currentPage == 1, 'col-sm-10': !$first || Data.itemsPagination.currentPage != 1}">
                 <div class="row rowForm">
                     <div class="col-sm-12">
-                        <a style="font-size: 22px; margin-bottom: 20px;  display: inline-block;" ui-sref="home.newsList.newsDetails({newsUid: new.uid})">{{new.title}}</a>
-                        <i access-checker="SEE_NEWS_READERS" class="fa fa-eye pull-left" ng-click="Func.onUserList( new.uid)" style="cursor: pointer;font-size: 15px"></i>
+                        <a style=" margin-bottom: 20px;  display: inline-block;" ui-sref="Func.getStateName('base.home.newsList.newsDetails({newsUid: new.uid})')">{{new.title}}</a>
+                        <i access-checker="SEE_NEWS_READERS" class="fa fa-eye pull-left" ng-click="Func.onUserList( new.uid)" style="cursor: pointer;"></i>
                     </div>
                     <div class="col-sm-12 rowForm">
                         <label>تاریخ انتشار: </label>

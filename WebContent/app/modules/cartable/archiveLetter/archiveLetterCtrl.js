@@ -141,15 +141,15 @@ angular.module('cartableModule').controller('archiveLetterCtrl',
 
             },
             onGoToProcessClick: function (event) {
-                $state.go("home.process.processInstanceInfo", {uid: event.object.uid});
+                $state.go("base.home.process.processInstanceInfo", {uid: event.object.uid});
             },
             onReturnClick: function () {
                 if (!_.isEmpty($scope.Func.getLastSearchQuery()))
                     cartableKatebSrvc.setArchiveSearchMode(true);
-                // if ($state.current.name === "home.secretariat.orgLetter") {
-                $state.go('home.cartable.archiveLetterList');
+                // if ($state.current.name === "base.home.secretariat.orgLetter") {
+                $state.go('base.home.cartable.archiveLetterList');
                 // } else {
-                //     $state.go('home.cartable.orgLetterList');
+                //     $state.go('base.home.cartable.orgLetterList');
                 // }
             },
             getLastSearchQuery: function () {
@@ -172,7 +172,7 @@ angular.module('cartableModule').controller('archiveLetterCtrl',
 				}
 
 
-				$state.go('home.cartable.archiveLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
+				$state.go('base.home.cartable.archiveLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
 
 
 
@@ -190,7 +190,7 @@ angular.module('cartableModule').controller('archiveLetterCtrl',
 				}
 				
 
-				$state.go('home.cartable.archiveLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+				$state.go('base.home.cartable.archiveLetter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
 
 
                 // cartableKatebSrvc.getNextArchiveLetter('previous').then(function (res) {

@@ -1,11 +1,23 @@
 angular.module('ruleModule').config(['$stateProvider', function($stateProvider) {
 	var ruleStates = [
 		{
-			state: "home.management.rule",
+			state: "base.home.management.rule",
 			config: {
 				url: '/:orgUid/rule',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/rule/rule.html",
+						controller: 'ruleCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.rule",
+			config: {
+				url: '/:orgUid/rule',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/rule/rule.html",
 						controller: 'ruleCtrl'
 					}

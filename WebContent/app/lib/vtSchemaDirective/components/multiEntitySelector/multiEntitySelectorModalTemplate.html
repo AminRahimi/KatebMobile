@@ -1,0 +1,63 @@
+<div class="modal-header">
+     <h3 class="modal-title">يک یا چند موجوديت را انتخاب نماييد</h3>
+</div>
+<div class="modal-body  itemSelectorModal haveFormRows">
+     <div class="col-md-12 row">
+          <div class="input-group col-md-6">
+               <input type="text" placeholder="نام موجودیت" ng-model="searchingFor.query" class="form-control" ui-keypress="{13:'onSearchClick();'}"></input>
+               <span style="cursor: pointer; cursor: hand;" class="input-group-addon btn btn-default" ng-click="onSearchClick();">
+                    <i class="glyphicon glyphicon-search"></i>
+               </span>
+               <span ng-show="isSearchMode" ng-click="onCancelSearchClick()" aria-hidden="true" class="glyphicon glyphicon-remove" style="left: 44px; position: absolute; top: 18px; z-index: 2; color: rgb(217, 83, 79); cursor: pointer;"></span>
+          </div>
+     </div>
+     <div class="col-sm-12 row">
+          <div class="slideCheckbox ng-hide"  style="width: 155px;" ng-if="allFeatures['hasAccessToDeletedEntities']">
+               <input type="checkbox" value="None" id="slideCheckbox" name="check" ng-model="showDeleted" />
+               <label for="slideCheckbox" style="width: 110px;">
+                    <span>نمایش حذف‌شده‌ها</span>
+               </label>
+          </div>
+     </div>
+     <p class="help-block" ng-show="!items.length">اطلاعاتی جهت نمايش وجود ندارد</p>
+     <!-- haveTableFixedHeaderContainer -->
+     <div class="col-md-12 row "  ng-show="items.length">
+          <div class="tableFixedHeaderContainer">
+               <table class="table table-hover table-striped">
+                    <thead>
+                         <tr>
+                              <th ng-repeat="itemKey in jsonSchema.extents.list" ng-if="itemKey[0]!='_'">
+                                   {{jsonSchema.properties[itemKey].label}}
+                              </th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr ng-show="items.length" ng-class="{selected:isItemSelected(item)}" ng-repeat="item in items" ng-click="onSelectItem(item)" ng-class="{'deleted':item.isDeleted}" ng-hide="item.isDeleted && !showDeleted">
+                              <td ng-repeat="itemKey in jsonSchema.extents.list" ng-if="itemKey[0]!='_'">{{item[itemKey]|emptyValueLabelFilter:itemKey:jsonSchema.properties|splitString:10}}</td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+          <ul uib-pagination total-items="itemsPagination.totalItems" 
+          		style="margin:0px;" 
+          		ng-model="itemsPagination.currentPage" 
+          		max-size="itemsPagination.maxSize" 
+          		items-per-page="itemsPagination.perPage" 
+          		ng-change="itemsPagination.pageChanged()" 
+          		class="pagination-sm" boundary-links="true" 
+          		first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی"> </ul>
+     </div>
+     <div class="row">
+          <label class="control-label col-sm-4">انتخاب شده ها:</label>
+          <div class="col-sm-12 clearfix">
+               <b class="alert alert-success pull-right" style="margin-right: 5px;" ng-repeat="selectedItem in selectedItems">
+               	{{ selectedItem._displayString }}
+               	<i class="fa fa-times fa-btn" ng-click="onRemove($index)"></i>
+               </b>
+          </div>
+     </div>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-xs btn-xs btn-primary" ng-click="ok()">تاييد</button>
+     <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="cancel()">لغو</button>
+</div>

@@ -1,0 +1,9 @@
+[class^="flaticon-"]::before, [class*=" flaticon-"]::before, [class^="flaticon-"]::after, [class*=" flaticon-"]::after {
+    color: rgba(225,225,225,0.7);
+	margin: 0px;
+}
+
+.flaticon-fm-signs::before , .flaticon-fm-close::before{
+    font-size: 14px;
+    margin-left: 0;
+}

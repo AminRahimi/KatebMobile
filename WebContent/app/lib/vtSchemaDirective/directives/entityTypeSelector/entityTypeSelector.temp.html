@@ -1,0 +1,24 @@
+<div class="col-sm-6 p-r">
+	<p class="input-group">
+		<input name="name" class="form-control" ng-model="model.name"/>
+		<span class="input-group-btn">
+			<button type="button" class="btn btn-default"
+				ng-click="Func.onOpenSelectorModal()">
+				<i class="flaticon-search"></i>
+			</button>
+		</span>
+	</p>
+</div>
+<button class="btn btn-passive distance-between-buttons-directive col-sm-2" ng-click="Func.onOpenAddModalClick()">
+	<span class="flaticon-signs"></span>
+</button>
+<button class="btn btn-passive col-sm-2" style="margin-right: -4px; margin-left: 4px;" ng-click="Func.onOpenEditModalClick()">
+	<span class="flaticon-pen"></span>
+</button>
+
+
+<button class="btn btn-passive col-sm-2" ng-click="Func.onRemoveClick()" ng-show="model">
+	<span class="flaticon-cross"></span>
+</button>	
+
+

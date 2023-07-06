@@ -1,0 +1,117 @@
+<style>
+body {
+	overflow: auto;
+	padding-top: 44px;
+}
+.dis-none{
+	display: none !important;
+}
+.dis-block{
+	display: block !important;
+}
+.dis-in-block{
+	display: inline-block !important;
+}
+</style>
+<div class="mainContent  form-manage">
+	
+
+	<!-- --------------------------------------------------------------------------------------------- -->
+	<div class="panel-draggabled-component" ng-class="{'open':Data.showIconText}">
+		<div class="panel panel-default ">
+			<div class="panel-heading">
+				<span>فرم پایه</span>
+				<button ng-click="Func.onAddGroupClick();" class="btn btn-add-form">+
+					<span class="flaticon-signs" aria-hidden="true" style="cursor: pointer;" ng-show="Data.formItem.viewGroups.length"></span>
+					<!-- <label ng-show="!Data.formItem.viewGroups.length">افزودن فرم</label> -->
+				</button>
+				<div class="row-reverse">
+					<button ng-click="Func.onRemoveViewGroupClick(tabActiveIndex)" ng-hide="tabActiveIndex==Data.formItem.viewGroups.length" type="button" class="btn btn-xs btn-danger btn-text pull-left">حذف</button>
+					<button class="btn btn-xs btn-success btn-text" type="button" ng-click="Func.onSaveFormClick()" ng-disabled="Data.formItem.properties['addProp']">ذخیره</button>
+					<button class="btn btn-xs btn-warning btn-text" type="button" ng-click="Func.onReturnClick()">انصراف</button>
+				</div>
+				
+			</div>
+			<div class="panel-body" >
+			<!-- nice-option="{railalign: 'left' , cursorcolor: '#000' , cursoropacitymin:0.5}" ng-nicescroll -->
+				<div class="panel-body-child" >
+					<div class="row noSideMargin">
+
+						<fieldset  ng-repeat="viewGroup in Data.formItem.viewGroups" ng-class="{'active':tabActiveIndex==$index}" ng-click="Func.changeTab($index);">
+							<legend  aria-hidden="true" style="cursor: pointer;" ng-click="Func.onEditGroupClick(viewGroup)">
+								<span class="glyphicon glyphicon-edit"></span>
+								{{viewGroup.name}}
+							</legend>
+							<div style="padding-left: 10px; min-height: 300px;" jqyoui-droppable="droppable" data-jqyoui-options data-drop="true">
+								<form name="example" class="form-horizontal" role="form" ng-init="Func.onInitSchemaField($index)">
+									<schema-form-fields ng-init="isEditMode=true" is-edit-mode="isEditMode" user-secret-level="UserSecretLevelObj.UserSecretLevel" api="Data.apis[$index]" schema="Data.formItem" model="model" is-col-7="true"></schema-form-fields>
+								</form>
+							</div>
+
+						</fieldset>
+						
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="leftcolumn" >
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span>فرم پایه</span>
+				<button ng-click="Func.onAddGroupClick();" class="btn btn-add-form">+
+					<span class="flaticon-signs" aria-hidden="true" style="cursor: pointer;" ng-show="Data.formItem.viewGroups.length"></span>
+					<!-- <label ng-show="!Data.formItem.viewGroups.length">افزودن فرم</label> -->
+				</button>
+				<div class="row-reverse">
+					<button ng-click="Func.onRemoveViewGroupClick(tabActiveIndex)" ng-hide="tabActiveIndex==Data.formItem.viewGroups.length" type="button" class="btn btn-xs btn-danger btn-text pull-left">حذف</button>
+					<button class="btn btn-xs btn-success btn-text" type="button" ng-click="Func.onSaveFormClick()" ng-disabled="Data.formItem.properties['addProp']">ذخیره</button>
+					<button class="btn btn-xs btn-warning btn-text" type="button" ng-click="Func.onReturnClick()">انصراف</button>
+				</div>
+			</div>
+			<div class="panel-body">
+				<edit-prop type-list="Data.entityTypeList" ng-show="Data.mode =='EDIT-PROP'"   base-selector-list="Data.baseSelectorList" property="editingProp"  api="api.editProp"></edit-prop>
+				<edit-view-group api="api.editViewGroup" view-group="editingViewGroup" ng-show="Data.mode =='EDIT-VIEWGROUP'" ></edit-view-group>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar-form-manage"  ng-class="{'sidebar-close':!Data.showIconText , 'sidebar-open':Data.showIconText}">
+		<!-- <div class="panel panel-default">
+			<div class="panel-body">
+				<div class="col-sm-3">
+					<a class="btn btn-default btn-xs btn-text" ng-disabled="Data.mode=='add'" type="button" style="margin-right: 30px" ng-click="Func.onReturnClick()">بازگشت</a>
+				</div>
+				<div class="col-sm-3">
+					<a class="btn btn-primary btn-xs btn-text" ng-disabled="Data.mode=='add'" type="button" ng-click="Func.helpForDrag()">راهنما</a>
+				</div>
+			</div>
+		</div> -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<button ng-click="Func.onShowIconClick()" ng-if="Data.showIconText" class="btn sidebar-btn-toggle">
+					<span class="flaticon-close"></span>
+				</button>
+				<button ng-click="Func.onShowIconTextClick()" ng-if="!Data.showIconText" class="btn sidebar-btn-toggle">
+					<span class="flaticon-signs"></span>
+				</button>
+			</div>
+			<div class="panel-body">
+				<div class="sidebar-component" ng-repeat="comp in Data.components">
+					<!-- 					<div  ng-repeat="comp in Data.components" class="col-sm-5 widget" ng-class="comp.directiveName"  -->
+					<!-- 						ng-model="comp.model" model="comp.model" field="comp.field" is-edit-mode="true" -->
+					<!-- 						jqyoui-draggable="{animate:true,onStart:'Func.test(comp)'}"  -->
+					<!-- 						data-jqyoui-options="{revert: 'invalid'}" data-drag="true"></div> -->
+					<!-- <img ng-src="app/assets/img/component_pics/{{comp.picName}}.png" ng-class="{'col-sm-12':!Data.showIconText , 'col-sm-6':Data.showIconText}" jqyoui-draggable="{animate:true,onStart:'Func.onStartDragFunction(comp)'}" data-jqyoui-options="{revert: 'invalid'}" data-drag="true" style=""> -->
+					<span  style="" ng-class="{'dis-block':!Data.showIconText , 'pull-right':Data.showIconText}" class="{{comp.picName}} " jqyoui-draggable="{animate:true,onStart:'Func.onStartDragFunction(comp)'}" data-jqyoui-options="{revert: 'invalid'}" data-drag="true" style=""></span>
+					<label class="pull-right"  ng-class="{'dis-none':!Data.showIconText}">{{comp.persianName}}</label>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+

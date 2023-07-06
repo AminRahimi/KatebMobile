@@ -1,7 +1,7 @@
 angular.module('privatesettingModule').config(['$stateProvider', function($stateProvider) {
 	var privatesettingStates = [
 		{
-			state: "home.setting.privatesetting",
+			state: "base.home.setting.privatesetting",
 			config: {
 				url: '/privatesetting/',
 				views: {

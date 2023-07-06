@@ -8,7 +8,7 @@ angular.module('secretariatModule').controller('secretariatUnapprovedIncomingLis
 	
 	$scope.Func = {
 		onIncomingClick: function(incoming){
-			$state.go('home.secretariat.incoming', {secUid: $scope.Data.secUid, incUid: incoming.uid});
+			$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid, incUid: incoming.uid});
 		},
         onIncomingDeleteClick: function (incoming) {
             secretariatSrvc.deleteIncoming($scope.Data.secUid, incoming.uid).then(function (res) {

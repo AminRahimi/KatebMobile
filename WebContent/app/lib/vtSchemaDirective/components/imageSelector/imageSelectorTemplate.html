@@ -1,0 +1,12 @@
+<span ng-show="isEditMode" ng-form="setViewValueForm">
+     <input class="file" type="file" name="setViewValueName" accept="image/*" ngf-select="onFileSelect($files)" class="filestyle" ng-model="setViewValueModel" />
+</span>
+<span class=" glyphicon glyphicon-remove" ng-show="model && isEditMode" style="cursor: pointer; cursor: hand; position: absolute; z-index: 2; left: 56px; top: 18px; color: red" data-placement="top" title="پاک کردن" ng-click="removeFile();" class="remove"> </span>
+<span ng-show="model.downloadLink || !isEditMode">
+     <div ng-hide="model.downloadLink">
+          <img class="thumbnail" alt="" src="{{defaultPic}}" ng-click="onShowBigPicClick(true);" style="cursor: pointer; max-width: 104px; max-height: 156px;">
+     </div>
+     <div ng-show="model.downloadLink">
+          <img class="thumbnail" alt="" src="{{model.downloadLink}}" ng-click="onShowBigPicClick(false);" style="cursor: pointer; max-width: 104px; max-height: 156px;">
+     </div>
+</span>

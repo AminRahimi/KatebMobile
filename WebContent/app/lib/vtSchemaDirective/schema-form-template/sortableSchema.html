@@ -1,0 +1,6 @@
+<ui-sortable ng-model='selectedViewGroup.members'>
+<li ng-repeat='field in selectedViewGroup.members'>
+     <schema-form-field ng-if="schema.properties[field]" is-focused='isFocused' field='field' glob-schema="schema" schema='schema.properties[field]' model='model' required='schema.properties[field].required' label='{{schema.properties[field].label}}' ng-mouseenter='schema.properties[field].showEditButton=true' ng-mouseleave='schema.properties[field].showEditButton=false' is-edit-mode='isEditMode' api='api' class='sortableSchema'></schema-form-field>
+     <schema-form-field ng-if="schema.staticSections[field]" is-focused='isFocused' field='field' glob-schema="schema" schema='schema.staticSections[field]' model='model' required='schema.staticSections[field].required' label='{{schema.staticSections[field].label}}' ng-mouseenter='schema.staticSections[field].showEditButton=true' ng-mouseleave='schema.staticSections[field].showEditButton=false' is-edit-mode='isEditMode' api='api' class='sortableSchema'></schema-form-field>
+</li>
+</ui-sortable>

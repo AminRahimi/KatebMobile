@@ -1,0 +1,35 @@
+<div class="modal-header">
+     <h3 class="modal-title">يک موضوع را انتخاب نماييد</h3>
+</div>
+<div class="modal-body  itemSelectorModal haveFormRows">
+     <div class="col-md-6 row">
+          <div class="input-group">
+               <input type="text" placeholder="نام موضوع" ng-model="searchingFor.query" class="form-control" ui-keypress="{13:'onSearchClick();'}">
+               <span style="cursor: pointer; cursor: hand;" class="input-group-addon btn btn-default" ng-click="onSearchClick();">
+                    <span class="glyphicon glyphicon-search"></span>
+               </span>
+          </div>
+     </div>
+     <div class="row" ng-repeat="nodeArray in searchResults">
+          <div class="btn-breadcrumb btn-group col-sm-12" ng-click="onBreadcrumbSearchResultClick(nodeArray)">
+               <span ng-repeat="node in nodeArray" class="btn btn-breadcrumb-item btn-breadcrumb-no-dropdown" data-placement="bottom" data-toggle="tooltip">
+                    <lable class="control-label">{{node.name}}</lable>
+               </span>
+          </div>
+     </div>
+     <div class="row">
+          <div class="col-md-12">
+               <vira-tree ng-init="isEditable=false" is-editable="isEditable" selected-node="viraTreeDirective.selectedNode" selected-nodes="viraTreeDirective.selectedNodes" controller="viraTreeDirective.controller" tree-data="b"></vira-tree>
+          </div>
+     </div>
+     <div class="row">
+          <label class="control-label col-sm-4">انتخاب شده:</label>
+          <div class="col-sm-12">
+               <b>{{ viraTreeDirective.selectedNode._displayString[viraTreeDirective.selectedNode._displayString.length-1] }}</b>
+          </div>
+     </div>
+     <div class="modal-footer">
+          <button class="btn btn-xs btn-primary" ng-click="ok()">تاييد</button>
+          <button class="btn btn-xs btn-warning pull-left" ng-click="cancel()">لغو</button>
+     </div>
+</div>

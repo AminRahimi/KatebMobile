@@ -3,9 +3,15 @@ kateb.katebConfigSrvc = function() {
 	var defer = null;
 	var appData = null;
 	var isResolved = false;
+	var CachedConfigObj = null;
 
 	 /* @ngInject */ function katebConfigSrvc($http, $q, Restangular, $rootScope, configObj) {
 		defer = $q.defer();
+
+		this.getCachedConfigObj = function(){
+			return CachedConfigObj
+		}
+
 		this.getConfig = function() {
 			if (isResolved || configObj) {
 				
@@ -39,6 +45,9 @@ kateb.katebConfigSrvc = function() {
 				});
 				$rootScope.features = _configObj.userConfig.features
 				Restangular.setBaseUrl(getBaseRequestUrl());
+
+				CachedConfigObj = angular.copy(_configObj);
+				
 				return _configObj;
 			})
 		}

@@ -1,0 +1,87 @@
+<div class="modalDiv drop-box vt-photo-modal" 
+	ngf-drop="Func.onFileSelect($files)" ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-pattern="'image/*'">
+	<div class="preModel" ng-show="Data.addPicButton">
+		<div class="headerDiv">
+			<span class="header_sp">کشیدن و انداختن </span>
+			<button class="uploadPic" ngf-select="Func.onFileSelect($files)">
+				<i class="glyphicon glyphicon-plus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="nextModel" ng-show="!Data.addPicButton">
+		<div class="cropper_contentDiv">
+			<div class="cropper_header"></div>
+			<div class="cropper_Contain">
+				<div class="img-cropper">
+					<div vt-ng-cropper control-fn="Data.cropperCtrl" ng-if="Data.showCrop"></div>
+				</div>
+				<div class="cropper_bottomRow">
+					<button ng-click="Func.submit()">افزودن</button>
+					<button ng-click="Func.cancel()">انصراف</button>
+				</div>
+			</div>
+			<div class="cropper_footer">
+				<div class=cropper_footer_btn>
+					<button class="activeBtn" data-method="rotate" data-option="45"
+						type="button" title="Rotate Right">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, 45)"> 
+							<span class="icon icon-rotate-right"></span>
+						</span>
+					</button>
+					<button class="activeBtn" data-method="rotate" data-option="-45"
+						type="button" title="Rotate Left">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, -45)"> 
+							<span class="icon icon-rotate-left"></span>
+						</span>
+					</button>
+					<button class="activeBtn" data-method="zoom" data-option="0.1"
+						type="button" title="Zoom In">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, 0.1)"> 
+							<span class="icon icon-zoom-in"></span>
+						</span>
+					</button>
+					<button class="activeBtn" data-method="zoom" data-option="-0.1"
+						type="button" title="Zoom Out">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, -0.1)"> 
+							<span class="icon icon-zoom-out"></span>
+						</span>
+					</button>
+					<button class="activeBtn" data-method="setDragMode"
+						data-option="move" type="button" title="Move">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)">
+							<span class="icon icon-move"></span>
+						</span>
+					</button>
+					<button class="activeBtn" data-method="setDragMode"
+						data-option="crop" type="button" title="Crop">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;crop&quot;)">
+							<span class="icon icon-crop"></span>
+						</span>
+					</button>
+					<button class="activeBtn" ngf-select="Func.onFileSelect($files)"
+						data-method="setDragMode" data-option="insert" type="button"
+						title="insert">
+						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;insert&quot;)">
+							<span class="icon icon-insert"></span>
+						</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<form class="row" ng-hide="Data.noTitleDescription">
+			<div class="form-group col-sm-12 margin-top-15">
+				<label class="col-sm-2">عنوان</label>
+				<div class="col-sm-9">
+					<input ng-model="Data.picInfo.title" class="form-control">
+				</div>
+			</div>
+			<div class="margin-bottom-15 col-sm-12">
+				<label class="col-sm-2">توضیحات</label>
+				<div class="col-sm-9">
+					<textarea ng-model="Data.picInfo.description" rows="3"
+						class="form-control no-resize"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

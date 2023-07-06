@@ -9,7 +9,7 @@ angular.module('secretariatModule').controller('secretariatIncommingLetterListCt
 	$scope.Func = {
 		onIncomingClick: function(incoming){
             $scope.Func.setLastPage($scope.Controller.listController.currentPage);
-			$state.go('home.secretariat.letterView', {letterUid:incoming.letter.uid, secUid:$state.params.secUid ,letterType:"incoming"});
+			$state.go('base.home.secretariat.letterView', {letterUid:incoming.letter.uid, secUid:$state.params.secUid ,letterType:"incoming"});
 		},
 
 		onChangeSearchModeClick: function(mode){

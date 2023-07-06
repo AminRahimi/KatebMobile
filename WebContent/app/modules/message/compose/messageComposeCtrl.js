@@ -33,7 +33,7 @@ angular.module('messageModule').controller('messageComposeCtrl', function($scope
 					return tmp;
 				});
 				messageSrvc.sendMessage($scope.Data.messageInfo).then(function (response) {
-					$state.go("home.message.inbox");
+					$state.go("base.home.message.inbox");
 				});
 			} else {
 				$scope.Data.validationClicked = true;

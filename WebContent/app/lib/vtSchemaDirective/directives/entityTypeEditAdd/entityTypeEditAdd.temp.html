@@ -1,0 +1,16 @@
+<div ng-form="form">
+	<div class="row form-group" ng-class="{'has-error':form.name.$invalid && Data.validationClicked}">
+		<label class="col-sm-5 control-label">عنوان</label>
+		<p class="col-sm-7 form-control-static" ng-show="Data.mode!='add' && Data.mode!='edit'">{{model.name|EnToFaNumber}}</p>
+		<div ng-show="Data.mode=='add' || Data.mode=='edit'" class="col-sm-7">
+			<input type="text" class="form-control" name="name" ng-model="Data.tmp.model.name">
+		</div>
+	</div>
+	<div class="row form-group" ng-class="{'has-error':form.key.$invalid && Data.validationClicked}">
+		<label class="col-sm-5 control-label">کلید انگلیسی</label>
+		<p class="col-sm-7 form-control-static" ng-show="Data.mode!='add'" style="direction: ltr; text-align: left;">{{model.key|EnToFaNumber}}</p>
+		<div ng-show="Data.mode=='add'" class="col-sm-7">
+			<input type="text" class="form-control" name="key" ng-model="Data.tmp.model.key">
+		</div>
+	</div>
+</div>

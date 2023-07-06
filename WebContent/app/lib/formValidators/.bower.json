@@ -1,0 +1,22 @@
+{
+  "name": "formValidators",
+  "authors": [
+    "viratech <www.viratech.ir>"
+  ],
+  "description": "",
+  "main": "formValidatorsModule.js",
+  "license": "",
+  "dependencies": {
+    "angular": "*"
+  },
+  "_release": "e6d878da0c",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e6d878da0c676a267f25c3120273a487ff14eb71"
+  },
+  "_source": "http://gitlab.viradev.ir:6480/clientproject/formvalidators.git",
+  "_target": "*",
+  "_originalSource": "http://gitlab.viradev.ir:6480/clientproject/formvalidators.git",
+  "_direct": true
+}

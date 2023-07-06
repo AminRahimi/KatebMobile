@@ -1,0 +1,183 @@
+/* formsaz */
+body{
+	padding: 0px !important;
+}
+.form-manage .panel-default{
+	border:0px none !important;
+}
+.sidebar-form-manage{
+	 float: right;
+    height: calc(100vh - 58px);
+    margin-right: -100%;
+    background-color: #31373d !important;
+}
+.sidebar-form-manage > .panel-default{
+	background-color: #31373d !important;
+	padding: 0px !important;
+}
+.sidebar-form-manage .panel-heading{
+	background-color: transparent !important;
+	border-bottom: 1px solid #595959 !important;
+	align-items: center;
+    border-bottom-width: 1px !important;
+    display: flex;
+    height: 40px;
+}
+.sidebar-form-manage > .panel > .panel-body{
+	height: calc(100vh - 40px);
+}
+.sidebar-form-manage label{
+	color: white;
+}
+.sidebar-form-manage .sidebar-btn-toggle{
+	background-color: transparent !important;
+	color: white !important;
+	border: 0 none !important;
+	padding: 5px !important;
+	margin: 0 auto !important;
+}
+
+.sidebar-open{
+	width: 160px;
+	transition: width 1s;
+}
+.sidebar-close{
+	width: 45px;
+	transition: width 1s;
+}
+.sidebar-component{
+	margin-bottom: 10px;
+	cursor: pointer;
+	height: 28px;
+    
+}
+.overflow-hidden{
+	overflow: hidden;
+}
+.sidebar-component > span{
+	text-align: center;
+	width:45px;
+}
+.sidebar-component > label{
+	color: rgba(225, 225, 225, 0.7);
+	font-size: 10px;
+	height: 28px;
+	line-height: 28px;
+}
+.panel-draggabled-component{
+	padding: 0px;
+	float: right;
+    width: 100%;
+   /*  height: calc(100vh - 43px); */
+}
+.panel-draggabled-component > .panel-default{
+	padding: 0px;
+	margin: 0 45px 0 40%;
+	transition: margin 1s;
+}
+.panel-draggabled-component.open > .panel-default{
+	padding: 0px;
+	margin: 0 160px 0 40%;
+	transition: margin 1s;
+	
+}
+.panel-draggabled-component  > .panel > .panel-heading{
+	background-color: #31373d !important;
+	border: 0px none !important;
+	height: 40px;
+	padding: 5px 15px !important;
+}
+.panel-draggabled-component  > .panel > .panel-heading > span{
+	color: white;
+}
+.panel-draggabled-component > .panel > .panel-body , .leftcolumn > .panel > .panel-body{
+	background-color: #e9f2f9;
+	padding: 15px !important;
+	height: calc(100vh - 40px);
+	overflow: hidden;
+}
+.panel-draggabled-component .panel-body-child , .leftcolumn .panel-body-child{
+	background-color: white;
+	height: calc(100vh - 70px);
+	overflow-y: scroll; 
+}
+.panel-draggabled-component .btn-add-form{
+	background-color: transparent;
+	border:0px none;
+	color: white;
+}
+.panel-draggabled-component schema-form-fields label{
+	color: #0e0e0e !important;
+}
+.panel-draggabled-component .formal-line{
+	display: none;
+}
+
+.leftcolumn{
+	float: right;
+    margin-right: -40%;
+    width: 40%;
+    background-color: white;
+    /* overflow-y: scroll;
+    height: 100vh; */
+}
+.panel{
+	margin: 0;
+}
+.panel-default > .panel-heading {
+    padding: 5px 0;
+}
+.panel-default > .panel-body {
+    padding: 15px 0;
+}
+.panel-heading {
+    align-items: center;
+    border-bottom-width: 2px;
+    display: flex;
+    border-radius:0px;
+}
+.btn-xs {
+    border-radius: 2px;
+    padding: 5px 14px;
+}
+.noSideMargin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.leftcolumn > .panel > .panel-heading {
+    background-color: #31373d !important;
+    border: 0 none !important;
+    height: 40px;
+    padding: 5px 15px !important;
+    flex-direction: row-reverse;
+}
+.leftcolumn > .panel > .panel-body {
+    height: calc(100vh - 40px);
+    padding-right: 0px !important;
+}
+.form-manage schema-form-field vt-persian-date-picker .input-group-btn .btn{
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+ui-sortable li{
+	list-style: none;
+}
+.ui-sortable-handle{
+	padding-bottom: 3px;
+    padding-top: 10px;
+ 	}
+.ui-sortable-handle-select{
+	background: #ffffe6 none repeat scroll 0 0;
+    border: 1px dashed #bbb;
+    border-radius: 5px;
+    /* margin-bottom: 10px;
+    padding-bottom: 3px;
+    padding-top: 10px; */
+}
+.ui-sortable .glyphicon-remove{
+	margin-right: 30px;
+}
+.ui-sortable .glyphicon-remove , .ui-sortable .glyphicon-edit{
+	cursor: pointer;
+	font-size: 16px;
+}

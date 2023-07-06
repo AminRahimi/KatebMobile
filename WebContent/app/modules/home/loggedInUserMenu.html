@@ -1,0 +1,45 @@
+<style>
+
+  :root{
+    --logged-in-user-menu-avatar-size: 24px;
+    --logged-in-user-menu-border: 1px solid var(--light);
+  }
+
+</style>
+
+
+
+
+<div class="btn-group  tw-border tw-border-light tw-rounded tw-border-solid">
+  <button type="button" class="btn btn-transparent   dropdown-toggle tw-flex tw-items-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<!--FIXME:src -->
+    <img src="https://docteav.saadev.ir/Ganjeh/app/assets/img/user.svg"
+         class="tw-rounded-full tw-h-[--logged-in-user-menu-avatar-size] tw-w-[--logged-in-user-menu-avatar-size] tw-border tw-border-light tw-border-solid" >
+    <span class=" tw-text-black tw-text-right tw-m-0 tw-mx-1">
+      <div>{{Data.userFullName}}</div>
+<!-- FIXME:user number     -->
+      <div>546849</div>
+    </span>
+     <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu tw-w-full">
+    <li><a>{{Data.time|persianDate:'yyyy/MM/dd'|EnToFaNumber}}</a></li>
+    <li><a ui-sref="Func.getStateName('base.home.changePassword')">تغییر رمز عبور</a></li>
+    <li class="menu-item dropdown dropdown-submenu dropdown-submenu-left">
+      <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> تنظیمات
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-repeat="submenu in Data.settingMenu" access-checker="{{submenu.feature}}">
+          <a class="submenu-item" ui-sref="{{Func.getStateName(submenu.uiSref)}}">{{submenu.title}}</a>
+        </li>
+      </ul>
+    </li>
+    <li><a ui-sref="Func.getStateName('base.home.theme')">تغییر ظاهر سامانه</a></li>
+    <li ng-show="Data.currentUserConfig.config.server.host==='kateb.saadev.ir'">
+      <a ng-click="Func.onGetClientLogClick()">client error log</a>
+    </li>
+    <li class="divider"></li>
+    <li><a href="logout">خروج</a></li>
+  </ul>
+</div>
+

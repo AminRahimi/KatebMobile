@@ -1,0 +1,14 @@
+<div class="row rowForm" ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode && api.validationClicked}">
+     <label for="{{field}}" class="control-label col-sm-4" ng-class="{'required':isEditMode && required}"> {{label}}</label>
+     <div class="col-sm-8 q14">
+          <topic-selector api="api" class="widget" ng-model="model[field]" model="model[field]" field="field" is-edit-mode="isEditMode"></topic-selector>
+          <p class="form-control-static" ng-class="{hidden:isEditMode}">
+               <!--  <span>{{model[field].displayString[model[field].displayString.length-1]}}</span> -->
+               <span ng-repeat="str in model[field].displayString track by $index" ng-hide="str=='*' && model[field].displayString.length>1">
+                    <i ng-if="!$first && $index!=1" class='glyphicon glyphicon-chevron-left' style="margin: 2px"></i>
+                    <i ng-if="str!='...'">{{str}}</i>
+                    <i ng-if="str=='...'" style="cursor: pointer;">{{str}}</i>
+               </span>
+          </p>
+     </div>
+</div>

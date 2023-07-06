@@ -1,7 +1,7 @@
 angular.module('messageModule').config(['$stateProvider', function($stateProvider) {
 	var messageStates = [
 	    {
-	    	state: "home.message",
+	    	state: "base.home.message",
 	    	config : {
 				url : "/message",
 				views: {
@@ -12,22 +12,22 @@ angular.module('messageModule').config(['$stateProvider', function($stateProvide
 				}
 			}
 	    },{
-			state: "home.message.inbox",
+			state: "base.home.message.inbox",
 			config: {
 				url: '/inbox',
 				views: {
-					'messageContainer@home.message': {
+					'messageContainer@base.home.message': {
 						templateUrl: "app/modules/message/inbox/messageInbox.html",
 						controller: 'messageInboxCtrl'
 					}
 				}
 			}
 		},{
-			state: "home.message.send",
+			state: "base.home.message.send",
 			config: {
 				url: '/send',
 				views: {
-					'messageContainer@home.message': {
+					'messageContainer@base.home.message': {
 						templateUrl: "app/modules/message/send/messageSend.html",
 						controller: 'messageSendCtrl'
 					}
@@ -35,11 +35,11 @@ angular.module('messageModule').config(['$stateProvider', function($stateProvide
 			}
 		},
 		{
-			state: "home.message.compose",
+			state: "base.home.message.compose",
 			config: {
 				url: '/compose',
 				views: {
-					'messageContainer@home.message': {
+					'messageContainer@base.home.message': {
 						templateUrl: "app/modules/message/compose/messageCompose.html",
 						controller: 'messageComposeCtrl'
 					}

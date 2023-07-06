@@ -1,11 +1,23 @@
 angular.module('hameshhotkeyModule').config(['$stateProvider', function($stateProvider) {
 	var hameshhotkeyStates = [
 		{
-			state: "home.management.hameshhotkey",
+			state: "base.home.management.hameshhotkey",
 			config: {
 				url: '/:orgUid/hameshhotkey/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/hameshhotkey/hameshhotkey.html",
+						controller: 'hameshhotkeyCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.hameshhotkey",
+			config: {
+				url: '/:orgUid/hameshhotkey/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/hameshhotkey/hameshhotkey.html",
 						controller: 'hameshhotkeyCtrl'
 					}

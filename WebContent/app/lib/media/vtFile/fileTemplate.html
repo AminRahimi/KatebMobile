@@ -1,0 +1,43 @@
+<div ng-if="isEditMode">
+	<p class="input-group">
+		<input name="{{name}}" type="text" readonly="readonly" ng-required="{{required}}"
+			class="form-control not-radius" ng-model="model.name" />
+		<span >
+			<button class="btn btn-default not-radius" style="white-space: unset;" type="button"
+				ngf-select 
+				ngf-multiple="multiple"
+				ngf-change="uploadFile($files)">
+				<i class="glyphicon glyphicon-file"></i>
+				<div style="display: none;" id="upload-text">لطفا به منظور بارگذاری فایل کلیک کنید.</div>
+			</button>
+		</span>
+	</p>
+	<span class="col-sm-12 text-error" ng-show="typeNotSupported">
+		نوع فایل انتخابی مناسب نمی‌باشد.
+	</span>
+	<div class="progress" ng-show="uploadingFile.showUpload && uploadingFile.progressPercentage<100 ">
+		<div class="progress-bar progress-bar-success progress-bar-striped"
+			role="progressbar"
+			aria-valuenow="{{uploadingFile.progressPercentage}}"
+			aria-valuemin="0" aria-valuemax="100"
+			ng-style="{width : uploadingFile.progressPercentage + '%' }">
+			<span>{{uploadingFile.progressPercentage|EnToFaNumber}}% </span>
+		</div>
+		<a class="btn btn-default" ng-click="cancelUpload()" ng-show="uploadingFile.progressPercentage != 100 || model!=null">
+			<i class="flaticon-close-button pull-left"></i>
+		</a>
+	</div>
+</div>
+<div ng-hide="hideDownload" ng-if="model.name!=null && model.name!=''">
+
+	<span class="tw-w-[290px]">
+		<kateb-attach-view attachment-type="FILE" attachment="model" attachment-link="" on-remove="deleteFile($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+	</span>
+	
+
+	<!-- <div class="alert alert-default">
+		<a class="btn" ng-click="downloadFile()"><i class="glyphicon glyphicon-arrow-down"></i></a>
+		<span class="control-label">{{model.name|splitString:15}}</span>
+		<span class="flaticon-close-button" ng-if="isEditMode" ng-click="deleteFile()"></span>
+	</div> -->
+</div>

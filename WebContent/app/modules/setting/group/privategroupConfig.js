@@ -1,7 +1,7 @@
 angular.module('privategroupModule').config(['$stateProvider', function($stateProvider) {
 	var groupStates = [
 		{
-			state: "home.setting.group",
+			state: "base.home.setting.group",
 			config: {
 				url: '/group/',
 				views: {

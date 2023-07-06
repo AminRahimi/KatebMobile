@@ -1,13 +1,12 @@
 
 <div class="btn-group" dropdown id="tagInputDropDown" style="width: 100%;">
-  <button type="button" class="btn btn-primary single-button btnActionInLetter btn-icon" dropdown-toggle style="display: flex;font-size: 10px !important;padding: 0 !important;margin: 0 !important;border: 1px solid #d6d6d6 !important; width: 100%;">
+  <button type="button" class="btn btn-primary single-button btnActionInLetter btn-icon" dropdown-toggle style="display: flex;padding: 0 !important;margin: 0 !important;border: 1px solid #d6d6d6 !important; width: 100%;">
     <i class="flaticon-business" style="margin: 0 0 0 7px"></i>
     برچسب گذاری
   </button>
   <div class="dropdown-menu" style="z-index: 99999; margin-top: 8px;padding: 6px; border-radius: 0px; font-family:iranyekanweb" role="menu" aria-labelledby="single-button">
     <ui-select multiple tagging tagging-label="false"
                ng-model="Data.tags"
-               theme="bootstrap"
                ng-disabled="ctrl.disabled">
         <ui-select-match placeholder="انتخاب برچسب...">{{$item.title?$item.title:$item}}</ui-select-match>
         <ui-select-choices repeat="item in Data.tagList | filter:$select.search"

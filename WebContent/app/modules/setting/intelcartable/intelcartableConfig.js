@@ -1,7 +1,7 @@
 angular.module('intelcartableModule').config(['$stateProvider', function ($stateProvider) {
     var intelcartableStates = [
         {
-            state: "home.setting.intelcartable",
+            state: "base.home.setting.intelcartable",
             config: {
                 url: '/intelcartable/',
                 views: {

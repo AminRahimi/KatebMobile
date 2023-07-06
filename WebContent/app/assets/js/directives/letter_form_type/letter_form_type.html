@@ -41,10 +41,10 @@
     }
 </style>
 <div class="{{ cssClass ? cssClass : 'col-sm-6' }}">
-    <div class="row rowForm {{ cssClassSelectorType }}" access-checker="ADD_FORM_TO_LETTER"
+    <div class="row form-row {{ cssClassSelectorType }}" access-checker="ADD_FORM_TO_LETTER"
         ng-if="mode && mode!=='view'">
-        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }}">نوع نامه</label>
-        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }} d-flex">
+        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }} form-label">نوع نامه</label>
+        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }} d-flex form-value">
             <ui-select style="flex: 1;" ng-model="Data.selectedLetterFormType" ng-click="Func.getLetterFormTypeList()"
                 ng-change="Func.onChangeLetterFormType()" ng-disabled="mode==='view' || !mode" id="letterFormTypeSelect"
                 append-to-body="true">
@@ -62,9 +62,9 @@
         </div>
 
     </div>
-    <div class="row rowForm {{ cssClassSelectorType }}" ng-if="mode==='view' || !mode">
-        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }}">نوع نامه</label>
-        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }}">{{ Data.selectedLetterFormType.name }}</div>
+    <div class="row form-row {{ cssClassSelectorType }}" ng-if="mode==='view' || !mode">
+        <label class="{{ cssClassSelectorTypeLabel ? cssClassSelectorTypeLabel : 'col-sm-5' }} form-label">نوع نامه</label>
+        <div class="{{ cssClassSelectorTypeInput ? cssClassSelectorTypeInput : 'col-sm-7' }} form-value">{{ Data.selectedLetterFormType.name }}</div>
     </div>
     <div>
         <form class="form-horizontal" role="form" novalidate="novalidate" ng-if="Data.selectedLetterFormType">

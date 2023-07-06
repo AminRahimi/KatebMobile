@@ -1,11 +1,23 @@
 angular.module('lettertemplateModule').config(['$stateProvider', function($stateProvider) {
 	var lettertemplateStates = [
 		{
-			state: "home.management.lettertemplate",
+			state: "base.home.management.lettertemplate",
 			config: {
 				url: '/:orgUid/lettertemplate/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/lettertemplate/lettertemplate.html",
+						controller: 'lettertemplateCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.lettertemplate",
+			config: {
+				url: '/:orgUid/lettertemplate/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/lettertemplate/lettertemplate.html",
 						controller: 'lettertemplateCtrl'
 					}

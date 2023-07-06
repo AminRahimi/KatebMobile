@@ -12,8 +12,11 @@
 	}
 </style>
 
-<cartable-menu api="Controller.api"
-	on-filter-click="Func.processListMenuIndermidiariFn"
-	settings="Controller.processMenu.settings">
-</cartable-menu>
+<div  class="col-sm-2 panel-cartable-menu" style="overflow: auto;">
+
+	<cartable-menu-for-process></cartable-menu-for-process>
+
+</div>
+
 <div ui-view="processContainer" style="height:100%" ></div>
+

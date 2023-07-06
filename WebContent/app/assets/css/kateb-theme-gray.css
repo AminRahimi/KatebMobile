@@ -69,7 +69,6 @@ body {
 }
 
 .btn-danger {
-	font-size: 11px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
@@ -85,7 +84,6 @@ body {
 }
 
 .btn-default{
-	font-size: 11px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
@@ -100,7 +98,6 @@ body {
 
 .btn-primary {
 	background-color: #757575;
-	font-size: 11px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
@@ -117,7 +114,6 @@ body {
     background-color: rgba(0, 161, 181, 0.8);
 }
 .btn-success {
-	font-size: 11px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
@@ -133,7 +129,6 @@ body {
 }
 
 .btn-warning{
-	font-size: 11px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
@@ -223,10 +218,7 @@ body {
     padding: 0px;
 }
 .navbar-default .navbar-nav>li>a {
-	font-family: "iranianSans";
-	font-size:14px;
 	color: rgba(255,255,255,0.7);
-	font-weight: 200 !important;
 }
 
 .navbar-default .navbar-nav>li>a:focus,.navbar-default .navbar-nav>li>a:hover{
@@ -240,17 +232,9 @@ body {
 	color: #fff;
 	border-bottom: 3px solid rgba(255,255,255,0.4);
 }
-.navbar-header > a{
-	font-family: "iranianSans";
-	font-size:18px !important;
-	font-weight: 200 !important;	
-}
+.
 .navbar-left {
 	background-color: #616161;
-}
-.navbar-left > li > a{
-	font-size:12px !important;
-	font-family: "iranianSans";
 }
 .navbar-default .navbar-nav>.open>a,.navbar-default .navbar-nav>.open>a:focus,.navbar-default .navbar-nav>.open>a:hover
 	{
@@ -309,22 +293,7 @@ body {
 	border: 0px;
 }
 
-.panel-primary>.panel-heading {
-	background-color: #fff;
-	color: #757575;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-top: 0px none !important;
-	border-left: 0px none !important;
-	border-right: 0px none !important;
-	border-bottom: 2px solid #757575 !important;
-	height: 40px;
-	padding: 0;
-	line-height: 38px;
-	font-family: "iranianSans";
-	font-weight: 200 !important;
-	font-size: 16px;
-}
+
 
 /* .panel-primary>.panel-heading>.page-header>h2 {
 	height: 38px;
@@ -353,8 +322,6 @@ body {
 	border-bottom: solid 2px #757575;
 	margin-bottom: 2px;
 	color: 	#757575;
-	font-size:17px;
-	font-weight: 200 !important;
 }
 
 
@@ -378,10 +345,7 @@ a.list-group-item {
 a.list-group-item label {
 	margin-bottom: 0px;
 	cursor: pointer;
-	font-family: "iranianSans";
-	font-size:14px;
 	text-align:right;
-	font-weight: 200 !important;
 	padding-right: 0px;
 }
 
@@ -566,15 +530,10 @@ input[type=radio]:not(old):checked+label>span>span {
 
 .panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-heading,.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-heading .panel-title span{
 	color: #757575 !important;
-	font-family: "iranianSans";
-	font-size:16px;
 	background-color: #FAFAFA;
 	border-radius:0px !important;
 }
 
-.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-collapse > .panel-body a h6,.panel-cartable-menu .cartable-accordion .panel-group .border-accordion-group > .panel-collapse > .panel-body a{
-	font-size: 13px !important;
-}
 
 /* end-cartable */
 
@@ -610,10 +569,7 @@ select{
 .pagination > li:last-child > a, .pagination > li:last-child > span {
     border-radius: 0px;}
 
-.row.rowForm > label {
-	color: #757575;
-	text-align: left;
-}
+
 
 .nav-tabs > li > a {
     color: #757575;
@@ -630,13 +586,10 @@ select{
     color: #757575;
     border: 0 none !important;
     border-radius: 0 !important;
-    font-size: 13px;
     padding-left: 50px;
-    font-family: iranianSans;
 }
 .btn-icon > *:first-child {
     bottom: 0;
-    font-size: 1.9em;
     right: 0;
     line-height: 34px;
     position: absolute;

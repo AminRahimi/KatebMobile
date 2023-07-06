@@ -1,11 +1,23 @@
 angular.module('organizationModule').config(['$stateProvider', function($stateProvider) {
 	var organizationStates = [
 		{
-			state: "home.management.organization",
+			state: "base.home.management.organization",
 			config: {
 				url: '/organization/',
 				views: {
-					'content@home.management': {
+					'content@base.home.management': {
+						templateUrl: "app/modules/management/organization/organization.html",
+						controller: 'organizationCtrl'
+					}
+				}
+			}
+		},
+		{
+			state: "base.mobileHome.management.organization",
+			config: {
+				url: '/organization/',
+				views: {
+					'mainContent@base.mobileHome' : {
 						templateUrl: "app/modules/management/organization/organization.html",
 						controller: 'organizationCtrl'
 					}

@@ -117,12 +117,8 @@ function requestListener(req, res) {
         } else {
             //////////////////////// read from local (static) /////////////////////
             req.addListener('end', function () {
-                var dir = getProjectDirectoryName(projectName);
-                var stats = fs.lstatSync('../' + dir);
-                if (!stats.isDirectory()) {
-                    dir = dir.toLowerCase();
-                }
-                var staticFiles = new nodeStatic.Server('../' + dir + "/" + getProjectStaticFileDirectoryName(projectName), {
+                
+                var staticFiles = new nodeStatic.Server('', {
                     cache: 0,
                     headers: {
                         'Cache-Control': 'no-cache, no-store, must-revalidate',

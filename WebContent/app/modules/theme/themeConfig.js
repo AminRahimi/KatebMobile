@@ -1,7 +1,7 @@
 angular.module('themeModule').config(['$stateProvider', function($stateProvider) {
 	var userStates = [
 		{
-			state: "home.theme",
+			state: "base.home.theme",
 			config: {
 				url: '/theme',
 				views: {

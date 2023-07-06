@@ -1,0 +1,51 @@
+<style>
+	.twoCalContainer{
+		border-right: 1px solid #eee;
+        padding: 0;
+	}
+
+    .fa-add-date {
+        position: absolute;
+        left: 20px;
+        top: 7px;
+        z-index: 10;
+    }
+    /*.viraDateBox.searchFilterBox .col-sm-10.twoCalContainer .sideCalender tr td button span.text-muted{
+        background-color: red;
+    }*/
+</style>
+<div class="btn-group vtCartableDateInterval" dropdown>
+		<span class="model-length" ng-if="!isopen && model.length">{{model.length|EnToFaNumber}}</span>
+		<button id="single-button" type="button" class="btn btn-primary dropdown-toggle-box" dropdown-toggle>
+        {{Data.label}}<i class="glyphicon glyphicon-chevron-down"></i>
+    </button>
+    <div class="dropdown-menu dropdown-menu-date" role="menu" aria-labelledby="single-button"
+        style="margin-top: 8px;padding: 6px; border-radius: 0px; font-family:iranyekanweb; width:800px;">
+        <div class="col-sm-2 default-dates">
+            <div class="btn-default btn"
+                    style="width: 80px;"
+                    ng-repeat="option in Data.datePickerOptions track by $index"
+                    ng-click="Func.onSetDate(option)">{{option.label}}</div>
+        </div>
+        <div class="col-sm-10 twoCalContainer">
+            <div class="alert alert-danger" ng-show="Data.errorMessage">{{Data.errorMessage}}</div>
+            <i class="fa fa-plus fa-btn fa-add-date" ng-click="Func.onAddDate()"></i>
+            <vt-date-interval
+                    start-date="Data.startDate"
+                    end-date="Data.endDate"
+                    display="inline"
+                    api="DateIntervalApi">
+            </vt-date-interval>
+            <div class="12">
+                <span class="kateb-label kateb-label--default-light "
+                      ng-repeat="date in model track by $index"
+                      ng-click="Func.onRemoveDate($index)">
+                    {{Func.viewModelItem(date).startDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+										-
+                    {{Func.viewModelItem(date).endDate|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}
+                    <i class="fa fa-times fa-btn"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 07/01/2017 17:19
+  	*/
+
+@font-face {
+  font-family: "FlaticonFormManager";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "FlaticonFormManager";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: "FlaticonFormManager";
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-fm-arrow:before { content: "\f100"; }
+.flaticon-fm-arrow-1:before { content: "\f101"; }
+.flaticon-fm-arrows:before { content: "\f102"; }
+.flaticon-fm-arrows-1:before { content: "\f103"; }
+.flaticon-fm-arrows-2:before { content: "\f104"; }
+.flaticon-fm-black:before { content: "\f105"; }
+.flaticon-fm-business:before { content: "\f106"; }
+.flaticon-fm-chain:before { content: "\f107"; }
+.flaticon-fm-check:before { content: "\f108"; }
+.flaticon-fm-circle:before { content: "\f109"; }
+.flaticon-fm-clock:before { content: "\f10a"; }
+.flaticon-fm-close:before { content: "\f10b"; }
+.flaticon-fm-cogwheel:before { content: "\f10c"; }
+.flaticon-fm-editing:before { content: "\f10d"; }
+.flaticon-fm-favorite:before { content: "\f10e"; }
+.flaticon-fm-interface:before { content: "\f10f"; }
+.flaticon-fm-null:before { content: "\f110"; }
+.flaticon-fm-numbers:before { content: "\f111"; }
+.flaticon-fm-photo:before { content: "\f112"; }
+.flaticon-fm-profile:before { content: "\f113"; }
+.flaticon-fm-search:before { content: "\f114"; }
+.flaticon-fm-sheet:before { content: "\f115"; }
+.flaticon-fm-sign:before { content: "\f116"; }
+.flaticon-fm-signs:before { content: "\f117"; }
+.flaticon-fm-signs-1:before { content: "\f118"; }
+.flaticon-fm-technology:before { content: "\f119"; }
+.flaticon-fm-tool:before { content: "\f11a"; }
+.flaticon-fm-write:before { content: "\f11b"; }
