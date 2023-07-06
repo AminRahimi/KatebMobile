@@ -4,7 +4,8 @@
   "description": "The Kateb project",
   "main": "index.js",
   "scripts": {
-    "test": "We Are The Champions ..."
+    "test": "We Are The Champions ...",
+    "start": "node server.js"
   },
   "author": "Amin Rahimi",
   "license": "Property",
@@ -13,6 +14,10 @@
     "@ckeditor/ckeditor5-build-classic": "^36.0.1",
     "@ckeditor/ckeditor5-find-and-replace": "^36.0.1",
     "@ckeditor/ckeditor5-font": "^36.0.1",
-    "interactjs": "^1.10.17"
+    "interactjs": "^1.10.17",
+    "http-proxy": "^1.15.1",
+    "mkdirp": "^0.5.1",
+    "node-static": "^0.7.9",
+    "request": "^2.81.0"
   }
 }
