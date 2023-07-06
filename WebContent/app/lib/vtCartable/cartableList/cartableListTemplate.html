@@ -1,0 +1,49 @@
+<style>
+    .tooltip-inner {
+    max-width: 530px;
+}
+.panel-cartable-content > .panel-primary > .panel-body {
+    height: calc(100vh - 120px);
+    overflow: hidden;
+}
+.customClass{
+	position: fixed !important;
+}
+.pagination{
+    margin: 2px !important;
+}
+#custom-pagination-container{
+        margin-bottom: 0px !important;
+}
+.custom-pagination-total-items , .total-items-pagination{
+    top:-12px
+}
+</style>
+<div class="col-sm-10 col-sm-offset-2 panel-cartable-content"
+     ng-show="true">
+    <div class="panel panel-primary">
+        		<div class="panel-heading"  style="padding-right: 30px;">
+                    <!-- {{Data.selectedCartable.title}}  -->
+                    {{Data.selectedFilter.title}}
+                    <a ng-if="Data.selectedFilter.description" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-class="customClass"
+                     tooltip-placement="left" tooltip-popup-delay="500" 
+                     tooltip={{Data.selectedFilter.description}}><img src="app/assets/img/information-button.png" style="width:12px;" /></a>
+                </div>
+        <div class="panel-body" style="box-shadow: 0 0 6px -3px #000;">
+            <div class="panel panel-default panel-search panel-filter" style="position: sticky;top: 0;z-index: 2;margin-bottom: 0;">
+                <div class="panel-body" style="position: sticky !important;top: 50px;z-index: 22;">
+                    <cartable-search class="col-sm-11 vt-search cartable"
+                                  control-fn="Controller.searchController" options="Controller.searchOptions">
+                    </cartable-search>
+                    <vt-cartable-filter data="Data" visible-header="visibleHeader"
+                                        controller="Controller" ng-if="showFilterManager"></vt-cartable-filter>
+                </div>
+            </div>
+            <div class="panel panel-default" style="margin-bottom: 0;">
+                <div class="panel-body cartable-grid" style="padding-top: 0;padding-bottom: 0;">
+                    <vt-cartable-grid control-fn="Controller.listController" visible-headers="visibleHeader"></vt-cartable-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

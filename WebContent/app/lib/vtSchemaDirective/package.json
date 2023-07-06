@@ -1,0 +1,16 @@
+{
+  "name": "FeatureCM",
+  "version": "1.0.0",
+  "description": "FeatureCM",
+  "main": "index.js",
+  "author": "SAhmad Fazeli",
+  "devDependencies": {
+    "gulp": "~3.8.8",
+    "gulp-concat": "~2.4.0",
+    "gulp-uglify": "~1.0.1",
+    "gulp-ng-template": "*",
+    "gulp-clean-css": "~2.0.8",
+    "gulp-fn": "*",
+    "del": "~2.2.0"
+  }
+}

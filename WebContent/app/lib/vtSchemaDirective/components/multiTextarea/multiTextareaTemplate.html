@@ -1,0 +1,17 @@
+<span ng-class="{hidden:!isEditMode}">
+     <div class="row" ng-repeat="inp in  model track by $index">
+          <div class="col-md-12">
+               <span class=" glyphicon glyphicon-remove btn btn-xs btn-default" style="cursor: pointer; position: relative; z-index: 2; color: red; padding: 8px;" data-placement="top" title="پاک کردن" ng-click="onRemoveTextAreaClick(inp,$index);" id="remove"> </span>
+               <textarea rows="6" ng-model="model[$index]" type="text" class="form-control" style="resize: vertical;"></textarea>
+               <br>
+          </div>
+     </div>
+     <a class="btn btn-default" ng-click="onAddNewTextareaClick()">
+          <i class="glyphicon glyphicon-plus"></i>
+     </a>
+</span>
+<span ng-class="{hidden:isEditMode}">
+     <div class="row" ng-repeat="inp in  model">
+          <p ng-if="inp!=''">{{inp}}</p>
+     </div>
+</span>

@@ -1,0 +1,55 @@
+<div class="modal-header">
+     <h3 class="modal-title">اطلاعات موجودیت</h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+     <div class="col-md-12 row">
+          <div class="panel panel-default testMMheight">
+               <div class="panel-body">
+                    <div class="row">
+                         <div class="col-md-12" ng-switch on="isEditMode">
+                              <a ng-switch-when="false" class="btn btn-xs btn-primary btn-text" ng-click="onEditEntity()">
+                                   <i class="icon-white icon-edit"></i>
+                                   ویرایش
+                              </a>
+                              <a ng-switch-when="true" class="btn btn-xs btn-success btn-text" ng-disabled="!example.$valid" ng-click="onUpdateEntity(model)">
+                                   <i class="icon-white icon-ok-sign"></i>
+                                   ذخیره
+                              </a>
+                              <a ng-switch-when="true" class="btn btn-xs btn-warning btn-text haveRightMargin" ng-click="onCancel()">
+                                   <i class="icon-white icon-remove-sign"></i>
+                                   انصراف
+                              </a>
+                              <button type="button" class="btn btn-xs btn-primary dropdown-toggle pull-left" data-toggle="dropdown">
+                                   دریافت اطلاعات
+                                   <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                   <li>
+                                        <a href="api/entity/{{entityTypeKey}}/entity_export/pdf?uid={{entityUid}}" target="_blank">PDF</a>
+                                   </li>
+                                   <li>
+                                        <a href="api/entity/{{entityTypeKey}}/entity_export/xlsx?uid={{entityUid}}" target="_blank">XLSX</a>
+                                   </li>
+                                   <li>
+                                        <a href="api/entity/{{entityTypeKey}}/entity_export/docx?uid={{entityUid}}" target="_blank">DOCX</a>
+                                   </li>
+                              </ul>
+                              <button class="btn btn-primary btn-xs pull-left" ng-click="onPrintClick()" style="margin-left: 5px;">چاپ</button>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <!-- haveRemaningWindowHeight -->
+          <div class="panel panel-default ">
+               <div class="panel-body" style="position: relative;">
+                    <form name="example" class="form-horizontal" role="form">
+                         <schema-form-fields ng-init="isEditMode=false" is-edit-mode="isEditMode" api="schemaFormViewModalApi" schema="jsonSchema" model="model" is-col-7="isCol7" has-relation="true"></schema-form-fields>
+                         <schema-form-fields ng-init="isEditMode=false" is-edit-mode="isEditMode" api="schemaFormViewModalApi2" class="ng-hide" is-col-7="isCol7" ng-if="isStatePrint" id="printableArea" is-print="true" schema="jsonSchema" model="model" has-relation="true"></schema-form-fields>
+                    </form>
+               </div>
+          </div>
+     </div>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="onReturnClick()">بازگشت</button>
+</div>

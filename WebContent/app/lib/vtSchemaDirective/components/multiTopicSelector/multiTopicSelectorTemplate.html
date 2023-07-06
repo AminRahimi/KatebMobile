@@ -1,0 +1,25 @@
+<div class="col-sm-2 noSidePadding" ng-class="{hidden:!isEditMode}">
+     <button type='button' class='btn btn-default' ng-click='openTopicMultiSelectorModal()' style="margin-bottom: 3px;">
+          <i class="glyphicon glyphicon-edit"></i>
+     </button>
+</div>
+<div class="col-sm-10 noSidePadding">
+     <div class="panel panel-default inPrint" ng-show="model.length" style="padding-right: 0; padding-left: 0;">
+          <div class="panel-body inPrint" style="padding: 5px;">
+               <!-- 	      <button style="position: absolute; padding: 3px; top: 2px; left: 2px;" class="btn btn-xs btn-default" -->
+               <!-- 	         type="button" ng-click="haveMaxHeight=!haveMaxHeight"> -->
+               <!-- 	         <span class="glyphicon glyphicon-resize-full" -->
+               <!-- 	            ng-class="{'glyphicon-resize-full':haveMaxHeight,'glyphicon-resize-small':!haveMaxHeight}"></span> -->
+               <!-- 	      </button> -->
+               <span class="label-default pull-right inPrint" style="padding: 10px; margin: 2px; line-height: 20px;" ng-repeat="topic in model">
+                    <span class=" glyphicon glyphicon-remove" ng-class="{hidden:!isEditMode}" style="cursor: pointer; cursor: hand; position: relative; z-index: 2; top: 4px; color: red" data-placement="top" title="پاک کردن" ng-click="onRemoveTopicClick(topic);" id="remove"> </span>
+                    &nbsp
+                    <span ng-repeat="str in topic._displayString track by $index" ng-hide="str=='*' && topic._displayString.length>1">
+                         <i ng-if="!$first && $index!=1" class='glyphicon glyphicon-chevron-left' style="margin: 2px"></i>
+                         <i ng-if="str!='...'">{{str}}</i>
+                         <i ng-if="str=='...'" ng-click="openFullTopic(topic)" style="cursor: pointer;">{{str}}</i>
+                    </span>
+               </span>
+          </div>
+     </div>
+</div>

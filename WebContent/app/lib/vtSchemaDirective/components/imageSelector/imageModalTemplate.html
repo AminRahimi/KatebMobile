@@ -1,0 +1,32 @@
+<style>
+.modal-content {
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	display: flex;
+}
+
+#range {
+	width: 500px;
+}
+
+.toolCnt {
+	right: 0px;
+	position: fixed;
+	top: 0;
+}
+</style>
+<img class="imageOnModal" src="{{image.downloadLink}}" style="margin: auto; display: block;">
+<div class="toolCnt">
+     <button class="btn btn-default btn-xs pull-right" ng-click="onZoominClick()">
+          <i class="glyphicon glyphicon-plus"></i>
+     </button>
+     <div id="range" class="pull-right" style="margin-right: 5px;"></div>
+     <button class="btn btn-default btn-xs pull-right" ng-click="onZoomoutClick()" style="margin-right: 5px;">
+          <i class="glyphicon glyphicon-minus"></i>
+     </button>
+     <button class="btn btn-default btn-xs pull-right" ng-click="onDownloadClick()" style="margin-right: 15px;">
+          <i class="glyphicon glyphicon-download-alt"></i>
+     </button>
+</div>
+<img class="fakeForGetDems" src="{{image.downloadLink}}" style="display: none">

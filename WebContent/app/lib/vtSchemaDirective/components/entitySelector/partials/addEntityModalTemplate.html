@@ -1,0 +1,99 @@
+<div class="modal-header" >
+     <h3 class="modal-title">ایجاد {{entityTypeLabel}} جدید</h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+     <div class="col-md-12 row" ng-show="mode=='add'">
+          <form name="example" class="form-horizontal" role="form">
+               <schema-form-fields ng-init="isEditMode=true" is-edit-mode="isEditMode" api="schemaFormAddEntityModalApi" schema="entityType.jsonSchema" model="newEntityModel" is-col-7="isCol7" has-relation="true" ></schema-form-fields>
+          </form>
+     </div>
+     <div class="row" ng-show="mode=='intersect'">
+          <div class="col-sm-6">
+               <h3>موجودیت‌های مشابه</h3>
+               <div class="panel panel-default">
+                    <div class="panel-body">
+                         <div class="bordered-container haveUpMargin haveRightMargin border-gray">
+                              <label ng-hide="intersecResult.accessList.length || isLoading">موجودیت مشابه یافت نشد!</label>
+                              <table class="table table-hover" ng-show="intersecResult.accessList.length">
+                                   <thead style="cursor: default;">
+                                        <tr>
+                                             <th></th>
+                                             <th ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'">{{entityType.jsonSchema.properties[propKey].label}}</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        <tr ng-repeat="entity in intersecResult.accessList" ng-class="{selected:entity.isSelected}">
+                                             <td ng-click="onIntersectClick(entity)">
+                                                  <button class="btn btn-xs btn-primary">انتخاب</button>
+                                             </td>
+                                             <td ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'" ng-click="onSelectEntity(entity)">{{entity[propKey] | splitString:10}}</td>
+                                        </tr>
+                                   </tbody>
+                              </table>
+                         </div>
+                    </div>
+               </div>
+               <h3>موجودیت های مشابه که به آن دسترسی ندارید</h3>
+               <div class="panel panel-default">
+                    <div class="panel-body">
+                         <div class="bordered-container haveUpMargin haveRightMargin border-gray">
+                              <label ng-hide="intersecResult.notAccessList.length || isLoading">موجودیت مشابه یافت نشد!</label>
+                              <table class="table table-hover" ng-show="intersecResult.notAccessList.length">
+                                   <thead style="cursor: default;">
+                                        <tr>
+                                             <th></th>
+                                             <th ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'">{{entityType.jsonSchema.properties[propKey].label}}</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        <tr ng-repeat="entity in intersecResult.notAccessList"  ng-class="{selected:entity.isSelected}">
+                                             <td ng-click="onIntersectClick(entity)">
+                                                  <button class="btn btn-xs btn-primary">انتخاب</button>
+                                             </td> 
+                                             <td ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'" ng-click="onSelectEntity(entity)">{{entity[propKey] | splitString:10}}</td>
+                                        </tr>
+                                   </tbody>
+                              </table>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="col-sm-6">
+               <h3>موجودیت جدید</h3>
+               <div class="panel panel-default">
+                    <div class="panel-body">
+                         <div class="bordered-container haveUpMargin haveRightMargin border-gray">
+                              <table class="table table-hover">
+                                   <thead style="cursor: default;">
+                                        <tr>
+                                             <th></th>
+                                             <th ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'">{{entityType.jsonSchema.properties[propKey].label}}</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        <tr>
+                                             <td>
+                                                  <button class="btn btn-xs btn-success" ng-click="onSaveClick()">ذخیره</button>
+                                             </td>
+                                             <td ng-repeat="propKey in entityType.jsonSchema.extents.list" ng-if="propKey[0]!='_'" ng-click="onSelectEntity(newEntityModel)">{{newEntityModel[propKey] | splitString:10}}</td>
+                                        </tr>
+                                   </tbody>
+                              </table>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <hr>
+          <div class="col-sm-12">
+               <form name="example" class="form-horizontal" role="form">
+                    <schema-form-fields ng-show="doSelect" is-edit-mode="false" api="schemaFormEntityApi" is-col-7="false" schema="entityType.jsonSchema" model="formDataModel" has-relation="true" ></schema-form-fields>
+               </form>
+          </div>
+     </div>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-xs btn-xs btn-success" ng-click="onSaveClick()" ng-show="mode=='add'">ذخیره</button>
+     <!--    <button class="btn btn-xs btn-xs btn-success" ng-click="onSaveClick()" ng-show="mode=='intersect'">ذخیره</button> -->
+     <button class="btn btn-xs btn-xs btn-primary" ng-click="onBackClick()" ng-show="mode=='intersect'">بازگشت</button>
+     <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="onCancelClick()">لغو</button>
+</div>

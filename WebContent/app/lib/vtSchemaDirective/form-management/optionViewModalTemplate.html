@@ -1,0 +1,20 @@
+<div class="modal-header">
+   <h3 class="modal-title">پیش‌نمایش انتخابگر</h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+   <div class="col-md-12 row" ng-init="isEditMode=true;">
+   	  <label class="col-sm-5" style="margin-top: 10px;">{{baseSelector.label}}</label>
+      <label class="col-sm-5" style="margin-top: 10px;" ng-hide="isEditMode">{{selected.label}}</label>
+   	  <select class="form-control col-sm-5" ng-change="onSelect()" ng-show="isEditMode"
+    	 ng-model="selected" ng-options="opt as opt.label for opt in baseSelector.members">
+    </select>
+   </div>
+</div>
+<div class="modal-footer">
+<!--    <button class="btn btn-sm btn-sm btn-success" ng-show="isEditMode" ng-click="isEditMode=false;">حالت عادی</button> -->
+<!--    <button class="btn btn-sm btn-sm btn-success" ng-hide="isEditMode" ng-click="isEditMode='true';">حالت ویرایش</button> -->
+   <button class="btn btn-sm btn-sm btn-warning pull-left" ng-click="onReturnClick()">بازگشت</button>
+</div>
+
+
+

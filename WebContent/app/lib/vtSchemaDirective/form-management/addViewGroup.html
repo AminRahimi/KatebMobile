@@ -1,0 +1,31 @@
+<form name="Data.mainForm" role="form" ng-init="Data.mainForm" novalidate>
+<div class="modal-header">
+   <h3 class="modal-title">مشخصات فرم</h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+	<div class="row haveMargin" ng-class="{'has-error':Data.mainForm.englishTitle.$invalid && Data.validationClicked}">
+		<label class="col-sm-5 pull-right required">نام انگلیسی</label>
+		<input type="text" class="form-control col-sm-5" name="englishTitle" ng-model="viewGroup.key" ui-keypress="{'ctrlKey && 13':'create();'}" ng-pattern="/^[a-zA-Z0-9]*$|^[a-zA-Z0-9]*(\_[a-zA-Z0-9]*)*?$/" required>
+		<label class="text-danger" ng-show="Data.duplicateKey">کلید وارد شده تکراری می‌باشد</label>
+	</div>
+   	<div class="row haveMargin" ng-class="{'has-error':Data.mainForm.PersianTitle.$invalid && Data.validationClicked}">
+		<label class="col-sm-5 pull-right required">نام فارسی</label>
+		<input type="text" class="form-control col-sm-5" name="PersianTitle" ng-model="viewGroup.name" ui-keypress="{'ctrlKey && 13':'create();'}" required>
+	</div>
+	<div class="row haveMargin" ng-class="{'has-error':Data.mainForm.secretLevel.$invalid && Data.validationClicked}">
+		<label class="col-sm-5 pull-right required">سطح محرمانگی</label>
+	    <select class="form-control col-md-5"   
+		           name="secretLevel"
+					ng-change="onSelectSecretLevel()" ng-model="viewGroup.secretLevel"
+				    ng-options="level as level.name for level in secretLevels" required>
+		</select><!--  ng-init="viewGroup.secretLevel = secretLevels[0].id" -->
+	  
+	</div>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-xs btn-xs btn-success" ng-click="create()" ng-show="!editFlag" ng-disabled="Data.mainForm.$invalid && Data.validationClicked">افزودن</button>
+   <button class="btn btn-xs btn-xs btn-success" ng-click="create()" ng-show="editFlag" ng-disabled="Data.mainForm.$invalid && Data.validationClicked">ذخیره</button>
+   <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="onReturnClick()">بازگشت</button>
+</div>
+</form>
+

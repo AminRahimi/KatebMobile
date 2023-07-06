@@ -1,0 +1,23 @@
+<div class="btn-group vtDropDownTagInput" dropdown>
+    <i ng-show="model.length>0" class="model-length">{{model.length|EnToFaNumber}}</i>
+    <button id="single-button" type="button" class="btn btn-primary" dropdown-toggle>
+        {{api.label?api.label:(isEditMode?'انتخاب کنید': 'نمایش')}} <i class="flaticon-arrows-3"></i>
+    </button>
+    <div class="dropdown-menu" style="z-index: 99999; margin-top: 8px;padding: 6px; border-radius: 0px; font-family:iranyekanweb" role="menu" aria-labelledby="single-button">
+        <div class="vtTagInput">
+            <div ng-show="isEditMode">
+                <ui-select multiple
+                           tagging tagging-label="false"
+                           ng-model="Data.selectedModel"
+                           on-select="onSelect($item, $model)"
+                           on-remove="onSelect($item, $model)"
+                           theme="bootstrap">
+                    <ui-select-match placeholder="{{api.label}}">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="item in [] | filter:$select.search">
+                        {{item}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+</div>

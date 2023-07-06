@@ -1,0 +1,33 @@
+<ul id="nav">
+	<li id="notification_li">
+		<span id="notification_count" ng-if="Data.notificationsCount.count!=0">{{Data.notificationsCount.count}}</span>
+		<div id="notificationLink" class="notificationBell" ng-click="Func.showNotification()">
+			<a class="fa fa-bell"></a>
+		</div>
+		<div id="notificationContainer">
+			<div id="notificationTitle">هشدار ها</div>
+			<div id="notificationsBody">
+				<ul infinite-scroll='Func.loadMore()' infinite-scroll-distance='1' infinite-scroll-parent="true" >
+					<li class="col-sm-12 listStyle" ng-repeat="item in Data.notificationsList" ng-click="Func.notificationLink(item.link)" >
+						<div class="content">
+							<div class="icon">
+								<div class="notificationBell" ng-class="{'bg-danger':item.type=='ERROR' , 'bg-info':item.type=='INFO' , 'bg-warning':item.type=='WARNING'}">
+									<a class="fa fa-bell"></a>
+								</div>
+							</div>
+							<div class="description">
+								<p>{{item.content}}</p>
+							</div>
+						</div>
+						<div class="date">
+							<span class="date">{{item.date|tehranDate:'jDD-jMMMM-jYYYY'|EnToFaNumber}}</span>
+							<span>،</span>
+							<span class="date">{{item.date|date:'HH:mm'|EnToFaNumber}}</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="notificationFooter" ng-click="Func.getMoreNotification()"><a>نمایش هشدارهای بیشتر</a></div>
+		</div>
+	</li>
+</ul>

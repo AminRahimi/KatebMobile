@@ -1,0 +1,95 @@
+.vtAttachment{
+   /* height: 132px;
+    overflow: auto;*/
+}
+.vtAttachment .email-attachment-img{
+    position: relative;
+}
+.vtAttachment .remove-attachment{
+    color: #fff;
+    font-size: 15px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.vtAttachment .select-attachment{
+    color: #fff;
+    font-size: 15px;
+    position: absolute;
+    right: 7px;
+    top: 3px;
+}
+.vtAttachment .split-string{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.vtAttachment .progress-attachment{
+    bottom: -18px;
+    height: 5px !important;
+    left: 2px;
+    position: absolute;
+    right: 2px;
+}
+.vtAttachment .attachment-name{
+    line-height: 30px;
+    text-align: center;
+    width: 100px;
+    color: #9e9e9e;
+}
+.vtAttachment a{
+    float: right;
+    margin-left: 30px;
+}
+.email-attachment-img{
+    font-size: 62px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    width: 100px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 30px;
+    margin-left: 15px;
+}
+.email-attachment-img + div{
+    color: #616161;
+    text-align: center;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.flaticon-attachment::before {
+    display: block;
+    font-size: 60px !important;
+    margin: 0 !important;
+}
+
+.flaticon-attachment {
+    display: inline-block;
+}
+.bg-word{
+    background-color: #2196f3;
+}
+.bg-excel{
+    background-color: #43A047;
+}
+.bg-image{
+    background-color: #ff9800;
+}
+.bg-letter{
+    background-color: #ff9800;
+}
+.bg-pdf{
+    background-color: #f44336;
+}
+.bg-audio{
+    background-color: #4caf50;
+}
+.bg-file{
+    background-color: #959595;
+}
+.bg-default-attachment {
+    background-color: #e0e0e0;
+    color: #b3b3b3;
+}

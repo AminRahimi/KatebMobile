@@ -1,0 +1,124 @@
+<style>
+vt-search > div.row:first-child > div.col-sm-10 {
+    display: flex;
+    align-items: center;
+}
+.searchFilterBox{
+border: none
+}
+.panel-search {
+    background-color: #fff;
+}
+.col-sm-10{
+	width: 65%;
+}
+.desc-search{
+	width: 246px;
+    position: absolute;
+    top: 5px;
+    left: 195px;
+}
+.date-css{
+	margin-top: 6px;
+}
+.searchFilterBox vt-persian-date-picker {
+    width: 150px !important;
+}
+.from-to-label {
+	top: 25px;
+    right: -17px;
+}
+.searchFilterBox .col-sm-6{
+	margin-bottom: 21px;
+}
+.searchFilterBox > select {
+    background: #fff;
+}
+.searchFilterBox > select { 
+		border: 1px solid #ccc;
+		background-color: #fcfcfc;
+    	padding-right: 15px;
+		min-height: 34px;
+	}
+.downloadReport {
+    margin-top: 2px;
+}
+.logDetails{
+	    display: inline-block;
+}
+.logDetails > a {
+	   margin-right: 25px;
+}
+.table>tbody>tr>td, .table>tfoot>tr>td, .table>thead>tr>td {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+/* .col-sm-6.searchFilterBox[ng-switch-when="date"]{
+	transform:translateY(5px);
+} */
+</style>
+<div class="panel panel-primary">
+	<div class="panel-heading">وقایع سیستم
+		<button ng-click="Func.onExcelClick()"  class="btn btn-default pull-left downloadReport">
+			<img src="app/assets/img/excel.png">
+		</button>
+	</div>
+	<div class="panel-body">
+		<div class="col-sm-12 panel-search">
+			<div class="col-md-12">
+				<vt-search control-fn="Controller.logSearchController"></vt-search>
+				<input class="form-control search-input desc-search"
+				  ng-model="Data.logDesc"type="text" placeholder="جستحو در توضیحات...">
+			</div>
+			<!--<div class="col-md-1">
+				<a class="btn btn-sm btn-primary btn-text" ng-click="Func.downloadLogList()" >
+					<i class="fa fa-download"></i>
+				</a>
+			</div>-->
+		</div>
+		<div class="col-sm-12" style="overflow: auto;">
+			<p class="help-block" ng-show="Data.logList.length==0">موردی یافت نشد.</p>
+			<table class="table table-hover table-striped col-sm-12" ng-show="Data.logList.length!=0">
+				<thead><tr>
+					<th>تاریخ</th>
+					<th>آدرس اینترنتی</th>
+					<th>کاربر</th>
+					<th>نوع</th>
+					<th>توضیحات</th>
+                    <th class="col-sm-1">نام و نام خانوادگی</th>
+				</tr></thead>
+				<tbody><tr ng-repeat="log in Data.logList">
+					<td>{{log.date|tehranDate:'hh:mm:ss jYYYY/jMMMM/jDD'|EnToFaNumber}}</td>
+					<td>{{log.ip_address|EnToFaNumber}}</td>
+					<td>{{log.username}}</td>
+					<td>{{Data.translator[log.type]}}</td>
+					<td>
+						<span>{{log.details|splitString:40}}</span>
+						<div class="logDetails">
+							<a ng-if="log.details && log.details.length>40"  ng-click="Func.onDetailClick(log.details)">
+								<span class="flaticon-search"></span>
+							</a>
+						</div>
+					</td>
+					<!-- <td>{{log.details}}</td> -->
+                    <td ng-click="Func.onShowFullnameClick(log)" style="cursor: pointer;overflow: visible;">
+                        <div style="position: relative;">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <div class="customTooltip" ng-show="log.showTooltip">{{log.tooltipContent}}</div>
+                        </div>
+                    </td>
+				</tr></tbody>
+			</table>
+			<pagination 
+				ng-show="!Controller.pagination.inOnePage()"
+				total-items="Controller.pagination.totalItems"
+				ng-model="Controller.pagination.currentPage"
+				max-size="Controller.pagination.maxSize"
+				items-per-page="Controller.pagination.perPage" 
+				ng-change="Controller.pagination.pageChanged()"
+				class="pagination-sm" boundary-links="true" 
+				first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی">
+			</pagination>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "media",
+  "authors": [
+    "viratech <www.viratech.ir>"
+  ],
+  "description": "media components that have uploaded and saved with hash code like file, photo and video (in future)",
+  "main": [
+    "mediaModule.js"
+  ],
+  "homepage": "index.html",
+  "dependencies": {
+    "angular": "*",
+    "ng-file-upload": "*",
+    "cropper": "*"
+  },
+  "devDependencies": {},
+  "_release": "0.2",
+  "_resolution": {
+    "type": "tag",
+    "tag": "0.2",
+    "commit": "654482b02769cbf40c851281cb52a4c8ff22f893"
+  },
+  "_source": "http://gitlab.viradev.ir:6480/clientproject/media.git",
+  "_target": "0.2",
+  "_originalSource": "http://gitlab.viradev.ir:6480/clientproject/media.git"
+}

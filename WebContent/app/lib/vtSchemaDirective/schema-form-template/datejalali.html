@@ -1,0 +1,2 @@
+          <vt-persian-date-picker is-required="required" ng-class="{hidden:!isEditMode}" class="col-sm-12" ng-model="model[field]" name="{{field}}" model="model[field]"></vt-persian-date-picker>
+          <p class="form-control-static" ng-class="{hidden:isEditMode}">{{model[field]|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</p>

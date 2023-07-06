@@ -1,0 +1,9 @@
+<span ng-show="isEditMode">
+     <div class="row noSideMargin" ng-repeat="opt in options[schema.enumType]">
+          <input type="radio" class="pull-right" ng-model="selected" value="{{opt.key}}" name="enumRadio" ng-change="onSelect($index)">
+          <label class="pull-right" style="margin-right: 2px;">{{opt.label}}</label>
+     </div>
+</span>
+<span ng-show="!isEditMode">
+     <label>{{model.label}}</label>
+</span>

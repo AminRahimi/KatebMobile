@@ -1,0 +1,114 @@
+<div class="col-sm-5">
+     <div class="panel panel-default">
+          <div class="panel-body">
+               <div class="row">
+                    <a class="btn btn-default btn-sm btn-text" ng-disabled="Data.mode=='add'" type="button" style="margin-right: 30px" ng-click="Func.onAddBaseSelectorClick()">ايجاد</a>
+               </div>
+          </div>
+     </div>
+     <div class="panel panel-info">
+          <div class="panel-heading">لیست انتخابگرها</div>
+          <div class="panel-body">
+               <label ng-show="Data.baseSelectorList.length==0">داده‌ای برای نمایش وجود ندارد!</label>
+               <div class="bordered-container" style="width: 100%; height: 90%;" ng-hide="Data.baseSelectorList.length==0">
+                    <table class="table table-hover table-striped">
+                         <thead>
+                              <tr>
+                                   <th width="40%">نام انتخابگر</th>
+                                   <th>تعداد انتخاب‌ها</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr ng-click='Func.editBaseSelector(baseSelector)' ng-repeat="baseSelector in Data.baseSelectorList" ng-class="baseSelector.class">
+                                   <td>{{baseSelector.label}}</td>
+                                   <td>{{baseSelector.members.length |EnToFaNumber}}</td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+               <!--          <pagination total-items="itemsPagination.totalItems" style="margin:0px;" ng-model="itemsPagination.currentPage" -->
+               <!--             max-size="itemsPagination.maxSize" items-per-page="itemsPagination.perPage" ng-change="pageChanged()" -->
+               <!--             class="pagination-sm" boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" -->
+               <!--             previous-text="قبلی"> </pagination> -->
+          </div>
+     </div>
+</div>
+<!-- ------------------------------------------- Create BaseSelector -------------------------------------------------- -->
+<div class="col-sm-7" ng-show="Data.newBaseSelector.key || Data.mode=='add'">
+     <div class="panel panel-default">
+          <div class="panel-body">
+               <div class="row">
+                    <div class="col-md-12">
+                         <a class="btn btn-sm btn-default btn-text" ng-show="Data.mode=='view'" type="button" ng-click="Data.mode='edit'">ویرایش</a>
+                         <button class="btn btn-success btn-sm btn-text" ng-show="Data.mode=='add'" type="button" ng-click="Func.onSaveBaseSelectorClick()" ng-disabled="(Data.baseSelectorForm.$invalid || Data.newBaseSelector.members.length==0) && Data.mainValidationClicked">ذخیره</button>
+                         <button class="btn btn-success btn-sm btn-text" ng-show="Data.mode=='edit'" type="button" ng-click="Func.onUpdateBaseSelectorClick()" ng-disabled="(Data.baseSelectorForm.$invalid || Data.newBaseSelector.members.length==0) && Data.mainValidationClicked">ثبت تغییرات</button>
+                         <a class="btn btn-warning btn-sm btn-text" ng-show="Data.mode!='view'" type="button" ng-click="Func.onCancelClick()">انصراف</a>
+                         <a class="btn btn-sm btn-info btn-text pull-left" ng-show="Data.mode!='view'" type="button" ng-click="Func.onOpenOptionsViewPopupClick()">
+                              پیش‌نمایش
+                              <i class="glyphicon glyphicon-zoom-in"></i>
+                         </a>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <div class="panel" ng-class="{'panel-info':Data.mode!='add','panel-default':Data.mode=='add'}">
+          <div class="panel-heading" ng-show="Data.mode!='add'">مشخصات انتخابگر</div>
+          <div class="panel-body">
+               <form role="form" name="Data.baseSelectorForm">
+                    <div class="row haveMargin" ng-class="{'has-error':Data.baseSelectorForm.newBaseSelectorKey.$invalid && Data.mainValidationClicked}" ng-show="Data.mode=='add'">
+                         <label class="col-sm-5 pull-right required">کلید انتخابگر </label>
+                         <label class="col-sm-5" ng-show="Data.mode=='view'">{{Data.newBaseSelector.key}}</label>
+                         <input type="text" name="newBaseSelectorKey" class="form-control col-sm-5" ng-model="Data.newBaseSelector.key" ng-required="Data.mode=='add'">
+                         <div class="col-sm-5"></div>
+                    </div>
+                    <div class="row haveMargin" ng-class="{'has-error':Data.baseSelectorForm.newBaseSelectorLabel.$invalid && Data.mainValidationClicked}">
+                         <label class="col-sm-5 pull-right required">عنوان انتخابگر </label>
+                         <label class="col-sm-5" ng-show="Data.mode=='view'">{{Data.newBaseSelector.label}}</label>
+                         <div ng-show="Data.mode!='view'">
+                              <input type="text" name="newBaseSelectorLabel" class="form-control col-sm-5" ng-model="Data.newBaseSelector.label" required>
+                         </div>
+                         <div class="col-sm-5"></div>
+                    </div>
+               </form>
+               <div class="panel panel-primary" ng-show="Data.mode!='view'">
+                    <div class="panel-heading">مشخصات انتخاب‌ها</div>
+                    <div class="panel-body">
+                         <form role="form" name="Data.choiseForm">
+                              <div class="row haveMargin" ng-class="{'has-error': (Data.choiseForm.englishKey.$invalid && Data.validationClicked) || 
+	                     	(Data.mainValidationClicked && Data.newBaseSelector.members.length==0)}">
+                                   <label class="col-sm-5 pull-right required">کلید (انگلیسی) </label>
+                                   <input type="text" name="englishKey" class="form-control col-sm-5" ng-model="Data.newOption.key" ng-pattern="/^[a-zA-Z0-9]*$|^[a-zA-Z0-9]*(\_[a-zA-Z0-9]*)*?$/" required>
+                                   <div class="col-sm-5"></div>
+                              </div>
+                              <div class="row haveMargin" ng-class="{'has-error':(Data.choiseForm.persianTag.$invalid && Data.validationClicked) || 
+	                     	(Data.mainValidationClicked && Data.newBaseSelector.members.length==0)}">
+                                   <label class="col-sm-5 pull-right required">برچسب (فارسی) </label>
+<<<<<<< HEAD
+                                   <input type="text" name="persianTag" class="form-control col-sm-5" ng-model="Data.newOption.label" ng-pattern="/^[\u0627-\u06CC\u06F0-\u06F90-9]*((\_)*(\-)*(\;)*(\:)*(\.)*(\،)*(\,)*(\()*(\))*(\{)*(\})*(\@)*(\!)*(\#)*(\$)*(\%)*(\^)*(\ )*(\&)*(\*)*(\+)*(\/)*(\|)*(\\)*(\?)*(\>)*(\<)*(\])*(\×)*(\÷)*(\=)*(\`)*(\~)*(\')*[\u0627-\u06CC\u06F0-\u06F90-9]*)*$/" required>
+=======
+                                   <input type="text" name="persianTag" class="form-control col-sm-5" ng-model="Data.newOption.label" ng-pattern="/^[\u0627-\u06CC\u06F0-\u06F90-9]*((\_)*(\s)*(\-)*(\;)*(\:)*(\.)*(\،)*(\,)*(\()*(\))*(\{)*(\})*(\@)*(\!)*(\#)*(\$)*(\%)*(\^)*(\&)*(\*)*(\+)*(\/)*(\|)*(\\)*(\?)*(\>)*(\<)*(\])*(\×)*(\÷)*(\=)*(\`)*(\~)*(\')*[\u0627-\u06CC\u06F0-\u06F90-9]*)*$/" required>
+>>>>>>> toDeploy
+                              </div>
+                              <div class="row haveMargin">
+                                   <a class="btn btn-default" style="margin-right: 10px" type="button" ng-click="Func.onAddOptionClick()" ng-disabled="Data.choiseForm.$invalid && Data.validationClicked">افزودن</a>
+                              </div>
+                         </form>
+                    </div>
+               </div>
+               <div class="row haveMargin" ng-show="Data.newBaseSelector.members.length">
+                    <label class="col-sm-4">گزینه‌های کنونی </label>
+                    <div class="col-sm-8">
+                         <ui-sortable ng-model="Data.newBaseSelector.members" ng-show="Data.mode!='view'">
+                         <div class="alert alert-info alertStyle" style="margin-bottom: 2px;" ng-repeat="opt in Data.newBaseSelector.members">
+                              <button type="button" class="close" ng-click="Func.deleteOption(opt)" ng-show="Data.mode!='view'">&times;</button>
+                              <label>{{ opt.label }}</label>
+                         </div>
+                         </ui-sortable>
+                         <div class="alert alert-info alertStyle" style="margin-bottom: 2px;" ng-show="Data.mode=='view'" ng-repeat="opt in Data.newBaseSelector.members">
+                              <label>{{ opt.label }}</label>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>

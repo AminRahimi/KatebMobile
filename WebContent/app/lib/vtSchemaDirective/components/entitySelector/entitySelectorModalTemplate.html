@@ -1,0 +1,30 @@
+<div class="modal-header">
+     <h3 class="modal-title">يک موجوديت را انتخاب نماييد</h3>
+</div>
+<div class="modal-body  itemSelectorModal haveFormRows">
+	<div class="col-md-12 row "  ng-show="items.length">
+          <div class="tableFixedHeaderContainer">
+               <table class="table table-hover table-striped">
+                    <tbody>
+                         <tr ng-repeat="item in items" ng-click="onSelectItem(item)">
+                         	<td>{{item._displayString|splitString:10}}</td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+          <ul uib-pagination total-items="itemsPagination.totalItems" 
+          		style="margin:0px;" 
+          		ng-model="itemsPagination.currentPage" 
+          		max-size="itemsPagination.maxSize" 
+          		items-per-page="itemsPagination.perPage" 
+          		ng-change="itemsPagination.pageChanged()" 
+          		class="pagination-sm" boundary-links="true" 
+          		first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی"> </ul>
+     </div>
+     انتخاب شده:
+     <b>{{ selectedItem._displayString }}</b>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-xs btn-xs btn-primary" ng-click="ok()">تاييد</button>
+     <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="cancel()">لغو</button>
+</div>

@@ -1,0 +1,16 @@
+{
+    "name": "eventLogUI",
+    "version": "1.0.0",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "Event Log UI",
+    "main": [
+        "logDirective.js"
+    ],
+    "dependencies": {
+        "angular" : "*",
+        "vtCommon": "http://gitlab.viradev.ir:6480/clientproject/commons.git#2.4.0"
+    },
+    "devDependencies": {}
+}

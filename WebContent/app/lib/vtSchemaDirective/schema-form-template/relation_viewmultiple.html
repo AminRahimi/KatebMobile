@@ -1,0 +1,9 @@
+<div class="form-group" ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode && api.validationClicked}">
+     <label for="{{field}}" class="control-label col-sm-4">
+          <span ng-show="isEditMode && required">*</span>
+          {{label}}
+     </label>
+     <div class="col-sm-8 q13">
+          <multi-entity-selector-for-relation-view api="api" class="widget" ng-model="model[field]" model="model[field]" field="field" schema="schema" glob-schema="globSchema" form-model="model" is-edit-mode="isEditMode"></multi-entity-selector-for-relation-view>
+     </div>
+</div>

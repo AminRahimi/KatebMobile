@@ -1,0 +1,74 @@
+<style>
+	.panel-search {
+    background-color: #fff;
+    padding: 10px 0px !important;
+	}
+	.searchFilterBox > select { 
+		border: 1px solid #ccc;
+		background-color: #fcfcfc;
+    	padding-right: 15px;
+		min-height: 34px;
+	}
+
+</style>
+<div class="panel panel-primary">
+	<div class="panel-heading">تاریخچه عناصر</div>
+	<div class="panel-body">
+		<div class="col-sm-12 panel-search">
+			<vt-search control-fn="Controller.logSearchController"></vt-search>
+		</div>
+		<div class="col-sm-6">
+			<p class="help-block" ng-show="Data.logList.length==0">موردی یافت نشد.</p>
+			<table class="table table-hover table-striped col-sm-12" ng-show="Data.logList.length!=0">
+				<thead>
+					<tr>
+						<th>عنوان</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="log in Data.logList" ng-click="Func.onLogItemClick(log);">
+						<td>{{log.display_string}}</td>
+					</tr>
+				</tbody>
+			</table>
+            <pagination ng-show="Data.itemsPagination.show"
+                        total-items="Data.itemsPagination.totalItems"
+                        ng-model="Data.itemsPagination.currentPage"
+                        max-size="Data.itemsPagination.maxSize"
+                        items-per-page="Data.itemsPagination.perPage" ng-change="Func.onPageChange()"
+                        class="pagination-sm" boundary-links="true" first-text="ابتدا"
+                        last-text="انتها" next-text="بعدی" previous-text="قبلی">
+            </pagination>
+
+        </div>
+		<div class="col-sm-6">
+			<table class="table table-hover table-striped col-sm-12" ng-show="Data.itemList.length>0">
+				<thead>
+					<tr>
+						<th>نام کاربری</th>
+						<th>آدرس اینترنتی</th>
+						<th>توضیحات</th>
+						<th>تاریخ</th>
+                        <th class="col-sm-1">نام و نام خانوادگی</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="log in Data.itemList">
+						<td>{{log.username}}</td>
+						<td>{{log.ip_address|EnToFaNumber}}</td>
+						<td tooltip-append-to-body="true" tooltip-trigger="mouseenter"
+                            tooltip-placement="top" tooltip-popup-delay="500"
+                            tooltip="{{log.details}}">{{log.details}}</td>
+						<td>{{log.date|tehranDate:'jDD-jMMMM-jYYYY HH:mm:ss'|EnToFaNumber}}</td>
+                        <td ng-click="Func.onShowFullnameClick(log)" style="cursor: pointer;overflow: visible;">
+                            <div style="position: relative;">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <div class="customTooltip" ng-show="log.showTooltip" style="right: -55px !important;">{{log.tooltipContent}}</div>
+                            </div>
+                        </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

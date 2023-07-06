@@ -1,0 +1,14 @@
+{
+    "name": "vtTriStateCheckbox",
+    "version": "0.1.0",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "",
+    "main": "vtTriStateCheckbox.js",
+    "license": "",
+    "dependencies": {
+        "angular": "*"
+    }
+}
+

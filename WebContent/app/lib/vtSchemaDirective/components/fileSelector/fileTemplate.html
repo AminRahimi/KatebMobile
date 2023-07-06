@@ -1,0 +1,33 @@
+<div class="col-sm-12 noPadding" ng-if="isEditMode">
+	<p class="input-group">
+		<input name="{{name}}" type="text" readonly="readonly" ng-required="{{required}}"
+			class="form-control not-radius" ng-model="model.title" />
+		<span class="input-group-btn">
+			<button class="btn btn-default not-radius" type="button"
+				ng-file-select="uploadFile($files)"
+				ng-file-multiple="multiple"
+				ng-file-change="uploadFile($files)">
+				<i class="glyphicon glyphicon-file"></i>
+			</button>
+		</span>
+	</p>
+	<div class="progress" ng-show="uploadingFile.showUpload && uploadingFile.progressPercentage<100 ">
+		<div class="progress-bar progress-bar-success progress-bar-striped"
+			role="progressbar"
+			aria-valuenow="{{uploadingFile.progressPercentage}}"
+			aria-valuemin="0" aria-valuemax="100"
+			ng-style="{width : uploadingFile.progressPercentage + '%' }">
+			<span>{{uploadingFile.progressPercentage|EnToFaNumber}}% </span>
+		</div>
+		<a class="btn btn-default" ng-click="cancelUpload()" ng-show="uploadingFile.progressPercentage != 100 || model!=null">
+			<i class="glyphicon glyphicon-remove pull-left"></i>
+		</a>
+	</div>
+</div>
+<div class="col-sm-12 noPadding"  ng-if="model.title!=null && model.title!=''">
+	<div class="alert alert-default user-file-upload">
+		<a class="btn" ng-click="downloadFile()"><i class="glyphicon glyphicon-arrow-down"></i></a>
+		<span class="control-label">{{model.title|splitString:15}}</span>
+		<span class="glyphicon glyphicon-remove" ng-if="isEditMode" ng-click="deleteFile()"></span>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<div class="row haveMargin" ng-class="{'has-error':hasError_widget}">
+     <label class="col-sm-5 pull-right">محدودیت حجمی هر فایل (MB)</label>
+     <input type="number" class="form-control col-sm-5" ng-model="Data.widgetParams.sizeLimit">
+</div>
+<div class="row haveMargin" ng-class="{'has-error':hasError_widget}">
+     <label class="col-sm-5 pull-right">نوع فایل های مورد قبول </label>
+     <!--      <div style="" class="multiSelector h-32 p-t p-b " ng-dropdown-multiselect="" translation-texts="multiSelect.multiSelectTranslate" options="widget=='fileSelector' ? Data.fileExts : Data.imgExts" selected-model=" widget=='fileSelector' ? multiSelect.selectedFileFromMultiselect : multiSelect.selectedImgFromMultiselect " extra-settings="multiSelect.multiSelectSettings" events="multiSelect.multiSelectEvents"></div> -->
+     <div class="input-group col-sm-5">
+          <span class="input-group-btn">
+               <button type="button" class="btn btn-success" ng-click="Func.onAddExtClick(Data.tmpAddingExt)">+</button>
+          </span>
+          <input type="text" ng-model="Data.tmpAddingExt" class="form-control"  ui-keypress="{13:'Func.onAddExtClick(Data.tmpAddingExt);'}">
+     </div>
+     <!--      <div role="alert" class="alert alert-info col-md-3" ng-repeat="ext in Data.listOfExt">{{ext}}</div> -->
+</div>
+<div ng-class="{'has-error':hasError_widget}" class="row haveMargin">
+     <div ng-repeat="ext in Data.listOfExt" role="alert" class="alert alert-info col-md-5 col-sm-offset-5 alert-dismissible" style="padding-top: 2px; padding-bottom: 2px;">
+          <button ng-click="Func.onDeleteExtClick(ext, $index)" class="close" type="button">
+               <span aria-hidden="true">×</span>
+          </button>
+          {{ext}}
+     </div>
+</div>

@@ -1,0 +1,139 @@
+<div class="modal-header">
+     <h3 class="modal-title" ng-show="mode=='VIEW'">نمایش رابطه</h3>
+     <h3 class="modal-title" ng-show="mode=='EDIT'">ویرایش ارتباط</h3>
+     <h4 ng-show="!Data.isEntityTypeChangeable" class="modal-title text-danger" style="margin-top: 10px;"><span style="margin-left: 10px; color: rgb(248, 197, 0);" aria-hidden="true" class="glyphicon glyphicon-warning-sign"></span> این رابطه توسط یک فیلد مدیریت می&zwnj;شود بنابراین امکان ویرایش اطلاعات آن به غیر از «مقصد ارتباط» ممکن نمی باشد.</h4>
+</div>
+<div class="modal-body   haveFormRows">
+     <form name="Data.mainForm" class="form-horizontal" role="form">
+          <div class="form-group" ng-class="{'has-error':Data.mainForm.title.$invalid}">
+               <label class="control-label col-sm-4">عنوان ارتباط</label>
+               <div class="col-sm-5">
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <p ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable" class="form-control-static">{{Data.relation.forwardRelationLabel}}</p>
+                    <input type="text" ng-show="mode=='EDIT' && Data.isEntityTypeChangeable" class="form-control" name="title" ng-model="Data.relation.forwardRelationLabel" required>
+               </div>
+               <div class="col-sm-3">
+               
+                    <input id="toggle-one" ng-disabled="mode=='VIEW'" ng-init="Func.doToggleStyle()" checked  ng-model="Data.relation.relationDirection" data-on='<img ng-init="onInitInput(this)"  data-toggle="tooltip"    data-placement="top"      title="یک طرفه" style="position: relative; height: 31px; width: 36px; right: -8px; top: -3px;" src="app/modules/assets/img/one-way.png">' data-off='<img ng-init="onInitInput(this)"  data-toggle="tooltip"    data-placement="top"      title="دو طرفه" style="position: relative; height: 31px; width: 36px; right: -8px; top: -3px;" src="app/assets/img/tow-way.png">' type="checkbox">
+                    
+               </div>
+          </div>
+          <div class="form-group" id="reverce-relation" ng-show="Data.relation.relationDirection==undefined || Data.relation.relationDirection==2">
+               <label class="control-label col-sm-4">عنوان ارتباط معکوس</label>
+               <div class="col-sm-5">
+                    <p class="form-control-static" ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable">{{Data.relation.backwardRelationLabel}}</p>
+                    <input type="text" ng-show="mode=='EDIT' && Data.isEntityTypeChangeable"  ng-disabled="!Data.isEntityTypeChangeable" class="form-control" name="reverse" ng-model="Data.relation.backwardRelationLabel" >
+               </div>
+          </div>
+          <div class="form-group" ng-if="relationDirection=='backward'" ng-class="{'has-error':Data.mainForm.sourceRelation.$invalid}" ng-if="relationDirection=='forward'">
+               <label class="control-label col-sm-4">مبدا ارتباط</label>
+               <div class="col-sm-4" >
+                    <select class="form-control" ng-show="mode=='EDIT' && relationDirection=='backward' && Data.isEntityTypeChangeable"  ng-disabled="!Data.isEntityTypeChangeable" ng-change="Func.onSelectSourceEntityType(entityType)" ng-model="Data.selectedSourceEntityType" ng-options="entityType as entityType.name for entityType in Data.entityTypes" style="margin-right: 5px;">
+                    </select>
+                    <p ng-show="(mode=='VIEW' || !Data.isEntityTypeChangeable) || relationDirection!='backward'" class="form-control-static">{{Data.selectedSourceEntityType.name}}</p>
+               </div>
+               <div class="col-sm-4" >
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <!-- <input type="text" class="form-control" ng-model="Data.relation.destination"> -->
+                    <entity-selector required name="sourceRelation" ng-show="Func.isSelectedEntityType(Data.selectedSourceEntityType)  && Data.isEntityTypeChangeable"   class="widget" ng-model="Data.relation.source" model="Data.relation.source" field="" schema="Data.schemaOFSource" is-edit-mode="mode=='EDIT' && relationDirection=='backward'" ng-if="mode=='EDIT'"></entity-selector>
+                    <p  ng-show="mode=='VIEW'" class="form-control-static">{{Data.relation.sourceEntityData._displayString}}</p>
+                    
+                    
+                    
+               </div>
+          </div>
+          <div class="form-group" ng-class="{'has-error':Data.mainForm.destRelation.$invalid}" ng-if="relationDirection=='forward'">
+               <label class="control-label col-sm-4">مقصد ارتباط</label>
+               <div class="col-sm-4" >
+                    <select class="form-control"  ng-show="mode=='EDIT' && relationDirection=='forward' && Data.isEntityTypeChangeable" ng-disabled="!Data.isEntityTypeChangeable" ng-change="Func.onSelectDestinationEntityType(entityType)" ng-model="Data.selectedDestinationEntityType" ng-options="entityType as entityType.name for entityType in Data.entityTypes" style="margin-right: 5px;">
+                    </select>
+                    <p ng-show="(mode=='VIEW' || !Data.isEntityTypeChangeable) || relationDirection!='forward'" class="form-control-static">{{Data.selectedDestinationEntityType.name}}</p>
+               </div>
+               <div class="col-sm-4" >
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <!-- <input type="text" class="form-control" ng-model="Data.relation.destination"> -->
+                    <entity-selector required  class="widget" ng-show="Func.isSelectedEntityType(Data.selectedDestinationEntityType) && Data.isEntityTypeChangeable" name="destRelation" ng-model="Data.relation.destination" model="Data.relation.destination" field="" schema="Data.schemaOFDestination" is-edit-mode="mode=='EDIT'  && relationDirection=='forward'" ng-if="mode=='EDIT'"></entity-selector>
+                    
+                    <label ng-show="mode=='VIEW'" style="padding: 10px; margin: 2px; cursor: pointer;" class="label label-default pull-right">
+                         <a  class="form-control-static" style="color: black;" ng-click="Func.onOpenViewEntityModalClick()"> {{Data.relation.destEntityData._displayString}} </a>
+                    </label>
+                    
+                    
+               </div>
+          </div>
+          <!-- <div class="form-group" ng-class="{'has-error':Data.mainForm.relationDirection.$invalid}">
+			<label class="control-label col-sm-4">جهت ارتباط</label>
+			<div class="col-sm-8">
+				<p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p>
+				<input type="text" class="form-control" ng-model="Data.relation.relationDirection">
+				<select class="form-control" ng-show="mode=='EDIT'" name="relationDirection"
+					ng-change="onSelect()" ng-model="Data.relation.relationDirection" required="required">
+					<option value='1'>یک طرفه</option>
+					<option value='2'>دو طرفه</option>
+				</select>
+
+				<p ng-show="mode=='VIEW' && Data.relation.relationDirection=='1'" class="form-control-static">یک
+					طرفه</p>
+				<p ng-show="mode=='VIEW' && Data.relation.relationDirection=='2'" class="form-control-static">دو
+					طرفه</p>
+			</div>
+		</div> -->
+          
+          
+          <div class="form-group" ng-class="{'has-error':Data.mainForm.widget.$invalid}">
+               <label class="control-label col-sm-4">وزن</label>
+               <div class="col-sm-8">
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <p ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable" class="form-control-static">{{Data.relation.relationWeight}}</p>
+                    <input ng-show="mode=='EDIT' && Data.isEntityTypeChangeable"  ng-disabled="!Data.isEntityTypeChangeable" name="widget" ng-model="Data.relation.relationWeight" type="number" ng-pattern="/^[0-9]$|^10$/" class="form-control"></input>
+                    <span  class="help-block" ng-show="Data.mainForm.widget.$invalid">عدد بین 0 تا 10</span>
+               </div>
+          </div>
+          <div class="form-group">
+               <label class="control-label col-sm-4">توضیحات</label>
+               <div class="col-sm-8">
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <p ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable" class="form-control-static">{{Data.relation.description}}</p>
+                    <input type="text" ng-show="mode=='EDIT' && Data.isEntityTypeChangeable"  ng-disabled="!Data.isEntityTypeChangeable" class="form-control" ng-model="Data.relation.description">
+               </div>
+          </div>
+          <div class="form-group">
+               <label class="control-label col-sm-4">ضمايم</label>
+               <div class="col-sm-8">
+                    <!-- <p ng-show="viewRoleMode" class="form-control-static">{{selectedRole.description}}</p> -->
+                    <!-- <input type="text" class="form-control" ng-model="Data.relation.attachments"> -->
+                    <attach-file-multiple class="widget" ng-model="Data.relation.attachments" model="Data.relation.attachments" field="v" schema="{}" is-edit-mode="mode=='EDIT'  && Data.isEntityTypeChangeable"></attach-file-multiple>
+               </div>
+          </div>
+          <div class="form-group">
+               <label class="control-label col-sm-4">تاریخ شروع</label>
+               <div class="col-sm-8">
+                    <p ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable" class="form-control-static">{{Data.relation.fromDate|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</p>
+                    <p class="input-group" ng-show="mode=='EDIT' && Data.isEntityTypeChangeable" style="padding: 0px;" >
+                         <span class="input-group-addon">از</span>
+                         <input style="" type="text" class="form-control" max-date="Data.relation.toDate" ng-disabled="!Data.isEntityTypeChangeable" datepicker-popup-persian="yyyy/MM/dd" ng-model="Data.relation.fromDate" is-open="date.isOpen.from" close-text="Close" ng-change="date.onChange('from')" />
+                         <span class="input-group-addon btn btn-default" ng-click="date.open($event,'from')">
+                              <span ng-click="open($event)" class="flaticon-icon-1078"></span>
+                         </span>
+                    </p>
+               </div>
+          </div>
+          <div class="form-group">
+               <label class="control-label col-sm-4">تاریخ پایان</label>
+               <div class="col-sm-8">
+                    <p ng-show="mode=='VIEW' || !Data.isEntityTypeChangeable" class="form-control-static">{{Data.relation.toDate|tehranDate:'jYYYY/jMM/jDD'|EnToFaNumber}}</p>
+                    <p class="input-group" ng-show="mode=='EDIT' && Data.isEntityTypeChangeable" style="padding: 0px;" >
+                         <span class="input-group-addon">تا</span>
+                         <input style="" type="text" class="form-control" ng-disabled="!Data.isEntityTypeChangeable" min-date="Data.relation.fromDate" datepicker-popup-persian="yyyy/MM/dd" ng-model="Data.relation.toDate" is-open="date.isOpen.to" close-text="Close" ng-change="date.onChange('to')" />
+                         <span class="input-group-addon btn btn-default" ng-click="date.open($event,'to')">
+                              <span ng-click="open($event)" class="flaticon-icon-1078"></span>
+                         </span>
+                    </p>
+               </div>
+          </div>
+     </form>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-xs btn-xs btn-primary" ng-disabled="!Data.relation.forwardRelationLabel  || Data.mainForm.widget.$invalid || Data.mainForm.$invalid" ng-show="mode=='EDIT'" ng-click="Func.ok()">تاييد</button>
+     <button class="btn btn-xs btn-xs btn-warning pull-left" ng-click="Func.cancel()">لغو</button>
+</div>

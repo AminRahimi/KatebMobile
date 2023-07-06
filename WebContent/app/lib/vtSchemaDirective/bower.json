@@ -1,0 +1,56 @@
+{
+    "name": "vtSchemaDirective",
+    "version": "2.2.1",
+    "authors": [
+    	"SAhmad Fazeli",
+    	"Ali Yadegari",
+    	"Amin Rahimi"
+    ],
+    "description": "form generator",
+    "main": [
+        "schema-form.js",
+		"style.css",
+		"components/multiText/multiTextDirective.js",
+		"components/multiTextarea/multiTextareaDirective.js",
+		"components/fileSelector/fileSelectorDirective.js",
+		"components/imageSelector/imageSelectorDirective.js",
+		"components/imageSelector/imageModalCtrl.js",
+		"components/multiFileSelector/multiFileSelectorDirective.js",
+		"components/bigText/bigTextDirective.js",
+		"components/bigText/bigTextModalCtrl.js",
+		"components/integer/integerDirective.js",
+		"components/optionSelector/optionSelectorDirective.js",
+		"components/multiOptionSelector/multiOptionSelectorDirective.js",
+		"components/radioOptionSelector/radioOptionSelectorDirective.js",
+		"components/multiRelationSelector/multiRelationSelectorDirective.js",
+		"components/multiRelationSelector/multiRelationSelectorModalTemplateCtrl.js",
+		"components/attachFileSingle/attachFileSingleDirective.js",
+		"components/attachFileMultiple/attachFileMultipleDirective.js",
+		"form-management/addProperty/addPropertyDirective.js"
+    ],
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test"
+	],
+    "dependencies": {
+    	"angular": "1.5.2",
+	  	"angular-animate": "1.5.2",
+	    "angular-bootstrap": "0.13.4",
+	    "angular-ui-router": "0.2.15",
+    	"angular-dragdrop": "1.0.9",
+    	"angular-ui-sortable": "0.13.1",
+    	"angular-hotkeys": "*",
+    	"angularjs-dropdown-multiselect": "1.5.2",
+    	"angular-nicescroll": "0.0.9",
+	    "AngularJS-Toaster": "2.0.0",
+	    "bootstrap":"3.3.4",
+	    "bootstrap-rtl": "3.3.4",
+    	"bootstrap-filestyle": "1.2.1",
+    	"ng-file-upload": "10.1.11",
+    	"ng-tags-input": "2.3.0",
+	    "restangular": "1.6.1",
+	    "vtCommon": "http://gitlab.viradev.ir:6480/clientproject/commons.git#*"
+    }
+}

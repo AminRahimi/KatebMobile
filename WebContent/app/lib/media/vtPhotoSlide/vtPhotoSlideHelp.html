@@ -1,0 +1,11 @@
+<div class="slideTheme">
+	<div class="upBtn" ng-show="isEditMode">
+		<button class="btn btn-default editbtn" ng-click="Func.onCancelClick()" ng-show="Data.showRemoveIcon">
+			<i class="glyphicon glyphicon-remove"></i>
+		</button>
+		<button class="btn btn-default closebtn" ng-click="Func.open()">
+			<i class="glyphicon glyphicon-pencil"></i>
+		</button>
+	</div>
+	<img ng-src="{{'files/?mode=view&fcode='+ Data.ngModel.$viewValue.hash}}" alt="">
+</div>

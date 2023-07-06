@@ -1,0 +1,253 @@
+/* modal */
+.slideTheme,.modalDiv{
+	padding: 0;
+	margin: 0;
+}
+
+.slideTheme {
+    min-height: 35px;
+    position: relative;
+    z-index: 2;
+}
+
+/*.panel-custom .slideTheme{
+    filter: brightness(50%);
+    transition: filter 0.5s ease 0s;
+}*/
+
+/*.panel-custom .slideTheme:hover img{
+    filter: brightness(100%);
+}*/
+
+.slideTheme .upBtn {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+.slideTheme .tooltip {
+	font-family: Yekan;
+}
+
+.slideTheme button {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #000;
+}
+
+.slideTheme img {
+	filter: brightness(50%);
+	max-width: 100%;
+	min-height: 35px;
+ 	transition: filter 0.5s ease 0s;
+	z-index: -1;
+}
+
+.modalDiv .preModel {
+	margin-top: 55px;
+	position: relative;
+	width: 463px;
+}
+
+.modalDiv .nextModel {
+	/* height: 600px; */
+}
+
+.modalDiv .uploadPic {
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	border: 0px none;
+	background: #00AFEF none repeat scroll 0% 0%;
+	color: #FFF;
+	left: 0px;
+}
+
+.modalDiv .uploadPic .glyphicon-plus {
+	font-size: 22px;
+	top: 4px;
+}
+
+.modalDiv span {
+	display: block;
+	position: absolute;
+}
+
+.modalDiv .headerDiv {
+	height: 124px;
+}
+.modalDiv .header_sp {
+	font-size: 27px;
+	top: 18px;
+	width: 320px;
+	direction: ltr;
+	left: 130px;
+}
+
+/* cropper */
+.modalDiv .cropper_header {
+	height: 40px;
+	border: 1px solid transparent;
+	width: 100%;
+	background: #252629;
+}
+
+.modalDiv .cropper_Contain {
+	/* height: 510px; */
+	border: 1px solid transparent;
+	/* 	width: 100%; */
+	background: #141618;
+}
+
+.modalDiv .cropper_contentDiv {
+	background: #000;
+}
+
+.modalDiv .activeBtn:focus {
+	background: #161618;
+}
+
+.modalDiv .img-cropper {
+	/* height: 416px; */
+	width: 100%;
+}
+
+.modalDiv .img-cropper .ng-scope.ng-isolate-scope .row {
+	display: none;
+}
+
+.modalDiv .cropper-point.point-s,.modalDiv .cropper-point.point-n,.modalDiv .cropper-point.point-e,.modalDiv .cropper-point.point-w
+	{
+	display: none;
+}
+
+.modalDiv .cropper-crop-box .cropper-point,.modalDiv .cropper-crop-box .cropper-point.point-se
+	{
+	background-color: #fff;
+	border-radius: 50%;
+	height: 15px;
+	opacity: 1;
+	width: 15px;
+}
+
+.modalDiv .cropper-crop-box .cropper-point.point-ne {
+	top: -8px;
+	right: -8px;
+}
+
+.modalDiv .cropper-crop-box .cropper-point.point-nw {
+	top: -8px;
+	left: -8px;
+}
+
+.modalDiv .cropper-crop-box .cropper-point,.cropper-crop-box .cropper-point.point-se
+	{
+	right: -8px;
+	bottom: -8px;
+}
+
+.modalDiv .cropper-crop-box .cropper-point.point-sw {
+	bottom: -8px;
+	left: -8px;
+}
+
+.modalDiv .cropper-crop-box .cropper-view-box {
+	display: block;
+	height: 100%;
+	outline: 3px solid #fff;
+	overflow: hidden;
+	width: 100%;
+}
+
+.modalDiv .cropper_bottomRow {
+	height: 43px;
+	border: 1px solid transparent;
+	width: 100%;
+	line-height: 25px;
+	float: right;
+	/* margin-top: 33px; */
+	background: #000 none repeat scroll 0% 0%;
+}
+
+.modalDiv .cropper_footer {
+	height: 50px;
+	border: 1px solid transparent;
+	width: 100%;
+	background: #252629 none repeat scroll 0% 0%;
+	margin-top: 40px;
+	position: relative;
+}
+
+.modalDiv .cropper_footer_btn {
+	/*position: absolute;*/
+	width: 435px;
+	height: 60px;
+	list-style: outside none none;
+	/*left: 12%;*/
+}
+
+.modalDiv .icon {
+	display: inline-block;
+	width: 32px;
+	height: 30px;
+	background: url("images/icons.png") no-repeat;
+	vertical-align: middle;
+	top: -10px;
+}
+
+.modalDiv .icon-rotate-left {
+	background-position: -120px 0px;
+}
+
+.modalDiv .icon-rotate-right {
+	background-position: -150px 0px;
+}
+
+.modalDiv .icon-zoom-in {
+	background-position: -60px 0px;
+}
+
+.modalDiv .icon-zoom-out {
+	background-position: -90px 0px;
+}
+
+.modalDiv .icon-move {
+	background-position: 0px 0px;
+}
+
+.modalDiv .icon-crop {
+	background-position: -30px 0px;
+}
+
+.modalDiv .icon-insert {
+	background-position: -300px 0px;
+}
+
+.modalDiv .cropper_bottomRow button {
+	color: #FFF;
+	font-size: 20px;
+	border: 0px none;
+	background: transparent none repeat scroll 0% 0%;
+	margin-left: 10px;
+	margin-right: 30px;
+	line-height: 35px;
+}
+
+.modalDiv .cropper_footer_btn button {
+	border: 1px solid transparent;
+	width: 50px;
+	height: 50px;
+	margin-left: 10px;
+	float: right;
+	background: none;
+}
+.photo-large{
+	margin: 15px;
+}
+.close{
+color: red !important;
+}

@@ -1,0 +1,17 @@
+<div dropdown is-open="isopen" auto-close="outsideClick">
+	<span class="model-length" ng-if="model.length">{{model.length|EnToFaNumber}}</span>
+	<div id="single-button" dropdown-toggle class="dropdown-toggle-box">{{label}} <i class="fa-btn glyphicon glyphicon-chevron-down"></i></div>
+	<ul class="tag-popup dropdown-menu"  role="menu" aria-labelledby="single-button">
+		<li>
+			<input class="form-control" ng-model="input"
+				ui-keypress="{13:'add(input)'}" placeholder="{{label}}" ng-click="$event.stopPropagation();">
+		</li>
+		<li>
+			<label class="label label-default label-repeat full-width" ng-repeat="tag in model track by $index">
+				<span>{{tag}}</span>
+				<i class="fa fa-times fa-btn" ng-click="remove($index); $event.stopPropagation();"></i>
+			</label>
+		</li>
+	</ul>
+
+</div>

@@ -1,0 +1,16 @@
+{
+    "name": "tree",
+    "version": "0.1.1",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "collection of tree components",
+    "main": [
+        "treeModule.js"
+    ],
+    "homepage": "index.html",
+    "dependencies": {
+        "angular" : "*"
+    },
+    "devDependencies": {}
+}

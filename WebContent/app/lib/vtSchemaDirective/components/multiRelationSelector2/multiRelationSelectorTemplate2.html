@@ -1,0 +1,63 @@
+<div class=" noSidePadding" ng-class="{hidden:!isEditMode}" style="float: right;">
+	<div class="btn-group">
+		<!-- <button type='button' class='btn btn-xs btn-default' ng-click='openEntityMultiSelectorModal()' ng-if="!isAddOnly">
+	      <i class='glyphicon glyphicon-search'></i>
+	   </button> -->
+
+		<button type='button' class='btn btn-xs btn-default' ng-click="onOpenAddEditRelationModal()" ng-if="relationDirection=='forward'">
+			<i class='glyphicon glyphicon-plus'></i>
+		</button>
+	</div>
+</div>
+<div class=" noSidePadding" ng-show="model.length">
+	<div class="panel panel-default" style="padding-left: 0; padding-right: 0;">
+		<div class="panel-body" style="padding: 5px;">
+			<!-- 	      <button style="position: absolute; padding: 3px; top: 2px; left: 2px;" class="btn btn-xs btn-default" -->
+			<!-- 	         type="button" ng-click="haveMaxHeight=!haveMaxHeight"> -->
+			<!-- 	         <span class="glyphicon glyphicon-resize-full" -->
+			<!-- 	            ng-class="{'glyphicon-resize-full':haveMaxHeight,'glyphicon-resize-small':!haveMaxHeight}"></span> -->
+			<!-- 	      </button> -->
+
+			<!-- 
+			<label ng-repeat="relation in model" class="label-default pull-right"
+				style="padding: 10px; margin: 2px; cursor: pointer;"> <span
+				class=" glyphicon glyphicon-remove" ng-class="{hidden:!isEditMode}"
+				style="cursor: pointer; cursor: hand; position: relative; z-index: 2; top: 4px; color: red"
+				data-placement="top" title="پاک کردن" ng-click="onRemoveRelationClick(relation);" id="remove">
+			</span> 	       	<a ui-sref="home.entity.entityType.info.info({entityUid:entity._uid,entityTypeKey:entityKey})" target="_blank" style="color: black;">
+						         {{entity._displayString}} 	        </a> <a
+				ng-click="onOpenAddEditRelationModal(relation,$index)" style="color: black;">
+					{{relation.title}} </a>
+			</label> -->
+
+			<table class="table table-hover table-striped" ng-show="model.length!=0">
+				<thead>
+					<tr class="header">
+						<th>عنوان ارتباط</th>
+						<th>مقصد ارتباط</th>
+						<th></th>
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr ng-repeat="relation in model track by $index" ng-hide="relation.isDeleted || relation.isBackwardOneWay ">
+						<td ng-click="onOpenAddEditRelationModal(relation,$index)" ng-show="relationDirection=='forward'">{{relation.forwardRelationLabel}}</td>
+						<td ng-click="onOpenAddEditRelationModal(relation,$index)" ng-show="relationDirection=='forward'">{{relation.destEntityData._displayString}}</td>
+                        <td ng-click="onOpenAddEditRelationModal(relation,$index)"  ng-show="relationDirection=='backward'">{{relation.backwardRelationLabel}}</td>
+                        <td ng-click="onOpenAddEditRelationModal(relation,$index)"  ng-show="relationDirection=='backward'">{{relation.sourceEntityData._displayString}}</td>      
+                              
+                              
+						<td ><span class=" glyphicon glyphicon-remove" ng-class="{hidden:!isEditMode}"
+							style="cursor: pointer; cursor: hand; position: relative; z-index: 2; top: 4px; color: red"
+							data-placement="top" title="پاک کردن" ng-click="onRemoveRelationClick(relation);" id="remove">
+						</span></td>
+                         <!-- <td ng-if="relationDirection=='backward'"></td> -->      
+                              
+                              
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>

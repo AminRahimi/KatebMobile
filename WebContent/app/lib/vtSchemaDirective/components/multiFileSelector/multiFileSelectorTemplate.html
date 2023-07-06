@@ -1,0 +1,14 @@
+<span ng-show="isEditMode">
+     <input type="file" ngf-select="onFileSelect($files)" class="filestyle" multiple>
+</span>
+<p ng-repeat="m in model" class="form-control-static" ng-show="isEditMode">
+     <label class="label label-info">{{m.name}}</label>
+     <button type="button" class="close" ng-click="removeFile(m)">&times;</button>
+     <a href="{{getDownloadLink(m)}}"><i class="fa fa-btn fa-download"></i></a>
+</p>
+<span ng-show="!isEditMode">
+     <label ng-hide="model.length">فایلی آپلود نشده است</label>
+     <div ng-repeat="m in model">
+          <a href="{{getDownloadLink(m)}}" target="_blank">دانلود فایل {{m.name}}</a>
+     </div>
+</span>

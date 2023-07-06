@@ -1,0 +1,4 @@
+<fieldset class='fildsetborderforprint' ng-repeat='viewGroup in schema[goodGroups]' style='display: block;' ng-if="userSecretLevel>=viewGroup.secretLevel|| !viewGroup.secretLevel">
+     <p class='scheduler-border fildsetHeaderborderforprint'>{{viewGroup.name}}</p>
+     <schema-form-field api="apis[field]" style='display: block;' ng-repeat='field in viewGroup.members track by $index' is-focused='isFocused' ng-class="{'col-lg-6 col-md-6 col-sm-6':!isCol7,'col-lg-6 col-md-6 col-sm-6':isCol7,'clearRight':$even && $index!=0}" field='field' schema='schema.properties[field]' glob-schema='schema' model='model' required='schema.properties[field].required' label='{{schema.properties[field].label}}' is-edit-mode=false> </schema-form-field>
+</fieldset>

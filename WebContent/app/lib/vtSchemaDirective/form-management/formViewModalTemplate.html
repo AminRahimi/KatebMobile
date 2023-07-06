@@ -1,0 +1,19 @@
+<div class="modal-header">
+   <h3 class="modal-title">پیش‌نمایش فرم</h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+   <div class="col-md-12 row">
+      <form name="example" class="form-horizontal" role="form">
+         <schema-form-fields ng-init="isEditMode=true"  is-edit-mode="isEditMode"  api="schemaFormViewModalApi" 
+            schema="jsonSchema" model="model" is-col-7="isCol7" simple-view="true"></schema-form-fields>
+      </form>
+   </div>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-sm btn-sm btn-success" ng-show="isEditMode" ng-click="isEditMode=false;">حالت عادی</button>
+   <button class="btn btn-sm btn-sm btn-success" ng-hide="isEditMode" ng-click="isEditMode='true';">حالت ویرایش</button>
+   <button class="btn btn-sm btn-sm btn-warning pull-left" ng-click="onReturnClick()">بازگشت</button>
+</div>
+
+
+

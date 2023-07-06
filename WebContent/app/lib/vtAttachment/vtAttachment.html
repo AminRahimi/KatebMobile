@@ -1,0 +1,49 @@
+<div class="vtAttachment">
+    <div class="row rowForm" ng-if="model.length>0">
+        <div class="col-sm-12 text-left">
+            <span class="c-pointer" ng-click="Func.onDownloadSelectedFilesClick()" ng-show="Data.isShowSelectedDownload">دانلود انتخاب شده ها</span>
+            <span ng-show="Data.isShowSelectedDownload">|</span>
+            <span class="c-pointer" ng-click="Func.onDownloadAllFilesClick()">دانلود همه</span>
+        </div>
+    </div>
+    <!--<span class="fa email-attachment-img" ng-repeat="attachment in model track by $index" ng-class="{-->
+        <!--'bg-pdf':Func.checkFileType(attachment.name)=='pdf' && attachment.active,-->
+        <!--'bg-word':Func.checkFileType(attachment.name)=='doc' && attachment.active,-->
+        <!--'bg-excel':Func.checkFileType(attachment.name)=='xls' && attachment.active,-->
+        <!--'bg-image':(Func.checkFileType(attachment.name)=='img' || Func.checkFileType(attachment.name)=='jpg' || Func.checkFileType(attachment.name)=='png' || Func.checkFileType(attachment.name)=='jpeg') && attachment.active,-->
+        <!--'bg-audio':(Func.checkFileType(attachment.name)=='mp4' || Func.checkFileType(attachment.name)=='mp3' || Func.checkFileType(attachment.name)=='ogg') && attachment.active,-->
+        <!--'bg-default-attachment': !attachment.active-->
+        <!--}">-->
+    <span class="fa email-attachment-img" ng-repeat="attachment in model track by $index" ng-class="{
+        'bg-pdf':Func.checkFileType(attachment.name)=='pdf',
+        'bg-word':Func.checkFileType(attachment.name)=='doc',
+        'bg-excel':Func.checkFileType(attachment.name)=='xls',
+        'bg-image':(Func.checkFileType(attachment.name)=='img' || Func.checkFileType(attachment.name)=='jpg' || Func.checkFileType(attachment.name)=='png' || Func.checkFileType(attachment.name)=='jpeg'),
+        'bg-audio':(Func.checkFileType(attachment.name)=='mp4' || Func.checkFileType(attachment.name)=='mp3' || Func.checkFileType(attachment.name)=='ogg'),
+        'bg-default-attachment': Func.checkFileType(attachment.name)=='none'}">
+        <i class="flaticon-attachment" ng-class="{
+            'flaticon-interface-1':Func.checkFileType(attachment.name)=='pdf',
+            'flaticon-interface':Func.checkFileType(attachment.name)=='doc',
+            'flaticon-interface-4':Func.checkFileType(attachment.name)=='xls',
+            'flaticon-art':Func.checkFileType(attachment.name)=='img',
+            'flaticon-sound':Func.checkFileType(attachment.name)=='mp3',
+            'flaticon-interface-5':Func.checkFileType(attachment.name)=='none'}" aria-hidden="true">
+        </i>
+        <i class="fa fa-times remove-attachment" ng-show="isEditMode" ng-click="Func.onRemoveAttachmentClick($event, $index, attachment)"></i>
+        <input class="select-attachment" type="checkbox" ng-change="Func.checkFileSelected()"
+           ng-model="attachment.active" ng-show="!isEditMode">
+        <div class="progress progress-attachment" ng-show="attachment.progressActive">
+            <div class="progress-bar progress-bar-success" role="progressbar"
+                aria-valuemin="0" aria-valuemax="100" ng-style="{'width': attachment.progressPercentage+'px'}">
+            </div>
+        </div>
+        <a class="attachment-name split-string" href="{{Func.getDownloadLink(attachment)}}">{{attachment.name}}</a>
+    </span>
+    <!-- THIS MUST NOT SHOWN -->
+    <button class="ng-hide fake-uploader-btn" type="button"
+            multiple
+            ngf-multiple="multiple"
+            ngf-select="Func.uploadFile($files)">
+        <i class="glyphicon glyphicon-file"></i>
+    </button>
+</div>

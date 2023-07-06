@@ -1,0 +1,16 @@
+<p class='input-group noPadding' ng-class="{hidden:!isEditMode}">
+     <input id="{{field}}" ng-readonly="true" ng-attr-name="{{field}}" ng-model="model._displayString" type="text" class="form-control"></input>
+     <i style="position: absolute; z-index: 2; left: 81px; top: 19px; cursor: pointer;" ng-click="onRemoveSelectedClick()" ng-show="model" class="glyphicon glyphicon-remove  text-danger"></i>
+     <i style="position: absolute; z-index: 2; top: 19px; cursor: pointer; left: 100px;" ng-click="onEditSelectedClick()" ng-show="model" class="glyphicon glyphicon-edit  text-primary"></i>
+     <span class='input-group-addon btn btn-default' ng-click='openEntitySelectorModal()' ng-if="!isAddOnly">
+          <i class='glyphicon glyphicon-search'></i>
+     </span>
+     <span class="input-group-addon btn btn-default" ng-hide="schema.isCreateDisabled" ng-click="onOpenAddNewEntityModal()">
+          <span class="glyphicon glyphicon-plus"></span>
+     </span>
+</p>
+<p class="form-control-static" ng-class="{hidden:isEditMode}" ng-show="model && model._displayString">
+     <label class="label label-default pull-right" style="padding: 10px; margin: 2px; cursor: pointer;">
+          <a ng-click="openEntityInfoModal(model);" style="color: black;"> {{model._displayString}} </a>
+     </label>
+</p>

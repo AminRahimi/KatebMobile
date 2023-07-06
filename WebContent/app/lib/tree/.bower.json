@@ -1,0 +1,24 @@
+{
+  "name": "tree",
+  "authors": [
+    "viratech <www.viratech.ir>"
+  ],
+  "description": "collection of tree components",
+  "main": [
+    "treeModule.js"
+  ],
+  "homepage": "index.html",
+  "dependencies": {
+    "angular": "*"
+  },
+  "devDependencies": {},
+  "_release": "5823d1d89f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5823d1d89fd67c4e336c1f71970b450945325531"
+  },
+  "_source": "http://yadegari:yadegari@gitlab.viradev.ir:6480/clientproject/tree.git",
+  "_target": "*",
+  "_originalSource": "http://yadegari:yadegari@gitlab.viradev.ir:6480/clientproject/tree.git"
+}

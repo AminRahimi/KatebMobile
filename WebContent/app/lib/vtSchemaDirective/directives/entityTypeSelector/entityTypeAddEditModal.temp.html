@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span ng-show="Data.mode=='edit'">ویرایش پرسشنامه</span>
+		<span ng-show="Data.mode=='add'">افزودن پرسشنامه</span>
+		<button class="btn btn-sm btn-success btn-text pull-left" ng-show="Data.mode=='edit'" type="button" ng-click="Func.events.onUpdateClick()" ng-bind="'UPDATE'|EnToFaButton" ng-disabled="Data.form.$invalid && Data.validationClicked"></button>
+		<button class="btn btn-sm btn-success btn-text pull-left" ng-show="Data.mode=='add'" type="button" ng-click="Func.events.onSaveAddingClick()" ng-bind="'SAVE'|EnToFaButton" ng-disabled="Data.form.$invalid && Data.validationClicked"></button>
+		<button class="btn btn-sm btn-default btn-text pull-left" type="button" ng-click="Func.events.onCancelClick()">انصراف</button>
+	</div>
+	<div class="panel-body">
+		<entity-type-edit-add model="Data.model" api="Apis.entityTypeCRUD" form="Data.form"></entity-type-edit-add>
+	</div>
+</div>
+
+
+
+

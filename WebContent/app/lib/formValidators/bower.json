@@ -1,0 +1,13 @@
+{
+    "name": "formValidators",
+    "version": "0.6.0",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "",
+    "main": "formValidatorsModule.js",
+    "license": "",
+    "dependencies": {
+        "angular": "*"
+    }
+}

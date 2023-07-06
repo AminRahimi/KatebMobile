@@ -1,0 +1,46 @@
+<div class="noSidePadding" ng-class="{hidden:!isEditMode}">
+     <div class="col-sm-5 col-sm-5o5 noSidePadding">
+          <input ng-model="tempTxt" type="text" class="form-control" ui-keypress="{13:'onAddNewAttachClick()'}">
+     </div>
+     <div class="col-sm-5" style="padding-left: 0px;" ng-form="setvalueForm">
+          <input type="file" class="file1" class="filestyle" name="upload{{$index}}" ngf-select="onFileSelect($files,inp)" ng-model="setvalueModel">
+          <script>
+											$(":file").filestyle({
+												buttonText : ""
+											});
+										</script>
+     </div>
+     <!-- <button type="button" class="btn btn-default pull-left" ng-click="onAddNewAttachClick()">
+          <i class="glyphicon glyphicon-plus" style="cursor: pointer;"></i>
+     </button> -->
+     <div class="row col-sm-12">
+          <!-- <div style="display: block; text-align: center;">
+               <label class="error" ng-show="tempTxt.length || tempFile.name">برای ذخیره بر روی دکمه + کلیک کنید.</label>
+          </div> -->
+          <div class="col-sm-6">
+               <label class="label_error" ng-show="textNotFound">عنوان وارد کنید</label>
+          </div>
+          <div class="col-sm-6">
+               <label class="label_error" ng-show="fileNotFound">فایل انتخاب کنید</label>
+          </div>
+     </div>
+</div>
+<div class="col-sm-12 noSidePadding">
+     <div class="panel panel-default noSidePadding" ng-show="model">
+          <div class="panel-body noPadding">
+               <span class="label label-default pull-right"  style="padding: 8px; margin: 2px;">
+                    <span>
+                         <a href="{{model.file.downloadLink}}" target="_blank" ng-if="model.file.downloadLink">
+                              <span class="glyphicon glyphicon-arrow-down"></span>
+                              {{model.title}}
+                         </a>
+                         <span ng-if="!model.file.downloadLink">
+                              <span class="glyphicon glyphicon-file"></span>
+                              {{model.title}}
+                         </span>
+                         <span class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="removeAttach(model)" ng-show="isEditMode"></span>
+                    </span>
+               </span>
+          </div>
+     </div>
+</div>

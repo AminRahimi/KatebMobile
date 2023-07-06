@@ -1,0 +1,14 @@
+<p class="input-group">
+	<input name="name" style="background-color: white;" type="text"
+		readonly="readonly" class="form-control"
+		datepicker-popup-persian="yyyy/MM/dd" ng-model="model"
+		ng-required="isRequired" is-open="Data.datePicker.isOpen"
+		current-text="امروز" clear-text="پاک کردن" close-text="لغو"
+		starting-day="6" />
+	<span id="create_dateID" class="input-group-btn">
+		<button type="button" class="btn btn-default"
+			ng-click="Data.open($event)">
+			<i class="glyphicon glyphicon-calendar"></i>
+		</button>
+	</span>
+</p>

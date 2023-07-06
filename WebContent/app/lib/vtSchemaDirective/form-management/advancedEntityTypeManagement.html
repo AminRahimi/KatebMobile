@@ -1,0 +1,243 @@
+<form name="Data.mainForm" role="form" ng-init="Data.mainForm">
+	<div class="col-sm-5">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<a class="btn btn-default btn-sm btn-text" ng-disabled="Data.mode=='add'" type="button"
+						style="margin-right: 30px" ng-click="Func.onAddEntityTypeClick()">ايجاد</a>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">لیست انواع موجودیت‌ها</div>
+			<div class="panel-body">
+				<label ng-show="Data.entityTypeList.length==0">داده‌ای برای نمایش وجود ندارد!</label>
+				<div class="bordered-container" style="width: 100%; height: 90%;"
+					ng-hide="Data.entityTypeList.length==0">
+					<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th width="40%">نام موجودیت</th>
+								<th>نام پدر</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-click='Func.editEntityType(entityType)' ng-repeat="entityType in Data.entityTypeList"
+								ng-class="entityType.class">
+								<td>{{entityType.name}}</td>
+								<td>{{entityType.parentEntityName}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--          <pagination total-items="itemsPagination.totalItems" style="margin:0px;" ng-model="itemsPagination.currentPage" -->
+				<!--             max-size="itemsPagination.maxSize" items-per-page="itemsPagination.perPage" ng-change="pageChanged()" -->
+				<!--             class="pagination-sm" boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" -->
+				<!--             previous-text="قبلی"> </pagination> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- ------------------------------------------- Create EntityType -------------------------------------------------- -->
+	<div class="col-sm-7" ng-show="Data.mode!='view'">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<a class="btn btn-sm btn-default btn-text" ng-show="Data.mode=='preview'" type="button"
+							ng-click="Func.onGotoEditModeClick();">ویرایش</a> <a class="btn btn-sm btn-success btn-text"
+							ng-show="Data.mode=='add'" type="button" ng-click="Func.onSaveEntityTypeClick()"
+							ng-disabled="Data.mainForm.$invalid">ذخیره</a> <a class="btn btn-sm btn-success btn-text"
+							ng-show="Data.mode=='edit'" type="button" ng-click="Func.onUpdateEntityTypeClick()">ثبت
+							تغییرات</a> <a class="btn btn-sm btn-warning btn-text"
+							ng-show="Data.mode!='view' && Data.mode!='preview'" type="button"
+							ng-click="Func.onCancelClick()">انصراف</a> <a class="btn btn-sm btn-info btn-text pull-left"
+							ng-show="Data.mode!='view'" type="button" ng-click="Func.onOpenFormViewPopupClick()">
+							پیش‌نمایش <i class="glyphicon glyphicon-zoom-in"></i>
+						</a> <a class="btn btn-sm btn-default btn-text pull-left" type="button"
+							ng-disabled="Data.mode=='add'" style="margin-left: 4px;" ng-click="Func.onFormDesignClick();">طراحی
+							فرم</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading animated">مشخصات نوع موجودیت</div>
+			<div class="panel-body">
+				<div id="entityTypeBaseInfoEdit" ng-show="Data.mode!='preview'">
+					<div class="row haveMargin" ng-class="{'has-error':Data.mainForm.englishTitle.$invalid}">
+						<label class="col-sm-5 pull-right required">عنوان لاتین </label>
+						<div class="col-sm-7">
+
+							<input type="text" class="form-control" name="englishTitle"
+								ng-model="Data.newEntityType.entityKey" style="direction: ltr;" required>
+						</div>
+						<label class="text-danger" ng-show="hasError_valid">عنوان وارد شده معتبر نمی‌باشد</label>
+					</div>
+					<div class="row haveMargin" ng-class="{'has-error':Data.mainForm.persianTitle.$invalid}">
+						<label class="col-sm-5 pull-right required">عنوان فارسی </label>
+
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="persianTitle"
+								ng-model="Data.newEntityType.name" required>
+						</div>
+					</div>
+					<div class="row haveMargin" ng-show="Data.mode=='add'"
+						ng-class="{'has-error':Data.mainForm.parent.$invalid}">
+						<label class="col-sm-5 required">پدر </label>
+
+						<div class="col-sm-7">
+							<select class="form-control" name="parent" ng-change="Func.onSelectParent()"
+								ng-model="parent" ng-options="parent as parent.name for parent in Data.parentsList" required>
+							</select>
+						</div>
+					</div>
+					<!-- <div class="row haveMargin" ng-show="Data.mode!='preview'">
+						<label class="col-sm-5">رشته نمایشی انتخابی</label>
+						<div class="col-sm-7">
+							<div class="checkbox">
+								<label> <input type="checkbox" ng-init="isSelectorDisplayStringVisible=true"
+									ng-model="isSelectorDisplayStringVisible">
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="row haveMargin" ng-show="Data.mode!='preview' && isSelectorDisplayStringVisible">
+						<label class="col-sm-5">رشته نمایشی </label>
+
+						<div class="col-sm-7">
+							<select class="form-control  has-error" ng-change="Func.onSelectPropForDisplayString()"
+								ng-model="selectedPropForDisplayString"
+								ng-options="prop as prop.name for prop in entityTypePropNames">
+							</select>
+						</div>
+					</div> -->
+					<div class="row haveMargin" ng-if="Data.mode=='add'">
+						<label class="col-sm-5 ">قالب گزارش </label>{{v}}
+						<div class="col-sm-7">
+							<file-select class="widget" name="reportFileTemplate"
+								ng-model="Data.newEntityType.exportFileTemplate"
+								model="Data.newEntityType.exportFileTemplate" field="field" schema="schema"
+								is-edit-mode="true"></file-select>
+						</div>
+					</div>
+					<div class="row haveMargin" ng-if="Data.mode=='edit'">
+						<label class="col-sm-5 ">قالب گزارش </label>{{v}}
+						<div class="col-sm-7">
+							<file-select class="widget" name="reportFileTemplate"
+								ng-model="Data.newEntityType.exportFileTemplate"
+								model="Data.newEntityType.exportFileTemplate" field="field" schema="schema"
+								is-edit-mode="true"></file-select>
+						</div>
+
+					</div>
+					<div class="row haveMargin" ng-show="Data.mode=='edit'">
+						<label class="col-sm-5">پدر </label> <label class="col-sm-5">{{Data.newEntityType.parentEntityKey}}</label>
+					</div>
+		<!-- 			<style type="text/css" media="screen">
+#displayStringEditor, #validationCodeEditor {
+	height: 100px;
+}
+</style>
+ -->
+
+					<!-- <div class="row haveMargin" ng-show="!isSelectorDisplayStringVisible">
+						<label class="col-sm-5 control-label">رشته نمایشی(کد)</label>
+						<div class="col-sm-7" ng-show="Data.mode!='add'">
+							<input type="checkbox" name="membershipsID" class="onoffswitch-checkbox"
+								id="is_member_of_park" ng-model="Data.hasDisplayString"
+								ng-change="Func.onToggleDisplayString()">
+						</div>
+					</div>
+					<div class="row haveMargin" ng-show="(Data.mode=='add' || Data.hasDisplayString) &&  !isSelectorDisplayStringVisible"
+						ng-class="{'has-error':false}">
+						<label class="col-sm-5 pull-right "></label>
+						<div class="col-sm-7">
+							<div id="displayStringEditor" class="" style="">function(){ return "TEST"; }</div>
+						</div>
+					</div>
+					<div class="row haveMargin">
+						<label class="col-sm-5 control-label">کد اعتبار سنجی</label>
+						<div class="col-sm-7">
+							<input type="checkbox" name="membershipsID" class="onoffswitch-checkbox"
+								id="is_member_of_park" ng-model="Data.hasValidationCode"
+								ng-change="Func.onToggleValidationCode()">
+						</div>
+					</div>
+					<div class="row haveMargin" ng-show="Data.hasValidationCode"
+						ng-class="{'has-error':hasError_parent}">
+						<label class="col-sm-5 pull-right "> </label>
+						<div class="col-sm-7">
+							<div id="validationCodeEditor" class="" style="">function(){return true;}</div>
+						</div>
+					</div> -->
+
+
+				</div>
+				<div id="entityTypeBaseInfoView" ng-show="Data.mode=='preview'">
+					<div class="row haveMargin">
+						<label class="col-sm-5 pull-right">عنوان لاتین </label> <label class="col-sm-5">{{Data.newEntityType.entityKey}}</label>
+					</div>
+					<div class="row haveMargin">
+						<label class="col-sm-5 pull-right">عنوان فارسی </label> <label class="col-sm-5">{{Data.newEntityType.name}}</label>
+					</div>
+					<div class="row haveMargin">
+						<label class="col-sm-5">پدر </label> <label class="col-sm-5">{{Data.newEntityType.parentEntityKey}}</label>
+					</div>
+					<div class="row haveMargin">
+						<label class="col-sm-5">قالب گزارش </label>
+						<!-- <label class="col-sm-5">{{Data.newEntityType.exportFileTemplate}}</label> -->
+						<a
+							href="/CrawlerDataManagement/files/export.docx?mode=download&fcode={{Data.newEntityType.exportFileTemplate}}"
+							ng-show="Data.newEntityType.exportFileTemplate">دانلود فایل</a>
+					</div>
+
+
+					<!-- <div class="row haveMargin">
+						<label class="col-sm-5">رشته نمایشی </label>
+						<div class="col-sm-7">
+							<pre class="" style="direction: ltr;">{{Data.newEntityType.jsonSchema.displayString}}</pre>
+						</div>
+					</div>
+					<div class="row haveMargin">
+						<label class="col-sm-5">کد اعتبار سنجی </label>
+						<div class="col-sm-7">
+							<pre class="" style="direction: ltr;">{{Data.newEntityType.jsonSchema.validationCode}}</pre>
+						</div>
+					</div> -->
+				</div>
+				<div id="formPreview">
+					<div class="">
+						<div class="row noSideMargin">
+							<div class="">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
+									<div class="list-group">
+										<a ng-repeat="viewGroup in Data.formItem.viewGroups" class="list-group-item text-center"
+											ng-class="{'active':tabActiveIndex==$index}" ng-click="Func.changeTab($index);">{{viewGroup.name}}
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
+									<div class="bhoechie-tab-content" ng-class="{'active':tabActiveIndex==$index}"
+										ng-repeat="viewGroup in Data.formItem.viewGroups" style="padding-left: 10px;">
+										<div class="row">
+											<div class="col-sm-12 haveMargin" ng-show="viewGroup.members.length!=0">
+												<label class="col-sm-4">فیلدهای کنونی </label>
+												<div class="col-sm-8">
+													<div ng-repeat="prop in viewGroup.members" style="height: 30px; margin-bottom: 5px">
+														<div class="alert alert-info  alertStyle">
+															<label>{{Data.formItem.properties[prop].label}}</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</form>

@@ -1,0 +1,15 @@
+<div class="">
+	<div class="row noSideMargin">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div ng-repeat='viewGroup in schema[goodGroups]' style='padding-left: 10px;' ng-if="userSecretLevel>=viewGroup.secretLevel|| !viewGroup.secretLevel">
+				<div class="row rowForm" ng-repeat='field in viewGroup.members track by $index' ng-class="{'has-error': formState['{{field}}-{{suffix}}'].$invalid && isEditMode && apis[field].validationClicked}" ng-if="schema.properties[field]">
+					<label for="{{field}}" class="control-label col-sm-12 text-right" ng-class="{'required':isEditMode && required}">{{schema.properties[field].label}}</label>
+					<div class="col-sm-12">
+						<schema-form-field api="apis[field]" glob-schema='schema' suffix="suffix" is-focused='isFocused' field='field' schema='schema.properties[field]' model='model' required='schema.properties[field].required' label='{{schema.properties[field].label}}' is-edit-mode='isEditMode' ng-if="schema.properties[field]"> </schema-form-field>
+					</div>
+				</div>
+<!-- 				<schema-form-field api="apis[field]" is-focused='isFocused' field='field' suffix="suffix" schema='schema.properties[field]' model='model' required='schema.properties[field].required' label='{{schema.properties[field].label}}' is-edit-mode='isEditMode'></schema-form-field> -->
+			</div>
+		</div>
+	</div>
+</div>

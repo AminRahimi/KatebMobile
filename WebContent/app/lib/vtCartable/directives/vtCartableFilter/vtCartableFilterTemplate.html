@@ -1,0 +1,59 @@
+<div id="saveAsCom"
+     class="btn-group p-t-6 p-b-6"
+     style="float:left; padding-left:15px"
+     auto-close="outsideClick"
+     dropdown>
+    <button type="button"
+            class="btn btn btn-xs dropdown-toggle btn-info"
+            dropdown-toggle
+            style="color: #00838F;    border: 1px solid #ddd;background: transparent">
+        <span class="glyphicon glyphicon-filter"></span>
+        <span class="sr-only">Split button!</span>
+        ذخیره فیلتر
+    </button>
+    <ul class="dropdown-menu"
+        role="menu"
+        style="z-index: 100; margin-top: 8px; padding: 6px; font-family: iranyekanweb; border-radius: 0px;float: left;margin-left: 41px;right:-110px !important;top: 33px;">
+        <li>
+            <div class="input-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        style="font-size: 12px;"
+                        placeholder="نام فیلتر ..."
+                        ng-model="Data.title">
+            </div>
+        </li>
+        <li ng-show="Data.selectedFilter.uid.indexOf('static') == -1">
+            <buttom
+                    style="margin-top: 1px;"
+                    class="btn btn-xs btn-primary col-sm-12"
+                    ng-disabled="!Data.title"
+                    ng-click="Func.onSaveFilterClick();">ذخیره
+            </buttom>
+        </li>
+        <li>
+            <buttom
+                    style="margin-top: 5px; padding-top: 6px;"
+                    class="btn btn-xs btn-primary col-sm-12"
+                    ng-disabled="!Data.title"
+                    ng-click="Func.onSaveasFilterClick();">ذخیره به عنوان
+            </buttom>
+        </li>
+        <!--<li>-->
+            <!--<buttom-->
+                    <!--style="margin-top: 1px;"-->
+                    <!--class="btn btn-xs btn-info col-sm-12"-->
+                    <!--ng-disabled="!Data.title"-->
+                    <!--ng-click="Func.onRenameFilterClick();">تغیر نام-->
+            <!--</buttom>-->
+        <!--</li>-->
+        <li ng-show="Data.selectedFilter.uid.indexOf('static') == -1">
+            <buttom
+                    style="margin-top: 1px;"
+                    class="btn btn-xs btn-danger col-sm-12"
+                    ng-click="Func.onRemoveFilterClick();">حذف
+            </buttom>
+        </li>
+    </ul>
+</div>

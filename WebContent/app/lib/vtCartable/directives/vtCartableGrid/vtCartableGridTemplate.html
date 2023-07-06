@@ -1,0 +1,160 @@
+<style>
+	.pagination-last{
+		display: none !important;
+	}
+</style>
+<div class="table-responsive" style="max-height: calc(100vh - 220px);">
+	<p class="help-block" ng-show="(Controller.pagination.totalItems!=-1 && controlFn.listItems.length==0) || (controlFn.listItems.length==0 && Controller.customPagination.choices)">موردی یافت نشد.</p>
+	<table class="table table-striped table-hover col-sm-12" ng-show="controlFn.listItems.length>0">
+		<thead style="top: 46px;background: #fff;z-index: 1;left: 0;right: 0;width: 100%;">
+		<tr>
+			<th class="listDirectiveTh" style="color: #666666" ng-repeat="field in Data.visibleFields track by $index"
+				ng-disabled="Data.isLoading"
+				ng-click="Func.changeOrder(field)"
+				ng-show="field.display"
+				ng-style="{'width':field.width,'text-align':field.textAlign}">
+                <div ng-if="field.type=='checkbox3'">
+                    <input id="indeterminate-checkbox" type="checkbox" data-indeterminate-checkbox ng-model="Data.selectAll"
+                           data-child-list="controlFn.listItems" data-property="selected" ng-click="field.action(controlFn.listItems, $event, Data.selectAll)">
+                    <label for="indeterminate-checkbox"></label>
+                </div>
+                <div ng-if="field.type!='checkbox3'" ng-hide="field.isHide()" style="width:150px">
+                    <div class="col-sm-1" ng-class="{'table-head-cartable':field.asc}" ng-show="field.sortable">
+                        <span class="caret" style="transform: rotate(180deg);" ng-show="field.asc"></span>
+                        <span class="caret" ng-hide="field.asc"></span>
+                    </div>
+                    <div class="col-sm-9" ng-class="{'table-head-cartable':field.asc}" ng-hide="field.isHide()">{{field.label}}   </div>
+                </div>
+			</th>
+			<th class="listDirectiveTh">
+				<div class="multiSelector h-32 p-t p-b pull-left" ng-dropdown-multiselect=""
+					translation-texts="selectFiledCnt.multiSelectTranslate" options="selectFiledCnt.selectedFromMultiselectOptions"
+					selected-model="visibleHeaders" extra-settings="selectFiledCnt.multiSelectSettings"
+					events="selectFiledCnt.multiSelectEvents"></div>
+			</th>
+			<th class="listDirectiveTh">
+				<div style="display: flex;justify-content: center;">
+					<i class="fa fa-refresh fa-lg pull-left" ng-click="controlFn.refreshList()"
+						style="cursor:pointer;padding-top:3px; "></i>
+				</div>
+			</th>
+		</tr>
+		</thead> 
+		<tbody>
+		<tr ng-repeat="item in controlFn.listItems track by $index" ng-class="{'selected':item.isSelected,'read-letter':!item.read}" style="cursor: pointer; cursor: hand; color: #666666">
+			<td ng-repeat="field in Data.visibleFields track by $index" ng-switch on="field.type" ng-show="field.display" ng-click="Func.onListItemClick(item, field, $parent.$index)" class="listDirectiveTd">
+				<span ng-switch-when="string" ng-if="field.hasTooltip" ng-hide="field.isHide()" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-popup-delay="500" tooltip="{{item[field.key]}}">{{item[field.key]|EnToFaNumber|splitString:40}}</span>
+				<span ng-switch-when="string" ng-if="!field.hasTooltip" ng-hide="field.isHide()">{{item[field.key]|EnToFaNumber|splitString:40}}</span>
+				<span ng-switch-when="checkbox"><input type="checkbox" ng-model="Data.checked[item.uid]" ng-change="Func.changeSelectedItems(item)" ></span>
+				<span ng-switch-when="checkbox2"><input type="checkbox" ng-model="item.selected" ng-click="field.action(item,$event,item.selected)" ></span>
+                <span ng-switch-when="checkbox3">
+                        <input type="checkbox" id="itemActive{{index}}" ng-model="item.selected"
+                               ng-click="field.action([item],$event)">
+					    <label for="itemActive{{index}}"></label>
+                </span>
+				<span ng-switch-when="int">{{item[field.key]|EnToFaNumber}}</span>
+				<span ng-switch-when="date">{{item[field.key]|tehranDate:field.format|EnToFaNumber}}</span>
+				<span ng-switch-when="timestamp">{{item[field.key]|tehranDate:field.format|EnToFaNumber}}</span>
+				<span ng-switch-when="bool">
+        						<span ng-show="item[field.key]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          <span ng-hide="item[field.key]" class="flaticon-close-button" aria-hidden="true"></span>
+          </span>
+				<span ng-switch-when="boolean">
+        						<span ng-show="item[field.key]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          <span ng-hide="item[field.key]" class="flaticon-close-button" aria-hidden="true"></span>
+          </span>
+				<span ng-switch-when="img">
+        						<span ng-show="{{field.if}}" ng-class="{'{{field.trueIcon}}':field.trueIcon}" aria-hidden="true"></span>
+          <span ng-hide="field.if" ng-class="{'{{field.falseIcon}}':field.falseIcon}" aria-hidden="true"></span>
+          </span>
+				<span ng-switch-when="link" ng-click="field.action(item,$event,item.selected)"><i class='glyphicon glyphicon-link'></i></span>
+				<span ng-switch-when="enum">{{item[field.key]|appEnum:field.filter}}</span>
+				<span ng-switch-when="action">
+             					<button class="btn btn-default" type="button"
+										ng-click="field.action(item,$event)"
+										ng-class="{'{{field.icon}}':field.icon}"
+										style="cursor: pointer;">{{field.actionName}}</button>
+             				</span>
+				<span ng-switch-when="action2">
+             					<button class="btn btn-default" type="button"
+										ng-click="field.action(item,$event)"
+										ng-class="{'{{field.icon}}':field.icon}"
+										style="cursor: pointer;" ng-hide="field.isHide()">{{field.actionName}}</button>
+             				</span>
+				<span ng-switch-when="actionList">
+             					<button class="btn btn-default" type="button"
+										ng-repeat="btn in field.actionList"
+										ng-click="btn.action(item,$event)"
+										ng-class="{'{{btn.icon}}':btn.icon}"
+										style="cursor: pointer;"></button>
+             				</span>
+				<span ng-switch-when="collection">
+             					<span>{{item[field.key][0].title}}, {{item[field.key][1].title}} ...</span>
+          </span>
+				<span ng-switch-when="collection_delivery">
+             					<span>{{item[field.key][0].title}}, {{item[field.key][1].title}} ...</span>
+          </span>
+				<span ng-switch-when="actionLongList">
+             					<div class="dropdown" ng-switch-when="action">
+        							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" aria-expanded="true">
+        								عملیات
+        								<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation" ng-repeat="action in field.actionList">
+              <a role="menuitem" tabindex="-1" ng-click="action.action(item,$event)">{{action.name}}</a>
+            </li>
+          </ul>
+</div>
+</span>
+                <span ng-switch-when="tag">
+                    <span ng-show="{{field.if}}" class="label label-danger">اقدام نشده</span>
+                </span>
+				<span ng-switch-when="edited">
+					<span ng-show="item[field.key]" class="label label-warning">ویرایش شده</span>
+				</span>
+				<span ng-switch-when="isForwarded">
+					<span ng-show="item[field.key]" class="label label-success">ارجاع شده</span>
+					<span ng-show="!item[field.key]" class="label label-danger">ارجاع نشده</span>
+				</span>
+				<span ng-switch-default>{{item[field.key]|EnToFaNumber|splitString:40}}</span>
+			</td>
+			<td style="width: 1px ! important;"></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div ng-show="controlFn.listItems.length>0" class="col-sm-12" style="position: sticky;bottom: -11px;background: #fff;z-index: 1;">
+	<pagination ng-if="!Controller.customPagination.choices && !Controller.pagination.inOnePage()"
+				total-items="Controller.pagination.totalItems"
+				ng-disabled="Data.isLoading"
+				ng-model="Controller.pagination.currentPage" max-size="Controller.pagination.maxSize" items-per-page="Controller.pagination.perPage" ng-change="Controller.pagination.pageChanged() "
+				class="pagination-sm" boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی" page-label="Func.ali($page)">
+	</pagination>
+
+	<pagination ng-if="Controller.customPagination.choices"
+				ng-disabled="Data.isLoading"
+				total-items="Controller.customPagination.totalItems"
+				ng-model="Controller.customPagination.currentPage" max-size="Controller.customPagination.maxSize" items-per-page="Controller.customPagination.count" ng-change="Controller.customPagination.change()"
+				class="pagination-sm" boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی" page-label="Func.ali($page)">
+	</pagination>
+
+	<div id="custom-pagination-container" ng-if="controlFn.listItems.length>0 && Controller.customPagination.choices">
+		<label id="custom-pagination-label" class="col-sm-1 text-left">نمایش</label>
+		<div class="col-sm-8 vtSelect">
+			<select id="custom-pagination-select" class="col-sm-9" ng-model="Controller.customPagination.count"
+					ng-change="Controller.customPagination.change()" ng-options="(itemsCount|EnToFaNumber) for itemsCount in Controller.customPagination.choices track by itemsCount">
+			</select>
+			<i id="custom-pagination-arrow" class="fa-btn flaticon-arrows-3"></i>
+		</div>
+	</div>
+
+	<span ng-if="!Controller.customPagination.choices" class="total-items-pagination hidden">تعداد کل
+		: {{Controller.pagination.totalItems|EnToFaNumber}}</span>
+
+	<span ng-if="Controller.customPagination.choices" class="custom-pagination-total-items hidden ">تعداد کل
+		: {{Controller.customPagination.totalItems|EnToFaNumber}}</span>
+    <span ng-if="Func.getSelectedItems().length > 0" class="custom-pagination-total-items">انتخاب شده
+		: {{Func.getSelectedItems().length|EnToFaNumber}}</span>
+</div>

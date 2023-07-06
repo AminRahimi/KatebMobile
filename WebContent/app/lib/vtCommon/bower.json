@@ -1,0 +1,44 @@
+{
+    "name": "vtCommons",
+    "version": "2.4.01",
+    "authors": [
+        "viratech <www.viratech.ir>"
+    ],
+    "description": "Commons Directive for Based RestProj Projects",
+    "main": [
+        "vtCommons.js",
+		"vtDatePicker/persian-datepicker-tpls.js",
+		"vtDatePicker/persiandate.js",
+		"vtDatePicker/style.css",
+		"vtDirectives/accessChecker/accessCheckerDirective.js",
+		"vtDirectives/pageNavigation/pageNavigationCtrl.js",
+		"vtFilter/checkmarkFilter.js",
+		"vtFilter/commonFilterModule.js",
+		"vtFilter/EnToFaButtonFilter.js",
+		"vtFilter/EnToFaNumberFilter.js",
+		"vtFilter/FaToEnNumberFilter.js",
+		"vtFilter/jalaliDateFilter.js",
+		"vtFilter/jalaliDateJustDateFilter.js",
+		"vtFilter/jalaliDatePastFilter.js",
+		"vtFilter/sliceFilter.js",
+		"vtFilter/stringFilter.js",
+		"vtGrid/gridDirective.js",
+		"vtMessageShower/vtMessageShower.js",
+		"vtMessageShower/style.css",
+		"vtPersianDatePicker/vtPersianDatePickerDirective.js",
+		"vtSearch/searchModule.js",
+		"vtSearch/searchSrvc.js",
+		"vtSearch/searchDirective.js",
+		"vtSearch/style.css",
+		"vtUtils/vtUtils.js"
+    ],
+    "homepage": "index.html",
+    "dependencies": {
+        "angular" : "*",
+        "momentjs" : "*",
+        "moment-jalaali" : "*",
+        "angular-ui-utils" : "#bower-keypress",
+        "indeterminate" : "http://gitlab.viradev.ir:6480/clientproject/vtindeterminate.git#*"
+    },
+    "devDependencies": {}
+}

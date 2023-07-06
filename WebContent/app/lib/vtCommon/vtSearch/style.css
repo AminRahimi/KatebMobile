@@ -1,0 +1,58 @@
+.search-input{
+	font-size: 11px;
+}
+select.search-input{
+	font-size: 10px;
+}
+select.search-input>option{
+	font-size: 10px;
+}
+.searchFilterBox{
+	border-left: solid #ddd thin;	
+	min-height: 44px;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+.searchFilterBox vt-persian-date-picker{
+	padding: 0;
+}
+.h-32{
+	height: 32px !important;
+	line-height: 32px !important;
+}
+.h-34{
+	height: 34px !important;
+}
+.active-search-box > label{
+	height: 34px !important;
+	line-height: 34px !important;
+    margin-bottom: 0 !important;
+}
+.active-search-box > div{
+	height: 34px !important;
+    padding-top: 11px;
+}
+.active-search-box > div > input {
+	margin-top:0 !important;
+}
+.p-t{
+	padding-top:0 !important;
+}
+.p-b{
+	padding-bottom:0 !important;
+}
+.p-r{
+	padding-right:0 !important;
+}
+.p-l{
+	padding-left:0 !important;
+}
+.p-t-6{
+	padding-top:6px !important;
+}
+.p-b-6{
+	padding-bottom:6px !important;
+}
+.p-t-10{
+	padding-top:10px !important;
+}

@@ -1,0 +1,61 @@
+﻿
+<div class="alert alert-success"  role="alert">
+  <script>
+      $(function () { $("[data-toggle='tooltip']").tooltip(); });
+  </script>
+  <label class="control-label col-sm-2"></label> 
+  <div class="input-group col-sm-8"> 
+	<button 
+        class="input-group-addon  col-sm-2"
+        data-placement="top"
+		title="آخرین صفحه"
+		data-toggle="tooltip" 
+        type="button"
+		class="btn btn-default"
+		ng-click="goToPage($event,'last')"
+	>
+		  <i class="glyphicon glyphicon-fast-forward"></i>
+	</button>
+	<button 
+        class="input-group-addon  col-sm-2"
+        data-placement="top"
+		title="صفحه بعدی"
+		data-toggle="tooltip" 
+        type="button"
+		class="btn btn-default"
+		ng-click="goToPage($event,'next')"
+	>
+		  <i class="glyphicon glyphicon-step-forward"></i>
+	</button>
+   <input 
+        type="text"
+		class="col-sm-4"
+		placeholder="برو به صفحه ..."
+		ng-model="pageNumber"
+		ng-keyup="checkPressBetween($event,changePage);"
+	/>
+	<button 
+        class="input-group-addon  col-sm-2"
+        data-placement="top"
+		title="صفحه قبلی"
+		data-toggle="tooltip" 
+        type="button"
+		class="btn btn-default"
+		ng-click="goToPage($event,'previus')"
+	>
+		  <i class="glyphicon glyphicon-step-backward"></i>
+    </button>
+	<button 
+        class="input-group-addon  col-sm-2"
+        data-placement="top"
+		title="صفحه اول"
+		data-toggle="tooltip" 
+        type="button"
+		class="btn btn-default"
+		ng-click="goToPage($event,'first')"
+	>
+		  <i class="glyphicon glyphicon-fast-backward"></i>
+   </button>
+  </div>
+  <label class="control-label col-sm-2"></label> 
+</div>

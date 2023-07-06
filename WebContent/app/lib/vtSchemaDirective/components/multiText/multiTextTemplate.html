@@ -1,0 +1,23 @@
+<div class="noSidePadding" ng-class="{hidden:!isEditMode}">
+     <div class="input-group" ang-repeat="inp in  model track by $id($index)">
+          <input ng-model="tempStr" type="text" ng-style="{'direction':schema.widgetParams.direction}" class="form-control" ui-keypress="{13:'onAddNewTextInputClick();'}">
+          <span ang-if="$last" class="input-group-addon" ng-click="onAddNewTextInputClick()" style="cursor: pointer;">
+               <i class="glyphicon glyphicon-plus" style="cursor: pointer;"></i>
+          </span>
+     </div>
+     <div class="row col-sm-12">
+          <label class="error" ng-show="tempStr.length">برای ذخیره بر روی دکمه + کلیک کنید.</label>
+     </div>
+</div>
+<div class="col-sm-12 noSidePadding">
+     <div class="panel panel-default noSidePadding" ng-show="model.length">
+          <div class="panel-body noPadding">
+               <span class="label label-default pull-right" ng-repeat="inp in  model track by $index" style="padding: 8px; margin: 2px;">
+                    <span>
+                         {{inp}}
+                         <span class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="removeTextInput(inp)" ng-show="isEditMode"></span>
+                    </span>
+               </span>
+          </div>
+     </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="col-sm-5 noSidePadding" ng-class="{hidden:!isEditMode}">
+     <div class="btn-group">
+          <button type='button' class='btn btn-xs btn-default' ng-click='openEntityMultiSelectorModal()' ng-if="!isAddOnly">
+               <i class='glyphicon glyphicon-search'></i>
+          </button>
+          <button type='button' class='btn btn-xs btn-default' ng-hide="schema.isCreateDisabled" ng-click="onOpenAddNewEntityModal()">
+               <i class='glyphicon glyphicon-plus'></i>
+          </button>
+     </div>
+</div>
+<div class="col-sm-7 noSidePadding" ng-show="model.length">
+     <div class="panel panel-default" style="padding-left: 0; padding-right: 0;">
+          <div class="panel-body" style="padding: 5px;">
+               <!-- 	      <button style="position: absolute; padding: 3px; top: 2px; left: 2px;" class="btn btn-xs btn-default" -->
+               <!-- 	         type="button" ng-click="haveMaxHeight=!haveMaxHeight"> -->
+               <!-- 	         <span class="glyphicon glyphicon-resize-full" -->
+               <!-- 	            ng-class="{'glyphicon-resize-full':haveMaxHeight,'glyphicon-resize-small':!haveMaxHeight}"></span> -->
+               <!-- 	      </button> -->
+               <label ng-repeat="entity in model" class="label-default pull-right" style="padding: 10px; margin: 2px; cursor: pointer;">
+                    <span class=" glyphicon glyphicon-remove" ng-class="{hidden:!isEditMode}" style="cursor: pointer; cursor: hand; position: relative; z-index: 2; top: 4px; color: red" data-placement="top" title="Ù¾Ø§Ú© Ú©Ø±Ø¯Ù†" ng-click="onRemoveEntityClick(entity);" id="remove"> </span>
+                    <!-- 	       	<a ui-sref="home.entity.entityType.info.info({entityUid:entity._uid,entityTypeKey:entityKey})" target="_blank" style="color: black;"> -->
+                    <!-- 		         {{entity.displayString}} -->
+                    <!-- 	        </a> -->
+                    <a ng-click="openEntityInfoModal(entity)" style="color: black;"> {{entity._displayString}} </a>
+               </label>
+          </div>
+     </div>
+</div>

@@ -1,0 +1,56 @@
+<style>
+    .btn-custom{
+       margin-right: 123px; 
+    }
+</style>
+<div ng-show="isEditMode">
+    <div class="slide-drag text-center"
+         ng-show="!Data.showRemoveIcon"
+         ngf-drop="Func.onFileSelect($files)"
+         ngf-drag-over-class="'dragover'"
+         ngf-multiple="false"
+         ngf-pattern="'image/*'">
+<!--
+        <button class="btn btn-default" ngf-select="Func.onFileSelect($files)">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+-->
+        <div class="slide-drag-text text-center">
+            <i class="fa fa-picture-o" aria-hidden="true"></i>
+            <h4>بکشید و رها کنید...</h4>
+        </div>
+        <button class="btn btn-custom" ngf-select="Func.onFileSelect($files)">
+            
+            بارگذاری تصویر
+
+            
+        </button>
+    </div>
+    <div class="slide-drop"
+         ng-show="Data.showRemoveIcon"
+         ngf-drop="Func.onFileSelect($files)"
+         ngf-drag-over-class="'dragover'"
+         ngf-multiple="false"
+         ngf-pattern="'image/*'">
+        <!--<button class="btn btn-default editbtn" ng-click="Func.onCancelClick()">
+            <i class="glyphicon glyphicon-remove"></i>
+        </button>-->
+<!--
+        <button class="btn btn-default" ngf-select="Func.onFileSelect($files)">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+-->
+        <!-- <button class="btn btn-default btn-upload btn-custom " ngf-select="Func.onFileSelect($files)">
+            
+            بارگذاری تصویر
+            
+            
+        </button> -->
+        <img ng-if="hashObjectName" class="img-rounded img-responsive" style="width: 100%;" ng-src="{{'files/?mode=view&fcode='+ Data.ngModel.$viewValue[hashObjectName]}}" alt="">
+        <img ng-if="!hashObjectName" class="img-rounded img-responsive" style="width: 100%;" ng-src="{{'files/?mode=view&fcode='+ Data.ngModel.$viewValue}}" alt="">
+    </div>
+</div>
+<div ng-show="!isEditMode">
+    <img ng-if="hashObjectName" class="img-rounded img-responsive" style="width: 100%;" ng-src="{{'files/?mode=view&fcode='+ Data.ngModel.$viewValue[hashObjectName]}}" alt="">
+    <img ng-if="!hashObjectName" class="img-rounded img-responsive" style="width: 100%;" ng-src="{{'files/?mode=view&fcode='+ Data.ngModel.$viewValue}}" alt="">
+</div>

@@ -1,0 +1,13 @@
+<div class="modal-header">
+     <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true" ng-click="cancel()" style="cursor: pointer;"></span>
+</div>
+<div class="modal-header">
+     <div class="row" ng-repeat="topic in topics" style="margin-right: 20px;">
+          <span class="label label-default pull-right" style="padding: 10px; margin: 2px;">
+               <span ng-repeat="str in topic._displayString">
+                    <i ng-if="!$first" class='glyphicon glyphicon-chevron-left' style="margin: 2px"></i>
+                    {{str}}
+               </span>
+          </span>
+     </div>
+</div>

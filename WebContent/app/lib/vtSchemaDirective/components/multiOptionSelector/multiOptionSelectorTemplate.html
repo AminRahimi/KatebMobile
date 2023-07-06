@@ -1,0 +1,9 @@
+<span ng-show="isEditMode">
+     <div class="row noSideMargin" ng-repeat="opt in options[schema.typeParams.enumType]">
+          <input type="checkbox" class="pull-right chkbx" ng-model="Data.selected[$index]" ng-change="onSelect()">
+          <label class="pull-right" style="margin-right: 2px;">{{opt.label}}</label>
+     </div>
+</span>
+<span ng-show="!isEditMode">
+     <label class="label label-default label-repeat" ng-repeat="m in model">{{m.label}}</label>
+</span>

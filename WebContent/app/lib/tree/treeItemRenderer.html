@@ -1,0 +1,34 @@
+<li class="tree-node" ng-repeat="treeData in treeData[privateData.childrenKey]">
+	<span style="width: 200px; padding: 0px 3px; background-color: transparent; border: medium none;">
+		<span class="treeNode" style="position: relative;"
+				ng-class="{'treeNodeSelected':treeData.selectedClass,
+				  'office_node':treeData.categoryKey=='center'}"
+				ng-click="privateFunc.onSelectNode(treeData);"> 
+			<i class="glyphicon" ng-class="{'glyphicon-plus':treeData.isCollapsed && treeData.childCount,
+						'glyphicon-minus':!treeData.isCollapsed && treeData.childCount,
+						'glyphicon-leaf':!treeData.childCount}"
+					ng-click="privateFunc.onCollapseClick(treeData)"
+					style="position: absolute; top: 5.5px;"></i>
+			<p style="padding: 0px; white-space: pre-wrap; min-height: 0px !important; 
+					display: inline-block; margin-bottom: 0px !important; margin-right: 15px; 
+					margin-left: 0px; left: 0px; word-break: break-word;">{{treeData.title}}</p>
+			<div class="dropdown" ng-show="privateData.inTreeAction"
+				style="float: left; left: 0px; position: absolute; top: 3px;">
+				<a role="button" data-toggle="dropdown" data-target="#"
+					aonclick="dropDownFixPosition(this);"> <i class="caret"></i>
+				</a>
+
+				<ul aria-labelledby="drop4" role="menu" style="width: 50px;"
+					class="dropdown-menu dropdown-menu-right">
+					<li ng-repeat="action in privateData.actionList">
+						<a ng-click="action.action(treeData)" style="padding-right: 0px; margin-right: -20px;">
+						<i ng-class="action.icon"></i>{{action.name}}</a>
+					</li>
+				</ul>
+			</div>
+		</span>
+	</span>
+	<ul class="treeChild" collapse="treeData.isCollapsed"
+		ng-include="privateData.treeItemRendererAddress">
+	</ul>
+</li>

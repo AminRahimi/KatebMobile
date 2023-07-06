@@ -1,0 +1,48 @@
+#custom-pagination-container {
+    margin-bottom: 19px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    color: #979797;
+    display: inline-block;
+    padding: 5px 0;
+}
+#custom-pagination-label {
+    font-size: 10px;
+    margin-top: 2px;
+}
+#custom-pagination-select {
+    border: none;
+    background: none;
+    padding: 0;
+    background-position-y: 8px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin: 3px 0 0 0;
+    position: absolute;
+    top: -10px;
+    right: 22px;
+    z-index: 10;
+    color: #0097a7;
+    font-family: iranyekanweb;
+}
+
+#custom-pagination-arrow::before {
+    font-size: 12px;
+    position: relative;
+    right: 30px;
+    top: 0;
+}
+
+.custom-pagination-total-items {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    color: #979797;
+    display: inline-block;
+    padding: 5px 10px;
+    position: relative;
+    top: -30px;
+    right: 5px;
+}
+
+

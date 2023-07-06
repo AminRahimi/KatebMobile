@@ -1,0 +1,74 @@
+<div class="modal-header">
+     <h3 class="modal-title"></h3>
+</div>
+<div class="modal-body  haveFormRows clearfix">
+     <form>
+          <div class="col-md-12 row">
+               <div class="row rowForm haveMargin" ng-class="{'has-error':hasError_pTitle}">
+                    <label class="col-sm-5 pull-right">کلید (انگلیسی) </label>
+                    <!--                     <input type="text" class="form-control col-sm-5" ng-model="Data.newProperty.title" style="direction: ltr;"> -->
+                    <p class="form-control-static">{{Data.newProperty.title}}</p>
+                    <div class="col-sm-5"></div>
+                    <label class="text-danger" ng-show="hasError_validProp">کلید وارد شده معتبر نمی‌باشد</label>
+               </div>
+               <div class="row rowForm haveMargin" ng-class="{'has-error':hasError_pName}">
+                    <label class="col-sm-5 pull-right">برچسب (فارسی) </label>
+                    <input type="text" class="form-control col-sm-5" ng-model="Data.newProperty.label">
+               </div>
+               <div class="row rowForm haveMargin">
+                    <label class="col-sm-5">نوع </label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectType()" ng-model="Data.newProperty.typeComponent" ng-options="type as type.typePersianName for type in Data.components" style="font-size: 12px;">
+                    </select>
+               </div>
+               <div class="row rowForm haveMargin" ng-hide="widgets.length<2" ng-class="{'has-error':hasError_widget}">
+                    <label class="col-sm-5 pull-right">نام ویجت </label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectWidget()" ng-model="Data.selectedWidget" ng-options="widget as widget.persianName for widget in widgets" style="font-size: 12px;">
+                    </select>
+               </div>
+			   <div class="row rowForm haveMargin" ng-show="Data.selectedWidget.widgetParamSchema">
+                    <form name="example" class="form-horizontal" role="form" novalidate="novalidate">
+                         <schema-form-fields is-edit-mode="true" api="Data.schemaFormApi" is-col-7="isCol7" schema="Data.selectedWidget.widgetParamSchema" model="Data.widgetParamModel" user-secret-level="UserSecretLevelObj.UserSecretLevel" simple-view="true"></schema-form-fields>
+                    </form>
+               </div>
+               <div class="row rowForm haveMargin" ng-show="Data.newProperty.typeComponent.type=='string'">
+                    <label class="col-sm-5 pull-right">زبان </label>
+                    <label class="col-sm-3 original-radio" style="padding-right: 0px;">
+                         <input type="radio" ng-model="Data.newProperty.widgetParams.direction" value="rtl">
+                         راست به چپ
+                    </label>
+                    <label class="original-radio">
+                         <input type="radio" ng-model="Data.newProperty.widgetParams.direction" value="ltr">
+                         چپ به راست
+                    </label>
+               </div>
+               <div class="row rowForm haveMargin" ng-show="Data.newProperty.typeComponent.type=='enum'">
+                    <label class="col-sm-5 pull-right">نام انتخابگر پایه </label>
+                    <select class="form-control col-md-5" ng-change="Func.onSelectEnumType()" ng-model="Data.newProperty.enumType" ng-options="enumType as enumType.label for enumType in Data.baseSelectorList">
+                    </select>
+               </div>
+               <div class="row rowForm haveMargin">
+                    <label class="col-sm-5 pull-right">نوع انتخاب </label>
+                    <label class="col-sm-3 original-radio" style="padding-right: 0px;">
+                         <input type="radio" ng-model="Data.newProperty.multiple" ng-value=false>
+                         تکی
+                    </label>
+                    <label class="original-radio">
+                         <input type="radio" ng-model="Data.newProperty.multiple" ng-value=true>
+                         چند انتخابی
+                    </label>
+               </div>
+               <div class="row rowForm haveMargin">
+                    <label class="col-sm-5 pull-right">ضروری </label>
+                    <input type="checkbox" class="checkbox" ng-model="Data.newProperty.required">
+               </div>
+               <div class="row rowForm haveMargin">
+                    <label class="col-sm-5 pull-right">شاخص‌گذاری برای جستجو </label>
+                    <input type="checkbox" class="checkbox" ng-model="Data.newProperty.searchable">
+               </div>
+          </div>
+     </form>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-sm btn-sm btn-success" ng-hide="isEditMode" ng-click="Func.onUpdatePropertyClick()">ثبت</button>
+     <button class="btn btn-sm btn-sm btn-warning pull-left" ng-click="Func.onReturnClick()">لغو</button>
+</div>
