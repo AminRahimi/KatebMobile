@@ -705,14 +705,15 @@ body, html{
   flex-wrap: wrap;
   -moz-column-gap: 1.25rem;
        column-gap: 1.25rem;
-  row-gap: 0.5rem;
+  row-gap: 2.5rem;
 }
 
 .saad-form {
   display: flex;
   max-width: 100%;
   flex-direction: column;
-  row-gap: 0.5rem;
+  row-gap: 2.5rem;
+  overflow: hidden;
 }
 
 .saad-form__row {
@@ -730,7 +731,8 @@ body, html{
 }
 
 .saad-form__value {
-  width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
   --tw-text-opacity: 1;
   color: rgb(27 39 51 / var(--tw-text-opacity));
 }
@@ -740,7 +742,7 @@ body, html{
   flex-wrap: wrap;
   -moz-column-gap: 1.25rem;
        column-gap: 1.25rem;
-  row-gap: 0.5rem;
+  row-gap: 2.5rem;
 }
 
 .saad-checkbox {
@@ -972,6 +974,10 @@ body, html{
 .tw-gap-x-em-1 {
   -moz-column-gap: 0.5em;
        column-gap: 0.5em;
+}
+
+.tw-overflow-hidden {
+  overflow: hidden;
 }
 
 .tw-overflow-scroll {

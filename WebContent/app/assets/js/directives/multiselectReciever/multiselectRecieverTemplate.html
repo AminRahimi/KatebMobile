@@ -3,7 +3,9 @@
 	<ui-select multiple
 			   on-remove="onRemove($item,$model)"
 			   on-select="onSelect($item, $model)"
-			   ng-model="model"  sortable="true" ng-disabled="disabled"  >
+			   ng-model="model"  sortable="true"
+			   append-to-body="true"
+			    ng-disabled="disabled"  >
 		<ui-select-match placeholder="">
 				{{$item.title || $item}}
 		</ui-select-match>

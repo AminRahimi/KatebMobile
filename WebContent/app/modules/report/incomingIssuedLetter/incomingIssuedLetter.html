@@ -36,7 +36,7 @@
             <div class="organization" >
                 <label class=" orgSender" >نام سازمان فرستنده</label>
                 <div style="min-width: 250px;">
-                    <ui-select ng-model="Data.selectedOrg" on-select="Func.onSelectOrg($item);">
+                    <ui-select append-to-body="true" ng-model="Data.selectedOrg" on-select="Func.onSelectOrg($item);">
                         <ui-select-match>
                             <span ng-bind="$select.selected.title"></span>
                         </ui-select-match>

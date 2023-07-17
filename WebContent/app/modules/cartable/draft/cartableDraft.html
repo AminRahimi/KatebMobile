@@ -503,7 +503,7 @@
         </nav>
         <section class="letter-draft-view__content ">
             <form name="form" class="tw-h-full" novalidate>
-                <div ng-show="Data.selectedTab.id == 0">
+                <div  ng-show="Data.selectedTab.id == 0">
                     <div>
                         <letter-form-type ng-model="Data.selectedLetterFormType" css-class-selector-type="col-sm-12" css-class-selector-type-label=""
                                             css-class-selector-type-input=""
@@ -603,7 +603,7 @@
                                 <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector"
                                 ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
 
-                                    <ui-select on-select="Func.onSelectLetterLayout(Data.letterLayout)"
+                                    <ui-select append-to-body="true" on-select="Func.onSelectLetterLayout(Data.letterLayout)"
 
                                                 ng-model="Data.letterLayout" required name="letterLayout">
                                         <ui-select-match>
@@ -727,7 +727,7 @@
 
                             
                         </div>
-                        <div class="saad-form tw-w-full">
+                        <div class="saad-form tw-w-full sm:tw-w-auto">
 
 
                             <div class="saad-form__row">
@@ -735,7 +735,9 @@
                                 <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div>
                                 <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
 
-                                    <ui-select ng-model="Data.draft.sender" required name="draftSender"
+                                    <ui-select ng-model="Data.draft.sender" 
+                                        append-to-body="true"
+                                        required name="draftSender"
                                                 on-select="Func.onSelectSender($item, $model);" >
                                         <ui-select-match>
                                             <span ng-bind="$select.selected.title"></span>
@@ -755,7 +757,9 @@
                                 <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div>
                                 <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
 
-                                    <ui-select  ng-model="Data.draft.actor" required name="draftActor" >
+                                    <ui-select  ng-model="Data.draft.actor" 
+                                        append-to-body="true"
+                                        required name="draftActor" >
                                         <ui-select-match>
                                             <span ng-bind="$select.selected.title"></span>
                                         </ui-select-match>

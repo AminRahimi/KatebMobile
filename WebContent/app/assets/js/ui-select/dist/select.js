@@ -1242,10 +1242,12 @@ uis.directive('uiSelect',
         }
 
         // See Click everywhere but here event http://stackoverflow.com/questions/12931369
-        $document.on('click', onDocumentClick);
+        // $document.on('click', onDocumentClick);
+        $document.on('touchstart', onDocumentClick);
 
         scope.$on('$destroy', function() {
-          $document.off('click', onDocumentClick);
+          // $document.off('click', onDocumentClick);
+          $document.off('touchstart', onDocumentClick);
         });
 
         // Move transcluded elements to their correct position in main template
@@ -2431,7 +2433,7 @@ $templateCache.put("md/match-multiple.tpl.html","<span class=\"ui-select-match\"
       "<span class=\"ui-select-match-close chips__close \" ng-hide=\"$select.disabled\" ng-click=\"$selectMultiple.removeChoice($index)\">&nbsp;&times;</span> " +
       "<span class='tw-p-1' uis-transclude-append=\"\"></span></span></span></span>");
 $templateCache.put("md/match.tpl.html","<div class=\"ui-select-match tw-h-[1.75rem]\" ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=\"$select.disabled\" >" +
-  "<span tabindex=\"-1\" class=\"ui-select-toggle tw-flex tw-items-center \" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=\"$select.disabled\" ng-click=\"$select.activate()\" style=\"outline: 0;\">" +
+  "<span tabindex=\"-1\" class=\"ui-select-toggle tw-flex tw-items-center tw-h-full \" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=\"$select.disabled\" ng-click=\"$select.activate()\" style=\"outline: 0;\">" +
     "<span ng-show=\"$select.isEmpty()\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> " +
     "<span ng-hide=\"$select.isEmpty()\" class=\"ui-select-match-text pull-left\" ng-class=\"{\'ui-select-allow-clear\': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"></span> " +
     "<i class=\"caret tw-mr-auto\" ng-click=\"$select.toggle($event)\"></i> " +

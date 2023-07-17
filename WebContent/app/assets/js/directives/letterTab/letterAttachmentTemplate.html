@@ -39,7 +39,7 @@
             ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
             <label class="saad-form__label" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
             <div class="saad-form__value" ng-show="isEditMode">
-                <ui-select  ng-model="Data.attachmentType" required name="attachmentType">
+                <ui-select append-to-body="true"  ng-model="Data.attachmentType" required name="attachmentType">
                     <ui-select-match>
                         <span ng-bind="$select.selected.title"></span>
                     </ui-select-match>
@@ -67,7 +67,7 @@
             <div class="saad-form__value">
 
 
-                <ui-select  ng-model="Data.chooseLetterType"  
+                <ui-select append-to-body="true" ng-model="Data.chooseLetterType"  
                     name="attachFrom" 
                     on-select="Func.onChooseLetterTypeChange()">
 
