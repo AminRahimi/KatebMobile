@@ -76,6 +76,10 @@
         @apply tw-border-r tw-border-solid tw-border-white tw-text-white tw-p-1 tw-flex tw-items-center;
     }
 
+    .chips.chips-default{
+        @apply tw-border-gray tw-bg-gray tw-text-white tw-rounded;
+    }
+
 
 
 /* Bootstrap overwrite */
@@ -84,9 +88,7 @@
 
 
 
-    .chips.chips-default{
-        @apply tw-border-gray tw-bg-gray tw-text-white tw-rounded;
-    }
+    
     .btn.btn-primary, .label.label-primary,.chips.chips-primary {
         @apply tw-border-hard tw-bg-hard tw-text-white tw-rounded;
     }
@@ -104,6 +106,13 @@
     .modal-content{
         @apply tw-flex tw-flex-col;
     }
+
+    .modal-body{
+        @apply tw-overflow-scroll
+    }
+
+
+
     .modal-footer{
         @apply tw-mt-auto;
     }

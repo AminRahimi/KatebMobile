@@ -1,0 +1,9 @@
+.saad-grid{
+    height: 100%;
+    overflow: scroll;
+}
+
+.saad-grid__table {
+    overflow: hidden;
+}
+

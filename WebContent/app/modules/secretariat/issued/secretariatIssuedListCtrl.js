@@ -1,18 +1,22 @@
-angular.module('secretariatModule').controller('secretariatIssuedListCtrl', function($scope, $state, $timeout, secretariatSrvc) {
+angular.module('secretariatModule').controller('secretariatIssuedListCtrl', function($scope, $state, $timeout, secretariatSrvc,homeSrvc) {
 
 	$scope.Data = {
 		secUid: $state.params.secUid,
-		featuresList: secretariatSrvc.getFeatureList($state.params.secUid),
+		featuresList: [],
         searchMode: 'none',
         wasSearched: false,
+        isMobileView: homeSrvc.screenSizeDetector.isMobile()
 	}
 
 	$scope.Func = {
+        getStateName: function (stateName) {
+            return homeSrvc.getStateName(stateName);
+        },
 		onAddClick: function(){
-			$state.go('base.home.secretariat.issuedAdd', {secUid: $scope.Data.secUid});
+			$state.go($scope.Func.getStateName('base.home.secretariat.issuedAdd'), {secUid: $scope.Data.secUid});
 		},
 		onIssuedClick: function(issued){
-			$state.go('base.home.secretariat.issued', {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
+			$state.go($scope.Func.getStateName('base.home.secretariat.issued'), {secUid: $scope.Data.secUid, incUid: issued.uid, letterUid: issued.letter.uid});
 		},
         onChangeSearchModeClick: function(mode){
             $scope.Data.searchMode = mode;
@@ -79,15 +83,39 @@ angular.module('secretariatModule').controller('secretariatIssuedListCtrl', func
 	
 	$scope.Controller = {
 		listController : {
-            headers: [
+            headers:{
+                desktop:[
                 
-                {key:'creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'},
-                {key:'letter.internalNumber', label:'شماره نامه'},
-                { key: 'letter.subject', label: 'موضوع' },
-                { key: 'letter.initiation.sender.title', label: 'فرستنده' },
-                { key: 'deliveryTo', label: 'گیرندگان ', type: 'tag' },
-			    // {key:'letter.requestResponseDate', label:'مهلت پاسخ'},
-			],
+                    {key:'creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'},
+                    {key:'letter.internalNumber', label:'شماره نامه'},
+                    { key: 'letter.subject', label: 'موضوع' },
+                    { key: 'letter.initiation.sender.title', label: 'فرستنده' },
+                    { key: 'deliveryTo', label: 'گیرندگان ', type: 'tag' },
+                    // {key:'letter.requestResponseDate', label:'مهلت پاسخ'},
+                ],
+                mobile:[
+                    { key: 'letter.subject', label: '',styleClass:"kateb-text-2 tw-text-black " },
+                    { 
+                        key: 'letter.initiation.sender.title', 
+                        label:"فرستنده:",
+                        styleClass:"kateb-text-2 tw-text-gray",
+                        labelClass:"" },
+                    {
+                        key:'letter.internalNumber', 
+                        label:'شماره نامه',
+                        styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    },
+                    {
+                        key:'creationDate', 
+                        label:'تاریخ ساخت', 
+                        type:'date', 
+                        "format": "jDD jMMMM jYYYY",
+                        styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    }
+                ]
+            } ,
 			getList : function(start, pageLen){
 				return secretariatSrvc.getIssuedList($scope.Data.secUid, start, pageLen);
 			},
@@ -114,6 +142,11 @@ angular.module('secretariatModule').controller('secretariatIssuedListCtrl', func
 	}
 	
 	var Run = function(){
+
+        secretariatSrvc.getFeatureList($state.params.secUid).then(function(featuresList) {
+            $scope.Data.featuresList = featuresList;
+        });
+            
 	}
 	
 	Run();

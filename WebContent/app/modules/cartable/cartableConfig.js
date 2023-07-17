@@ -71,13 +71,13 @@ angular.module('cartableModule').config(['$stateProvider', function ($stateProvi
         {
             state: "base.home.cartable.draft",
             config: {
+                url: '/draft/:draftUid/:replyFromUid/:duplicateUid/:orgUid?:cartableUid?:filter',
                 params: {
                     draftUid: { squash: true, value: null },
                     replyFromUid: { squash: true, value: null },
                     duplicateUid: { squash: true, value: null },
                     orgUid: { squash: true, value: null }
                 },
-                url: '/draft/:draftUid/:replyFromUid/:duplicateUid/:orgUid?:cartableUid?:filter',
                 views: {
                     'cartableContainer@base.home.cartable': {
                         templateUrl: "app/modules/cartable/draft/cartableDraft.html?v=3",

@@ -538,7 +538,7 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
             if (!$scope.controlFn.isDisableInit) {
                 $scope.Func.getItemsPerCondition();
             }
-            if($scope.options.infinitScroll){
+            if($scope.options && $scope.options.infinitScroll){
                 $scope.Func.activateInfinitScroll();
             }
             $timeout(function () {

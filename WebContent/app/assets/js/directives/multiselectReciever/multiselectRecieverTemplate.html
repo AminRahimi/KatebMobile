@@ -1,16 +1,16 @@
 <div ng-show="isEditMode">
 
 	<ui-select multiple
-			   on-remove="onRemove($item)"
-			   on-model-item-select="onModelItemSelect($item)"
+			   on-remove="onRemove($item,$model)"
+			   on-select="onSelect($item, $model)"
 			   ng-model="model"  sortable="true" ng-disabled="disabled"  >
 		<ui-select-match placeholder="">
-				{{$item.title}}
+				{{$item.title || $item}}
 		</ui-select-match>
 		<ui-select-choices refresh="onRefresh($select.search)"
 						   refresh-delay="0" minimum-input-length="2"
 						   repeat="item in (options | filter: $select.search) track by $index"
-			   on-select="onSelect($item, $model)">
+			   >
 			<span >{{item.title}}</span>
 		</ui-select-choices>
 	</ui-select>

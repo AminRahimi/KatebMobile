@@ -10,16 +10,6 @@ angular.module('messageModule').controller('messageComposeCtrl', function($scope
 	};
 
 	$scope.Func = {
-		onSelectItemInMultiselect: function (item) {
-			if (item.type === 'THROUGH_SECRETARIAT') {
-				$scope.Data.counter += 1;
-			}
-		},
-		onRemoveItemInMultiselect: function (item) {
-			if (item.type === 'THROUGH_SECRETARIAT') {
-				$scope.Data.counter -= 1;
-			}
-		},
 		getRecievers: function () {
 			messageSrvc.getRecievers().then(function (response) {
 				$scope.Data.recievers = response.data;
@@ -45,10 +35,6 @@ angular.module('messageModule').controller('messageComposeCtrl', function($scope
 	}
 
 	$scope.Controller = {
-		multiselect: {
-			onSelect: $scope.Func.onSelectItemInMultiselect,
-			onRemove: $scope.Func.onRemoveItemInMultiselect
-		},
 		attachment: {}
 	}
 

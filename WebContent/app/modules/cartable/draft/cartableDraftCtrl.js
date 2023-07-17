@@ -200,7 +200,6 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 						$scope.Data.editorType = 'File';
 						// }, 0);
 					}
-					$scope.Func.onEditorTypeChange($scope.Data.editorType);
 					$scope.Data.draft.deliveryTo.forEach(function (item) {
 						if (item.type == "THROUGH_SECRETARIAT") {
 							$scope.Data.counter = 1;
@@ -520,7 +519,9 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 
 				draftCp.draftUid = $scope.Data.draft.uid;
 				draftCp.bodyHash = $scope.Data.pdfHash;
-				draftCp.textBody = $scope.Func.correctLetterTextBody(draftCp.textBody);
+				if ($scope.Data.draft.textBody != null) {
+					draftCp.textBody = $scope.Func.correctLetterTextBody(draftCp.textBody);
+				}
 				cartableKatebSrvc.sendDraft(draftCp, $scope.Data.newOrganizationUid).then(function (response) {
 					vtShowMessageSrvc.showMassage('success', 'نامه شماره ' + response.data.internalNumber, 'نامه با موفقیت ثبت شد.');
 					cartableSrvc.publishTo("updateCartableMenu");;
@@ -528,6 +529,10 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				}, function (response) {
 					if (response.status === 403 && response.data.key && response.data.key === 'ganjeh_token_expired') {
 						// TODO call -> letterAttachmentCtrl.Func.onEnterToGanjehClick();
+						if($scope.Apis.vtFolderSelector && angular.isFunction($scope.Apis.vtFolderSelector.openEnterToGanjeh)){
+
+							$scope.Apis.vtFolderSelector.openEnterToGanjeh();
+						}
 					}
 					$scope.Data.disableSendBtn = false;
 				});
@@ -781,6 +786,17 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				if (result.textBodyHashcode && $state.params.duplicateUid) {
 					delete result.textBodyHashcode;
 				}
+
+
+				if(result.bodyType==='File'){
+					delete result.textBody;
+				}else{
+					//body type is Editor(CKEditor)
+					delete result.fileBody;
+					delete result.webEditFileUid
+				}
+				
+
 				if (shouldChange) {
 					$scope.Data.draft = angular.copy(result);
 				}
@@ -1032,6 +1048,10 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				});
 			},
 			correctLetterTextBody: function (textBody) {
+
+				if(!textBody){
+					return
+				}
 				var textbodyCopy = angular.copy(textBody);
 
 				/*textbodyCopy = textbodyCopy.replace('{{موضوع}}', "<span class='kateb_template_subject'></span>");
@@ -1110,7 +1130,6 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 				// return textBodyCp.prop('outerHTML');
 			},
 			getReplyFromData: function () {
-				// $scope.Func.onEditorTypeChange('file');
 				$scope.Data.editorType = 'File'
 				cartableKatebSrvc.getLpa($scope.Data.replyFromUid).then(function (res) {
 					// $scope.Data.replyFromData = res.data.originalElement.letter;
@@ -1213,9 +1232,16 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 					$scope.Data.signerInfo = res.data;
 				});
 			},
-			onCreateDocxTemplate: function () {
+			onEditDocxWhitSystemEdit: function () {
 				let draft = $scope.Data.draft;
-				if (draft.letterLayout && draft.letterLayout.uid)
+				if (!draft.letterLayout || !draft.letterLayout.uid){
+					return 
+				}
+				if(draft.webEditFileUid || (draft.fileBody && draft.fileBody.name && draft.fileBody.name.split('.').pop()==='docx')){
+					// edit prev docx
+					$scope.Func.SystemEdit();
+				}else{
+				// edit default temp docx
 					cartableKatebSrvc.getDraftDocxTemplate(draft.letterLayout.uid).then(
 						function (res) {
 							draft.fileBody = {
@@ -1226,6 +1252,7 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 							$scope.Func.SystemEdit();
 						}
 					);
+				}
 			},
 			removeFileBodyCallBack: function () {
 				let draft = $scope.Data.draft;
@@ -1236,10 +1263,6 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 			},
 			deleteWebEditFile: function (draft) {
 				cartableKatebSrvc.deleteWebEditFile(draft.webEditFileUid)
-			},
-			getWebEditFileInfo: function (draft) {
-				if (draft.webEditFileUid)
-					console.log()
 			},
 			SystemEdit: function() {
 				let draft = $scope.Data.draft;
@@ -1367,7 +1390,9 @@ angular.module('cartableModule').controller('cartableDraftCtrl',
 			multiselectRecieverSearch: cartableKatebSrvc.getPuaList,
 		}
 
-		$scope.Apis = {}
+		$scope.Apis = {
+			vtFolderSelector:{}
+		}
 
 		var Run = function () {
 			$scope.Data.letterState = cartableSrvc.getCurrentTaskState();

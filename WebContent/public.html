@@ -89,10 +89,9 @@
             </div><!-- /.container-fluid -->
         </nav>
         
-        <div ng-class="{'container' : (stateName.indexOf('management')==-1 && stateName.indexOf('setting')==-1),
-                       'managementContainer' : stateName.indexOf('management') !== -1 } ">
+        <div>
         
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 mainContent">
+            <div class="mainContent">
         
                 <iframe ng-src="{{Func.getPdfUrl()+'#view=FitH'}}" style="width: 100%; height: calc(100vh - 70px)"></iframe>
         

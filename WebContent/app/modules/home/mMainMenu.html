@@ -152,10 +152,27 @@
 
 
 				<!--TODO:refactor to dynamic if prefer-->
-				<cartable-menu-for-cartable ng-if="headerMenuItem.title==='مکاتبات'" on-menu-item-click="Func.onMenuItemClick()" ></cartable-menu-for-cartable>
-				<cartable-menu-for-process ng-if="headerMenuItem.title==='فرآیند'" on-menu-item-click="Func.onMenuItemClick()"></cartable-menu-for-process>
-				<secretariat-menu ng-if="headerMenuItem.title==='دبیرخانه'" on-menu-item-click="Func.onMenuItemClick()"></secretariat-menu>
-				<management-menu ng-if="headerMenuItem.title==='مدیریت'" on-menu-item-click="Func.onMenuItemClick()"></management-menu>
+				<cartable-menu-for-cartable 
+					ng-if="headerMenuItem.title==='مکاتبات'" 
+					on-menu-item-click="Func.onMenuItemClick()"
+					options="{dontSelectDefaultCartable:true}" >
+				</cartable-menu-for-cartable>
+
+				<cartable-menu-for-process 
+					ng-if="headerMenuItem.title==='فرآیند'" 
+					on-menu-item-click="Func.onMenuItemClick()"
+					options="{dontSelectDefaultCartable:true}">
+				</cartable-menu-for-process>
+
+				<secretariat-menu 
+					ng-if="headerMenuItem.title==='دبیرخانه'" 
+					on-menu-item-click="Func.onMenuItemClick()">
+				</secretariat-menu>
+				
+				<management-menu 
+					ng-if="headerMenuItem.title==='مدیریت'" 
+					on-menu-item-click="Func.onMenuItemClick()">
+				</management-menu>
 
 				<span ng-if="headerMenuItem.title==='گزارش'" class="page-menu">
 

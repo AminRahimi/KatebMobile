@@ -71,12 +71,35 @@ angular.module('secretariatModule').controller('secretariatIssuedLetterListCtrl'
 
 	$scope.Controller = {
 		listController : {
-			headers: [
-			   {key:'letter.initiation.sender.title', label:'فرستنده'},
-               {key:'letter.subject', label:'موضوع'},
-               {key:'letter.internalNumber', label:'شماره نامه'},
-			   {key:'letter.creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'}
-			],
+			headers:{
+                desktop:[
+                    {key:'letter.initiation.sender.title', label:'فرستنده'},
+                    {key:'letter.subject', label:'موضوع'},
+                    {key:'letter.internalNumber', label:'شماره نامه'},
+                    {key:'letter.creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'}
+                 ],
+                 mobile:[
+                    {
+                        key:'letter.subject', "label":"",
+                        styleClass:"kateb-text-2 tw-text-black "
+                    },
+                    {
+                        key:'letter.initiation.sender.title', label:'فرستنده',styleClass:"kateb-text-2 tw-text-gray",
+                        labelClass:""
+                    },
+                    {
+                        key:'letter.internalNumber', label:'شماره نامه',
+                        styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    },
+                    {
+                        key:'letter.creationDate', label:'تاریخ ساخت', type:'date',"format": "jDD jMMMM jYYYY",
+                        styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    }
+
+                 ]
+            },
 			getList : null,
             // getList : function(start, pageLen){
             //     return secretariatSrvc.getIssuedLetterList($scope.Data.secUid, start, pageLen);

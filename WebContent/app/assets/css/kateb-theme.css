@@ -565,46 +565,15 @@ table.table.table-striped.col-sm-12.logsTable th{
     background: #fff;
     z-index: 2;
 }
-.btnActionInLetter {
-    max-width: 150px !important;
-    margin-left: 5px !important;
-    border-radius: 2px !important;
-    display: inline-flex;
-    color: #0097a7 !important;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-    min-width: 130px;
-/*    border-left: 1px solid #ccc !important;*/
-    position: relative
-}
-/*
-.btnActionInLetter:after{
-    content: "";
-    width: 1px;
-    height: 20px;
-    margin-right: 25px;
-    background: #ccc;
-}
-.btnActionInLetter.noBorder:after{
-    border-left: none !important;
-    display: none;
-}
-*/
+
+
 .btnActionRow{
     display: flex;
 	flex-grow: 1;
 	flex-wrap: wrap;
 }
-/*
-.btnActionInLetter:nth-last-child(4),
-.btnActionInLetter:nth-last-child(2){
-    border-left: 0px solid #ccc !important;
-}
-*/
-.btnActionInLetter.btn-primary{
-/*	color: #fff !important;*/
-}
+
+
 description-dropdown #single-button,
 tag-input .btn-group > .btn{
     min-width: 110px;

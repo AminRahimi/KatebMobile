@@ -6,12 +6,12 @@ angular.module('secretariatModule').controller('secretariatIssuedCtrl',
 			secUid: $state.params.secUid,
 			orgUid: $rootScope.currentUserOrg.uid,
 			incUid: $state.params.incUid,
-		letterUid: $state.params.letterUid,
+			letterUid: $state.params.letterUid,
 			indicatorBookList: [],
 			tagList: [],
 			letter: {},
 			issuedLetter: {},
-			featuresList: secretariatSrvc.getFeatureList($state.params.secUid),
+			featuresList: [],
 			organizationList: [],
 			members: [],
             pdfUrl: "",
@@ -21,10 +21,10 @@ angular.module('secretariatModule').controller('secretariatIssuedCtrl',
 			isEditForms: [],
 			editedRecepiant:[],
 			deliverys: [],
-		archivedLetter: [],
-		selectedFolder: "",
-		hasExternalArchives: configObj.externalArchives.length,
-		vtFolderSelectorForm: ""
+			archivedLetter: [],
+			selectedFolder: "",
+			hasExternalArchives: configObj.externalArchives.length,
+			vtFolderSelectorForm: ""
 		}
 
 		$scope.Func = {
@@ -319,6 +319,10 @@ angular.module('secretariatModule').controller('secretariatIssuedCtrl',
 			if($scope.Data.incUid)
 				$scope.Func.getIssuedLetter();
 			$scope.Func.getExternalOrganizationList();
+
+			secretariatSrvc.getFeatureList($state.params.secUid).then(function(featuresList) {
+				$scope.Data.featuresList = featuresList;
+			});
 		}
 
 		Run();

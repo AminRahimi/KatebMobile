@@ -3,38 +3,22 @@ angular.module('secretariatModule').config(['$stateProvider', function($statePro
 	    {
 	    	state: "base.home.secretariat",
 	    	config : {
-				url : "/secretariat/",
+				url : "/secretariat",
 				views: {
 					'mainContent@base.home': {
 						templateUrl: "app/modules/secretariat/secretariat.html",
 						controller: 'secretariatCtrl'
 					}
 				},
-				// resolve:{
-				// sideMenu:
-				// /* @ngInject */  function (homeSrvc) {
-				// 		return homeSrvc.generateSecretariatMenu();
-				// 	}
-				// }
+				
 			}
 	    },
 
 		{
 			state: "base.mobileHome.secretariat",
 			config : {
-				url : "/secretariat/",
-				views: {
-					'mainContent@base.mobileHome': {
-						templateUrl: "app/modules/secretariat/secretariat.html",
-						controller: 'secretariatCtrl'
-					}
-				},
-				// resolve:{
-				// sideMenu:
-				// /* @ngInject */  function (homeSrvc) {
-				// 		return homeSrvc.generateSecretariatMenu();
-				// 	}
-				// }
+				url : "/secretariat",
+				
 			}
 		},
 
@@ -73,6 +57,11 @@ angular.module('secretariatModule').config(['$stateProvider', function($statePro
 			state: "base.home.secretariat.incoming",
 			config: {
 				url: '/:secUid/incoming/:incUid/:tmpUid',
+				params: {
+                    secUid: { squash: true, value: null },
+                    incUid: { squash: true, value: null },
+                    tmpUid: { squash: true, value: null },
+                },
 				views: {
 					'content@base.home.secretariat': {
 						templateUrl: "app/modules/secretariat/incoming/secretariatIncoming.html",
@@ -85,6 +74,11 @@ angular.module('secretariatModule').config(['$stateProvider', function($statePro
 			state: "base.mobileHome.secretariat.incoming",
 			config: {
 				url: '/:secUid/incoming/:incUid/:tmpUid',
+				params: {
+                    secUid: { squash: true, value: null },
+                    incUid: { squash: true, value: null },
+                    tmpUid: { squash: true, value: null },
+                },
 				views: {
 					'mainContent@base.mobileHome': {
 						templateUrl: "app/modules/secretariat/incoming/secretariatIncoming.html",
@@ -109,6 +103,7 @@ angular.module('secretariatModule').config(['$stateProvider', function($statePro
 						controller: 'secretariatIssuedListCtrl'
 					}
 				}
+				
 			}
 		},
 		{

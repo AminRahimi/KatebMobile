@@ -4,9 +4,9 @@ kateb.externalDependencies = [ 'ui.bootstrap', 'ui.router' ,'angularjs-dropdown-
  								'ui.select', 'ngSanitize', 'cfp.hotkeys','ui.bootstrap.persian.interval.datepicker',
 								'ngFileUpload','as.sortable', 'ngclipboard'];
 kateb.internalDependency = [ 'vtCommon', 'appFilter', 'treeModule', 'vtMedia',  'indeterminateCheckbox', 'vtCartable' ,'cartableSearch','dateInterval',
-							'letterTabModule', 'sharedServices', 'multiselect', 'multiselectReciever',
+							'letterTabModule', 'sharedServices', 'multiselectReciever',
 							'scannerModule' , 'vtArrayRequired', 'isolateForm', 'tagInputModule', 'letterFormTypeDirectiveModule',
-							'vtMaxlength', 'vtPDF','vtPDFSignable', 'descriptionDropdownModule', 'notificationHandlerConstModule',
+							'vtMaxlength', 'vtPDF','vtPDFSignable', 'internalArchiveActionBtnModule', 'notificationHandlerConstModule',
 							'vtTypeahead', 'katebPrint', 'vtNotification','optionSelectWebservice',
 							'vtDropdownTaginputDirective', 'vtDateInterval', 'vtCartableDateInterval', 'scan', 'scannerCMModule',
 							'letterTabCMModule', 'vtDropdownMultiStringModule', 'deleteButton', 'deleteModule', 'deleteFromArchive', 'viraTree', 'viraTreePagination', 'docList', 'vtFolderSelector',

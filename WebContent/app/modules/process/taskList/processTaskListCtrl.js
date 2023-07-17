@@ -115,7 +115,9 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
                         {"key": "trackingNumber"}, 
                         {
                             "key": "createTime",
-                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                            "format": "jDD jMMMM jYYYY",
+                            styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                            labelClass:"tw-text-black"
                         }, 
                         {
                             "key": "formData._bpmsData.createTime", 
@@ -163,7 +165,9 @@ angular.module('processModule').controller('processTaskListCtrl', function ($sco
                         { "key": "description", "hasTooltip": true }, 
                         {
                             "key": "formData._creationdDate",
-                            "format": "jDD-jMMMM-jYYYY (HH:mm)"
+                            "format": "jDD jMMMM jYYYY",
+                            styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                            labelClass:"tw-text-black"
                         }, 
                         {"key": "trackingNumber"}, 
                         {"key": "formData._bpmsData.starter.user.title"}

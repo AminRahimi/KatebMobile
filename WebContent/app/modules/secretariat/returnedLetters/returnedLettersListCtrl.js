@@ -2,7 +2,7 @@ angular.module('secretariatModule').controller('returnedLettersListCtrl', functi
 
 	$scope.Data = {
 		secUid: $state.params.secUid,
-		featuresList: secretariatSrvc.getFeatureList($state.params.secUid),
+		featuresList: [],
         searchMode: 'none',
         wasSearched: false
 	}
@@ -100,6 +100,9 @@ angular.module('secretariatModule').controller('returnedLettersListCtrl', functi
 	}
 	
 	var Run = function(){
+        secretariatSrvc.getFeatureList($state.params.secUid).then(function(featuresList) {
+            $scope.Data.featuresList = featuresList;
+        });
 		
 	}
 	

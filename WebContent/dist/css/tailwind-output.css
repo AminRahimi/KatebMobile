@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -191,6 +191,10 @@ select,
 textarea {
   font-family: inherit;
   /* 1 */
+  font-feature-settings: inherit;
+  /* 1 */
+  font-variation-settings: inherit;
+  /* 1 */
   font-size: 100%;
   /* 1 */
   font-weight: inherit;
@@ -338,6 +342,14 @@ ul,
 menu {
   list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+
+dialog {
   padding: 0;
 }
 
@@ -627,8 +639,6 @@ body, html{
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-/* Bootstrap overwrite */
-
 .chips.chips-default {
   border-radius: 0.25rem;
   --tw-border-opacity: 1;
@@ -638,6 +648,8 @@ body, html{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+
+/* Bootstrap overwrite */
 
 .btn.btn-primary, .label.label-primary,.chips.chips-primary {
   border-radius: 0.25rem;
@@ -676,6 +688,10 @@ body, html{
 .modal-content {
   display: flex;
   flex-direction: column;
+}
+
+.modal-body {
+  overflow: scroll;
 }
 
 .modal-footer {
@@ -882,6 +898,14 @@ body, html{
   height: var(--logged-in-user-menu-avatar-size);
 }
 
+.tw-h-\[1\.75rem\] {
+  height: 1.75rem;
+}
+
+.tw-h-\[480px\] {
+  height: 480px;
+}
+
 .tw-h-\[70px\] {
   height: 70px;
 }
@@ -898,12 +922,12 @@ body, html{
   width: var(--logged-in-user-menu-avatar-size);
 }
 
-.tw-w-\[290px\] {
-  width: 290px;
+.tw-w-\[10em\] {
+  width: 10em;
 }
 
-.tw-w-\[9em\] {
-  width: 9em;
+.tw-w-\[290px\] {
+  width: 290px;
 }
 
 .tw-w-em-6 {
@@ -919,6 +943,10 @@ body, html{
 }
 
 .tw-flex-grow {
+  flex-grow: 1;
+}
+
+.tw-grow {
   flex-grow: 1;
 }
 
@@ -1041,4 +1069,10 @@ body, html{
 }
 
 /*FIXME:separate in css files*/
+
+@media (min-width: 640px) {
+  .sm\:tw-w-auto {
+    width: auto;
+  }
+}
 

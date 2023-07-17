@@ -1,0 +1,152 @@
+<script type="text/ng-template" id="vt-grid-field-templates.html">
+<span ng-switch on="field.type">
+				<label class="" ng-class="field.labelClass" ng-show="field.label">{{field.label}} </label>
+				<span ng-switch-when="string" ng-bind="item[field.key]|EnToFaNumber|splitString:field.strSize?field.strSize:'60'" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="top" tooltip="{{item[field.key]}}" tooltip-popup-delay="500" ng-if="item[field.key].length>=60">{{}}</span>
+
+				<span ng-switch-when="string" ng-bind="item[field.key]|EnToFaNumber|splitString:field.strSize?field.strSize:'60'" ng-if="60>item[field.key].length"></span>
+	 			<span ng-switch-when="stringArray" ng-bind="item[field.key]|EnToFaNumber|splitString:field.strSize?field.strSize:'60'" ng-if="Func.lenCalculator(item[field.key])>=60" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="top" tooltip="{{item[field.key]}}" tooltip-popup-delay="500" ></span> 
+		
+				<span ng-switch-when="stringArray" ng-bind="item[field.key]|EnToFaNumber|splitString:field.strSize?field.strSize:'60'" ng-if="60>Func.lenCalculator(item[field.key])"></span>
+				<span ng-switch-when="checkbox"><input type="checkbox" ng-model="Data.checked[item.uid]" ng-change="Func.changeSelectedItems(item)" ></span>
+				<span ng-switch-when="checkbox2"><input type="checkbox" ng-model="item.selected" ng-click="field.action(item,$event,item.selected)" ></span>
+				<span ng-switch-when="int">{{item[field.key]|EnToFaNumber}}</span>
+				<span ng-switch-when="date">{{item[field.key]|tehranDate:field.format|EnToFaNumber}}</span>
+				<span ng-switch-when="timestamp">{{item[field.key]|tehranDate:field.format|EnToFaNumber}}</span>
+				<span ng-switch-when="tag"><span ng-repeat="tag in item[field.key]" class="label-blue">{{tag.title}}</span></span>  
+				<span ng-switch-when="edited"><span ng-show="item[field.key]" class="label label-warning">ویرایش شده</span></span> 
+				<span ng-switch-when="bool">
+					<span ng-show="item[field.key]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          			<span ng-hide="item[field.key]" class="flaticon-close-button" aria-hidden="true"></span>
+          		</span>
+				<span ng-switch-when="boolean">
+					<span ng-show="item[field.key]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<span ng-hide="item[field.key]" class="flaticon-close-button" aria-hidden="true"></span>
+				</span>
+				<span ng-switch-when="img">
+					<span ng-show="field.if" ng-class="{'{{field.trueIcon}}':field.trueIcon}" aria-hidden="true"></span>
+					<span ng-hide="field.if" ng-class="{'{{field.falseIcon}}':field.falseIcon}" aria-hidden="true"></span>
+				</span>
+				<span ng-switch-when="enum">{{item[field.key]|appEnum:field.filter}}</span>
+				<span ng-switch-when="action" ng-hide='field.isHidden(item)'>
+					<div type="button"
+						ng-click="field.action(item,$event, $parent.$parent.$index)"
+						ng-hide="(field.showCondition && !item[field.valueShouldHave]) || (field.showConditionArr && !item[field.valueShouldHave].length)"
+						ng-class="{'{{field.icon}}':field.icon, '{{btn}}' : !field.icon, '{{btn-default}}': !field.icon}"
+						style="cursor: pointer;">{{field.actionName}}
+					</div>
+				</span>
+				<span ng-switch-when="actionList">
+					<button class="btn btn-default" type="button"
+					ng-repeat="btn in field.actionList"
+					ng-click="btn.action(item,$event)"
+					ng-class="{'{{btn.icon}}':btn.icon}"
+					style="cursor: pointer;"></button>
+				</span>
+				<span ng-switch-when="collection">
+					<span>{{item[field.key][0].title}}, {{item[field.key][1].title}} ...</span>
+         		 </span>
+				<span ng-switch-when="actionLongList">
+					<div class="dropdown" ng-switch-when="action">
+						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" aria-expanded="true">
+							عملیات
+							<span class="caret"></span>
+          				</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation" ng-repeat="action in field.actionList">
+							<a role="menuitem" tabindex="-1" ng-click="action.action(item,$event)">{{action.name}}</a>
+							</li>
+						</ul>
+					</div>
+				</span>
+                <span ng-switch-when="link" ng-click="field.action(item,$event,item.selected)"><i class='glyphicon glyphicon-link'></i></span>
+				<span ng-switch-default>{{item[field.key]|EnToFaNumber|splitString:40}}</span>
+</span>
+
+</script>
+
+
+
+
+<div class="saad-grid">
+	<p class="help-block" ng-show="((Controller.pagination.totalItems!=-1 && controlFn.listItems.length==0) || (!controlFn.listItems.length>0 && Controller.customPagination.choices)) && (!controlFn.isLoading)">موردی یافت نشد.</p>
+	<table class="saad-grid__table table" ng-show="controlFn.listItems.length>0">
+		<thead class=" hidden-xs">
+			<tr>
+
+
+				<th ng-if="options.isMobleView">
+
+				</th>
+				<th ng-if="!options.isMobleView" class="listDirectiveTh {{field.class}}" 
+					style="color: #666666" 
+					ng-repeat="field in Data.visibleFields" ng-click="Func.changeOrder(field)" 
+					ng-style="{'width':field.width,'text-align':field.textAlign}">
+					<div class="ng-hide" ng-show="field.sortable && controlFn.showSort">
+						<span class="caret" ng-hide="field.asc"></span>
+					<i ng-if="$last" class="fa fa-refresh fa-lg pull-left" ng-click="controlFn.refreshList()" style="cursor:pointer;padding-top:3px;"></i>
+						<span class="caret" style="transform: rotate(180deg);" ng-show="field.asc"></span>
+					</div>
+					<div >{{field.label}}</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="item in controlFn.listItems" class="{{controlFn.setRowClass(item)}}"
+			ng-class="{'selected':item.isSelected}" style="cursor: pointer; cursor: hand; color: #666666">
+
+
+
+
+
+			<td ng-if="options.isMobleView"   >
+				<div ng-repeat="field in Data.visibleFields track by $index"
+				 	ng-class="field.styleClass"  
+					ng-click="Func.onListItemClick(item, field, $parent.$index)"  
+					ng-dblclick="Func.onListItemClick(item, field, $parent.$index, true)" class="listDirectiveTd">
+					<span ng-include="'vt-grid-field-templates.html'"></span>
+				</div>
+			</td>
+
+
+			<td ng-if="!options.isMobleView"  ng-repeat="field in Data.visibleFields"  
+				ng-click="Func.onListItemClick(item, field, $parent.$index)" 
+				ng-dblclick="Func.onListItemClick(item, field, $parent.$index, true)" class="listDirectiveTd">
+				<span ng-include="'vt-grid-field-templates.html'"></span>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<span class="scroll-sentinel"></span>
+</div>
+
+
+<!-- FIXME:hide pagination in mobile view -->
+<div ng-show="controlFn.listItems.length>0" class="col-sm-12">
+	<pagination ng-if="!Controller.customPagination.choices && !Controller.pagination.inOnePage()"
+				total-items="Controller.pagination.totalItems"
+				ng-model="Controller.pagination.currentPage" max-size="Controller.pagination.maxSize" items-per-page="Controller.pagination.perPage" ng-change="Controller.pagination.pageChanged() "
+				class="pagination-sm" ng-disabled="Data.isLoading"  boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی">
+	</pagination>
+
+	<pagination ng-if="Controller.customPagination.choices"
+				total-items="Controller.customPagination.totalItems"
+				ng-model="Controller.customPagination.currentPage" max-size="Controller.customPagination.maxSize" items-per-page="Controller.customPagination.count" ng-change="Controller.customPagination.change()"
+				class="pagination-sm" ng-disabled="Data.isLoading"  boundary-links="true" first-text="ابتدا" last-text="انتها" next-text="بعدی" previous-text="قبلی">
+	</pagination>
+
+	<div id="custom-pagination-container" ng-if="controlFn.listItems.length>0 && Controller.customPagination.choices">
+		<label id="custom-pagination-label" class="col-sm-1 text-left">نمایش</label>
+		<div class="col-sm-8 vtSelect">
+			<select id="custom-pagination-select" class="col-sm-9" ng-model="Controller.customPagination.count"
+					ng-change="Controller.customPagination.change()" ng-options="(itemsCount|EnToFaNumber) for itemsCount in Controller.customPagination.choices track by itemsCount">
+			</select>
+			<i id="custom-pagination-arrow" class="fa-btn flaticon-arrows-3"></i>
+		</div>
+	</div>
+
+	<span ng-if="!Controller.customPagination.choices" class="total-items-pagination" ng-hide="options.hideTotalCount">تعداد کل
+		: {{Controller.pagination.totalItems|EnToFaNumber}}</span>
+
+	<span ng-if="Controller.customPagination.choices" class="custom-pagination-total-items" ng-hide="options.hideTotalCount">تعداد کل
+		: {{Controller.customPagination.totalItems|EnToFaNumber}}</span>
+</div>

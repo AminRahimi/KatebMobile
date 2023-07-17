@@ -1,15 +1,6 @@
 angular.module('tagInputModule', []);
 
 angular.module('tagInputModule').directive('tagInput', [
-        /**
-         * @memberOf tagModule
-         * @ngdoc directive
-         * @description set tag for entities
-         * @name tagInput
-         * @attr external-data data from other sources to send with tagList
-         * @example
-         *  <tag-input external-data=""></tag-input>
-         */
         function() {
         return {
             restrict: 'AE',
@@ -18,37 +9,37 @@ angular.module('tagInputModule').directive('tagInput', [
                  listChange: "="
              },
              templateUrl: 'app/assets/js/directives/tagInput/tagInputTemplate.html',
-             controller: function($scope, $timeout, $rootScope, tagInputSrvc) {
+             controller: function($scope, tagInputSrvc,homeSrvc ) {
                 $scope.Data = {
-                    tagList: [],
-                    tags: []
+                    isMobileView:  homeSrvc.screenSizeDetector.isMobile(),
                 };
 
                 $scope.Func = {
                     refreshTegList: function (searchableTag) {
                         if (searchableTag.length > 1) {
-                            tagInputSrvc.getTagsList(searchableTag).then(function(response){
-                                $scope.Data.tagList = response.data.originalElement;
+                            return tagInputSrvc.getTagsList(searchableTag).then(function(response){
+                                // $scope.Data.tagList = response.data.originalElement;
+                                return response
                             });
                         }
                     },
-                    onSendTagsClick: function () {
+                    onSendTagsClick: function (tags) {
                         var sendData = {
                             letters: $scope.externalData,
                             tags:[]
                         };
-                        $scope.Data.tags.forEach(function (tag) {
+                        tags.forEach(function (tag) {
                             if(!_.isObject(tag)){
                                 sendData.tags.push({title: tag});
                             }else{
                                 sendData.tags.push(tag);
                             }
                         });
-                        tagInputSrvc.sendTags(sendData).then(function (res) {
+                        return tagInputSrvc.sendTags(sendData).then(function (res) {
                             if(_.isFunction($scope.listChange)){
                                 $scope.listChange(sendData.tags);
                             }
-                            $scope.Data.tags = [];
+                            // $scope.Data.tags = [];
                         });
                     }
                 };
@@ -62,6 +53,115 @@ angular.module('tagInputModule').directive('tagInput', [
              }
         }
 }]);
+
+
+
+// FIXME:place to separate files
+angular.module('tagInputModule').directive('tagInputModal', [
+    function() {
+    return {
+        restrict: 'AE',
+         scope: {
+            externalData: "=",
+             listChange: "=",
+             refreshTegList:"&",
+             onSendTagsClick:"&"
+         },
+         templateUrl: 'app/assets/js/directives/tagInput/mobileView/tagInputModal.html',
+         controller: function($scope,$modal) {
+            $scope.Data = {
+                
+            };
+
+            $scope.Func = {
+                onActionBtnClick:function(){
+                    var modalInstance = $modal.open({
+                       templateUrl : 'app/assets/js/directives/tagInput/mobileView/tagInputModal.modal.html',
+                       controller : function($scope,$modalInstance,refreshTegList){
+
+
+                        $scope.Func={
+                            refreshTegList:function(query){
+                                return refreshTegList({$query:query});
+                            },
+                            onCancelClick : function() {
+                                $modalInstance.dismiss();
+                            },
+                            onSendClick : function() {
+                                $modalInstance.close($scope.Data.tags);
+                            }
+                        }
+                           
+                       },
+                       resolve:{
+                            refreshTegList:()=>$scope.refreshTegList,
+                       },
+                       size : 'sm',
+                   });
+                   modalInstance.result.then(function(tags) {
+                       $scope.onSendTagsClick({$tags:tags})
+                   }, function() {
+                   });
+               }
+           };
+            var init = function () {
+                
+            };
+
+            init();
+         }
+    }
+}]);
+
+
+angular.module('tagInputModule').directive('tagInputDropdown', [
+    function() {
+    return {
+        restrict: 'AE',
+         scope: {
+            externalData: "=",
+             listChange: "=",
+             refreshTegList:"&",
+             onSendTagsClick:"&"
+         },
+         templateUrl: 'app/assets/js/directives/tagInput/desktopView/tagInputDropdown.html',
+         controller: function($scope) {
+            $scope.Data = {
+                tagList: [],
+                tags: []
+            };
+
+            $scope.Func = {
+                refreshTegList: function (searchableTag) {
+                    if (searchableTag.length > 1) {
+                        return $scope.refreshTegList({$query:searchableTag})
+                    }
+                },
+                onSendTagsClick: function () {
+
+                    $scope.onSendTagsClick({$tags:$scope.Data.tags}).then(()=>{
+                        $scope.Data.tags = [];
+                    });
+
+                }
+            };
+            var init = function () {
+                $('#tagInputDropDown').bind('click', function(e) {
+                    e.stopPropagation();
+                });
+            };
+
+            init();
+         }
+    }
+}]);
+
+
+
+
+
+
+
 
 angular.module('tagInputModule').factory('tagInputSrvc', function (Restangular) {
     return {

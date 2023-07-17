@@ -87,7 +87,8 @@
             <label class="saad-form__label" ng-class="{'required':isEditMode}">فایل</label>
             <div class="saad-form__value"
                  ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">
-                <letter-body class="katebLetterBody" model="Data.file" ng-required="!Data.file.hash" name="file"
+                <letter-body class="katebLetterBody tw-flex tw-flex-col tw-h-[480px]" model="Data.file" 
+                            ng-required="!Data.file.hash" name="file"
                              ng-model="Data.file"
                              is-edit-mode="isEditMode" api="controller.letterBody"
                              type="Data.letterBodyType"

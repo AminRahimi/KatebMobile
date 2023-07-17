@@ -28,9 +28,11 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
 		getGetIncommingLetterTemplate:function(uid){
 			return Restangular.one('/incomming_letter_template/items',uid).get();
 		},
+		getFeatureListDeferObject: $q.defer(),
 		getSideMenuSecretariat: function(){
 			return Restangular.all('/org/current/secretariat/availables').getList().then(function (response){
 				SecretariatSrvc.setFeatureList(response.data);
+				SecretariatSrvc.getFeatureListDeferObject.resolve(response.data);
 				return response;
 			});
 		},
@@ -43,7 +45,15 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
 			});
 		},
 		getFeatureList: function (secUid) {
-			return this.featureList[secUid];
+			let defered = $q.defer();
+			if(this.featureList ){
+				defered.resolve(this.featureList[secUid])
+			}else{
+				SecretariatSrvc.getFeatureListDeferObject.promise.then(function(res){
+					defered.resolve(SecretariatSrvc.featureList[secUid]);
+				});
+			}
+			return defered.promise;
 		},
 
 		/* ***************************************************************************** */
@@ -289,7 +299,7 @@ angular.module('secretariatModule').factory('secretariatSrvc', [ 'Restangular', 
         getLastPage: function () {
             return lastPage;
         },
-		descriptionDropdownSrvc: function (letterUid, draft_uid, desc) {
+		internalArchiveActionBtnSrvc: function (letterUid, draft_uid, desc) {
 			return Restangular.all('dispatch/set_returned/' + letterUid+"?draft_uid="+draft_uid).post(desc);
 		},
 

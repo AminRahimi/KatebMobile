@@ -333,14 +333,14 @@
 
 
 
-.cartable-list {
+.kateb-filter-list {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
 
 
-.cartable-list__list {
+.kateb-filter-list__list {
 	flex-grow: 1;
 	overflow: hidden;
 }
@@ -385,7 +385,7 @@ margin: 0 5px;
 .action-bar .single-button > .flaticon-arrows-3::before,.action-bar .single-button > .flaticon-arrows-3::before{
 margin-right: 5px;
 }
-tag-input.col-sm-1 + description-dropdown > #descriptionDropDown > #single-button{
+tag-input.col-sm-1 + description-dropdown > #internalArchiveActionBtn > #single-button{
     display: block;
 }
 

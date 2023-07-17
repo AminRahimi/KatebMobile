@@ -1,0 +1,18 @@
+
+<internal-archive-action-btn-dropdown ng-if="!Data.isMobileView" 
+  on-send-click="Func.onSendClick($description,$directiveScope)"
+  on-text-area-adjust="Func.onTextAreaAdjust()" 
+  uid-list="uidList" cb="cb">
+
+</internal-archive-action-btn-dropdown>
+
+
+
+
+
+<internal-archive-action-btn-modal ng-if="Data.isMobileView" 
+  on-send-click="Func.onSendClick($description,$directiveScope)"
+  on-text-area-adjust="Func.onTextAreaAdjust()"
+  uid-list="uidList" cb="cb">
+
+</internal-archive-action-btn-modal>

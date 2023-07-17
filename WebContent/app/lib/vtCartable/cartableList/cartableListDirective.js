@@ -146,12 +146,7 @@ angular.module("vtCartable").directive('cartableList',
                                     filter: $scope.Data.selectedFilter
                                 };
                                 //FIXME: get current page from cartableSrvc.getCurrentPage()
-                                if($scope.Controller.listController.goToPage){
-                                    $scope.Controller.listController.goToPage(cartableSrvc.current).then(defer.resolve);
-                                }
-                                else{
-                                    defer.resolve(null);
-                                }
+                                $scope.Controller.listController.goToPage(1).then(defer.resolve);
                             }, 1);
                         return defer.promise;
                     },

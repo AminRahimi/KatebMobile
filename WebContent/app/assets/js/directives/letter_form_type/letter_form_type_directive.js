@@ -122,7 +122,7 @@ angular
           }
 
           $scope.cssClass =
-            $scope.cssClass === undefined ? "col-sm-6" : $scope.cssClass;
+            $scope.cssClass === undefined ? "" : $scope.cssClass;
         };
 
         Run();

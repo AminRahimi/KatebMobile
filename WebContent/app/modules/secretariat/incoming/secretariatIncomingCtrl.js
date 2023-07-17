@@ -1,6 +1,6 @@
 angular.module('secretariatModule').controller('secretariatIncomingCtrl',
-		function($scope, $rootScope, $timeout, $state, $modal, secretariatSrvc, fileSrvc, katebSrvc,
-				 vtShowMessageSrvc, hotkeys, configObj) {
+		function($scope, $rootScope, $timeout, $state, secretariatSrvc, katebSrvc,
+				 vtShowMessageSrvc, hotkeys, configObj,homeSrvc ) {
 
 
 
@@ -54,6 +54,9 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 				vtFolderSelectorForm: ""
 			}
 			$scope.Func = {
+				getStateName: function (stateName) {
+					return homeSrvc.getStateName(stateName);
+				},
 				getTabList: function () {
 					$scope.Data.tabList = [{
 						id: 0,
@@ -125,7 +128,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 							$scope.Apis.schemaFormApi.prepareLetterFormTypeForSave();
 						}
 						secretariatSrvc.saveIncoming($scope.Data.secUid, $scope.Func.removeExtraFields($scope.Data.letter, true)).then(function () {
-							$state.go('base.home.secretariat.incomingList', {secUid: $scope.Data.secUid});
+							$state.go($scope.Func.getStateName('base.home.secretariat.incomingList'), {secUid: $scope.Data.secUid});
 							$scope.Data.validationClicked = false;
 						});
 					}
@@ -175,9 +178,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 
 				},
 				onReturnClick: function () {
-					// $state.go("base.home.secretariat.unapprovedIncomming", {secUid: $scope.Data.secUid});
-					$state.go("base.home.secretariat.incomingList", {secUid: $scope.Data.secUid});
-					// $state.go(secretariatSrvc.getBackButton(), {secUid: $scope.Data.secUid});
+					$state.go($scope.Func.getStateName("base.home.secretariat.incomingList"), {secUid: $scope.Data.secUid});
 				},
 				onResetClick: function () {
 					$scope.Data.letter = {
@@ -311,7 +312,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 					}
 				},
 				onDuplicateClick: function (letter) {
-					var url = $state.href('base.home.cartable.orgLetter', {letterUid: letter.uid});
+					var url = $state.href($scope.Func.getStateName('base.home.cartable.orgLetter'), {letterUid: letter.uid});
 					window.open(url, '_blank');
 				},
 				removeExtraFields: function (data, shouldChange) {
@@ -389,7 +390,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 					});
 				},
 				onSendBackDescriptionClick: function () {
-					secretariatSrvc.descriptionDropdownSrvc($scope.Data.letter.dispatchToOtherOrgRefrence.uid, $scope.Data.letter.uid, $scope.descriptionBack).then(function (res) {
+					secretariatSrvc.internalArchiveActionBtnSrvc($scope.Data.letter.dispatchToOtherOrgRefrence.uid, $scope.Data.letter.uid, $scope.descriptionBack).then(function (res) {
 						$scope.descriptionBack = "";
 						// $scope.sendSucceded = true;
 						// $(".successMessage").fadeIn();
@@ -410,7 +411,6 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 					// }
 					onCreatedpdfUploaded : function (hashNameObj) {
 						$scope.controller.letterBody.setPdfUrl(hashNameObj);
-						// $scope.controller.vtPDF.pdfUrl = fileSrvc.getFileURLForViewByFile({name: hashNameObj.name, hash: hashNameObj.hash});
 
 					}
 				},

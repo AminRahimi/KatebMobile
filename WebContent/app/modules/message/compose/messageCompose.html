@@ -13,9 +13,15 @@
 					<label class="col-sm-1 required">گیرنده</label>
 					<div class="col-sm-7"
 					 	ng-class="{'has-error': Data.composeForm.receivers.$invalid && Data.validationClicked}">
-						<multiselect api="controller.multiselect" name="receivers" model="Data.messageInfo.receivers"
-							ng-model="Data.messageInfo.receivers" vt-array-required options="Data.recievers"
-							is-edit-mode="Data.mode!='view'"></multiselect>
+
+						<multiselect-reciever 
+							model="Data.messageInfo.receivers" 
+							init-options="Data.recievers"
+							ng-model="Data.messageInfo.receivers"
+							vt-array-required
+						 	name="receivers"
+							is-edit-mode="Data.mode!='view'">
+						</multiselect-reciever>
 					</div>
 				</div>
 				<div class="row rowForm">

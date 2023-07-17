@@ -410,7 +410,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                             "key": "modificationDate",
                             "label": "تاریخ:",
                             "format": "jDD jMMMM jYYYY",
-                            styleClass:"kateb-text-2 tw-float-left  tw-text-primary-light",
+                            styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
                             labelClass:"tw-text-black"
                         }
                     ],
@@ -656,7 +656,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                             key: "content.officialDate",
                             label: "تاریخ:",
                             "format": "jDD jMMMM jYYYY",
-                            styleClass:"kateb-text-2 tw-w-[9em] tw-float-left  tw-text-primary-light",
+                            styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
                             labelClass:"tw-text-black"
                         },
                     ],

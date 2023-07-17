@@ -5,7 +5,8 @@ angular.module('vtCartable').directive('cartableMenuForCartable',
             restrict: 'EAC',
             templateUrl: 'app/lib/vtCartable/cartableMenu/cartableMenuForCartable.html',
             scope: {
-                onMenuItemClick:"&"
+                onMenuItemClick:"&",
+                options:"=?"
             },
             controller: function ($scope,$state,cartableSrvc,homeSrvc) {
                 $scope.Data = {};

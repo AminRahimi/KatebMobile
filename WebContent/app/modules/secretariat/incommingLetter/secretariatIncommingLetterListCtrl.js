@@ -1,9 +1,10 @@
-angular.module('secretariatModule').controller('secretariatIncommingLetterListCtrl', function($scope, $state, secretariatSrvc, $timeout) {
+angular.module('secretariatModule').controller('secretariatIncommingLetterListCtrl', function($scope, $state, secretariatSrvc, $timeout,homeSrvc) {
 
 	$scope.Data = {
 		secUid: $state.params.secUid,
 		searchMode: 'none',
-        wasSearched: false
+        wasSearched: false,
+        isMobileView: homeSrvc.screenSizeDetector.isMobile()
 	}
 
 	$scope.Func = {
@@ -71,13 +72,29 @@ angular.module('secretariatModule').controller('secretariatIncommingLetterListCt
 
 	$scope.Controller = {
 		listController: {
-			headers: [
-               {key:'letter.initiation.sender.title', label:'فرستنده'},
-               {key:'letter.subject', label:'موضوع'},
-               {key:'letter.internalNumber', label:'شماره نامه'},
-				{key:'externalNumber'},
-			   {key:'letter.creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'}
-			],
+			headers:{
+                desktop:[
+                    {key:'letter.initiation.sender.title', label:'فرستنده'},
+                    {key:'letter.subject', label:'موضوع'},
+                    {key:'letter.internalNumber', label:'شماره نامه'},
+                     {key:'externalNumber'},
+                    {key:'letter.creationDate', label:'تاریخ ساخت', type:'date', format:'jDD-jMMMM-jYYYY'}
+                 ],
+                 mobile:[
+                    {key:'letter.subject', label:'موضوع',styleClass:"kateb-text-2 tw-text-black "},
+                    {key:'letter.initiation.sender.title', label:'فرستنده',styleClass:"kateb-text-2 tw-text-gray",
+                    labelClass:""},
+                    {key:'externalNumber',label:'شماره خارجی',styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                    labelClass:"tw-text-black"},
+                    {
+                        key:'letter.creationDate', label:'تاریخ ساخت', type:'date', "format": "jDD jMMMM jYYYY",
+                        styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    }
+
+
+                 ]
+            } ,
             getList: null,
 			// getList: function(start, pageLen){
 			// 	return secretariatSrvc.getIncommingLetterList($scope.Data.secUid, start, pageLen);
@@ -107,9 +124,11 @@ angular.module('secretariatModule').controller('secretariatIncommingLetterListCt
         $scope.Data.currentPage = $scope.Func.getLastPage();
 
         if (!$scope.Data.wasSearched) {
-            $timeout(function () {
+
+            $scope.Controller.listController.onReady = function(){
                 $scope.Controller.listController.goToPage($scope.Data.currentPage);
-            }, 1);
+            }
+           
         } else {
             $scope.Controller.searchController.searchQuery = $scope.Func.getLastSearchQuery();
             $timeout(function () {

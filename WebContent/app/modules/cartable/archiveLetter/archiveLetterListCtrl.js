@@ -51,9 +51,7 @@ angular.module('cartableModule').controller('archiveLetterListCtrl', function ($
                 return cartableKatebSrvc.searchArchiveLetterListQueryParam($scope.Data.orgUid, start, pageLen, query, isNewSearch);
             }
             $timeout(function () {
-                if (pageNum)
-                    $scope.Controller.listController.goToPage(pageNum);
-                else $scope.Controller.listController.refreshList();
+                    $scope.Controller.listController.goToPage(1);
             }, 1);
             cartableKatebSrvc.setArchiveSearchQeury($scope.Controller.searchController.searchQuery, 1);
             $scope.Func.setSearchMode(false);
@@ -144,21 +142,47 @@ angular.module('cartableModule').controller('archiveLetterListCtrl', function ($
 
     $scope.Controller = {
         listController: {
-            headers: [
-                {key: 'internalNumber', label: 'شماره نامه'},
-                {key: 'subject', label: 'موضوع', class: 'col-sm-6', hasTooltip: true, strSize: '70'},
-                {key: 'initiation.sender.title', label: 'فرستنده', sortable: true},
-                {key: 'dirType', label: 'نوع نامه', sortable: true},
-                {key: 'officialDate', type: 'date', label: 'تاریخ ', format: 'jDD-jMMMM-jYYYY'},
-                {
-                    key: 'uid',
-                    type: 'link',
-                    label: '',
-                    sortable: false,
-                    display: true,
-                    action: $scope.Func.onOpenLetterInNewTabClick
-                }
-            ],
+            headers:{
+                desktop:[
+                    {key: 'internalNumber', label: 'شماره نامه'},
+                    {key: 'subject', label: 'موضوع', class: 'col-sm-6', hasTooltip: true, strSize: '70'},
+                    {key: 'initiation.sender.title', label: 'فرستنده', sortable: true},
+                    {key: 'dirType', label: 'نوع نامه', sortable: true},
+                    {key: 'officialDate', type: 'date', label: 'تاریخ ', format: 'jDD-jMMMM-jYYYY'},
+                    {
+                        key: 'uid',
+                        type: 'link',
+                        label: '',
+                        sortable: false,
+                        display: true,
+                        action: $scope.Func.onOpenLetterInNewTabClick
+                    }
+                ],
+                mobile:[
+                    {
+                        key: 'subject', "label":"",
+                        styleClass:"kateb-text-2 tw-text-black " 
+                    },
+                    {
+                        key: 'initiation.sender.title', label: 'فرستنده', sortable: true,
+                        styleClass:"kateb-text-2 tw-text-gray",
+                        labelClass:""
+                    },
+                    {
+                        key: 'internalNumber', label: 'شماره نامه',
+                        styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    },
+                    {
+                        key: 'officialDate', type: 'date', label: 'تاریخ ', "format": "jDD jMMMM jYYYY",
+                        styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    },
+
+
+                ]
+            }
+             ,
             getList: function (start, pageLen) {
                 return cartableKatebSrvc.getArchiveLetterList($scope.Data.orgUid, start, pageLen);
             },

@@ -65,10 +65,7 @@ a.list-group-item:focus, a.list-group-item:hover,
     background: #00d576;
     border-radius: 2px !important
 }
-.btnActionInLetter,
-.btn-icon{
-    color:  #0062d2 !important
-}
+
 .nav-tabs > li > a{
     color: #aaa;
 }

@@ -365,7 +365,7 @@ angular.module('secretariatModule').controller('secretariatRejectedCtrl',
 					});
 				},
 				// onSendBackDescriptionClick: function () {
-				// 	secretariatSrvc.descriptionDropdownSrvc($scope.Data.letter.dispatchToOtherOrgRefrence.uid, $scope.descriptionBack).then(function (res) {
+				// 	secretariatSrvc.internalArchiveActionBtnSrvc($scope.Data.letter.dispatchToOtherOrgRefrence.uid, $scope.descriptionBack).then(function (res) {
 				// 		$scope.descriptionBack = "";
 				// 		// $scope.sendSucceded = true;
 				// 		// $(".successMessage").fadeIn();

@@ -15,6 +15,11 @@ angular.module('HomeModule').controller('baseCtrl',
 
        
         
+        $scope.Func = {
+            getStateName: function (stateName) {
+                return homeSrvc.getStateName(stateName);
+            },
+        }
 
         
 
@@ -22,8 +27,10 @@ angular.module('HomeModule').controller('baseCtrl',
             $scope.stateName = $state.$current.name;
         });
 
-        if ($scope.stateName === "base")
-            $state.go('base.home.cartable');
+        if ($scope.stateName === "base"){
+
+            $state.go($scope.Func.getStateName('base.home.cartable'));
+        }
 
         if (currentUserConfig.userConfig.passwordExpired) {
             $state.go('base.home.changePassword');

@@ -168,8 +168,11 @@
                 <div class="row rowForm" ng-show="Data.type != 'relational'">
 					<label class="col-sm-5">افزودن سمت</label>
 					<div class="col-sm-7">
-						<multiselect options="Data.groupList" model="Data.selectedrule.groupOne" name="groupOne"
-							is-edit-mode="Data.mode!='view'"></multiselect>
+
+						<multiselect-reciever model="Data.selectedrule.groupOne" init-options="Data.groupList"
+														ng-model="Data.selectedrule.groupOne" name="groupOne"
+														is-edit-mode="Data.mode!='view'">
+						</multiselect-reciever>
 					</div>
 				</div>
                 <label ng-if="Data.type == 'betweenGroups'">گروه شماره دو</label>
@@ -185,8 +188,11 @@
 				<div class="row rowForm" ng-show="Data.type == 'betweenGroups'">
 					<label class="col-sm-5">افزودن سمت</label>
 					<div class="col-sm-7">
-						<multiselect options="Data.groupList" model="Data.selectedrule.groupTwo"  name="groupTwo"
-									 is-edit-mode="Data.mode!='view'"></multiselect>
+
+						<multiselect-reciever model="Data.selectedrule.groupTwo" init-options="Data.groupList"
+														ng-model="Data.selectedrule.groupTwo" name="groupTwo"
+														is-edit-mode="Data.mode!='view'">
+						</multiselect-reciever>
 					</div>
 				</div>
 			</form>

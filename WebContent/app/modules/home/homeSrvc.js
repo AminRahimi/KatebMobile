@@ -60,17 +60,7 @@ angular.module('HomeModule').factory('homeSrvc', function(Restangular, Kateb_CON
 		},
 
 
-		// generateMenuDataWithDynamicChildItems: function (){
-		// 	var menuData = angular.copy(HomeSrvc.generateMenuData());
-		// 	return HomeSrvc.generateSecretariatMenu().then(function (secretariatList){
-		// 		return menuData.map(function (menuItem) {
-		// 			if(menuItem.title==='دبیرخانه'){
-		// 				menuItem.childItems = angular.copy(secretariatList);
-		// 			}
-		// 			return menuItem;
-		// 		});
-		// 	});
-		// },
+		
 		
 		generateSecretariatMenu: function() {
 

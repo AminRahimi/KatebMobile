@@ -10,7 +10,8 @@ angular.module('vtFolderSelector', []).directive('vtFolderSelector', function ()
             isEditMode: "=?",   // view or edit mode - Boolean
             formName: "=?",     // name of form
             required:"=?" , 
-            modernizationCodePlacement: "=?"
+            modernizationCodePlacement: "=?",
+            controller:"=?"
         },
         controller: function ($scope, configObj, $modal, $interval, vtFolderSelectorSrvc, $timeout, appConst) {
             $scope.Data = {
@@ -39,7 +40,7 @@ angular.module('vtFolderSelector', []).directive('vtFolderSelector', function ()
                         }
                     });
                 },
-                onEnterToGanjehClick: function () {
+                openEnterToGanjeh: function(){
                     // Fixes dual-screen position                         Most browsers      Firefox
                     // var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
                     // var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
@@ -68,6 +69,10 @@ angular.module('vtFolderSelector', []).directive('vtFolderSelector', function ()
                         }
                     }, 2000);
                 },
+                onEnterToGanjehClick: function () {
+                    $scope.Func.openEnterToGanjeh();
+                },
+                
                 onChooseFolderClick: function () {
                     vtFolderSelectorSrvc.checkUserIsLoginToGanjeh().then(function (res) {
                         if (res.data.isLogin) {
@@ -289,6 +294,11 @@ angular.module('vtFolderSelector', []).directive('vtFolderSelector', function ()
                         });
                     }
                 });
+
+
+                if($scope.controller){
+                    $scope.controller.openEnterToGanjeh = $scope.Func.openEnterToGanjeh;
+                }
             };
 
             Run();

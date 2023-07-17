@@ -27,7 +27,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-close">
     <span ng-click="Func.onReturnClick()">
         <!-- web view -->
-        <a class="btn btn-sm btn-text btn-icon btnActionInLetter hidden-xs" type="button" >
+        <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button" >
                     <i class="flaticon-close-button"></i>
                     بستن
         </a>
@@ -41,8 +41,8 @@
 <script type="text/ng-template" id="cartable-acction-btn-tag">
     <span >
         <!-- web view -->
-        <tag-input style="display: inline-block;height: 35px; padding: 0" class="btnActionInLetter"  list-change="Func.onTagInputListChanged" external-data="Data.tagInputExternalData">
-                </tag-input>
+        <tag-input style="" class=""  list-change="Func.onTagInputListChanged" external-data="Data.tagInputExternalData">
+        </tag-input>
         <!-- mobile view -->
 <!--        <a class="visible-xs">بازگشت </a>-->
 
@@ -52,7 +52,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-archive">
     <span >
         <!-- web view -->
-        <description-dropdown uid-list="Data.archiveInputExternalData" cb="Func.onArchiveCb"> </description-dropdown>
+        <internal-archive-action-btn uid-list="Data.archiveInputExternalData" cb="Func.onArchiveCb"> </description-dropdown>
         <!-- mobile view -->
         <!--        <a class="visible-xs">بازگشت </a>-->
 
@@ -62,7 +62,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-reply">
     <span ng-click="Func.onReplyClick()">
         <!-- web view -->
-        <a class="btn btn-sm btn-text btn-icon btnActionInLetter hidden-xs" >
+        <a class="btn btn-sm btn-text btn-icon  hidden-xs" >
                     <i class="fa fa-mail-reply"></i>
                     پاسخ
                 </a>
@@ -77,7 +77,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-user-archive">
     <span access-checker="USER_LETTER_ARCHIVE" ng-click="Func.onAddToUserArchive()">
         <!-- web view -->
-        <a  class="btn btn-sm btn-text btn-icon btnActionInLetter hidden-xs" >
+        <a  class="btn btn-sm btn-text btn-icon  hidden-xs" >
                     انتقال به آرشیو شخصی
                 </a>
         <!-- mobile view -->
@@ -89,7 +89,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-follow">
     <span ng-click="Func.onFollowClick()" ng-show="!Data.isFollow">
         <!-- web view -->
-        <button class="btn btn-primary single-button btnActionInLetter noBorder hidden-xs" style="border: 1px solid #d6d6d6 !important" type="button" >نیاز به پیگیری</button>
+        <button class="btn btn-primary single-button  noBorder hidden-xs" style="border: 1px solid #d6d6d6 !important" type="button" >نیاز به پیگیری</button>
         <!-- mobile view -->
         <div class="action-icon  visible-xs" ng-include="'kateb-icon-level-up-alt.svg'"></div>
 
@@ -98,7 +98,7 @@
 <script type="text/ng-template" id="cartable-acction-btn-follow">
     <span ng-show="Data.isFollow" ng-click="Func.onUnfollowClick()">
         <!-- web view -->
-        <button  class="btn btn-primary single-button btnActionInLetter hidden-xs" type="button" >عدم نیاز به پیگیری</button>
+        <button  class="btn btn-primary single-button  hidden-xs" type="button" >عدم نیاز به پیگیری</button>
         <!-- mobile view -->
         <a class="visible-xs">عدم نیاز به پیگیری</a>
 
@@ -110,7 +110,7 @@
         <!-- web view -->
         <button
                 type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left btnActionInLetter noBorder hidden-xs" >
+                class="btn btn-sm btn-text btn-icon white-bg pull-left  noBorder hidden-xs" >
                 <i class="fa fa-arrow-up"></i>                    قبلی
         </button>
         <!-- mobile view -->
@@ -126,7 +126,7 @@
         <!-- web view -->
         <button
                 type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left btnActionInLetter hidden-xs " >
+                class="btn btn-sm btn-text btn-icon white-bg pull-left  hidden-xs " >
                     <i class="fa fa-arrow-down"></i>بعدی
         </button>
         <!-- mobile view -->
@@ -179,7 +179,7 @@
 </div>
 <div class="letter-draft-view">
     <section class="letter-draft-view__header-summary visible-xs ">
-        <span>نامه (شماره {{Data.letter.internalNumber}}):</span>
+        <span>نامه (شماره {{Data.letter.internalNumber| EnToFaNumber}}):</span>
         <p class="tw-mr-p-margin tw-text-gray">
             {{Data.letter.subject}}
         </p>
@@ -420,7 +420,7 @@
                                 <div class="row "
                                         ng-repeat="letter in Data.relatedLetterList track by $index">
                                     <span class="">{{letter.dirType|appEnum:letterType}}</span>
-                                    <div class="col-sm-2" style="text-align:center">
+                                    <div class="saad-form__label" style="text-align:center">
                                         <div class="img-type-attachment fa fa-envelope-o bg-letter"></div>
                                         <div class="title-attachment">{{letter.letterBody.name|splitString:15}}</div>
                                     </div>
@@ -697,14 +697,22 @@
                 }
             </style>
             <table class="table table-striped  logsTable" ng-show="Data.events.length>0">
+                <colgroup>
+                    <col class="col-sm-2">
+                    <col class="col-sm-1">
+                    <col class="col-sm-5">
+                    <col class="col-sm-1">
+                    <col class="col-sm-2">
+                    <col class="col-sm-1">
+                </colgroup>
                 <thead>
                     <tr class="align-center">
                         <th>کاربر</th>
                         <th>IP</th>
                         <th>اقدام</th>
                         <th>زمان</th>
-                        <th class="col-sm-1">نام و نام خانوادگی</th>
-                        <th class="col-sm-1">لینک به فرآیند</th>
+                        <th >نام و نام خانوادگی</th>
+                        <th >لینک به فرآیند</th>
                     </tr>
                 </thead>
                 <tr ng-repeat="event in Data.events|orderBy: '-date'">
@@ -730,87 +738,92 @@
 
         <div class="" ng-show="Data.selectedTab.id == 7">
             <div ng-if="Data.letterFeatures['send']">
-                <div class="saad-form__row">
-                    <label class="col-sm-2">نحوه ارسال</label>
-                    <div class="col-sm-3">
-                        <select class="form-control" ng-model="Data.letter.type" name="receivingStyle">
-                            <!--<option value="Post">پست</option>-->
-                            <!--<option value="Fax">فکس</option>-->
-                            <!--<option value="Courier">پیک</option>-->
-                            <option value="Org">بین سازمان</option>
-                            <!--<option value="Ece">ECEP</option>-->
-                        </select>
+                <div class="saad-form">
+                    <div class="saad-form__row">
+                        <label class="saad-form__label">نحوه ارسال</label>
+                        <div class="saad-form__value">
+                            <select class="form-control" ng-model="Data.letter.type" name="receivingStyle">
+                                <!--<option value="Post">پست</option>-->
+                                <!--<option value="Fax">فکس</option>-->
+                                <!--<option value="Courier">پیک</option>-->
+                                <option value="Org">بین سازمان</option>
+                                <!--<option value="Ece">ECEP</option>-->
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="saad-form__row" ng-if="Data.letter.type == 'Courier'">
-                    <label class="col-sm-2">نام پیک</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" ng-model="Data.letter.courierName">
+                    <div class="saad-form__row" ng-if="Data.letter.type == 'Courier'">
+                        <label class="saad-form__label">نام پیک</label>
+                        <div class="saad-form__value">
+                            <input type="text" class="form-control" ng-model="Data.letter.courierName">
+                        </div>
                     </div>
-                </div>
-                <div class="saad-form__row" ng-if="Data.letter.type == 'Fax'">
-                    <!--<label class="col-sm-2">انتخاب سازمان</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" ng-model="Data.letter.organization" name="receivingStyle">
-                            <option value="Post">پست</option>
-                            <option value="Fax">فکس</option>
-                            <option value="Courier">پیک</option>
-                        </select>
-                    </div>-->
-                    <label class="col-sm-2">شماره فکس</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" ng-model="Data.letter.faxNumber">
+                    <div class="saad-form__row" ng-if="Data.letter.type == 'Fax'">
+                        <!--<label class="saad-form__label">انتخاب سازمان</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" ng-model="Data.letter.organization" name="receivingStyle">
+                                <option value="Post">پست</option>
+                                <option value="Fax">فکس</option>
+                                <option value="Courier">پیک</option>
+                            </select>
+                        </div>-->
+                        <label class="saad-form__label">شماره فکس</label>
+                        <div class="saad-form__value">
+                            <input type="text" class="form-control" ng-model="Data.letter.faxNumber">
+                        </div>
                     </div>
-                </div>
-                <div class="saad-form__row" ng-if="Data.letter.type == 'Org'">
-                    <label class="col-sm-2">انتخاب سازمان</label>
-                    <div class="col-sm-3">
-                        <select class="form-control"
-                                ng-model="Data.organization"
-                                name="organization"
-                                ng-change="Func.onOrganiztionChange(Data.organization)"
-                                ng-options="organization as organization.title for organization in Data.organizationList">
-                        </select>
+                    <div class="saad-form__row" ng-if="Data.letter.type == 'Org'">
+                        <label class="saad-form__label">انتخاب سازمان</label>
+                        <div class="saad-form__value">
+                            <select class="form-control"
+                                    ng-model="Data.organization"
+                                    name="organization"
+                                    ng-change="Func.onOrganiztionChange(Data.organization)"
+                                    ng-options="organization as organization.title for organization in Data.organizationList">
+                            </select>
+                        </div>
+                        <label class="saad-form__label">انتخاب سمت</label>
+                        <div class="saad-form__value">
+                            <ui-select ng-model="Data.letter.reciverPostionUserAssignment">
+                                <ui-select-match>
+                                    <span ng-bind="$select.selected.title"></span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in (Data.members | filter: $select.search) track by $index">
+                                    <span ng-bind="item.title"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </div>
-                    <label class="col-sm-2">انتخاب سمت</label>
-                    <div class="col-sm-3">
-                        <ui-select ng-model="Data.letter.reciverPostionUserAssignment">
-                            <ui-select-match>
-                                <span ng-bind="$select.selected.title"></span>
-                            </ui-select-match>
-                            <ui-select-choices repeat="item in (Data.members | filter: $select.search) track by $index">
-                                <span ng-bind="item.title"></span>
-                            </ui-select-choices>
-                        </ui-select>
+                    <div class="saad-form__row" ng-if="Data.letter.type == 'Post'">
+                        <label class="saad-form__label">کد مرسوله</label>
+                        <div class="saad-form__value">
+                            <input type="text" class="form-control" ng-model="Data.letter.boxNumber">
+                        </div>
+                        <label class="saad-form__label">کد پستی</label>
+                        <div class="saad-form__value">
+                            <input type="text" class="form-control" ng-model="Data.letter.postalCode">
+                        </div>
                     </div>
-                </div>
-                <div class="saad-form__row" ng-if="Data.letter.type == 'Post'">
-                    <label class="col-sm-2">کد مرسوله</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" ng-model="Data.letter.boxNumber">
+                    <div class="saad-form__row" ng-if="Data.letter.type == 'Ece'">
+                        <label class="saad-form__label"></label>
+                        <div class="col-sm-4">
+                            <button class="btn btn-primary" type="button" ng-click="Func.onLetterDownloadClick()">دریافت نامه</button>
+                        </div>
                     </div>
-                    <label class="col-sm-2">کد پستی</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" ng-model="Data.letter.postalCode">
+                    <div class="saad-form__row">
+                        <label class="saad-form__label">توضیحات</label>
+                        <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="description" rows="4"
+                                    ng-model="Data.letter.description"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="saad-form__row" ng-if="Data.letter.type == 'Ece'">
-                    <label class="col-sm-2"></label>
-                    <div class="col-sm-4">
-                        <button class="btn btn-primary" type="button" ng-click="Func.onLetterDownloadClick()">دریافت نامه</button>
-                    </div>
-                </div>
-                <div class="saad-form__row">
-                    <label class="col-sm-2">توضیحات</label>
-                    <div class="col-sm-8">
-                    <textarea type="text" class="form-control" name="description" rows="4"
-                                ng-model="Data.letter.description"></textarea>
-                    </div>
-                </div>
-                <button class="btn btn-primary pull-left"
+                    <div class="saad-form__row">
+                        <button class="btn btn-primary pull-left"
                         type="button"
                         ng-click="Func.onSaveClick()" ng-disabled="Data.isLoadingSaveClick">ثبت ارسال</button>
-            <hr>
+                    </div>
+                </div>
+                
+                <hr>
             </div>
             <div class="">
                 <h4> آرشیو ارسال </h4>

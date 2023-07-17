@@ -73,15 +73,6 @@
             <label class="col-sm-3"
                    ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
             <div class="col-sm-9">
-                <!--<multiselect model="Data.forward.deliveryTo" name="letterDeliveryTo" ng-model="Data.forward.deliveryTo" options="Data.puaList"-->
-                <!--is-edit-mode="Data.mode!='view'"></multiselect>-->
-                <!--<vt-typeahead api="Controller.typeahead"-->
-                              <!--ng-model="Data.forward.deliveryTo"-->
-                              <!--model="Data.forward.deliveryTo"-->
-                              <!--vt-array-required-->
-                              <!--name="draftDeliveryTo"-->
-                              <!--is-edit-mode="true">-->
-                <!--</vt-typeahead>-->
                 <multiselect-reciever model="Data.forward.deliveryTo" search-fn="Controller.multiselectRecieverSearch(query)"
                                       name="draftDeliveryTo" ng-model="Data.forward.deliveryTo"
                                       options="Data.puaList" is-edit-mode="true" vt-array-required>

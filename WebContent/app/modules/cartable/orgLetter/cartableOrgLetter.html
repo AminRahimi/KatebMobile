@@ -416,14 +416,22 @@
                     }
                 </style>
 				<table class="table table-striped col-sm-12 logsTable" ng-show="Data.events.length>0">
+                    <colgroup>
+                        <col class="col-sm-2">
+                        <col class="col-sm-1">
+                        <col class="col-sm-5">
+                        <col class="col-sm-1">
+                        <col class="col-sm-2">
+                        <col class="col-sm-1">
+                    </colgroup>
                     <thead>
                         <tr class="align-center">
                             <th>کاربر</th>
                             <th>IP</th>
                             <th>اقدام</th>
                             <th>زمان</th>
-                            <th class="col-sm-1">نام و نام خانوادگی</th>
-                            <th class="col-sm-1">لینک به فرآیند</th>
+                            <th>نام و نام خانوادگی</th>
+                            <th>لینک به فرآیند</th>
                         </tr>
                     </thead>
                     <tr ng-repeat="event in Data.events|orderBy: '-date'">

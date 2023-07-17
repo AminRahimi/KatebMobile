@@ -101,8 +101,9 @@
 
                     },
                     onDownloadWordClick: function () {
-                        var url = "api/letter/items/docx/" + $scope.letterUid;
-
+                        var url = "api/letter/items/docx/" + $scope.letterUid
+                            + "?delivery_cc=" + $scope.Data.deliverycc + "&"
+                            + "delivery_bcc=" + $scope.Data.deliverybcc;
                         const downloadWord= function (){
                             katebSrvc.downloadByLink(url,"hello");
                         };

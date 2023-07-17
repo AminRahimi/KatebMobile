@@ -19,7 +19,8 @@ angular.module('vtCartable').directive('cartableMenu',
                 onFilterAllLetterClick:"&",
                 onBtnsClick:"&",
                 settings: "=",
-                type: "@"
+                type: "@",
+                options:'=?'
             },
             controller: function ($scope, $state, $location, cartableSrvc,CARTABLE_CONFIG,$element,homeSrvc) {
                 $scope.settings = !_.isEmpty($scope.settings) ? $scope.settings : {taskSettings: {}};
@@ -81,7 +82,7 @@ angular.module('vtCartable').directive('cartableMenu',
                                 if (urlFilter) {
                                     updateCartableListWithFilter()
                                 }
-                                if (!urlFilter && !validUid) {
+                                if (!urlFilter && !validUid && (!$scope.options || !$scope.options.dontSelectDefaultCartable)) {
                                     updateCartableListWithoutFilter();
                                 }
                                 function updateCartableListWithFilter() {
@@ -108,7 +109,10 @@ angular.module('vtCartable').directive('cartableMenu',
                                         }
                                         $scope.Data.cartableList[int].open = true;
                                     }
-                                    $scope.Func.onFilterClick(cartable, filter);
+                                    if(cartable && filter){
+
+                                        $scope.Func.onFilterClick(cartable, filter);
+                                    }
                                 }
                             });
                         }

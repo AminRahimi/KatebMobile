@@ -92,13 +92,7 @@ angular.module('cartableModule').controller('cartableOrgLetterListCtrl', functio
                 }
                 $timeout(function () {
                     // $scope.Controller.listController.refreshList(false).then(function () {
-                    if (pageNum){
-                        $scope.Controller.listController.goToPage(pageNum).then(defer.resolve);
-                    }
-
-                    else {
-                        $scope.Controller.listController.refreshList().then(defer.resolve);
-                    }
+                        $scope.Controller.listController.goToPage(1).then(defer.resolve);
                     // });
                 }, 1);
                 // if(pageNum){
@@ -230,22 +224,44 @@ angular.module('cartableModule').controller('cartableOrgLetterListCtrl', functio
 
     $scope.Controller = {
         listController: {
-            headers: [
-                {key: 'internalNumber', label: 'شماره نامه'},
-                { key: 'subject', label: 'موضوع', hasTooltip: true, strSize: '70' },
-                { key: 'edited',type: 'edited', label: '' },
-                {key: 'initiation.sender.title', label: 'فرستنده',sortable: true},
-                {key: 'dirType', label: 'نوع نامه',sortable: true},
-                {key: 'officialDate', type: 'date', label: 'تاریخ ', format: 'jDD-jMMMM-jYYYY'},
-                {
-                    key: 'uid',
-                    type: 'link',
-                    label: '',
-                    sortable: false,
-                    display: true,
-                    action: $scope.Func.onOpenLetterInNewTabClick
-                }
-            ],
+            headers:{
+                desktop:[
+                    {key: 'internalNumber', label: 'شماره نامه'},
+                    { key: 'subject', label: 'موضوع', hasTooltip: true, strSize: '70' },
+                    { key: 'edited',type: 'edited', label: '' },
+                    {key: 'initiation.sender.title', label: 'فرستنده',sortable: true},
+                    {key: 'dirType', label: 'نوع نامه',sortable: true},
+                    {key: 'officialDate', type: 'date', label: 'تاریخ ', format: 'jDD-jMMMM-jYYYY'},
+                    {
+                        key: 'uid',
+                        type: 'link',
+                        label: '',
+                        sortable: false,
+                        display: true,
+                        action: $scope.Func.onOpenLetterInNewTabClick
+                    }
+                ],
+                mobile:[
+                    { 
+                        key: 'subject', label: 'موضوع', "label":"",
+                        styleClass:"kateb-text-2 tw-text-black " 
+                    },
+                    {
+                        key: 'initiation.sender.title', label: 'فرستنده',sortable: true,label:"فرستنده:",
+                        styleClass:"kateb-text-2 tw-text-gray",
+                        labelClass:""
+                    },
+                    {
+                        key: 'internalNumber', label: 'شماره نامه',styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    },
+                    {
+                        key: 'officialDate', type: 'date', label: 'تاریخ ', "format": "jDD jMMMM jYYYY",
+                        styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                        labelClass:"tw-text-black"
+                    }
+                ]
+            } ,
             getList : function(start, pageLen){
                 return cartableKatebSrvc.getOrgLetterList($scope.Data.orgUid, start, pageLen);
             },
@@ -338,65 +354,5 @@ angular.module('cartableModule').controller('cartableOrgLetterListCtrl', functio
     };
 
     Run();
-    // var Run = function () {
-    //     $scope.Data.wasSearched = $scope.Func.getSearchMode();
-    //     $scope.Data.currentPage = $scope.Func.getLastPage();
-        /*$scope.Controller.searchController.searchQuery = {
-            number: $state.params.letterNumber,
-            // sender: $state.params.sender,
-            subject: $state.params.subject
-        }*/
-        // $scope.Controller.listController.getList = $scope.Func.getOrgLetterList();
 
-        /*$timeout(function () {
-            if(!$scope.Func.initOrgLetterState()){
-                $scope.Controller.listController.goToPage($state.params.pagination ? $state.params.pagination : 1);
-            }
-        }, 1);*/
-        // if (!$scope.Data.wasSearched) {
-        //     $timeout(function () {
-        //         // $scope.Controller.listController.refreshList().then(function () {
-        //         $scope.Controller.listController.goToPage($scope.Data.currentPage);
-        //         // });
-        //     }, 1);
-        // if (!$scope.Data.wasSearched) {
-        //     console.log(55555);
-        //     // $timeout(function () {
-        //     //     $timeout(function () {
-        //             $timeout(function () {
-        //                 $scope.Controller.listController.refreshList().then(function () {
-        //                     $scope.Controller.listController.goToPage($scope.Data.currentPage);
-        //                 });
-        //             }, 1)
-        //         // }, 1);
-        //     // }, 1);
-        // } else {
-        // if (cartableSrvc.getRegisterFilterSearchQuery("1")) {
-        //     $scope.Controller.searchController.searchQuery = $scope.Func.getLastSearchQuery();
-        //     // $timeout(function () {
-        //     if ($scope.Controller.searchController.initSearchFieldInfo) {
-        //         $scope.Controller.searchController.initSearchFieldInfo(cartableSrvc.getRegisterFilterSearchQuery("1"), cartableSrvc.getRegisterShowFilterSearchQuery("1"), $scope.Data.searchController.searchQuery);
-        //     } else {
-        //         $scope.Controller.searchOptions.selectedFromMultiselect = cartableSrvc.getRegisterFilterSearchQuery("1");
-        //         $scope.Controller.searchOptions.showFilterSearchQuery = cartableSrvc.getRegisterShowFilterSearchQuery("1");
-        //     }
-        //     // $scope.Controller.searchController.init();
-        //     $scope.Func.onSearchClick($scope.Data.currentPage, cartableSrvc.getRegisterFilterSearchQuery("1"), cartableSrvc.getRegisterShowFilterSearchQuery("1"));
-        //     // }, 1);
-        // } else {
-        //     $scope.Controller.searchController.searchQuery = $scope.Func.getLastSearchQuery();
-        //     $timeout(function () {
-        //         $scope.Func.onSearchClick($scope.Data.currentPage);
-        //     }, 1);
-        // }
-        //
-        // }
-        // $scope.Controller.listController.callHook = function () {
-        //     $timeout(function () {
-        //         $scope.Controller.listController.currentPage = cartableKatebSrvc.getCurrentPage();
-        //     }, 1);
-        // };
-    // }
-
-    // Run();
 });

@@ -1,20 +1,30 @@
-<div class="" ng-show="true">
-    <div class="">
-        <div class="" style="overflow: auto">
-            <div class=" panel-search panel-filter"
-                 style="position: sticky;top: 0;z-index: 2;margin-bottom: 0;">
-                <div class="panel-body" style="position: sticky !important;top: 50px;z-index: 22;padding: 0 0 10px;">
-                    <cartable-search class="col-sm-12 vt-search cartable" control-fn="Controller.searchController"
+<div class="mobile-action-bar hidden-md" >
+	
+</div>
+<div class="main-content">
+
+	<div class="kateb-filter-list">
+	
+		<div class="  hidden-xs">همه نامه‌ها
+			<a tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="left"
+				tooltip-popup-delay="500" tooltip=" آرشیو همه نامه های سازمان"><img
+					src="app/assets/img/information-button.png" style="width:12px;" /></a>
+		</div>
+		<div class=" hidden-xs" >
+			<cartable-search class="col-sm-12 vt-search cartable" control-fn="Controller.searchController"
                                      options="Controller.searchOptions">
                     </cartable-search>
-                </div>
-            </div>
-            <div class="" style="margin-bottom: 0; margin-top: 30px;">
-                <div class="" style="padding-top: 0;padding-bottom: 0;">
-                    <vt-grid control-fn="Controller.listController" options="{hideTotalCount:true}"></vt-grid>
-                    <span ng-show="Controller.listController.getList == null">به منظور یافتن نامه مورد نظر جستجو نمایید.</span>
-                </div>
-            </div>
-        </div>
-    </div>
+	
+		</div>
+		<div class="kateb-filter-list__list" >
+			<vt-grid class="has-select" control-fn="Controller.listController" 
+			options="{
+				hideTotalCount:true,
+				isMobleView:true,
+				infinitScroll:true
+			}"></vt-grid>
+			<span ng-show="Controller.listController.getList == null">به منظور یافتن نامه مورد نظر جستجو نمایید.</span>
+		</div>
+	</div>
+
 </div>

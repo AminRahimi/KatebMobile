@@ -1,5 +1,5 @@
 angular.module('secretariatModule').controller('secretariatIssuedAddCtrl',
-		function($scope, $rootScope, $state, $modal, secretariatSrvc, vtShowMessageSrvc, hotkeys,$timeout, configObj) {
+		function($scope, $rootScope, $state, $modal, secretariatSrvc, vtShowMessageSrvc, hotkeys,$timeout, configObj,homeSrvc) {
 ///////////////////////////////////FIXME rahimi
 	$scope.doAoutoSizeInput=function(){
 		$timeout(function(){
@@ -49,6 +49,9 @@ angular.module('secretariatModule').controller('secretariatIssuedAddCtrl',
 	var shape;
 
 	$scope.Func = {
+		getStateName: function (stateName) {
+			return homeSrvc.getStateName(stateName);
+		},
 		getTabList: function(){
 			$scope.Data.tabList = [{
 				id: 0,
@@ -96,7 +99,7 @@ angular.module('secretariatModule').controller('secretariatIssuedAddCtrl',
 			}
 		},
 		onReturnClick: function(){
-			$state.go('base.home.secretariat.issuedList',{secUid:$scope.Data.secUid});
+			$state.go($scope.Func.getStateName('base.home.secretariat.issuedList'),{secUid:$scope.Data.secUid});
 		},
 
 		onSenderRefresh: function(query){

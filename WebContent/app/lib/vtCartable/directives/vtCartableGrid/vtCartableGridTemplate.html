@@ -4,10 +4,10 @@
 	}
 </style>
 
-<script type="text/ng-template" id="vt-grid-field-templates.html">
-<span ng-switch on="field.type" class="cartable-grid__td-cnt">
+<script type="text/ng-template" id="vt-cartable-grid-field-templates.html">
+<span ng-switch on="field.type" class="">
 <!--	FIXME: label for-->
-	<label class="cartable-grid__td-label" ng-class="field.labelClass" ng-show="field.label">{{field.label}} </label>
+	<label class="" ng-class="field.labelClass" ng-show="field.label">{{field.label}} </label>
 	<span ng-switch-when="string" ng-if="field.hasTooltip" ng-hide="field.isHide()" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-popup-delay="500" tooltip="{{item[field.key]}}">{{item[field.key]|EnToFaNumber|splitString:40}}</span>
 	<span ng-switch-when="string" ng-if="!field.hasTooltip" ng-hide="field.isHide()">{{item[field.key]|EnToFaNumber|splitString:40}}</span>
 	<span ng-switch-when="checkbox"><input type="checkbox" ng-model="Data.checked[item.uid]" ng-change="Func.changeSelectedItems(item)" ></span>
@@ -94,10 +94,10 @@
 
 </script>
 
-<div class="cartable-grid" >
+<div class="saad-grid" >
 	<p class="help-block" ng-show="(Controller.pagination.totalItems!=-1 && controlFn.listItems.length==0) || (controlFn.listItems.length==0 && Controller.customPagination.choices)">موردی یافت نشد.</p>
-	<table class="cartable-grid__table table " ng-show="controlFn.listItems.length>0">
-		<thead class="cartable-grid__table-thead hidden-xs" style="">
+	<table class="saad-grid__table table " ng-show="controlFn.listItems.length>0">
+		<thead class=" hidden-xs" style="">
 			<tr>
 			<th ng-if="options.isMobileView && Data.visibleFields[0].type==='checkbox3'">
 
@@ -133,7 +133,7 @@
 			</th>
 		</tr>
 		</thead> 
-		<tbody class="cartable-grid__table-body">
+		<tbody class="">
 			<tr ng-repeat="item in controlFn.listItems track by $index" ng-class="{'selected':item.isSelected,'read-letter':!item.read}" style="cursor: pointer; cursor: hand; color: #666666">
 			<td ng-if="options.isMobileView && Data.visibleFields[0].type==='checkbox3'">
 				<span>
@@ -144,11 +144,11 @@
 			</td>
 			<td ng-if="options.isMobileView"   >
 				<div ng-repeat="field in Data.visibleFields track by $index" ng-class="field.styleClass"  ng-show="field.display && field.type!=='checkbox3'" ng-click="Func.onListItemClick(item, field, $parent.$index)" >
-					<span ng-include="'vt-grid-field-templates.html'"></span>
+					<span ng-include="'vt-cartable-grid-field-templates.html'"></span>
 				</div>
 			</td>
 			<td ng-if="!options.isMobileView" ng-repeat="field in Data.visibleFields track by $index"  ng-show="field.display" ng-click="Func.onListItemClick(item, field, $parent.$index)" class="">
-				<span ng-include="'vt-grid-field-templates.html'"></span>
+				<span ng-include="'vt-cartable-grid-field-templates.html'"></span>
 			</td>
 			<td style="width: 1px ! important;" class="hidden-xs"></td>
 		</tr>

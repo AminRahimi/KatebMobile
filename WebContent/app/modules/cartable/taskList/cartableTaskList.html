@@ -36,7 +36,7 @@
 <script type="text/ng-template" id="archive-action-button">
     <span>
         <!-- web view -->
-        <description-dropdown style="vertical-align: super;"
+        <internal-archive-action-btn style="vertical-align: super;"
                               uid-list="Data.checkedItemEntityUIdLis"
                               ng-show="Data.checkedItemEntityUIdLis.length>0"
                               cb="Func.onArchiveCb">
@@ -191,7 +191,8 @@
     <!-- FIXME: refactor  route-state-name (it's not needed that directive be aware about state) -->
     <cartable-list directive-is-ready="Func.listDirectiveIsReady()"
                    process-task-fn="Func.onProcessTaskClick(task, cartable)"
-                   api="Controller.api" options="Controller.options" 
+                   api="Controller.api" 
+                   options="Controller.options" 
                    subscribe-for="selectedCartableFilterChanged"
                    >
     </cartable-list>

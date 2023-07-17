@@ -11,28 +11,27 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
                  onSelectFn: "&",
                  onRemoveFn: "&",
                  hasDescription: "=",
-		initOptions:"=",
-		notShowModel: "=",
+                initOptions:"=",
+                notShowModel: "=",
              },
              templateUrl: 'app/assets/js/directives/multiselectReciever/multiselectRecieverTemplate.html?v=2',
              controller: function($scope, multiselectRecieverSrvc) {
-                 $scope.model = [];
+                 $scope.model = $scope.model ||  [];
                  $scope.options = $scope.initOptions || [];
-                 $scope.selectedFromModel = null;
 
 
             	 var isDuplicateModel = function(model){
-            		 for ( var int = 0; int < $scope.model.length; int++) {
-        						if($scope.model[int].uid == model.uid)
-        							return true;
-        					}
-            		return false;
+                    if(!$scope.model|| $scope.model.length===0){
+                        return false
+                    }
+
+                    let foundIndex = $scope.model.findIndex((item)=>angular.isObject(item)?item.uid===model.uid:item===model);
+                    return foundIndex>0;
+            		
             	 };
 
 
-                 $scope.onModelItemSelect = function (modelItem){
-                     $scope.selectedFromModel = modelItem;
-                 };
+                
 
                  $scope.onRefresh = function (query) {
                      if(!$scope.searchFn){return false;}
@@ -81,7 +80,7 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
 
             	 $scope.onRemove = function(item){
             		// $scope.model.splice(index, 1);
-                    $scope.model = $scope.model.filter((modelItem)=>item.uid===modelItem.uid);
+                    $scope.model = $scope.model.filter((modelItem)=>item.uid!==modelItem.uid);
                     if($scope.onRemoveFn){
                         $scope.onRemoveFn({item: item});
                     }

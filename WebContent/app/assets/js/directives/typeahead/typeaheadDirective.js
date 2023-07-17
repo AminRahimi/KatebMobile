@@ -1,18 +1,6 @@
 angular.module('vtTypeahead', []);
 
 angular.module('vtTypeahead').directive('vtTypeahead', [
-        /**
-         * @memberOf multiselect
-         * @ngdoc directive
-         * @description multiple selection of a list with client search 
-         * @name multiselect
-         * @attr {array} model
-         * @attr {array} options
-         * @attr {boolean} is-edit-mode
-         * @attr {object} api methods: onSelect, onRemove
-         * @example
-         *  <multiselect model=[] options=[] is-edit-mode="" api=""></multiselect>
-         */
         function() {
         return {
              scope: {
