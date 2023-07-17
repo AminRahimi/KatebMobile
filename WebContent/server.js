@@ -7,16 +7,16 @@ var config = require('./nodeConfig.js'),
     url = require('url'),
     request = require('request');
 
-function getProjectDirectoryName(projectKey) {
-    return config.target[projectKey].clientDirectory;
+function getProjectDirectoryName() {
+    return config.target.clientDirectory;
 }
 
-function getProjectStaticFileDirectoryName(projectKey) {
-    return config.target[projectKey].staticFileDirectory || '';
+function getProjectStaticFileDirectoryName() {
+    return config.target.staticFileDirectory || '';
 }
 
 function getServerRequestUrl(projectKey, requestedUrl) {
-    return config.target[projectKey].server + requestedUrl.replace('/' + projectKey, '');
+    return config.target.server + requestedUrl.replace('/' + projectKey, '');
 }
 
 function pathOfCacheFile(req, projectDirectoryName) {
@@ -34,7 +34,7 @@ function readFromServer(projectName, req, res) {
     proxiedReq.on('response', function (response) {
         console.log('response ' + serverRequestUrl + ': ' + response.statusCode);
         if (response.statusCode === 200 && config.cacheFiles) {
-            var cachedFile = fs.createWriteStream(pathOfCacheFile(req, getProjectDirectoryName(projectName)));
+            var cachedFile = fs.createWriteStream(pathOfCacheFile(req, getProjectDirectoryName()));
             proxiedReq.pipe(cachedFile);
         }
     }).on('error', function (error) {
@@ -88,18 +88,18 @@ function requestListener(req, res) {
     }
 
     var strippedUrl = req.url.substring(indexOfSecondSlash);
-    var projectName = url.parse(req.url).pathname.split('/')[1];
+    var projectName = 'Kateb'
 
-    if (!config.target[projectName]) {
+    if (!config.target) {
         res.end();
     } else {
         if (config.cacheFiles)
-            makeCacheFolder(getProjectDirectoryName(projectName));
+            makeCacheFolder(getProjectDirectoryName());
 
         if (activeProxy) {
             //////////////////////// read from server /////////////////////////////
             if (config.readFromMock) {
-                var foundCachedFileStream = fs.createReadStream(pathOfCacheFile(req, getProjectDirectoryName(projectName)));
+                var foundCachedFileStream = fs.createReadStream(pathOfCacheFile(req, getProjectDirectoryName()));
                 foundCachedFileStream.on('error', function (err) {
                     console.log('can\'t find cached file: ' + err);
                     if (!config.neverConnectToServer) {
@@ -110,7 +110,7 @@ function requestListener(req, res) {
                     } //file.read();
                 });
                 foundCachedFileStream.pipe(res);
-                console.log('read form cache= ' + pathOfCacheFile(req, getProjectDirectoryName(projectName)));
+                console.log('read form cache= ' + pathOfCacheFile(req, getProjectDirectoryName()));
             } else {
                 readFromServer(projectName, req, res);
             }
@@ -129,7 +129,7 @@ function requestListener(req, res) {
                 req.url = strippedUrl;
                 staticFiles.serve(req, res, function (err, result) {
                     if (err) { // There was an error serving the file
-                        console.log('Error serving ' + req.url + ' - ' + err.message + ' - ' + getProjectDirectoryName(projectName) + ' - ' + projectName);
+                        console.log('Error serving ' + req.url + ' - ' + err.message + ' - ' + getProjectDirectoryName() + ' - ' + projectName);
                         // Respond to the client
                         res.writeHead(err.status, err.headers);
                         res.end();
