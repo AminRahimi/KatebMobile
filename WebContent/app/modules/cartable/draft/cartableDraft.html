@@ -594,13 +594,13 @@
 
 
 
-                            <div class="saad-form__row tw-w-full " ng-hide="Data.mode=='view' && !Data.draft.letterLayout.title">
+                            <div class="saad-form__row " ng-hide="Data.mode=='view' && !Data.draft.letterLayout.title">
                                 <label class="  saad-form__label" 
                                     ng-class="{'required':Data.mode!='view'}">سربرگ
                                 </label>
 
                                 <div ng-show="Data.mode=='view' && Data.draft.letterLayout.title" class=" saad-form__value" >{{Data.draft.letterLayout.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value tw-w-full dropdown-selector"
+                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector"
                                 ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
 
                                     <ui-select on-select="Func.onSelectLetterLayout(Data.letterLayout)"
@@ -730,10 +730,10 @@
                         <div class="saad-form tw-w-full">
 
 
-                            <div class="saad-form__row tw-w-full">
+                            <div class="saad-form__row">
                                 <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">امضا کننده</label>
                                 <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value tw-w-full dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
+                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
 
                                     <ui-select ng-model="Data.draft.sender" required name="draftSender"
                                                 on-select="Func.onSelectSender($item, $model);" >
@@ -750,10 +750,10 @@
                             
 
 
-                            <div class="saad-form__row tw-w-full">
+                            <div class="saad-form__row">
                                 <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">اقدام کننده</label>
                                 <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value tw-w-full dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
+                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
 
                                     <ui-select  ng-model="Data.draft.actor" required name="draftActor" >
                                         <ui-select-match>
@@ -769,9 +769,9 @@
 
   
 
-                            <div class="saad-form__row tw-w-full">
+                            <div class="saad-form__row">
                                 <label class="  saad-form__label">پاراف کنندگان</label>
-                                <div class=" saad-form__value tw-w-full">
+                                <div class=" saad-form__value">
 
     <!--                                            FIXME:change this directive to general type-->
                                     <multiselect-reciever model="Data.draft.paraphers" init-options="Data.senderList"

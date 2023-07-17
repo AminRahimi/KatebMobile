@@ -147,13 +147,13 @@
     }
 
     .saad-form__row{
-        @apply   tw-flex tw-gap-colGap;
+        @apply   tw-flex tw-w-full tw-gap-colGap;
     }
     .saad-form__label{
         @apply tw-text-gray tw-flex-shrink-0 tw-relative tw-w-formLabelWidth;
     }
     .saad-form__value{
-        @apply tw-text-black;
+        @apply tw-text-black tw-w-full;
     }
 
 

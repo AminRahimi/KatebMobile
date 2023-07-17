@@ -717,6 +717,7 @@ body, html{
 
 .saad-form__row {
   display: flex;
+  width: 100%;
   gap: 0.5rem;
 }
 
@@ -729,6 +730,7 @@ body, html{
 }
 
 .saad-form__value {
+  width: 100%;
   --tw-text-opacity: 1;
   color: rgb(27 39 51 / var(--tw-text-opacity));
 }
