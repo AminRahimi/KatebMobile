@@ -1,0 +1,37 @@
+
+
+
+<single-select-dropdown ng-if="!widget || widget==='dropdown'"  
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	app-enum-key="{{appEnumKey}}"
+	title-prop-key="{{titlePropKey}}"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	>
+</single-select-dropdown>
+<single-select-bottom-sheet-opener ng-if="widget==='bottomSheetOpener'"
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	app-enum-key="{{appEnumKey}}"
+	title-prop-key="{{titlePropKey}}"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	>
+</single-select-bottom-sheet-opener>
+
+
+<single-select-list ng-if="widget==='list'"  
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	app-enum-key="{{appEnumKey}}"
+	title-prop-key="{{titlePropKey}}"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	>
+</single-select-list>  
+
+<div ng-show="!isEditMode" >{{appEnumKey?(model | appEnum:appEnumKey):titlePropKey? model[titlePropKey]: model.title? model.title: model}}</div>

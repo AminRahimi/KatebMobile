@@ -878,6 +878,14 @@ body, html{
   margin-right: 0.25rem;
 }
 
+.tw-mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.tw-mb-listRowGap {
+  margin-bottom: 1rem;
+}
+
 .tw-ml-auto {
   margin-left: auto;
 }
@@ -888,6 +896,14 @@ body, html{
 
 .tw-mr-p-margin {
   margin-right: 0.5rem;
+}
+
+.tw-mt-3 {
+  margin-top: 0.75rem;
+}
+
+.tw-mt-auto {
+  margin-top: auto;
 }
 
 .tw-flex {
@@ -902,10 +918,6 @@ body, html{
   height: var(--logged-in-user-menu-avatar-size);
 }
 
-.tw-h-\[1\.75rem\] {
-  height: 1.75rem;
-}
-
 .tw-h-\[480px\] {
   height: 480px;
 }
@@ -916,6 +928,10 @@ body, html{
 
 .tw-h-full {
   height: 100%;
+}
+
+.tw-min-h-\[1\.75rem\] {
+  min-height: 1.75rem;
 }
 
 .tw-w-16 {
@@ -964,6 +980,10 @@ body, html{
 
 .tw-items-center {
   align-items: center;
+}
+
+.tw-justify-end {
+  justify-content: flex-end;
 }
 
 .tw-gap-x-8 {

@@ -1,0 +1,5 @@
+
+<div ng-show="isEditMode">
+	<div ng-click="Func.onOpenClick()" ng-show="model" >{{appEnumKey?(model | appEnum:appEnumKey):titlePropKey? model[titlePropKey]: model.title? model.title: model}}</div>
+	<div ng-click="Func.onOpenClick()" ng-hide="model" class="action-icon" ng-include="'kateb-icon-plus.svg'"></div>
+</div>

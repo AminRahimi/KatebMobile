@@ -1,0 +1,28 @@
+<div class="md-input-main">
+	<div class="md-input-box">
+		<input 
+		ng-change="Func.onQueryChange()"
+		type="text" 
+		class="md-input" 
+		ng-model="Data.query" 
+		class="md-input"
+		placeholder=" "
+		/>
+<!--                                        <label for="fullName" class="md-label">Full Name</label>-->
+		<div class="md-input-underline" >
+		</div>
+	</div>
+</div>
+
+<ul class="tw-overflow-scroll tw-mt-3 tw-mb-3">
+	<li ng-repeat="item in (options | appEnum:appEnumKey | filter: Data.query) track by $index"
+	class="tw-mb-listRowGap"
+	 ng-click="Func.onSelect(item)">
+		<span >{{appEnumKey?(item | appEnum:appEnumKey):titlePropKey? item[titlePropKey]: item.title? item.title: item}}</span>
+	</li>
+</ul>
+
+
+<div class="tw-mt-auto">
+	{{appEnumKey?(model | appEnum:appEnumKey):titlePropKey? model[titlePropKey]: model.title? model.title: model}}
+</div>

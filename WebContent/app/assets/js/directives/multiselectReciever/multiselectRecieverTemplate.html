@@ -1,49 +1,65 @@
-<div ng-show="isEditMode">
 
-	<ui-select multiple
-			   on-remove="onRemove($item,$model)"
-			   on-select="onSelect($item, $model)"
-			   ng-model="model"  sortable="true"
-			   append-to-body="true"
-			    ng-disabled="disabled"  >
-		<ui-select-match placeholder="">
-				{{$item.title || $item}}
-		</ui-select-match>
-		<ui-select-choices refresh="onRefresh($select.search)"
-						   refresh-delay="0" minimum-input-length="2"
-						   repeat="item in (options | filter: $select.search) track by $index"
-			   >
-			<span >{{item.title}}</span>
-		</ui-select-choices>
-	</ui-select>
 
-	<div ng-show="selectedFromModel" class="tw-relative">
-		<div ng-if="hasDescription"
-			 style="
-			 	padding: 10px 0;
-			 	line-height: 20px;
-    			text-align: right;">
-			<label style="cursor: pointer" ng-click="toggleDescEditMode(true, selectedFromModel)">توضیحات:</label>
-			<p ng-show="!selectedFromModel.descEditMode" ng-click="toggleDescEditMode(true, selectedFromModel)">
-				{{selectedFromModel.description}}
-			</p>
-			<div ng-show="(selectedFromModel.descEditMode)">
-				<textarea type="text" class="form-control" ng-model="selectedFromModel.description"
-						  style="
-    				font-weight: normal;" maxlength="250">توضیحات رونوشت</textarea>
-				<i class="fa fa-check"
-				   style="
-						left: 22px;
-						position: absolute;
-						top: 56px;
-				   		color: #41a264;"
-				   tooltip="ثبت توضیحات" ng-click="saveDesc(selectedFromModel)"></i>
-			</div>
+
+<multiselect-dropdown ng-if="!widget || widget==='dropdown'"  
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	on-model-item-select="Func.onModelItemSelect($item)"
+	on-remove="Func.onRemove($item)"
+	>
+</multiselect-dropdown>
+
+<multiselect-bottom-sheet-opener ng-if="widget==='bottomSheetOpener'"
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	on-model-item-select="Func.onModelItemSelect($item)"
+	on-remove="Func.onRemove($item)"
+	>
+</multiselect-bottom-sheet-opener>
+
+
+<multiselect-list ng-if="widget==='list'"  
+	model="model" 
+	options="options"
+	is-edit-mode="isEditMode"
+	on-refresh="Func.onRefresh($query)"
+	on-select="Func.onSelect($item, $model)"
+	on-model-item-select="Func.onModelItemSelect($item)"
+	on-remove="Func.onRemove($item)"
+	>
+</multiselect-list>  
+
+<div ng-show="Data.selectedItem" class="tw-relative">
+	<div ng-if="hasDescription"
+		 style="
+			 padding: 10px 0;
+			 line-height: 20px;
+			text-align: right;">
+		<label style="cursor: pointer" ng-click="toggleDescEditMode(true, Data.selectedItem)">توضیحات:</label>
+		<p ng-show="!Data.selectedItem.descEditMode" ng-click="toggleDescEditMode(true, Data.selectedItem)">
+			{{Data.selectedItem.description}}
+		</p>
+		<div ng-show="(Data.selectedItem.descEditMode)">
+			<textarea type="text" class="form-control" ng-model="Data.selectedItem.description"
+					  style="
+				font-weight: normal;" maxlength="250">توضیحات رونوشت</textarea>
+			<i class="fa fa-check"
+			   style="
+					left: 22px;
+					position: absolute;
+					top: 56px;
+					   color: #41a264;"
+			   tooltip="ثبت توضیحات" ng-click="saveDesc(Data.selectedItem)"></i>
 		</div>
-
 	</div>
-</div>
 
+</div>
 
 
 

@@ -139,11 +139,11 @@
 
 
     .saad-forms{
-        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-rowGap;
+        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-formRowGap;
     }
 
     .saad-form{
-        @apply tw-flex tw-flex-col tw-gap-y-rowGap tw-max-w-full tw-overflow-hidden;
+        @apply tw-flex tw-flex-col tw-gap-y-formRowGap tw-max-w-full tw-overflow-hidden;
     }
 
     .saad-form__row{
@@ -160,7 +160,7 @@
     
 
     .saad-checkbox-group{
-        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-rowGap;
+        @apply tw-flex tw-flex-wrap tw-gap-x-5 tw-gap-y-formRowGap;
     }
     .saad-checkbox{
         @apply tw-inline-flex tw-gap-x-checkboxLabel

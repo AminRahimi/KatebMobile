@@ -22,7 +22,6 @@
 		'ECE': 'ECEP',
 		'KATEB': 'بین سازمانی',
 		'ORG': 'بین سازمانی'
-
 	},
 	attachmentType: {
 		'Turn': 'عطف',
@@ -36,13 +35,6 @@
 		'Blocker': 'خیلی فوری',
 		'Immediate': 'آنی',
 		'Unknown': 'نامشخص'
-	},
-	priorityUpper: {
-		'NORMAL': 'عادی',
-		'CRITICAL': 'فوری',
-		'BLOCKER': 'خیلی فوری',
-		'IMMEDIATE': 'آنی',
-		'UNKNOWN': 'نامشخص'
 	},
 	draftState: {
 		'INITIAL': 'در حال ویرایش ',
@@ -171,25 +163,40 @@
 
 
 }).filter('appEnum', function(appConst) {
-    var aggregatedConst = {};
+	const upperize = obj =>
+		Object.keys(obj).reduce((acc, k) => {
+			acc[k.toUpperCase()] = obj[k];
+			return acc;
+		}, {});
+
+	var aggregatedConst = {};
+	var appConstUpperCase = {};
 	for (val in appConst) {
-		angular.extend(aggregatedConst, appConst[val]);
+		angular.extend(aggregatedConst, upperize(appConst[val]));
+		appConstUpperCase[val] = upperize(appConst[val]);
+	}
+
+	const translate = (key,filterName)=>{
+		if(!key || !angular.isString(key) ) return key
+		let _keyUpperCase = key.toUpperCase();
+		if(filterName){
+			return (appConstUpperCase[filterName] && appConstUpperCase[filterName][_keyUpperCase])  || key
+		}else{
+			return aggregatedConst[_keyUpperCase] || key;
+		}
 	}
 
 	return function(input,filterName) {
-        if(filterName){
-			if(appConst[filterName] && appConst[filterName][input]){
-				return appConst[filterName][input];
-			}else{
-				return input;
-			}
-		}else{
-			if (aggregatedConst[input]){
-				return aggregatedConst[input];
-			}else{
-				return input;
-			}
+		if(!input || (angular.isObject(input) && !angular.isArray(input)) ) return 
+		
+
+
+		if(angular.isArray(input)){
+			return input.map(item=>translate(item,filterName))
 		}
+		
+		return translate(input,filterName);
+
 	}
 
 });

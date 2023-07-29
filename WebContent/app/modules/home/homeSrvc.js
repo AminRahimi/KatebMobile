@@ -14,6 +14,7 @@ angular.module('HomeModule').factory('homeSrvc', function(Restangular, Kateb_CON
 			isMedium: window.matchMedia( '(min-width: 992px) and (max-width: 1199px)' ).matches,
 			isLarge: window.matchMedia( '(min-width: 1200px)' ).matches,
 			isMobile:function (){
+				// FIXME:
 				return true;
 				// return false;
 				// return HomeSrvc.screenSizeDetector.isSmall || HomeSrvc.screenSizeDetector.isExtraSmall;

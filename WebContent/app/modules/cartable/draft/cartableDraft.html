@@ -600,10 +600,10 @@
                                 </label>
 
                                 <div ng-show="Data.mode=='view' && Data.draft.letterLayout.title" class=" saad-form__value" >{{Data.draft.letterLayout.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector"
+                                <div ng-show="Data.mode!='view'" class=" saad-form__value "
                                 ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
 
-                                    <ui-select append-to-body="true" on-select="Func.onSelectLetterLayout(Data.letterLayout)"
+                                    <!-- <ui-select append-to-body="true" on-select="Func.onSelectLetterLayout(Data.letterLayout)"
 
                                                 ng-model="Data.letterLayout" required name="letterLayout">
                                         <ui-select-match>
@@ -613,7 +613,28 @@
                                                 repeat="item in (Data.letterLayoutList | filter:{enabled:'true'}) track by $index">
                                             <span ng-bind="item.name"></span>
                                         </ui-select-choices>
-                                    </ui-select>
+                                    </ui-select> -->
+
+
+
+
+                                    <!-- FIXME:implement single source of truth for enabled layout list -->
+                                    <single-select
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        name="letterLayout"
+                                        required
+                                        title-prop-key="name"
+                                        options="Data.letterLayoutEnabledList"
+                                        ng-model="Data.letterLayout"
+                                        model="Data.letterLayout" 
+                                        on-select="Func.onSelectLetterLayout($item)"
+                                        is-edit-mode="Data.mode!='view'"
+                                        >
+
+                                    </single-select>
+
+                                    
+
                                 </div>
                             </div>
                             
@@ -631,6 +652,7 @@
                                             ng-change="Func.onSelectSecretariat(Data.secretariat)"
                                             ng-options="secretariat as secretariat.title for secretariat in Data.secretariatList">
                                     </select>
+                                    
                                 </div>
                             </div>
 
@@ -656,13 +678,26 @@
                                     <kateb-priority-label priority="Data.draft.priority" value="{{Data.draft.priority|appEnum}}"></kateb-priority-label>
                                 </div>
                                 <div ng-show="Data.mode!='view'" class=" saad-form__value">
-                                    <select class="form-control" ng-model="Data.draft.priority">
+                                    <!-- <select class="form-control" ng-model="Data.draft.priority">
                                         <option value="Normal">عادی</option>
                                         <option value="Critical">فوری</option>
                                         <option value="Blocker">خیلی فوری</option>
                                         <option value="Immediate">آنی</option>
                                         <option value="Unknown">نامشخص</option>
-                                    </select>
+                                    </select> -->
+
+                                    <!-- FIXME:refactor extra input(options/app-enum-key)  -->
+                                    <single-select
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        app-enum-key="priority"
+                                        options="Data.priorityList"
+                                        ng-model="Data.draft.priority" 
+                                        model="Data.draft.priority" 
+                                        is-edit-mode="Data.mode!='view'"
+                                        >
+                                    </single-select>
+
+
                                 </div>
                             </div>
 
@@ -671,17 +706,29 @@
 
                             <div class="saad-form__row">
                                 <label class="  saad-form__label">سطح محرمانگی</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value">
+                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">
                                     {{Data.draft.confidentialityLevel|appEnum:confidentialityLevel}}
-                                </div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value">
-                                    <select class="form-control" ng-model="Data.draft.confidentialityLevel">
+                                </div> -->
+                                <div class=" saad-form__value">
+                                    <!-- <select class="form-control" ng-model="Data.draft.confidentialityLevel">
                                         <option value="Unclassified">طبقه بندی نشده</option>
                                         <option value="Restricted">محرمانه</option>
                                         <option value="Confidential">فوق محرمانه</option>
                                         <option value="Secret">سری</option>
                                         <option value="Top_secret">فوق سری</option>
-                                    </select>
+                                    </select> -->
+
+                                    <single-select
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        app-enum-key="confidentialityLevel"
+                                        options="Data.confidentialityLevelList"
+                                        ng-model="Data.draft.confidentialityLevel" 
+                                        model="Data.draft.confidentialityLevel" 
+                                        is-edit-mode="Data.mode!='view'"
+                                        >
+
+                                    </single-select>
+
                                 </div>
                             </div>
 
@@ -732,13 +779,14 @@
 
                             <div class="saad-form__row">
                                 <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">امضا کننده</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
+                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div> -->
+                                <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
 
-                                    <ui-select ng-model="Data.draft.sender" 
-                                        append-to-body="true"
-                                        required name="draftSender"
-                                                on-select="Func.onSelectSender($item, $model);" >
+                                    <!-- <ui-select 
+                                            ng-model="Data.draft.sender" 
+                                            append-to-body="true"
+                                            required name="draftSender"
+                                            on-select="Func.onSelectSender($item, $model);" >
                                         <ui-select-match>
                                             <span ng-bind="$select.selected.title"></span>
                                         </ui-select-match>
@@ -746,18 +794,30 @@
                                                 repeat="item in (Data.senderList | filter: $select.search) track by $index">
                                             <span ng-bind="item.title"></span>
                                         </ui-select-choices>
-                                    </ui-select>
+                                    </ui-select> -->
+
+
+                                    <single-select
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        options="Data.senderList"
+                                        name="draftSender"
+                                        ng-model="Data.draft.sender" 
+                                        model="Data.draft.sender" 
+                                        is-edit-mode="Data.mode!='view'"
+                                        on-select="Func.onSelectSender($item, $model);">
+
+                                    </single-select>
                                 </div>
                             </div>
                             
 
 
-                            <div class="saad-form__row">
+                            <div class="saad-form__row ">
                                 <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">اقدام کننده</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value dropdown-selector" ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
+                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div> -->
+                                <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
 
-                                    <ui-select  ng-model="Data.draft.actor" 
+                                    <!-- <ui-select  ng-model="Data.draft.actor" 
                                         append-to-body="true"
                                         required name="draftActor" >
                                         <ui-select-match>
@@ -767,7 +827,22 @@
                                                 repeat="item in (Data.senderList | filter: $select.search) track by $index">
                                             <span ng-bind="item.title"></span>
                                         </ui-select-choices>
-                                    </ui-select>
+                                    </ui-select> -->
+
+
+                                    <single-select
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        options="Data.senderList"
+                                        name="draftActor"
+                                        ng-model="Data.draft.actor" 
+                                        model="Data.draft.actor" 
+                                        required
+                                        is-edit-mode="Data.mode!='view'"
+                                        >
+
+                                    </single-select>
+
+
                                 </div>
                             </div>
 
@@ -778,9 +853,11 @@
                                 <div class=" saad-form__value">
 
     <!--                                            FIXME:change this directive to general type-->
-                                    <multiselect-reciever model="Data.draft.paraphers" init-options="Data.senderList"
-                                                            ng-model="Data.draft.paraphers" name="paraphers"
-                                                            is-edit-mode="Data.mode!='view'">
+                                    <multiselect-reciever 
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        model="Data.draft.paraphers" init-options="Data.senderList"
+                                        ng-model="Data.draft.paraphers" name="paraphers"
+                                        is-edit-mode="Data.mode!='view'">
                                     </multiselect-reciever>
 
                                 </div>
@@ -790,11 +867,13 @@
                             <div class="saad-form__row">
                                 <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
                                 <div class=" saad-form__value" ng-class="{'has-error':Data.validationClicked && form.letterDeliveryTo.$invalid}">
-                                    <multiselect-reciever model="Data.draft.deliveryTo"
-                                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                                            ng-model="Data.draft.deliveryTo" name="letterDeliveryTo" vt-array-required
-                                                            on-select-fn="Func.onSelectReceiver(item, model)"
-                                                            on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                    <multiselect-reciever
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        model="Data.draft.deliveryTo"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        ng-model="Data.draft.deliveryTo" name="letterDeliveryTo" vt-array-required
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
                                     </multiselect-reciever>
                                 </div>
                             </div>
@@ -804,11 +883,14 @@
                             <div class="saad-form__row">
                                 <label class="  saad-form__label">رونوشت</label>
                                 <div class=" saad-form__value">
-                                    <multiselect-reciever has-description="true" model="Data.draft.deliveryCc"
-                                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                                            on-select-fn="Func.onSelectReceiver(item, model)"
-                                                            on-remove-fn="Func.onRemoveReceiver(item)"
-                                                            is-edit-mode="Data.mode!='view'"></multiselect-reciever>
+                                    <multiselect-reciever 
+                                        has-description="true" 
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        model="Data.draft.deliveryCc"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)"
+                                        is-edit-mode="Data.mode!='view'"></multiselect-reciever>
 
                                     <div ng-show="Data.mode!='view'" class="col-sm-6" style="padding: 10px 15px;">
                                         <a ng-init="bcc=false" ng-click="bcc = !bcc" ng-show="!bcc"
@@ -823,10 +905,13 @@
                             <div class="saad-form__row" ng-show="bcc || Data.draft.deliveryBcc.length">
                                 <label class="  saad-form__label" >رونوشت پنهان</label>
                                 <div class=" saad-form__value" >
-                                    <multiselect-reciever has-description="true" model="Data.draft.deliveryBcc"
-                                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                                            on-select-fn="Func.onSelectReceiver(item, model)"
-                                                            on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                    <multiselect-reciever 
+                                        has-description="true" 
+                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                        model="Data.draft.deliveryBcc"
+                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                        on-select-fn="Func.onSelectReceiver(item, model)"
+                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
                                     </multiselect-reciever>
                                 </div>
                             </div>

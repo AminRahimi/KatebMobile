@@ -1,4 +1,4 @@
-angular.module('cartableModule').factory('cartableKatebSrvc', function(Restangular, $rootScope) {
+angular.module('cartableModule').factory('cartableKatebSrvc', function(Restangular, $q) {
 
 	this.orgLetterStateData = undefined;
 	this.searchQuery = undefined;
@@ -22,6 +22,9 @@ angular.module('cartableModule').factory('cartableKatebSrvc', function(Restangul
 	this.archiveLetterState = {};
 	var searchArchiveMode = false;
 
+
+
+	let abortGetPuaList;
 	return {
 		saveDraft: function(data, orgUid) {
 			return Restangular.all('org/' + orgUid + '/letter_draft/items').post(data);
@@ -305,10 +308,12 @@ angular.module('cartableModule').factory('cartableKatebSrvc', function(Restangul
 		},
 
 		/* ***************************************************************************** */
-		getPuaList: function(orgUid, targerOrganization, query){
-			// return Restangular.all('/letter_deliveres').getList({showExternalPosition: true, query: query});
-			//return Restangular.all('/org/' + orgUid + '/letter_deliveres').getList({showExternalPosition: true, query: query});
-			return Restangular.all('/org/' + orgUid + '/letter_deliveres').getList({targetOrganization: targerOrganization, showExternalPosition: true, query: query , len:20});
+		getPuaList: function(orgUid, targerOrganization, query,dontAbortPrevRequest){
+			if (!dontAbortPrevRequest && abortGetPuaList) abortGetPuaList.resolve();
+			abortGetPuaList = $q.defer();
+			return Restangular.all('/org/' + orgUid + '/letter_deliveres')
+				.withHttpConfig({timeout: abortGetPuaList.promise})
+				.getList({targetOrganization: targerOrganization, showExternalPosition: true, query: query , len:20});
 		},
 		getPuaListSEPFalse: function(query){
 			return Restangular.all('/org/current/letter_deliveres').getList({showExternalPosition: false, showOrgPosition: true, query: query, len:20});

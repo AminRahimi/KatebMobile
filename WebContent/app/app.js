@@ -3,6 +3,9 @@ var kateb = kateb || {};
 kateb.externalDependencies = [ 'ui.bootstrap', 'ui.router' ,'angularjs-dropdown-multiselect','restangular',
  								'ui.select', 'ngSanitize', 'cfp.hotkeys','ui.bootstrap.persian.interval.datepicker',
 								'ngFileUpload','as.sortable', 'ngclipboard'];
+
+
+
 kateb.internalDependency = [ 'vtCommon', 'appFilter', 'treeModule', 'vtMedia',  'indeterminateCheckbox', 'vtCartable' ,'cartableSearch','dateInterval',
 							'letterTabModule', 'sharedServices', 'multiselectReciever',
 							'scannerModule' , 'vtArrayRequired', 'isolateForm', 'tagInputModule', 'letterFormTypeDirectiveModule',
@@ -10,7 +13,10 @@ kateb.internalDependency = [ 'vtCommon', 'appFilter', 'treeModule', 'vtMedia',  
 							'vtTypeahead', 'katebPrint', 'vtNotification','optionSelectWebservice',
 							'vtDropdownTaginputDirective', 'vtDateInterval', 'vtCartableDateInterval', 'scan', 'scannerCMModule',
 							'letterTabCMModule', 'vtDropdownMultiStringModule', 'deleteButton', 'deleteModule', 'deleteFromArchive', 'viraTree', 'viraTreePagination', 'docList', 'vtFolderSelector',
-							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser','mMainMenu','headerMenu','loggedInUserMenu','katebPriorityLabel','katebAttachView'];
+							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser','mMainMenu','headerMenu','loggedInUserMenu','katebPriorityLabel','katebAttachView','bottomSheet','singleSelect'];
+
+
+
 kateb.modulesDependency = [ 'katebConfigModule', 'HomeModule', 'ManagementModule', 'SettingModule', 'katebModule', 'schemaForm',
                             'secretariatModule', 'cartableModule', 'logModule', 'messageModule',
 							'vtAttachment', 'reportModule','accessAllLettersModule', 'processModule', 'incomingLettertemplateModule', 'globallettertemplateModule',
