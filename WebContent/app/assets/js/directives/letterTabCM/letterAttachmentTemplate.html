@@ -53,12 +53,28 @@
      <div class="row rowForm" ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
           <label class="col-sm-2" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
           <div ng-show="isEditMode" class="col-sm-4">
-               <select class="form-control" ng-model="Data.attachmentType" name="attachmentType" required>
+               <!-- <select class="form-control" ng-model="Data.attachmentType" name="attachmentType" required>
                     <option value="Turn">عطف</option>
                     <option value="Follow">پیرو</option>
                     <option value="Appendix">پیوست</option>
                     <option value="Relation">ارتباط</option>
-               </select>
+               </select> -->
+
+
+               <single-select
+                    widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                    name="attachmentType"
+                    required
+                    app-enum-key="attachmentType"
+                    ng-model="Data.attachmentType"
+                    model="Data.attachmentType"
+                    is-edit-mode="Data.mode!='view'"
+                    >
+
+               </single-select>
+
+
+               
           </div>
      </div>
      <div class="row rowForm" ng-if="Data.type=='FILE'" ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">

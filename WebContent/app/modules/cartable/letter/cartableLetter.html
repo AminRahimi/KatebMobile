@@ -15,106 +15,112 @@
         top: 50px;
     }
     .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+        content: "";
+        clear: both;
+        display: table;
     }
-    .tree-view {
-        /* width: 510px; */
-    }
+
 </style>
 
-<script type="text/ng-template" id="cartable-acction-btn-close">
-    <span ng-click="Func.onReturnClick()">
-        <!-- web view -->
-        <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button" >
+<script type="text/ng-template" id="letter-close-action-button">
+    <span ng-click="Data.actionButtonsMap['letter-close-action-button'].click()">
+        
+        <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button" >
                     <i class="flaticon-close-button"></i>
                     بستن
         </a>
-        <!-- mobile view -->
-        <a class="visible-xs">بازگشت </a>
+        
+        <div class="action-btn-widget action-btn-widget--text">بازگشت </div>
 
     </span>
 </script>
 
 
-<script type="text/ng-template" id="cartable-acction-btn-tag">
+<script type="text/ng-template" id="letter-tag-action-button">
     <span >
-        <!-- web view -->
+        
         <tag-input style="" class=""  list-change="Func.onTagInputListChanged" external-data="Data.tagInputExternalData">
         </tag-input>
-        <!-- mobile view -->
-<!--        <a class="visible-xs">بازگشت </a>-->
+        
 
     </span>
 </script>
 
-<script type="text/ng-template" id="cartable-acction-btn-archive">
+<script type="text/ng-template" id="letter-archive-action-button">
     <span >
-        <!-- web view -->
+        
         <internal-archive-action-btn uid-list="Data.archiveInputExternalData" cb="Func.onArchiveCb"> </description-dropdown>
-        <!-- mobile view -->
-        <!--        <a class="visible-xs">بازگشت </a>-->
+        
 
     </span>
 </script>
 
-<script type="text/ng-template" id="cartable-acction-btn-reply">
-    <span ng-click="Func.onReplyClick()">
-        <!-- web view -->
-        <a class="btn btn-sm btn-text btn-icon  hidden-xs" >
+<script type="text/ng-template" id="letter-reply-action-button">
+    <span ng-click="Data.actionButtonsMap['letter-reply-action-button'].click()">
+        
+        <a class="btn btn-sm btn-text btn-icon  action-btn-widget" >
                     <i class="fa fa-mail-reply"></i>
                     پاسخ
-                </a>
-        <!-- mobile view -->
-                <a class="visible-xs">پاسخ </a>
+        </a>
+        
+        <a class="action-btn-widget action-btn-widget--text">پاسخ </a>
 
     </span>
 </script>
 
 
 
-<script type="text/ng-template" id="cartable-acction-btn-user-archive">
-    <span access-checker="USER_LETTER_ARCHIVE" ng-click="Func.onAddToUserArchive()">
-        <!-- web view -->
-        <a  class="btn btn-sm btn-text btn-icon  hidden-xs" >
+<script type="text/ng-template" id="letter-user-archive-action-button">
+    <span access-checker="{{Data.actionButtonsMap['letter-user-archive-action-button'].access_checker}}"  
+        ng-click="Data.actionButtonsMap['letter-user-archive-action-button'].click()">
+        
+        <a  class="btn btn-sm btn-text btn-icon  action-btn-widget" >
                     انتقال به آرشیو شخصی
-                </a>
-        <!-- mobile view -->
-        <a class="visible-xs">انتقال به آرشیو شخصی </a>
+        </a>
+        
+        <a class="action-btn-widget action-btn-widget--text">انتقال به آرشیو شخصی </a>
 
     </span>
 </script>
 
-<script type="text/ng-template" id="cartable-acction-btn-follow">
-    <span ng-click="Func.onFollowClick()" ng-show="!Data.isFollow">
-        <!-- web view -->
-        <button class="btn btn-primary single-button  noBorder hidden-xs" style="border: 1px solid #d6d6d6 !important" type="button" >نیاز به پیگیری</button>
-        <!-- mobile view -->
-        <div class="action-icon  visible-xs" ng-include="'kateb-icon-level-up-alt.svg'"></div>
+<script type="text/ng-template" id="letter-follow-action-button">
+    <span ng-click="Data.actionButtonsMap['letter-follow-action-button'].click()" 
+        ng-show="Data.actionButtonsMap['letter-follow-action-button'].isVisible()">
+        
+        <button class="btn btn-primary single-button  noBorder action-btn-widget" style="border: 1px solid #d6d6d6 !important" type="button" >نیاز به پیگیری</button>
+        
+        <div class="action-icon  action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-level-up-alt.svg'"></div>
+        <div class="  action-btn-widget action-btn-widget--text" >نیاز به پیگیری</div>
 
     </span>
 </script>
-<script type="text/ng-template" id="cartable-acction-btn-follow">
-    <span ng-show="Data.isFollow" ng-click="Func.onUnfollowClick()">
-        <!-- web view -->
-        <button  class="btn btn-primary single-button  hidden-xs" type="button" >عدم نیاز به پیگیری</button>
-        <!-- mobile view -->
-        <a class="visible-xs">عدم نیاز به پیگیری</a>
+<script type="text/ng-template" id="letter-un-follow-action-button">
+    <span ng-show="Data.actionButtonsMap['letter-un-follow-action-button'].isVisible()" 
+        ng-click="Data.actionButtonsMap['letter-un-follow-action-button'].click()">
+        
+        <button  class="btn btn-primary single-button  action-btn-widget" type="button" >عدم نیاز به پیگیری</button>
+        
+        <a class="action-btn-widget action-btn-widget--text">عدم نیاز به پیگیری</a>
 
     </span>
 </script>
 
 <script type="text/ng-template" id="letter-prev-action-button">
-    <span ng-disabled="Data.isPrevDisabled" ng-show="Data.isNextPrevFeaturePossible" ng-click="Func.onGetPreviousLetterClick()">
-        <!-- web view -->
+    <span
+        ng-class="{'disabled':Data.actionButtonsMap['letter-prev-action-button'].isDisabled()}"
+        ng-show="Data.actionButtonsMap['letter-prev-action-button'].isVisible()" 
+        ng-click="Data.actionButtonsMap['letter-prev-action-button'].isDisabled() || Data.actionButtonsMap['letter-prev-action-button'].click()">
+        
         <button
                 type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left  noBorder hidden-xs" >
+                class="btn btn-sm btn-text btn-icon white-bg pull-left  noBorder action-btn-widget" >
                 <i class="fa fa-arrow-up"></i>                    قبلی
         </button>
-        <!-- mobile view -->
-        <div class="acction-icon visible-xs" ng-include="'kateb-icon-angle-right.svg'"></div>
+        
+        <div class="acction-icon action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-angle-right.svg'"></div>
+        <div class=" action-btn-widget action-btn-widget--text" >
+            قبلی
+        </div>
 
     </span>
 </script>
@@ -122,40 +128,46 @@
 
 
 <script type="text/ng-template" id="letter-next-action-button">
-    <span ng-disabled="Data.isNextDisabled" ng-show="Data.isNextPrevFeaturePossible" ng-click="Func.onGetNextLetterClick()">
-        <!-- web view -->
+    <span 
+        ng-show="Data.actionButtonsMap['letter-next-action-button'].isVisible()" 
+        ng-class="{'disabled':Data.actionButtonsMap['letter-next-action-button'].isDisabled()}"
+        ng-click="Data.actionButtonsMap['letter-next-action-button'].isDisabled() || Data.actionButtonsMap['letter-next-action-button'].click()">
+        
         <button
                 type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left  hidden-xs " >
+                class="btn btn-sm btn-text btn-icon white-bg pull-left  action-btn-widget " >
                     <i class="fa fa-arrow-down"></i>بعدی
         </button>
-        <!-- mobile view -->
-        <div class="acction-icon visible-xs" ng-include="'kateb-icon-angle-left.svg'"></div>
+        
+        <div class="acction-icon action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-angle-left.svg'"></div>
+        <div class=" action-btn-widget action-btn-widget--text" >
+            بعدی
+        </div>
 
     </span>
 </script>
 
-<script type="text/ng-template" id="cartable-acction-btn-user-un-archive">
-    <span access-checker="USER_LETTER_ARCHIVE">
+<script type="text/ng-template" id="letter-user-un-archive-action-button">
+    <span access-checker="{{Data.actionButtonsMap['letter-user-un-archive-action-button'].access_checker}}" >
         <un-archive  class="btn btn-sm btn-icon white-bg"
-                            exchange-function-for-delete="Func.exchangeDelete">
-                        </un-archive>
-        </span>
+                exchange-function-for-delete="Func.exchangeDelete">
+        </un-archive>
+    </span>
   </script>
-
 
 
 
 
 <div class="mobile-action-bar hidden-md">
 
-    <div ng-repeat="actionButton in  Data.actionButtons" >
-        <span ng-include="'cartable-acction-btn-'+ actionButton"></span>
-    </div>
 
-    <!-- next prev buttons-->
-    <span ng-include="'letter-prev-action-button'"></span>
-    <span ng-include="'letter-next-action-button'"></span>
+    <span class="tw-mr-auto">
+        <more-btn-bottom-sheet-opener
+            menu-item-tpls="Data.actionButtonTpls"
+            action-buttons-map="Data.actionButtonsMap"
+        ></more-btn-bottom-sheet-opener>
+    </span>
+
 
 </div>
 
@@ -163,18 +175,12 @@
 <div class="panel panel-default hidden-xs" style="overflow: visible">
     <div class="panel-body"  style="border-bottom: 1px solid #ddd;justify-content:space-between;display: flex;">
         <div class="btnActionRow ">
-            <div ng-repeat="actionButton in  Data.actionButtons" >
-                <span ng-include="'cartable-acction-btn-'+ actionButton"></span>
+            <div ng-repeat="actionButtonTpl in  Data.actionButtonTpls" >
+                <span ng-include="actionButtonTpl"></span>
             </div>
 
-
         </div>
-        <!-- next prev buttons-->
-        <div class="">
-            <span ng-include="'letter-prev-action-button'"></span>
-            <span ng-include="'letter-next-action-button'"></span>
-
-        </div>
+        
     </div>
 </div>
 <div class="letter-draft-view">
@@ -289,8 +295,8 @@
                 <div class="saad-form__row" ng-if="Data.letter.tags">
                     <label class="saad-form__label">برچسب ها</label>
                     <div class="saad-form__value">
-                        <span class=" chips  chips-default " ng-repeat="tag in Data.letter.tags track by $index">
-                            <span class="chips__close " ng-click="Func.onRemoveTagClick($index, tag);">×</span>
+                        <span class=" chip  chip-default " ng-repeat="tag in Data.letter.tags track by $index">
+                            <span class="chip__close " ng-click="Func.onRemoveTagClick($index, tag);">×</span>
                             <span class="tw-p-1" >
                                 {{tag.title}}
                             </span>

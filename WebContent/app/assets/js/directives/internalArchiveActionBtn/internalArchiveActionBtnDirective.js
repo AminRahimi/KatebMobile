@@ -58,13 +58,13 @@ angular.module('internalArchiveActionBtnModule').directive('internalArchiveActio
             onSendClick:"&",
             onTextAreaAdjust:"&"
          },
-         templateUrl: 'app/assets/js/directives/internalArchiveActionBtn/mobileView/internalArchiveActionBtnModal.html',
+         templateUrl: 'app/assets/js/directives/internalArchiveActionBtn/modalView/internalArchiveActionBtnModal.html',
          controller: function($scope, $modal) {
              
              $scope.Func = {
                  onActionBtnClick:function(){
                      var modalInstance = $modal.open({
-                        templateUrl : 'app/assets/js/directives/internalArchiveActionBtn/mobileView/internalArchiveActionBtnModal.modal.html',
+                        templateUrl : 'app/assets/js/directives/internalArchiveActionBtn/modalView/internalArchiveActionBtnModal.modal.html',
                         controller : function($scope,$modalInstance,onTextAreaAdjust){
 
 
@@ -115,7 +115,7 @@ angular.module('internalArchiveActionBtnModule').directive('internalArchiveActio
                     onSendClick:"&",
                     onTextAreaAdjust:"&"
                 },
-                templateUrl: 'app/assets/js/directives/internalArchiveActionBtn/desktopView/internalArchiveActionBtnDropdown.html',
+                templateUrl: 'app/assets/js/directives/internalArchiveActionBtn/dropdownView/internalArchiveActionBtnDropdown.html',
                 controller: function($scope) {
                     
                     $scope.Func = {

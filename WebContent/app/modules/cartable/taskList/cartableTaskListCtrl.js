@@ -6,15 +6,112 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
         checkedItemList: [],
         checkedItemEntityUIdLis: [],
         selectedLetters: [],
-        selectedFilter:null
+        selectedFilter:null,
+        actionButtonsMap: {
+            // TODO: refactor  isVisible duplication in this file an all other places
+            "task-list-send-action-button": {
+                click: function() {
+                    return $scope.Func.openSendLetterModal()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                },
+                isDisabled: function() {
+                    return
+                },
+                access_checker: "SEND_TO_OTHER_ORG"
+            },
+            "task-list-label-action-button": {
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-archive-action-button": {
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-forward-action-button": {
+                click: function() {
+                    return $scope.Func.openForwardLetterModal()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-personal-archive-action-button": {
+                click: function() {
+                    return $scope.Func.onAddLettersToUserArchiveSuccess()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                },
+                isDisabled: function() {
+                    return
+                },
+                access_checker: "USER_LETTER_ARCHIVE"
+            },
+            "task-list-remove-from-persoanl-archive-action-button": {
+                click: function() {
+                    return $scope.Func.onRemoveLettersFromUserArchiveClick()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && $scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-follow-unfollow-action-button": {
+            
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            
+            },
+            "task-list-follow-action-button": {
+                click: function() {
+                    return $scope.Func.onFollowClick()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-unfollow-action-button": {
+                click: function() {
+                    return $scope.Func.onUnfollowClick()
+                },
+                isVisible: function() {
+                    return $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-read-action-button": {
+                click: function() {
+                    return $scope.Func.readTask()
+                },
+                isVisible: function() {
+                    return ($scope.Func.isInFilter('letter.unread') || $scope.Func.isInFilter('letter.recievedLetters')) && $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            },
+            "task-list-unread-action-button": {
+                click: function() {
+                    return $scope.Func.unreadTask()
+                },
+                isVisible: function() {
+                    return $scope.Func.isInFilter('letter.recievedLetters') && $scope.Data.checkedItemList.length > 0 && !$scope.Func.isInCartable('user-letter-archive')
+                }
+            }
+            
+        },
+        isMobileView: homeSrvc.screenSizeDetector.isMobile(),
     };
 
 
 
     $scope.Func = {
 
+        isInCartable :function (cartableName){
+            return $state.params.cartableUid && $state.params.cartableUid.indexOf(cartableName)>-1;
+        },
         isInFilter :function (filterName){
-            return $state.params.cartableUid && $state.params.cartableUid.indexOf(filterName)>-1;
+            return $state.params.filter && $state.params.filter.indexOf(filterName)>-1;
         },
         getStateName: function (stateName) {
             return homeSrvc.getStateName(stateName);
@@ -29,7 +126,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
             }
             var readAll= function (){
                 var uids = $scope.Data.checkedItemList.map((task)=>task.uid);
-                var readTaskPromiseList = uids.map((taskuid)=>cartableSrvc.readTask($scope.$parent.Data.selectedFilter.cartable.taskType,taskuid));
+                var readTaskPromiseList = uids.map((taskuid)=>cartableSrvc.readTask($state.params.cartableUid,taskuid));
                 return $q.all(readTaskPromiseList);
             };
             $scope.Func.doJobAndUpdateListAndMenu(readAll);
@@ -41,7 +138,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
             }
             var unreadAll= function (){
                 var uids = $scope.Data.checkedItemList.map((task)=>task.uid);
-                var readTaskPromiseList = uids.map((taskuid)=>cartableSrvc.unreadTask($scope.$parent.Data.selectedFilter.cartable.taskType,taskuid));
+                var readTaskPromiseList = uids.map((taskuid)=>cartableSrvc.unreadTask($state.params.cartableUid,taskuid));
                 return $q.all(readTaskPromiseList);
             };
             $scope.Func.doJobAndUpdateListAndMenu(unreadAll);
@@ -104,25 +201,25 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }
                 $scope.Func.setDraftButtonDisablity(false);
                 
-                if ($scope.Func.isInFilter('draft')) {
+                if ($scope.Func.isInCartable('draft')) {
                     $scope.Func.setDraftButtonDisablity(true);
                     $state.go($scope.Func.getStateName('base.home.cartable.draft'), {
                         draftUid: task.uid,
                         cartableUid:cartable.taskType,
-                        filter:$scope.Data.selectedFilter ?$scope.Data.selectedFilter.filter.uid :null
+                        filter:$state.params.filter
                     });
                     return
                 }
 
                 var letterUid ,cartableType,userArchiveUid;
                 
-                if ($scope.Func.isInFilter('letter')) {
+                if ($scope.Func.isInCartable('letter')) {
                     letterUid = task.itemUid;
                     cartableType = 'letter';
 
                 }
                 
-                if($scope.Func.isInFilter('user-letter-archive')){
+                if($scope.Func.isInCartable('user-letter-archive')){
                     letterUid = task.letterUid;
                     cartableType = 'user-letter-archive';
                     userArchiveUid = task.uid
@@ -134,7 +231,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     userArchiveUid:userArchiveUid,
                     cartableType:cartableType,
                     cartableUid:cartable.taskType,
-                    filter:$scope.Data.selectedFilter ? $scope.Data.selectedFilter.filter.uid : null
+                    filter:$state.params.filter
                 });
             }
 
@@ -281,12 +378,14 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                         "sortable": false,
                         "type": "tagInput",
+                        widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                         "label": "شماره",
                         "key": "number"
                     },
                     {
                         "sortable": false,
                         "type": "tagInput",
+                        widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                         "label": "موضوع",
                         "key": "subject"
                     },
@@ -299,6 +398,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                         "sortable": false,
                         "type": "enum",
+                        widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                         "label": "نوع نامه",
                         "key": "dirType",
                         "multiple": true,
@@ -317,40 +417,72 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                         "sortable": false,
                         "type": "tagInput",
+                        widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                         "label": "شماره خارجی",
                         "key": "externalNumber"
                     }],
-                headers: [
-                    {
-                        "type": "checkbox3",
-                        "label": "",
-                        "sortable": false,
-                        "display": true,
-                        "action": $scope.Func.onCheckedItemClick
-                    },
-                    {
-                        "key": "archiveDate"
-                    },
-                    {
-                        "key": "number"
-                    },
-                    {
-                        "key": "subject",
-                        "width": "30%",
-                        "hasTooltip": true
-                    },
-                    {
-                        "key": "officialDate",
-                        "label": "تاریخ رسمی",
-                        "format": "jDD jMMMM jYYYY",
-                    },
-                    {
-                        "key": "dirType"
-                    },
-                    {
-                        "key": "externalNumber"
-                    }
-                ]
+                headers:{
+                    desktop:[
+                        {
+                            "type": "checkbox3",
+                            "label": "",
+                            "sortable": false,
+                            "display": true,
+                            "action": $scope.Func.onCheckedItemClick
+                        },
+                        {
+                            "key": "archiveDate"
+                        },
+                        {
+                            "key": "number"
+                        },
+                        {
+                            "key": "subject",
+                            "width": "30%",
+                            "hasTooltip": true
+                        },
+                        {
+                            "key": "officialDate",
+                            "label": "تاریخ رسمی",
+                            "format": "jDD jMMMM jYYYY",
+                        },
+                        {
+                            "key": "dirType"
+                        },
+                        {
+                            "key": "externalNumber"
+                        }
+                    ],
+                    mobile:[
+                        {
+                            "type": "checkbox3",
+                            "label": "",
+                            "sortable": false,
+                            "display": true,
+                            "action": $scope.Func.onCheckedItemClick
+                        },
+                        {
+                            "key": "subject",
+                            "width": "30%",
+                            "hasTooltip": true,
+                            label:"",
+                            styleClass:"kateb-text-2 tw-text-black "
+                        },
+                        {
+                            "key": "number",
+                            label:"شماره:",
+                            styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
+                            labelClass:"tw-text-black"
+                        },
+                        {
+                            "key": "officialDate",
+                            "label": "تاریخ رسمی",
+                            "format": "jDD jMMMM jYYYY",
+                            styleClass:"kateb-text-2 tw-w-[10em] tw-float-left  tw-text-primary-light",
+                            labelClass:"tw-text-black"
+                        },
+                    ]
+                }
             },
             draft: {
                 searchableFieldInfo: [/*{
@@ -361,11 +493,13 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 },*/ {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "شماره",
                     "key": "number"
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "فرستنده",
                     "key": "senderTitle"
                 }, {
@@ -376,11 +510,13 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "موضوع",
                     "key": "subject"
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "متن پیش‌نویس",
                     "key": "body"
                 }],
@@ -488,12 +624,14 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "موضوع",
                     "key": "content.subject",
                     "serverType": "string"
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "شماره",
                     "key": "content.internalNumber"
                     },
@@ -519,6 +657,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "فرستنده",
                     "key": "content.senderTitle",
                 }, {
@@ -529,16 +668,19 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "ارجاع‌دهنده",
                     "key": "content.forwarderTitle"
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "شماره‌خارجی",
                     "key": "content.externalNumber"
                 }, {
                     "sortable": true,
                     "type": "enum",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "محرمانگی",
                     "key": "content.confidentialityLevel",
                     "multiple": true,
@@ -565,6 +707,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                     {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "هامش",
                     "key": "content.hamesh"
                     },
@@ -582,6 +725,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "enum",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "فوریت",
                     "key": "content.priority",
                     "multiple": true,
@@ -604,6 +748,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "enum",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "نوع نامه",
                     "key": "content.dirType",
                     "multiple": true,
@@ -620,6 +765,7 @@ angular.module('cartableModule').controller('cartableTaskListCtrl', function ($s
                 }, {
                     "sortable": true,
                     "type": "tagInput",
+                    widget: $scope.Data.isMobileView?'bottomSheetOpener':null,
                     "label": "گیرندگان",
                     "key": "content.deliveryTo"
                 }],

@@ -59,27 +59,36 @@
 
 
 <script type="text/ng-template" id="draft-return-action-button">
-    <span ng-click="Func.onReturnClick()">
-        <!-- web view -->
-       <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button"
+    <span ng-click="Data.actionButtonsMap['draft-return-action-button'].click()">
+        
+       <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"
           ><i class="flaticon-close-button"></i>بستن</a>
-        <!-- mobile view -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-times.svg'" >
+        
+        <div class="action-btn-widget action-btn-widget--icon action-icon"  ng-include="'kateb-icon-times.svg'" >
         </div>
+
+        <div class="action-btn-widget action-btn-widget--text">بستن</div>
+        
 
     </span>
 </script>
 
 
 <script type="text/ng-template" id="draft-reclaim-action-button">
-    <span ng-if="Data.draft.canReclaim"   access-checker="RECLAIM_DRAFT" ng-click="Func.OnReclaimClick()">
-        <!-- web view -->
-       <a class="btn btn-sm btn-text btn-icon  hidden-xs"  type="button" > بازپسگیری پیش نویس</a>
-        <!-- mobile view -->
+    <span 
+    ng-show="Data.actionButtonsMap['draft-reclaim-action-button'].isVisible()"
+      access-checker="{{Data.actionButtonsMap['draft-reclaim-action-button'].access_checker}}" 
+      ng-click="Data.actionButtonsMap['draft-reclaim-action-button'].click()">
+        
+       <a class="btn btn-sm btn-text btn-icon  action-btn-widget"  type="button" > بازپسگیری پیش نویس</a>
+        
 
 <!--        FIXME:correct icon-->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-pen-square.svg'" >
+        <div class="action-btn-widget action-icon" ng-include="'kateb-icon-pen-square.svg'" >
         </div>
+
+        <div class="action-btn-widget action-btn-widget--text">بازپسگیری پیش نویس</div>
+        
 
     </span>
 </script>
@@ -87,228 +96,214 @@
 
 <script type="text/ng-template" id="draft-edit-action-button">
 <!--   FIXME:check ng-disable effect on span -->
-    <span ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode=='view'"
-          ng-click="Func.onEditClick()" ng-disabled="">
-        <!-- web view -->
-        <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button"
-           ><i
-                class="flaticon-pencil-on-a-notes-paper"></i>
-                            {{'EDIT'|EnToFaButton}}
-        </a>
-        <!-- mobile view -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-pen-square.svg'" >
-        </div>
+<span ng-click="Data.actionButtonsMap['draft-edit-action-button'].click()"
+    ng-show="Data.actionButtonsMap['draft-edit-action-button'].isVisible()">
 
-    </span>
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i
+            class="flaticon-pencil-on-a-notes-paper"></i>
+        {{'EDIT'|EnToFaButton}}
+    </a>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-pen-square.svg'">
+    </div>
+
+
+    <div class="action-btn-widget action-btn-widget--text">{{'EDIT'|EnToFaButton}}</div>
+
+
+</span>
 </script>
 
 
 <script type="text/ng-template" id="draft-sign-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-click="Func.onSignatureClick()" ng-if="Data.draft.canSign"
-          ng-disabled="Func.isActionButtonDisabled()">
-        <!-- web view -->
-         <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button"
-            ><i
-                 class="flaticon-interface-2"></i>امضاء
-        </a>
-        <!-- mobile view -->
+<span ng-click="Data.actionButtonsMap['draft-sign-action-button'].isDisabled() || Data.actionButtonsMap['draft-sign-action-button'].click()"
+    ng-show="Data.actionButtonsMap['draft-sign-action-button'].isVisible()" 
+    ng-class="{'disabled':Data.actionButtonsMap['draft-sign-action-button'].isDisabled()}"
+    >
 
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-signature.svg'">
-        </div>
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i class="flaticon-interface-2"></i>امضاء
+    </a>
 
-    </span>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-signature.svg'">
+    </div>
+
+    <div class="action-btn-widget action-btn-widget--text">امضاء</div>
+
+</span>
 </script>
 
 <script type="text/ng-template" id="draft-paraph-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-if="Data.draft.canParaph" ng-click="Func.onParaphClick()"
-          ng-disabled="Func.isActionButtonDisabled()">
-        <!-- web view -->
-         <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button"
-            ><i
-                 class="flaticon-interface-2"></i>پاراف</a>
-        <!-- mobile view -->
-       <div class="visible-xs action-icon" ng-include="'kateb-icon-signature.svg'">
-        </div>
+<span ng-show="Data.actionButtonsMap['draft-paraph-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-paraph-action-button'].isDisabled() || Data.actionButtonsMap['draft-paraph-action-button'].click()" 
+    ng-class="{'disabled':Data.actionButtonsMap['draft-paraph-action-button'].isDisabled()}"
+    >
 
-    </span>
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i
+            class="flaticon-interface-2"></i>پاراف</a>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-signature.svg'">
+    </div>
+
+    <div class="action-btn-widget action-btn-widget--text">پاراف</div>
+
+</span>
 </script>
 
 
 <script type="text/ng-template" id="draft-transfer-action-button">
+
+
+
     <!--   FIXME:check ng-disable effect on span in all places! -->
-    <span ng-click="Func.onTransferClick()"
-          ng-if="(Data.draft.canMove || Data.draft.canMove==undefined)"
-          ng-disabled="Func.isActionButtonDisabled()">
-        <!-- web view -->
-         <a class="btn btn-sm btn-text btn-icon  hidden-xs" type="button"
-            ><i class="flaticon-arrow"></i>انتقال
-                        </a>
-        <!-- mobile view -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-paper-plane.svg'">
-        </div>
+<span ng-click="Data.actionButtonsMap['draft-transfer-action-button'].isDisabled() || Data.actionButtonsMap['draft-transfer-action-button'].click()"
+    ng-show="Data.actionButtonsMap['draft-transfer-action-button'].isVisible()"
+    ng-class="{'disabled':Data.actionButtonsMap['draft-transfer-action-button'].isDisabled()}" 
+    >
 
-    </span>
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i class="flaticon-arrow"></i>انتقال
+    </a>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-paper-plane.svg'">
+    </div>
+
+
+    <div class="action-btn-widget action-btn-widget--text">انتقال</div>
+
+
+</span>
+</script>
+
+
+<script type="text/ng-template" id="draft-save-action-button">
+    <!--   FIXME:check ng-disable effect on span in all places! -->
+<span ng-class="{'disabled':Data.actionButtonsMap['draft-save-action-button'].isDisabled()}"
+    ng-show="Data.actionButtonsMap['draft-save-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-save-action-button'].isDisabled() || Data.actionButtonsMap['draft-save-action-button'].click()">
+
+    <button type="button" class="btn btn-sm btn-text btn-icon white-bg action-btn-widget ">
+        <i class="flaticon-technology"></i> ‌ذخیره
+    </button>
+
+    <div class="action-btn-widget action-icon " ng-include="'kateb-icon-save'">
+    </div>
+
+
+    <div class="action-btn-widget action-btn-widget--text">‌ذخیره</div>
+
+
+</span>
 </script>
 
 
 
-<script type="text/ng-template" id="draft-save-template-action-button">
-    <span>
-        <!-- web view -->
-        <!-- save template and draft btn -->
-        <div id="draftTemplateId" class="btn-group" dropdown ng-show="Data.mode=='add'">
-                            <button ng-click="Func.onSaveClick()" type="button"
-                                    class="btn btn-sm btn-text btn-icon white-bg "
-                                    ng-disabled="Func.isActionButtonDisabled('SAVE')">
-                                <i class="flaticon-technology"></i> ‌ذخیره
-                            </button>
-                            <button type="button" ng-if="Data.newOrganizationUid === 'CURRENT'"
-                                    class="btn btn btn-sm dropdown-toggle white-bg " dropdown-toggle>
-                                <div>ذخیره قالب نامه<div class="caret" style="margin-right: 5px;"></div>
-                                </div>
-                                <span class="sr-only">Split button!</span>
-                            </button>
-                            <ul class="dropdown-menu template-drop-down" ng-if="Data.newOrganizationUid === 'CURRENT'"
-                                role="menu">
-                                <li>
-                                    <div class="input-group" style="position: relative;">
-                                        <input type="text" class="form-control" placeholder="نام قالب ..."
-                                               ng-model="Data.userDefinedTemplateName">
-                                        <!-- <vt-photo ng-model="Data.selecteduser.signature" ratio="1" style="position: absolute; left: 42px;"
-                                                is-edit-mode="Data.mode!='view'" no-title-description="true">
-                                        </vt-photo> -->
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="form-control template-icon">
-                                        آیکون قالب
-                                        <div>
-                                            <vt-photo ng-model="Data.userDefinedTemplateThumnail" ratio="1"
-                                                      style="position: absolute; left: 42px; top: 60px;"
-                                                      is-edit-mode="Data.mode!='view'" no-title-description="true"
-                                                      template-mode="true">
-                                            </vt-photo>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <button style="margin-top: 10px;"
-                                            class="btn btn-xs btn-primary col-sm-12  letterTemplate"
-                                            ng-click="Func.savePrivateLetterTemplate('edit');"
-                                            access-checker="API_EDIT_PRIVATE_LETTER_TEMPLATE">ذخیره قالب
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="btn btn-xs btn-primary col-sm-12  letterTemplate"
-                                            ng-disabled="!Data.userDefinedTemplateName"
-                                            ng-click="Func.savePrivateLetterTemplate('add');"
-                                            access-checker="API_ADD_PRIVATE_LETTER_TEMPLATE">ذخیره قالب جدید
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="btn btn-xs btn-primary col-sm-12  letterTemplate"
-                                            ng-disabled="!Data.userDefinedTemplateName"
-                                            ng-click="Func.savePublicLetterTemplate();"
-                                            access-checker="API_EDIT_PUBLIC_LETTER_TEMPLATE">ذخیره قالب عمومی
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-        <!-- end of save template and draft btn -->
-        <!-- mobile view -->
-<!--        <a class="visible-xs">انتقال</a>-->
-
-    </span>
-</script>
 
 
 <script type="text/ng-template" id="draft-update-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-show="Data.mode!='add'" ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode!='view'"
-          ng-click="Func.onUpdateClick()"
-          ng-disabled="Func.isActionButtonDisabled('SAVE')">
-        <!-- web view -->
-         <a  class="btn btn-sm btn-text btn-icon  hidden-xs" type="button" ><i class="flaticon-technology"></i>
-                            {{'UPDATE'|EnToFaButton}}
-                        </a>
-        <!-- mobile view -->
-       <div class="visible-xs action-icon" ng-include="'kateb-icon-save'">
-        </div>
+<span ng-show="Data.actionButtonsMap['draft-update-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-update-action-button'].isDisabled() || Data.actionButtonsMap['draft-update-action-button'].click()"
+    ng-class="{'disabled':Data.actionButtonsMap['draft-update-action-button'].isDisabled()}"
+    >
+
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i class="flaticon-technology"></i>
+        {{'UPDATE'|EnToFaButton}}
+    </a>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-save'">
+    </div>
 
 
-    </span>
+    <div class="action-btn-widget action-btn-widget--text">{{'UPDATE'|EnToFaButton}}</div>
+
+
+
+</span>
 </script>
 
 
 <script type="text/ng-template" id="draft-reset-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-show="'a'=='b'"
-          ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined) && Data.mode!='view'" ng-click="Func.onResetClick()">
-        <!-- web view -->
-         <a class="btn btn-sm btn-text btn-icon  hidden-xs"
-            type="button" ><i class="fa fa-refresh"></i>ریست
-                        </a>
-        <!-- mobile view -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-times.svg'">
-        </div>
+<!-- FIXME: 'a'=='b' what?! -->
+<span ng-show="Data.actionButtonsMap['draft-reset-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-reset-action-button'].click()">
+
+    <a class="btn btn-sm btn-text btn-icon  action-btn-widget" type="button"><i class="fa fa-refresh"></i>ریست
+    </a>
+
+    <div class="action-btn-widget action-icon" ng-include="'kateb-icon-times.svg'">
+    </div>
+
+
+    <div class="action-btn-widget action-btn-widget--text">ریست</div>
 
 
 
 
-    </span>
+
+</span>
 </script>
 
 
 <script type="text/ng-template" id="draft-delete-action-button">
-    <span ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined)&& Data.draft.uid && !Data.duplicateUid">
-        <!-- web view -->
-        <delete-button
-         exchange-function-for-delete="Func.exchangeDelete">
+    <!-- FIXME:check ng-show for this -->
+<span ng-show="Data.actionButtonsMap['draft-delete-action-button'].isVisible()">
 
-        </delete-button>
+    <delete-button exchange-function-for-delete="Func.exchangeDelete">
 
-        <!-- mobile view -->
-<!--        <a class="visible-xs">ریست</a>-->
+    </delete-button>
 
-    </span>
+
+
+</span>
 </script>
 
 
 
 <script type="text/ng-template" id="draft-prev-action-button">
-    <span ng-click="Func.onGetPreviousLetterClick()" ng-show="Data.isNextPrevFeaturePossible && Data.mode==='view'" ng-disabled="Data.isPrevDisabled">
-        <!-- web view -->
+    <span ng-click="Data.actionButtonsMap['draft-prev-action-button'].isDisabled() || Data.actionButtonsMap['draft-prev-action-button'].click()"
+     ng-show="Data.actionButtonsMap['draft-prev-action-button'].isVisible()" 
+     ng-class="{'disabled':Data.actionButtonsMap['draft-prev-action-button'].isDisabled()}"
+     >
+        
         <button  type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left hidden-xs">
+                class="btn btn-sm btn-text btn-icon white-bg pull-left action-btn-widget">
                             <i class="fa fa-arrow-up"></i> قبلی
         </button>
 
-        <!-- mobile view -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-angle-right.svg'">
+        
+        <div class="action-btn-widget action-icon" ng-include="'kateb-icon-angle-right.svg'">
         </div>
+
+        <div class="action-btn-widget action-btn-widget--text">قبلی</div>
+
 
     </span>
 </script>
 
 
+
+
 <script type="text/ng-template" id="draft-next-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-click="Func.onGetNextLetterClick()" ng-show="Data.isNextPrevFeaturePossible && Data.mode==='view'"
-    ng-disabled="Data.isNextDisabled">
-        <!-- web view -->
-        <button  type="button"
-                class="btn btn-sm btn-text btn-icon white-bg pull-left hidden-xs" >
-                            <i class="fa fa-arrow-down"></i>بعدی
-        </button>
+<span ng-click="Data.actionButtonsMap['draft-next-action-button'].isDisabled() || Data.actionButtonsMap['draft-next-action-button'].click()"
+    ng-show="Data.actionButtonsMap['draft-next-action-button'].isVisible()"
+    ng-class="{'disabled':Data.actionButtonsMap['draft-next-action-button'].isDisabled()}"
+    >
 
-        <!-- mobile view -->
-<!--        FIXME:use tailwind for visible-xs if necessarily in all places  -->
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-angle-left.svg'">
-        </div>
+    <button type="button" class="btn btn-sm btn-text btn-icon white-bg pull-left action-btn-widget">
+        <i class="fa fa-arrow-down"></i>بعدی
+    </button>
 
-    </span>
+    <div class="action-icon action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-angle-left.svg'">
+    </div>
+
+    <div class="action-btn-widget action-btn-widget--text">بعدی</div>
+
+</span>
+
 </script>
 
 
@@ -316,33 +311,112 @@
 
 <script type="text/ng-template" id="draft-sign-and-send-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-if="Data.draft.canSign" ng-show="Data.mode=='signature'"
-    ng-click="Func.onSendClick()" ng-disabled="Data.disableSendBtn">
-        <!-- web view -->
-        
-        <button class="btn btn-sm btn-text btn-icon " type="button" >
-            <i  class="flaticon-interface-2"></i>امضا و ارسال نامه
-        </button>
+<span ng-show="Data.actionButtonsMap['draft-sign-and-send-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-sign-and-send-action-button'].isDisabled() || Data.actionButtonsMap['draft-sign-and-send-action-button'].click()" 
+    ng-class="{'disabled':Data.actionButtonsMap['draft-sign-and-send-action-button'].isDisabled()}"
+    >
 
-        <!-- mobile view -->
 
-    </span>
+    <button class="btn btn-sm btn-text btn-icon action-btn-widget " type="button">
+        <i class="flaticon-interface-2"></i>امضا و ارسال نامه
+    </button>
+
+    <div class="action-icon action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-paper-plane.svg'">
+    </div>
+
+    <div class="action-btn-widget action-btn-widget--text">امضا و ارسال نامه</div>
+
+</span>
 </script>
 
 <script type="text/ng-template" id="draft-paraph-and-send-action-button">
     <!--   FIXME:check ng-disable effect on span -->
-    <span ng-if="Data.draft.canParaph" ng-show="Data.mode=='paraph'"
-    ng-click="Func.onSendParaphClick()" ng-disabled="Data.disableSendBtn || controller.vtPDF.maxCharError">
-        <!-- web view -->
-        <button class="btn btn-sm btn-text btn-icon " type="button" >
-            <i    class="flaticon-interface-2"></i>پاراف و ارسال نامه
-        </button>
+<!--   FIXME: controller.vtPDF.maxCharError on <more-btn-bottom-sheet-opener> -->
+<span ng-show="Data.actionButtonsMap['draft-paraph-and-send-action-button'].isVisible()"
+    ng-click="Data.actionButtonsMap['draft-paraph-and-send-action-button'].isDisabled() || Data.actionButtonsMap['draft-paraph-and-send-action-button'].click()"
+    ng-class="{'disabled':Data.actionButtonsMap['draft-paraph-and-send-action-button'].isDisabled()}"
+    >
 
-        <!-- mobile view -->
+    <button class="btn btn-sm btn-text btn-icon action-btn-widget " type="button">
+        <i class="flaticon-interface-2"></i>پاراف و ارسال نامه
+    </button>
+
+    <div class="action-icon action-btn-widget action-btn-widget--icon" ng-include="'kateb-icon-paper-plane.svg'">
+    </div>
+
+    <div class="action-btn-widget action-btn-widget--text">پاراف و ارسال نامه</div>
+
+
+</span>
+</script>
+
+
+
+<script type="text/ng-template" id="draft-save-template-action-button">
+    <span ng-show="Data.actionButtonsMap['draft-save-template-action-button'].isVisible()"
+    >
+        
+        <!-- save template and draft btn -->
+        <div id="draftTemplateId" class="btn-group" dropdown ng-show="Data.mode=='add'">
+                            
+            <button type="button" ng-if="Data.newOrganizationUid === 'CURRENT'"
+                    class="btn btn btn-sm dropdown-toggle white-bg " dropdown-toggle>
+                <div>ذخیره قالب نامه<div class="caret" style="margin-right: 5px;"></div>
+                </div>
+                <span class="sr-only">Split button!</span>
+            </button>
+            <ul class="dropdown-menu template-drop-down" ng-if="Data.newOrganizationUid === 'CURRENT'"
+                role="menu">
+                <li>
+                    <div class="input-group" style="position: relative;">
+                        <input type="text" class="form-control" placeholder="نام قالب ..."
+                                ng-model="Data.userDefinedTemplateName">
+                        <!-- <vt-photo ng-model="Data.selecteduser.signature" ratio="1" style="position: absolute; left: 42px;"
+                                is-edit-mode="Data.mode!='view'" no-title-description="true">
+                        </vt-photo> -->
+                    </div>
+                </li>
+                <li class="">
+                    <div class="form-control template-icon">
+                        آیکون قالب
+                        <div>
+                            <vt-photo ng-model="Data.userDefinedTemplateThumnail" ratio="1"
+                                        style="position: absolute; left: 42px; top: 60px;"
+                                        is-edit-mode="Data.mode!='view'" no-title-description="true"
+                                        template-mode="true">
+                            </vt-photo>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button style="margin-top: 10px;"
+                            class="btn btn-xs btn-primary col-sm-12  letterTemplate"
+                            ng-click="Func.savePrivateLetterTemplate('edit');"
+                            access-checker="API_EDIT_PRIVATE_LETTER_TEMPLATE">ذخیره قالب
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-xs btn-primary col-sm-12  letterTemplate"
+                            ng-disabled="!Data.userDefinedTemplateName"
+                            ng-click="Func.savePrivateLetterTemplate('add');"
+                            access-checker="API_ADD_PRIVATE_LETTER_TEMPLATE">ذخیره قالب جدید
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-xs btn-primary col-sm-12  letterTemplate"
+                            ng-disabled="!Data.userDefinedTemplateName"
+                            ng-click="Func.savePublicLetterTemplate();"
+                            access-checker="API_EDIT_PUBLIC_LETTER_TEMPLATE">ذخیره قالب عمومی
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <!-- end of save template and draft btn -->
+        
+<!--        <a class="action-btn-widget">انتقال</a>-->
 
     </span>
 </script>
-
 
 
 
@@ -355,62 +429,38 @@
 
 
 
-    <div class="hidden-md mobile-action-bar  ">
-        <div ng-show="Data.mode!=='view' || (Data.mode==='view' && Data.draft && Data.draft.uid)"
-            class="tw-flex tw-flex-grow tw-items-center">
-            
-            <div ng-show="Data.mode!='signature' && Data.mode!='paraph' &&  (Data.mode !=='view' || (Data.mode ==='view' && Data.letterLayout && Data.letterLayout.isFetched))" 
-            class="tw-flex tw-flex-grow tw-items-center">
-
-                <span class="tw-ml-auto" ng-include="'draft-return-action-button'"></span>
-                <span ng-include="'draft-reclaim-action-button'"></span>
-                <span ng-include="'draft-edit-action-button'"></span>
-                <span ng-include="'draft-sign-action-button'"></span>
-                <span ng-include="'draft-paraph-action-button'"></span>
-                <span ng-include="'draft-transfer-action-button'"></span>
-                <span ng-include="'draft-save-template-action-button'"></span>
-                <span ng-include="'draft-update-action-button'"></span>
-                <span ng-include="'draft-reset-action-button'"></span>
-                <span ng-include="'draft-delete-action-button'"></span>
-
-                <!-- navigation (prev,next)  -->
-                <span ng-include="'draft-prev-action-button'"></span>
-                <span ng-include="'draft-next-action-button'"></span>
-                <delete-button class="btn btn-sm btn-text btn-icon  noBorder"
-                                           
-                                            exchange-function-for-delete="Func.exchangeDelete"
-                                           ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined)&& Data.draft.uid && !Data.duplicateUid">
-                            </delete-button>
-
-            </div>
-
-            <div ng-show="Data.mode ==='view' && !(Data.letterLayout && Data.letterLayout.isFetched)">
-                <div class="col-sm-12" style="display: flex; justify-content: space-between"
-                     ng-show="Data.mode!='signature' && Data.mode!='paraph'">
-                    <div class="actions">
-                        <delete-button class="btn btn-sm btn-text btn-icon  noBorder"
-                                        exchange-function-for-delete="Func.exchangeDelete"
-                                       ng-if="(Data.draft.canEdit || Data.draft.canEdit==undefined)&& Data.draft.uid && !Data.duplicateUid">
-                        </delete-button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tw-flex tw-items-center tw-flex-grow " ng-show="Data.mode=='signature' || Data.mode=='paraph'">
-                <span class="tw-ml-auto" ng-include="'draft-return-action-button'"></span>
-                <span ng-include="'draft-sign-and-send-action-button'" ng-show="Data.mode=='signature'"></span>
-                <span ng-include="'draft-paraph-and-send-action-button'" ng-show="Data.mode=='paraph'"></span>
-            </div>
-
-
-        </div>
-        
-        
+    <div class="hidden-md mobile-action-bar  " class="tw-flex tw-flex-grow tw-items-center">
+       
 
         
 
-        <div class="visible-xs action-icon" ng-include="'kateb-icon-ellipsis-v.svg'">
-        </div>
+        
+        <span class="tw-mr-auto">
+    <!-- FIXME:check ng-show="Data.draft && Data.draft.uid" for all action buttons -->
+            <more-btn-bottom-sheet-opener
+                
+                menu-item-tpls="[
+                'draft-return-action-button',
+                'draft-reclaim-action-button',
+                'draft-edit-action-button',
+                'draft-sign-action-button',
+                'draft-paraph-action-button',
+                'draft-transfer-action-button',
+                'draft-save-action-button',
+                'draft-update-action-button',
+                'draft-reset-action-button',
+                'draft-delete-action-button',
+                'draft-prev-action-button',
+                'draft-next-action-button',
+                'draft-save-template-action-button',
+                'draft-sign-and-send-action-button',
+                'draft-paraph-and-send-action-button'
+                ]" 
+                action-buttons-map="Data.actionButtonsMap"
+            ></more-btn-bottom-sheet-opener>
+        </span>
+
+        
 
 
     </div>
@@ -422,6 +472,8 @@
                 ng-show="Data.mode!='signature' && Data.mode!='paraph'">
                 <div class="" style="display: flex;flex-wrap: wrap;">
 
+
+                    <action-button></action-button>
 
                     <span ng-include="'draft-return-action-button'"></span>
 
@@ -437,6 +489,8 @@
                     <span ng-include="'draft-transfer-action-button'"></span>
 
                     <span ng-include="'draft-save-template-action-button'"></span>
+
+                    <span ng-include="'draft-save-action-button'"></span>
 
                     <span ng-include="'draft-update-action-button'"></span>
 
@@ -502,499 +556,456 @@
             </ul>
         </nav>
         <section class="letter-draft-view__content ">
-            <form name="form" class="tw-h-full" novalidate>
+            
                 <div  ng-show="Data.selectedTab.id == 0">
-                    <div>
-                        <letter-form-type ng-model="Data.selectedLetterFormType" css-class-selector-type="col-sm-12" css-class-selector-type-label=""
-                                            css-class-selector-type-input=""
-                                            ng-if="(Data.mode==='view' && Data.draft && Data.draft.forms && Data.draft.forms.length>0) || Data.mode!=='view'"
-                                            apis="Apis" mode="Data.mode" letter="Data.draft" org-uid="Data.orgUid"></letter-form-type>
-                    </div>
-                    <div class="saad-forms">
+                    <form name="form"  novalidate>
+                        <div>
+                            <letter-form-type ng-model="Data.selectedLetterFormType" css-class-selector-type="col-sm-12" css-class-selector-type-label=""
+                                                css-class-selector-type-input=""
+                                                ng-if="(Data.mode==='view' && Data.draft && Data.draft.forms && Data.draft.forms.length>0) || Data.mode!=='view'"
+                                                apis="Apis" mode="Data.mode" letter="Data.draft" org-uid="Data.orgUid"></letter-form-type>
+                        </div>
+                        <div class="saad-forms">
 
 
 
 
-                            
-                            <!-- FIXME:use a replace directive for shared hgshow ngclass ... -->
+                                
+                                <!-- FIXME:use a replace directive for shared hgshow ngclass ... -->
 
-                        <div class="saad-form tw-w-full sm:tw-w-auto">
-                            <div class="saad-form__row" ng-show="Data.draft.number">
-                                <label class=" saad-form__label" >شماره پیش نویس</label>
-                                <div class=" saad-form__value" >{{Data.draft.number|EnToFaNumber}}</div>
-                            </div>
+                            <div class="saad-form tw-w-full sm:tw-w-auto">
+                                <div class="saad-form__row" ng-show="Data.draft.number">
+                                    <label class=" saad-form__label" >شماره پیش نویس</label>
+                                    <div class=" saad-form__value" >{{Data.draft.number|EnToFaNumber}}</div>
+                                </div>
 
-                            <div class="saad-form__row" ng-show="Data.draft.letterNumber">
-                                <label class="  saad-form__label" >شماره نامه</label>
-                                <div class=" saad-form__value" >{{Data.draft.letterNumber|EnToFaNumber}}</div>
-                            </div>
-
-
+                                <div class="saad-form__row" ng-show="Data.draft.letterNumber">
+                                    <label class="  saad-form__label" >شماره نامه</label>
+                                    <div class=" saad-form__value" >{{Data.draft.letterNumber|EnToFaNumber}}</div>
+                                </div>
 
 
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">موضوع</label>
-                                <div ng-show="Data.mode=='view'" class="saad-form__value" >{{Data.draft.subject}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value" ng-class="{'has-error':Data.validationClicked && form.subject.$invalid}">
-                                    <style>
-                                        input.auto-size-input {
-                                            min-width: 100%;
-                                            max-width: 100%;
-                                        }
 
-                                        #hidden_span {
-                                            position: absolute;
-                                            top: 0px;
-                                            left: 0px;
-                                            visibility: hidden;
-                                            width: 10px;
-                                            white-space: nowrap;
-                                            overflow: hidden;
-                                        }
-                                    </style>
-                                    
 
-                                    <div class="md-input-main">
-                                        <div class="md-input-box">
-                                            <input
-                                            type="text" class="md-input auto-size-input" name="subject"
-                                            ng-model="Data.draft.subject" required ng-init="doAoutoSizeInput()"
-                                            maxlength="250"
-                                                    class="md-input"
-                                                    placeholder=" "
-                                            />
-    <!--                                        <label for="fullName" class="md-label">Full Name</label>-->
-                                            <div class="md-input-underline" >
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">موضوع</label>
+                                    <div ng-show="Data.mode=='view'" class="saad-form__value" >{{Data.draft.subject}}</div>
+                                    <div ng-show="Data.mode!='view'" class=" saad-form__value" ng-class="{'has-error':Data.validationClicked && form.subject.$invalid}">
+                                        <style>
+                                            input.auto-size-input {
+                                                min-width: 100%;
+                                                max-width: 100%;
+                                            }
+
+                                            #hidden_span {
+                                                position: absolute;
+                                                top: 0px;
+                                                left: 0px;
+                                                visibility: hidden;
+                                                width: 10px;
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                            }
+                                        </style>
+                                        
+
+                                        <div class="md-input-main">
+                                            <div class="md-input-box">
+                                                <input
+                                                type="text" class="md-input auto-size-input" name="subject"
+                                                ng-model="Data.draft.subject" required ng-init="doAoutoSizeInput()"
+                                                maxlength="250"
+                                                        class="md-input"
+                                                        placeholder=" "
+                                                />
+        <!--                                        <label for="fullName" class="md-label">Full Name</label>-->
+                                                <div class="md-input-underline" >
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
 
 
-                                    <div id="counter"></div>
-                                    <span id="hidden_span"></span>
-                                </div>
-                            </div>
-
-
-
-                            <div class="saad-form__row" ng-show="Data.mode=='view'">
-                                <label class=" saad-form__label" >تاریخ نامه</label>
-                                <div class=" saad-form__value" >
-                                    {{Data.draft.letterOfficialDate|persianDate:'dd-MMMM-yyyy'|EnToFaNumber}}
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-                            <div class="saad-form__row " ng-hide="Data.mode=='view' && !Data.draft.letterLayout.title">
-                                <label class="  saad-form__label" 
-                                    ng-class="{'required':Data.mode!='view'}">سربرگ
-                                </label>
-
-                                <div ng-show="Data.mode=='view' && Data.draft.letterLayout.title" class=" saad-form__value" >{{Data.draft.letterLayout.title}}</div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value "
-                                ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
-
-                                    <!-- <ui-select append-to-body="true" on-select="Func.onSelectLetterLayout(Data.letterLayout)"
-
-                                                ng-model="Data.letterLayout" required name="letterLayout">
-                                        <ui-select-match>
-                                            <span ng-bind="$select.selected.name"></span>
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="item in (Data.letterLayoutList | filter:{enabled:'true'}) track by $index">
-                                            <span ng-bind="item.name"></span>
-                                        </ui-select-choices>
-                                    </ui-select> -->
-
-
-
-
-                                    <!-- FIXME:implement single source of truth for enabled layout list -->
-                                    <single-select
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        name="letterLayout"
-                                        required
-                                        title-prop-key="name"
-                                        options="Data.letterLayoutEnabledList"
-                                        ng-model="Data.letterLayout"
-                                        model="Data.letterLayout" 
-                                        on-select="Func.onSelectLetterLayout($item)"
-                                        is-edit-mode="Data.mode!='view'"
-                                        >
-
-                                    </single-select>
-
-                                    
-
-                                </div>
-                            </div>
-                            
-                            
-
-
-
-                            <div class="saad-form__row" ng-if="Data.counter">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}"   >دبیرخانه</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value" >
-                                    {{Data.draft.secretariat.title}}
-                                </div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value"  ng-class="{'has-error':Data.validationClicked && form.secretariat.$invalid}">
-                                    <select class="form-control" ng-model="Data.secretariat" name="secretariat" required
-                                            ng-change="Func.onSelectSecretariat(Data.secretariat)"
-                                            ng-options="secretariat as secretariat.title for secretariat in Data.secretariatList">
-                                    </select>
-                                    
-                                </div>
-                            </div>
-
-                            
-                            
-
-
-                            <div class="saad-form__row" ng-show="Data.mode=='view'">
-                                <label class="  saad-form__label" >وضعیت</label>
-                                <div class=" saad-form__value" >
-                                    {{Data.draft.state|appEnum:draftState}}
-                                </div>
-                            </div>
-
-
-                            
-                            
-
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label">فوریت</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value">
-                                    <kateb-priority-label priority="Data.draft.priority" value="{{Data.draft.priority|appEnum}}"></kateb-priority-label>
-                                </div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value">
-                                    <!-- <select class="form-control" ng-model="Data.draft.priority">
-                                        <option value="Normal">عادی</option>
-                                        <option value="Critical">فوری</option>
-                                        <option value="Blocker">خیلی فوری</option>
-                                        <option value="Immediate">آنی</option>
-                                        <option value="Unknown">نامشخص</option>
-                                    </select> -->
-
-                                    <!-- FIXME:refactor extra input(options/app-enum-key)  -->
-                                    <single-select
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        app-enum-key="priority"
-                                        options="Data.priorityList"
-                                        ng-model="Data.draft.priority" 
-                                        model="Data.draft.priority" 
-                                        is-edit-mode="Data.mode!='view'"
-                                        >
-                                    </single-select>
-
-
-                                </div>
-                            </div>
-
-                            
-
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label">سطح محرمانگی</label>
-                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">
-                                    {{Data.draft.confidentialityLevel|appEnum:confidentialityLevel}}
-                                </div> -->
-                                <div class=" saad-form__value">
-                                    <!-- <select class="form-control" ng-model="Data.draft.confidentialityLevel">
-                                        <option value="Unclassified">طبقه بندی نشده</option>
-                                        <option value="Restricted">محرمانه</option>
-                                        <option value="Confidential">فوق محرمانه</option>
-                                        <option value="Secret">سری</option>
-                                        <option value="Top_secret">فوق سری</option>
-                                    </select> -->
-
-                                    <single-select
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        app-enum-key="confidentialityLevel"
-                                        options="Data.confidentialityLevelList"
-                                        ng-model="Data.draft.confidentialityLevel" 
-                                        model="Data.draft.confidentialityLevel" 
-                                        is-edit-mode="Data.mode!='view'"
-                                        >
-
-                                    </single-select>
-
-                                </div>
-                            </div>
-
-                            
-                            
-
-
-                            <div class="saad-form__row" ng-show="Data.mode!='view'">
-                                <label class="  saad-form__label" >نیاز به پاسخ</label>
-                                <div class=" saad-form__value" >
-                                    <input type="checkbox" ng-model="Data.responseNeeded" class="tw-accent-primary-light">
-                                </div>
-                            </div>
-                            
-
-
-
-                            <div class="saad-form__row" ng-if="Data.responseNeeded">
-                                <label class="  saad-form__label" >مهلت پاسخ</label>
-                                <div ng-show="Data.mode=='view'" class=" saad-form__value" >
-                                    {{Data.draft.requestResponseDate|persianDate:'dd-MMMM-yyyy'|EnToFaNumber}}
-                                </div>
-                                <div ng-show="Data.mode!='view'" class=" saad-form__value" >
-                                    <vt-persian-date-picker min-date="Data.currentDate" name="requestResponseDate"
-                                                            model="Data.draft.requestResponseDate"></vt-persian-date-picker>
-                                </div>
-                            </div>
-
-
-                            
-
-
-                            <div class="saad-form__row ng-hide" ng-if="Data.hasExternalArchives">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}" >بایگانی نامه</label>
-                                <div class=" saad-form__value" ng-if="Data.isDraftLoaded " ng-class="{'has-error':Data.validationClicked && Data.vtFolderSelectorForm.$invalid}">
-                                    <ng-form name="Data.vtFolderSelectorForm">
-                                        <vt-folder-selector controller="Apis.vtFolderSelector" model="Data.draft.externalArchive" required = "Data.mode=='add'"
-                                                            is-edit-mode="Data.mode!='view'"
-                                                            form-name="Data.vtFolderSelectorForm"></vt-folder-selector>
-                                    </ng-form>
-                                </div>
-                            </div>
-
-                            
-                        </div>
-                        <div class="saad-form tw-w-full sm:tw-w-auto">
-
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">امضا کننده</label>
-                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div> -->
-                                <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
-
-                                    <!-- <ui-select 
-                                            ng-model="Data.draft.sender" 
-                                            append-to-body="true"
-                                            required name="draftSender"
-                                            on-select="Func.onSelectSender($item, $model);" >
-                                        <ui-select-match>
-                                            <span ng-bind="$select.selected.title"></span>
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="item in (Data.senderList | filter: $select.search) track by $index">
-                                            <span ng-bind="item.title"></span>
-                                        </ui-select-choices>
-                                    </ui-select> -->
-
-
-                                    <single-select
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        options="Data.senderList"
-                                        name="draftSender"
-                                        ng-model="Data.draft.sender" 
-                                        model="Data.draft.sender" 
-                                        is-edit-mode="Data.mode!='view'"
-                                        on-select="Func.onSelectSender($item, $model);">
-
-                                    </single-select>
-                                </div>
-                            </div>
-                            
-
-
-                            <div class="saad-form__row ">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">اقدام کننده</label>
-                                <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div> -->
-                                <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
-
-                                    <!-- <ui-select  ng-model="Data.draft.actor" 
-                                        append-to-body="true"
-                                        required name="draftActor" >
-                                        <ui-select-match>
-                                            <span ng-bind="$select.selected.title"></span>
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="item in (Data.senderList | filter: $select.search) track by $index">
-                                            <span ng-bind="item.title"></span>
-                                        </ui-select-choices>
-                                    </ui-select> -->
-
-
-                                    <single-select
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        options="Data.senderList"
-                                        name="draftActor"
-                                        ng-model="Data.draft.actor" 
-                                        model="Data.draft.actor" 
-                                        required
-                                        is-edit-mode="Data.mode!='view'"
-                                        >
-
-                                    </single-select>
-
-
-                                </div>
-                            </div>
-
-  
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label">پاراف کنندگان</label>
-                                <div class=" saad-form__value">
-
-    <!--                                            FIXME:change this directive to general type-->
-                                    <multiselect-reciever 
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        model="Data.draft.paraphers" init-options="Data.senderList"
-                                        ng-model="Data.draft.paraphers" name="paraphers"
-                                        is-edit-mode="Data.mode!='view'">
-                                    </multiselect-reciever>
-
-                                </div>
-                            </div>
-
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
-                                <div class=" saad-form__value" ng-class="{'has-error':Data.validationClicked && form.letterDeliveryTo.$invalid}">
-                                    <multiselect-reciever
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        model="Data.draft.deliveryTo"
-                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                        ng-model="Data.draft.deliveryTo" name="letterDeliveryTo" vt-array-required
-                                        on-select-fn="Func.onSelectReceiver(item, model)"
-                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
-                                    </multiselect-reciever>
-                                </div>
-                            </div>
-
-            
-
-                            <div class="saad-form__row">
-                                <label class="  saad-form__label">رونوشت</label>
-                                <div class=" saad-form__value">
-                                    <multiselect-reciever 
-                                        has-description="true" 
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        model="Data.draft.deliveryCc"
-                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                        on-select-fn="Func.onSelectReceiver(item, model)"
-                                        on-remove-fn="Func.onRemoveReceiver(item)"
-                                        is-edit-mode="Data.mode!='view'"></multiselect-reciever>
-
-                                    <div ng-show="Data.mode!='view'" class="col-sm-6" style="padding: 10px 15px;">
-                                        <a ng-init="bcc=false" ng-click="bcc = !bcc" ng-show="!bcc"
-                                            class="text-success">افزودن
-                                            رونوشت پنهان</a>
+                                        <div id="counter"></div>
+                                        <span id="hidden_span"></span>
                                     </div>
                                 </div>
-                            </div>
-                            
-                    
 
-                            <div class="saad-form__row" ng-show="bcc || Data.draft.deliveryBcc.length">
-                                <label class="  saad-form__label" >رونوشت پنهان</label>
-                                <div class=" saad-form__value" >
-                                    <multiselect-reciever 
-                                        has-description="true" 
-                                        widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
-                                        model="Data.draft.deliveryBcc"
-                                        search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
-                                        on-select-fn="Func.onSelectReceiver(item, model)"
-                                        on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
-                                    </multiselect-reciever>
+
+
+                                <div class="saad-form__row" ng-show="Data.mode=='view'">
+                                    <label class=" saad-form__label" >تاریخ نامه</label>
+                                    <div class=" saad-form__value" >
+                                        {{Data.draft.letterOfficialDate|persianDate:'dd-MMMM-yyyy'|EnToFaNumber}}
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
 
-                       
-                    </div>
 
-                </div>
 
-                <div class="" ng-show="Data.selectedTab.id == 1">
-                    <div class="saad-form ">
-                        <div class=" saad-form__row  " ng-show="Data.mode!='view'">
-                            <label class="radio-inline" >
 
-                                <input type="radio" name="editorType" id="editorType1" value="Editor"
-                                        ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('Editor')">
-                                <label for="editorType1">
-                                    <span><span></span></span>
-                                    <label>ویرایشگر متن</label>
-                                </label>
-                            </label>
-                            <label class="radio-inline" >
-                                <input type="radio" name="editorType" id="editorType2" value="System"
-                                        ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('File')">
-                                <label for="editorType2">
-                                    <span><span></span></span>
-                                    <label>ویرایشگر سیستم</label>
-                                </label>
-                            </label>
-                            <label class="radio-inline" >
-                                <input type="radio" name="editorType" id="editorType3" value="File"
-                                       ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('File')">
-                                <label for="editorType3">
-                                    <span><span></span></span>
-                                    <label>بارگذاری فایل</label>
-                                </label>
-                            </label>
-                        </div>
-                        <div class=" saad-form__row  " ng-show="Data.editorType == 'Editor'"
-                                ng-class="{'has-error':Data.validationClicked && Data.ckeditorInvalid}">
-                            <div ng-show="Data.mode=='view'">
-                                <div class="ck-content" lang="fa" dir="rtl" ng-bind-html="Func.trustAsHtml(Data.draft.textBody)"></div>
-                            </div>
 
-                            <div ng-show="Data.mode!='view' && Data.draft.bodyType=='Editor'"
-                                    class=" ckeditorContainer" id="ckeditorContainer">
-                            <textarea name="content_ref" class="text-justify form-control" id="editor1" rows="200"
-                                    cols="80"></textarea>
-                            </div>
-                        </div>
-                        <div class=" saad-form__row   editor" ng-show="Data.editorType == 'File'">
-                            <div class=""
-                                    ng-class="{'has-error':Data.validationClicked && form.draftFileBody.$invalid}"
-                                    name="draftFileBody" ng-model="Data.draft.fileBody"
-                                    ng-required="Data.draft.bodyType=='File'">
-                                    <vt-file class="col-sm-8" model="Data.draft.fileBody" is-edit-mode="Data.mode!='view'" remove-callback-fn="Func.removeFileBodyCallBack"
-                                     type="Data.draftFileBody">
-                            </vt-file>
-                            <a class="btn btn-default col-sm-4" ng-if="Data.letterTemplateFile"
-                               href="{{Data.letterTemplateFile}}">دانلود قالب</a>
+
+
+
+                                <div class="saad-form__row " ng-hide="Data.mode=='view' && !Data.draft.letterLayout.title">
+                                    <label class="  saad-form__label" 
+                                        ng-class="{'required':Data.mode!='view'}">سربرگ
+                                    </label>
+
+                                    <div ng-show="Data.mode=='view' && Data.draft.letterLayout.title" class=" saad-form__value" >{{Data.draft.letterLayout.title}}</div>
+                                    <div ng-show="Data.mode!='view'" class=" saad-form__value "
+                                    ng-class="{'has-error':Data.validationClicked && form.letterLayout.$invalid}">
+
+
+
+
+
+                                        <!-- FIXME:implement single source of truth for enabled layout list -->
+                                        <single-select
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            name="letterLayout"
+                                            required
+                                            title-prop-key="name"
+                                            options="Data.letterLayoutEnabledList"
+                                            ng-model="Data.letterLayout"
+                                            model="Data.letterLayout" 
+                                            on-select="Func.onSelectLetterLayout($item)"
+                                            on-remove="Func.onRemoveLetterLayout()"
+                                            is-edit-mode="Data.mode!='view'"
+                                            >
+
+                                        </single-select>
+
+                                        
+
+                                    </div>
+                                </div>
+                                
+                                
+
+
+
+                                <div class="saad-form__row" ng-if="Data.counter">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}"   >دبیرخانه</label>
+                                    <div ng-show="Data.mode=='view'" class=" saad-form__value" >
+                                        {{Data.draft.secretariat.title}}
+                                    </div>
+                                    <div ng-show="Data.mode!='view'" class=" saad-form__value"  ng-class="{'has-error':Data.validationClicked && form.secretariat.$invalid}">
+                                        <select class="form-control" ng-model="Data.secretariat" name="secretariat" required
+                                                ng-change="Func.onSelectSecretariat(Data.secretariat)"
+                                                ng-options="secretariat as secretariat.title for secretariat in Data.secretariatList">
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+
+                                
+                                
+
+
+                                <div class="saad-form__row" ng-show="Data.mode=='view'">
+                                    <label class="  saad-form__label" >وضعیت</label>
+                                    <div class=" saad-form__value" >
+                                        {{Data.draft.state|appEnum:draftState}}
+                                    </div>
+                                </div>
+
+
+                                
+                                
+
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label">فوریت</label>
+                                    <div ng-show="Data.mode=='view'" class=" saad-form__value">
+                                        <kateb-priority-label priority="Data.draft.priority" value="{{Data.draft.priority|appEnum}}"></kateb-priority-label>
+                                    </div>
+                                    <div ng-show="Data.mode!='view'" class=" saad-form__value">
+
+                                        <!-- FIXME:refactor extra input(options/app-enum-key)  -->
+                                        <single-select
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            app-enum-key="priority"
+                                            ng-model="Data.draft.priority" 
+                                            model="Data.draft.priority" 
+                                            is-edit-mode="Data.mode!='view'"
+                                            >
+                                        </single-select>
+
+
+                                    </div>
+                                </div>
+
+                                
+
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label">سطح محرمانگی</label>
+                                    <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">
+                                        {{Data.draft.confidentialityLevel|appEnum:confidentialityLevel}}
+                                    </div> -->
+                                    <div class=" saad-form__value">
+                                       
+                                        <single-select
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            app-enum-key="confidentialityLevel"
+                                            ng-model="Data.draft.confidentialityLevel" 
+                                            model="Data.draft.confidentialityLevel" 
+                                            is-edit-mode="Data.mode!='view'"
+                                            >
+
+                                        </single-select>
+
+                                    </div>
+                                </div>
+
+                                
+                                
+
+
+                                <div class="saad-form__row" ng-show="Data.mode!='view'">
+                                    <label class="  saad-form__label" >نیاز به پاسخ</label>
+                                    <div class=" saad-form__value" >
+                                        <input type="checkbox" ng-model="Data.responseNeeded" class="tw-accent-primary-light">
+                                    </div>
+                                </div>
+                                
+
+
+
+                                <div class="saad-form__row" ng-if="Data.responseNeeded">
+                                    <label class="  saad-form__label" >مهلت پاسخ</label>
+                                    <div ng-show="Data.mode=='view'" class=" saad-form__value" >
+                                        {{Data.draft.requestResponseDate|persianDate:'dd-MMMM-yyyy'|EnToFaNumber}}
+                                    </div>
+                                    <div ng-show="Data.mode!='view'" class=" saad-form__value" >
+                                        <vt-persian-date-picker min-date="Data.currentDate" name="requestResponseDate"
+                                                                model="Data.draft.requestResponseDate"></vt-persian-date-picker>
+                                    </div>
+                                </div>
+
+
+                                
+
+
+                                <div class="saad-form__row ng-hide" ng-if="Data.hasExternalArchives">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}" >بایگانی نامه</label>
+                                    <div class=" saad-form__value" ng-if="Data.isDraftLoaded " ng-class="{'has-error':Data.validationClicked && Data.vtFolderSelectorForm.$invalid}">
+                                        <ng-form name="Data.vtFolderSelectorForm">
+                                            <vt-folder-selector controller="Apis.vtFolderSelector" model="Data.draft.externalArchive" required = "Data.mode=='add'"
+                                                                is-edit-mode="Data.mode!='view'"
+                                                                form-name="Data.vtFolderSelectorForm"></vt-folder-selector>
+                                        </ng-form>
+                                    </div>
+                                </div>
 
                                 
                             </div>
-                        </div>
-                        <div class="saad-form__row editor" ng-show="Data.editorType == 'System'">
-                            <div class=""
-                                 ng-class="{'has-error':Data.validationClicked && form.draftFileBody.$invalid}"
-                                 name="draftFileBody" ng-model="Data.draft.fileBody"
-                                 ng-required="Data.draft.bodyType=='System'">
-                                <div class="row" ng-if="Data.mode!='view'">
-                                    <div class="col-sm-4" access-checker="WEB_EDIT">
-                                        <button class="btn" ng-disabled="!Data.draft.letterLayout" ng-click="Func.onEditDocxWhitSystemEdit()" >
-                                            شروع ویرایش
-                                        </button>
-                                        <img tooltip="پس از انتخاب سربرگ در قسمت اطلاعات نامه می توانید با استفاده از ویرایشگر سیستم خود شروع به ویرایش نمایید." src="app/assets/img/information-button.png" style="width:12px;" />
+                            <div class="saad-form tw-w-full sm:tw-w-auto">
+
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">امضا کننده</label>
+                                    <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.sender.title}}</div> -->
+                                    <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftSender.$invalid}">
+
+
+
+                                        <single-select
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            options="Data.senderList"
+                                            name="draftSender"
+                                            ng-model="Data.draft.sender" 
+                                            model="Data.draft.sender" 
+                                            is-edit-mode="Data.mode!='view'"
+                                            on-select="Func.onSelectSender($item, $model);"
+                                            on-remove="Func.onRemoveSender();">
+
+                                        </single-select>
                                     </div>
+                                </div>
+                                
+
+
+                                <div class="saad-form__row ">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">اقدام کننده</label>
+                                    <!-- <div ng-show="Data.mode=='view'" class=" saad-form__value">{{Data.draft.actor.title}}</div> -->
+                                    <div  class=" saad-form__value " ng-class="{'has-error':Data.validationClicked && form.draftActor.$invalid}">
+
+                                       
+
+
+                                        <single-select
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            options="Data.senderList"
+                                            name="draftActor"
+                                            ng-model="Data.draft.actor" 
+                                            model="Data.draft.actor" 
+                                            required
+                                            is-edit-mode="Data.mode!='view'"
+                                            >
+
+                                        </single-select>
+
+
+                                    </div>
+                                </div>
+
     
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label">پاراف کنندگان</label>
+                                    <div class=" saad-form__value">
+
+        <!--                                            FIXME:change this directive to general type-->
+                                        <multiselect-reciever 
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            model="Data.draft.paraphers" 
+                                            init-options="Data.senderList"
+                                            ng-model="Data.draft.paraphers" 
+                                            name="paraphers"
+                                            is-edit-mode="Data.mode!='view'">
+                                        </multiselect-reciever>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label" ng-class="{'required':Data.mode!='view'}">گیرندگان</label>
+                                    <div class=" saad-form__value" ng-class="{'has-error':Data.validationClicked && form.letterDeliveryTo.$invalid}">
+                                        <multiselect-reciever
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            model="Data.draft.deliveryTo"
+                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                            ng-model="Data.draft.deliveryTo" name="letterDeliveryTo" vt-array-required
+                                            on-select-fn="Func.onSelectReceiver(item, model)"
+                                            on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                        </multiselect-reciever>
+                                    </div>
+                                </div>
+
+                
+
+                                <div class="saad-form__row">
+                                    <label class="  saad-form__label">رونوشت</label>
+                                    <div class=" saad-form__value">
+                                        <multiselect-reciever 
+                                            has-description="true" 
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            model="Data.draft.deliveryCc"
+                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                            on-select-fn="Func.onSelectReceiver(item, model)"
+                                            on-remove-fn="Func.onRemoveReceiver(item)"
+                                            is-edit-mode="Data.mode!='view'"></multiselect-reciever>
+
+                                        <div ng-show="Data.mode!='view'" class="col-sm-6" style="padding: 10px 15px;">
+                                            <a ng-init="bcc=false" ng-click="bcc = !bcc" ng-show="!bcc"
+                                                class="text-success">افزودن
+                                                رونوشت پنهان</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                        
+
+                                <div class="saad-form__row" ng-show="bcc || Data.draft.deliveryBcc.length">
+                                    <label class="  saad-form__label" >رونوشت پنهان</label>
+                                    <div class=" saad-form__value" >
+                                        <multiselect-reciever 
+                                            has-description="true" 
+                                            widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                                            model="Data.draft.deliveryBcc"
+                                            search-fn="controller.multiselectRecieverSearch(Data.orgUid, Data.newOrganizationUid, query)"
+                                            on-select-fn="Func.onSelectReceiver(item, model)"
+                                            on-remove-fn="Func.onRemoveReceiver(item)" is-edit-mode="Data.mode!='view'">
+                                        </multiselect-reciever>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        
+                        </div>
+                    </form>
+                </div>
+
+                <div class="" ng-show="Data.selectedTab.id == 1">
+                    <form name="form2" novalidate>
+                        <div class="saad-form ">
+                            <div class=" saad-form__row  " ng-show="Data.mode!='view'">
+                                <label class="radio-inline" >
+
+                                    <input type="radio" name="editorType" id="editorType1" value="text"
+                                            ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('text')">
+                                    <label for="editorType1">
+                                        <span><span></span></span>
+                                        <label>ویرایشگر متن</label>
+                                    </label>
+                                </label>
+                                <label class="radio-inline" >
+                                    <input type="radio" name="editorType" id="editorType2" value="system"
+                                            ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('file')">
+                                    <label for="editorType2">
+                                        <span><span></span></span>
+                                        <label>ویرایشگر سیستم</label>
+                                    </label>
+                                </label>
+                                <label class="radio-inline" >
+                                    <input type="radio" name="editorType" id="editorType3" value="file"
+                                        ng-model="Data.editorType" ng-click="Func.onEditorTypeChange('file')">
+                                    <label for="editorType3">
+                                        <span><span></span></span>
+                                        <label>بارگذاری فایل</label>
+                                    </label>
+                                </label>
+                            </div>
+                            <div class=" saad-form__row  " ng-show="Data.editorType == 'text'"
+                                    ng-class="{'has-error':Data.validationClicked && Data.ckeditorInvalid}">
+                                <div ng-show="Data.mode=='view'">
+                                    <div class="ck-content" lang="fa" dir="rtl" ng-bind-html="Func.trustAsHtml(Data.draft.textBody)"></div>
+                                </div>
+
+                                <div ng-show="Data.mode!='view' && Data.draft.bodyType=='text'"
+                                        class=" ckeditorContainer" id="ckeditorContainer">
+                                <textarea name="content_ref" class="text-justify form-control" id="editor1" rows="200"
+                                        cols="80"></textarea>
+                                </div>
+                            </div>
+                            <div class=" saad-form__row   editor" ng-show="Data.editorType == 'file'">
+                                <div class=""
+                                        ng-class="{'has-error':Data.validationClicked && form2.draftFileBody.$invalid}"
+                                        name="draftFileBody" ng-model="Data.draft.fileBody"
+                                        ng-required="Data.draft.bodyType=='file'">
+                                        <vt-file class="col-sm-8" model="Data.draft.fileBody" is-edit-mode="Data.mode!='view'" remove-callback-fn="Func.removeFileBodyCallBack"
+                                        type="Data.draftFileBody">
+                                </vt-file>
+                                <a class="btn btn-default col-sm-4" ng-if="Data.letterTemplateFile"
+                                href="{{Data.letterTemplateFile}}">دانلود قالب</a>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="saad-form__row editor" ng-show="Data.editorType == 'system'">
+                                <div class=""
+                                    ng-class="{'has-error':Data.validationClicked && form2.draftFileBody.$invalid}"
+                                    name="draftFileBody" ng-model="Data.draft.fileBody"
+                                    ng-required="Data.draft.bodyType=='system'">
+                                    <div class="row" ng-if="Data.mode!='view'">
+                                        <div class="col-sm-4" access-checker="WEB_EDIT">
+                                            <button class="btn" ng-disabled="!Data.draft.letterLayout" ng-click="Func.onEditDocxWhitSystemEdit()" >
+                                                شروع ویرایش
+                                            </button>
+                                            <img tooltip="پس از انتخاب سربرگ در قسمت اطلاعات نامه می توانید با استفاده از ویرایشگر سیستم خود شروع به ویرایش نمایید." src="app/assets/img/information-button.png" style="width:12px;" />
+                                        </div>
+        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="" ng-if="Data.selectedTab.id == 2">
                     <letter-attachment model="Data.draft.attachments" is-edit-mode="Data.mode!='view'">
@@ -1036,10 +1047,10 @@
                 <div class="" ng-if="Data.selectedTab.id == 4 && Data.mode != 'add'">
                             <vt-grid control-fn="controller.draftHistoryListController"></vt-grid>
                 </div>
-            </form>
+            
         </section>
     </div>
-    <div ng-if="pdfUrl && Data.mode=='signature' || Data.mode=='paraph'" class="tw-bg-light-gray tw-overflow-scroll tw-p-content-padding">
+    <div ng-if="pdfUrl && Data.mode=='signature' || Data.mode=='paraph'" class="tw-bg-gray-light tw-grow tw-overflow-scroll tw-p-content-padding">
         <div  vt-pdf-signable
             control-fn="controller.vtPDF" signer-info="Data.signerInfo" sign-text="Data.draft.signatureHtml"
             ng-init="Data.draft.signatureHtml=''"></div>

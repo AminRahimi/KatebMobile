@@ -1,191 +1,219 @@
-<style>
-    
-	.table-responsive{
-		background-color: #f8f8f8;
-	}
-	th{
-		background-color: #fff;
-	}
-</style>
-<s class="tw-font-bold"> </s>
-<script type="text/ng-template" id="send-action-button">
-    <span class="send-action-button" access-checker="SEND_TO_OTHER_ORG" ng-click="Func.openSendLetterModal()">
-        <!-- web view -->
-        <button class="btn btn-primary single-button hidden-xs">
+
+<script type="text/ng-template" id="task-list-send-action-button">
+    <span class="send-action-button" 
+        access-checker="{{Data.actionButtonsMap['task-list-send-action-button'].access_checker}}" 
+        ng-show="Data.actionButtonsMap['task-list-send-action-button'].isVisible()"
+        ng-click="Data.actionButtonsMap['task-list-send-action-button'].click()">
+        
+        <button class="btn btn-primary single-button action-btn-widget">
             <i class="flaticon-interface-2"></i>
             ارسال
         </button>
-        <!-- mobile view -->
+        
 
-        <div class="visible-xs acction-icon" ng-include="'kateb-icon-paper-plane.svg'"></div>
+        <div class="action-btn-widget action-btn-widget--icon acction-icon" ng-include="'kateb-icon-paper-plane.svg'"></div>
+
+        <div class="action-btn-widget action-btn-widget--text" >ارسال</div>
+
 
     </span>
 </script>
-<script type="text/ng-template" id="label-action-button">
-    <span>
-        <!-- web view -->
+<script type="text/ng-template" id="task-list-label-action-button">
+    <span ng-show="Data.actionButtonsMap['task-list-label-action-button'].isVisible()"
+        >
+        
         <tag-input
                 external-data="Data.checkedItemList"
-                ng-show="Data.checkedItemList.length>0">
+                >
         </tag-input>
-        <!-- mobile view -->
-<!--        <a class="visible-xs">ارسال </a>-->
+        
 
     </span>
 </script>
-<script type="text/ng-template" id="archive-action-button">
-    <span>
-        <!-- web view -->
+<script type="text/ng-template" id="task-list-archive-action-button">
+    <span ng-show="Data.actionButtonsMap['task-list-archive-action-button'].isVisible()"
+        >
+        
         <internal-archive-action-btn style="vertical-align: super;"
                               uid-list="Data.checkedItemEntityUIdLis"
-                              ng-show="Data.checkedItemEntityUIdLis.length>0"
                               cb="Func.onArchiveCb">
-        </description-dropdown>
-        <!-- mobile view -->
-        <!--        <a class="visible-xs">ارسال </a>-->
+        </internal-archive-action-btn>
+        
 
     </span>
 </script>
 
-<script type="text/ng-template" id="forward-action-button">
-    <span ng-click="Func.openForwardLetterModal()">
-        <!-- web view -->
-        <button class="btn btn-primary single-button hidden-xs">
+<script type="text/ng-template" id="task-list-forward-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-forward-action-button'].click()"
+    ng-show="Data.actionButtonsMap['task-list-forward-action-button'].isVisible()"
+    >
+        
+        <button class="action-btn-widget btn btn-primary single-button ">
             <i class="flaticon-arrows-1"></i>
         ارجاع
         </button>
-        <!-- mobile view -->
-        <div class="action-icon  visible-xs" ng-include="'kateb-icon-reply'"></div>
+        
+        <div class="action-btn-widget action-btn-widget--icon action-icon  " ng-include="'kateb-icon-reply'"></div>
+
+        <div class="action-btn-widget action-btn-widget--text" >ارجاع</div>
+
+
 
     </span>
 </script>
 
 
-<script type="text/ng-template" id="personal-archive-action-button">
-    <span access-checker="USER_LETTER_ARCHIVE" ng-click="Func.onAddLettersToUserArchiveSuccess()">
-        <!-- web view -->
-        <button  class="btn btn-primary single-button hidden-xs">
+<script type="text/ng-template" id="task-list-personal-archive-action-button">
+    <span access-checker="{{Data.actionButtonsMap['task-list-personal-archive-action-button'].access_checker}}"  
+        ng-show="Data.actionButtonsMap['task-list-personal-archive-action-button'].isVisible()"
+
+        ng-click="Data.actionButtonsMap['task-list-personal-archive-action-button'].click()">
+        
+        <button  class="action-btn-widget btn btn-primary single-button ">
         انتقال به آرشیو شخصی
         </button>
-        <!-- mobile view -->
-        <a class="visible-xs">انتقال به آرشیو شخصی </a>
+
+        
+        <div class="action-btn-widget action-btn-widget--text" >انتقال به آرشیو شخصی</div>
+
+        
 
     </span>
 </script>
 
 
-<script type="text/ng-template" id="remove-from-persoanl-archive-action-button">
-    <span ng-click="Func.onRemoveLettersFromUserArchiveClick()">
-        <!-- web view -->
-        <button  class="btn btn-primary single-button hidden-xs" >
+<script type="text/ng-template" id="task-list-remove-from-persoanl-archive-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-remove-from-persoanl-archive-action-button'].click()"
+    ng-show="Data.actionButtonsMap['task-list-remove-from-persoanl-archive-action-button'].isVisible()">
+        
+        <button  class="action-btn-widget btn btn-primary single-button " >
             بازگرداندن از آرشیو شخصی
         </button>
-        <!-- mobile view -->
-        <a class="visible-xs">بازگرداندن از آرشیو شخصی </a>
+        
+        <div class="action-btn-widget action-btn-widget--text">بازگرداندن از آرشیو شخصی </div>
+
+        
+
     </span>
 </script>
 
 
 
-<script type="text/ng-template" id="follow-action-button">
-    <span >
-        <!-- web view -->
-        <label class="dropdown">
+<script type="text/ng-template" id="task-list-follow-unfollow-action-button">
+    <span  ng-show="Data.actionButtonsMap['task-list-follow-unfollow-action-button'].isVisible()"
+        >
+        
+        <label class="action-btn-widget dropdown">
 
-            <!-- web view -->
-            <button class="btn btn-primary single-button dropdown-toggle hidden-xs" type="button"
+            
+            <button class="btn btn-primary single-button dropdown-toggle " type="button"
                     id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 نیاز به پیگیری
                 <span class="caret"></span>
             </button>
 
-            <div class="action-icon dropdown-toggle visible-xs" ng-include="'kateb-icon-level-up-alt.svg'"
+            <div class="action-icon dropdown-toggle " ng-include="'kateb-icon-level-up-alt.svg'"
              id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></div>
 
-            <!-- mobile view -->
+            
 
 
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li ng-click="Func.onFollowClick()"><a>پیگیری</a></li>
                 <li><a ng-click="Func.onUnfollowClick()">عدم پیگیری</a></li>
             </ul>
         </label>
-        <!-- mobile view -->
-<!--        <a class="visible-xs">انتقال به آرشیو شخصی </a>-->
+
+        
+        
 
     </span>
 </script>
 
-<script type="text/ng-template" id="read-action-button">
-    <span ng-click="Func.readTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter &&
-                                                               ($parent.Data.selectedFilter.filter.uid.indexOf('letter.unread')>-1 || $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1)">
-        <!-- web view -->
-        <button class="btn btn-primary hidden-xs" >خوانده شده</button>
-        <!-- mobile view -->
-        <a class="visible-xs">خوانده شده </a>
-
+<script type="text/ng-template" id="task-list-follow-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-follow-action-button'].click()"
+      ng-show="Data.actionButtonsMap['task-list-follow-action-button'].isVisible()"
+        >
+        <div class="action-btn-widget action-btn-widget--text" >نیاز به پیگیری</div>
     </span>
 </script>
 
-<script type="text/ng-template" id="unread-action-button">
-    <span ng-click="Func.unreadTask()" ng-if="$parent.Data && $parent.Data.selectedFilter && $parent.Data.selectedFilter.filter && $parent.Data.selectedFilter.filter.uid.indexOf('letter.recievedLetters')>-1">
-        <!-- web view -->
-       <button class="btn btn-warning hidden-xs" >خوانده نشده</button>
-        <!-- mobile view -->
-        <a class="visible-xs">خوانده نشده </a>
-
+<script type="text/ng-template" id="task-list-unfollow-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-unfollow-action-button'].click()"
+      ng-show="Data.actionButtonsMap['task-list-unfollow-action-button'].isVisible()"
+        >
+        <div class="action-btn-widget action-btn-widget--text" >عدم پیگیری</div>
     </span>
 </script>
 
 
+<script type="text/ng-template" id="task-list-read-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-read-action-button'].click()"
+    ng-show="Data.actionButtonsMap['task-list-read-action-button'].isVisible()">
+        
+        <button class="action-btn-widget btn btn-primary " >خوانده شده</button>
+         
+        <div class="action-btn-widget action-btn-widget--text">خوانده شده </div>
 
-<div class="mobile-action-bar hidden-md" >
+        
 
-<!-- FIXME: repeated ng-show expression >>  ng-show="Data.checkedItemList.length>0...-->
+    </span>
+</script>
 
-    <div class="tw-flex tw-flex-grow tw-items-center" ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
-        <span ng-include="'remove-from-persoanl-archive-action-button'"></span>
-    </div>
+<script type="text/ng-template" id="task-list-unread-action-button">
+    <span ng-click="Data.actionButtonsMap['task-list-unread-action-button'].click()"
+        ng-show="Data.actionButtonsMap['task-list-unread-action-button'].isVisible()">
 
-    <div class="tw-flex tw-flex-grow tw-items-center" ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
+        
+       <button class="action-btn-widget btn btn-warning " >خوانده نشده</button>
+        
+       <div class="action-btn-widget action-btn-widget--text">خوانده نشده </div>
 
-        <span ng-include="'label-action-button'"></span>
-        <span ng-include="'archive-action-button'"></span>
-        <span ng-include="'forward-action-button'"></span>
-        <span ng-include="'personal-archive-action-button'"></span>
-        <span ng-include="'follow-action-button'"></span>
-        <span ng-include="'send-action-button'"></span>
-        <span ng-include="'read-action-button'"></span>
-        <span ng-include="'unread-action-button'"></span>
-    </div>
+    </span>
+</script>
 
+
+<div class="mobile-action-bar hidden-md tw-flex  tw-items-center" >
+
+    <span class="tw-mr-auto">
+        <more-btn-bottom-sheet-opener
+            ng-show="Data.checkedItemList.length>0"
+            menu-item-tpls="[
+            'task-list-remove-from-persoanl-archive-action-button',
+            'task-list-label-action-button',
+            'task-list-archive-action-button',
+            'task-list-forward-action-button',
+            'task-list-personal-archive-action-button',
+            'task-list-follow-action-button',
+            'task-list-unfollow-action-button',
+            'task-list-send-action-button',
+            'task-list-read-action-button',
+            'task-list-unread-action-button'
+            ]" 
+            action-buttons-map="Data.actionButtonsMap"
+        ></more-btn-bottom-sheet-opener>
+    </span>
 
 </div>
 
 
 
-<div class="well well-sm action-bar hidden-xs" style="background: #fff"
-     ng-show="Data.checkedItemList.length>0 && Func.isInFilter('user-letter-archive')">
+<div class="well well-sm action-bar hidden-xs" style="background: #fff">
 
-    <span ng-include="'remove-from-persoanl-archive-action-button'"></span>
+    <span ng-include="'task-list-remove-from-persoanl-archive-action-button'"></span>
+    <span ng-include="'task-list-label-action-button'"></span>
+    <span ng-include="'task-list-archive-action-button'"></span>
+    <span ng-include="'task-list-forward-action-button'"></span>
+    <span ng-include="'task-list-personal-archive-action-button'"></span>
+    <span ng-include="'task-list-follow-unfollow-action-button'"></span>
+    <span ng-include="'task-list-send-action-button'"></span>
+    <span ng-include="'task-list-read-action-button'"></span>
+    <span ng-include="'task-list-unread-action-button'"></span>
 </div>
 
 
-<div class="well well-sm action-bar hidden-xs" style="background: #fff"
-     ng-show="Data.checkedItemList.length>0 && !Func.isInFilter('user-letter-archive')">
 
-    <span ng-include="'label-action-button'"></span>
-    <span ng-include="'archive-action-button'"></span>
-    <span ng-include="'forward-action-button'"></span>
-    <span ng-include="'personal-archive-action-button'"></span>
-    <span ng-include="'follow-action-button'"></span>
-    <span ng-include="'send-action-button'"></span>
-    <span ng-include="'read-action-button'"></span>
-    <span ng-include="'unread-action-button'"></span>
-
-
-</div>
 <div class="main-content">
 
     <!-- FIXME: refactor  route-state-name (it's not needed that directive be aware about state) -->

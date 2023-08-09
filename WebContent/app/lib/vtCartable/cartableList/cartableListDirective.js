@@ -26,7 +26,8 @@ angular.module("vtCartable").directive('cartableList',
                 options: "=",
                 subscribeFor:"@",
             },
-            controller: function ($scope, $modal, cartableSrvc, vtCartableSearchSrvc, $timeout, $modalStack, $location, CARTABLE_CONFIG,homeSrvc,$state,$q) {
+            controller: function ($scope, $modal, cartableSrvc, vtCartableSearchSrvc, $timeout,
+			 $modalStack, $location, CARTABLE_CONFIG,homeSrvc,$state,$q) {
                 $scope.api = $scope.api || {};
 
                 $scope.visibleHeader = [];
@@ -147,7 +148,7 @@ angular.module("vtCartable").directive('cartableList',
                                 };
                                 //FIXME: get current page from cartableSrvc.getCurrentPage()
                                 if(angular.isFunction($scope.Controller.listController.goToPage)){
-                                    $scope.Controller.listController.goToPage(1).then(defer.resolve);
+                                $scope.Controller.listController.goToPage(1).then(defer.resolve);
                                 }
                             }, 1);
                         return defer.promise;

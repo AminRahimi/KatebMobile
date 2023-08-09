@@ -6,13 +6,7 @@
 		.panel-search {
 		background-color: #fff !important;
 		}
-		
-	.fixed-detail{
-			position: fixed;
-			left: 15px;
-			top: 102px;
-			width: 435px;
-				}
+
 	.scrollable-table{
 			max-height: 500px;
 			overflow: auto
@@ -58,7 +52,7 @@
 		</div>
 	</div>
 </div>
-<div class="col-md-4 fixed-detail " access-checker="API_VIEW_POSITION">
+<div class="col-md-4" access-checker="API_VIEW_POSITION">
 	<div class="panel panel-default">
 		<div class="panel-body panel-management">
 			<div class="col-sm-12">
@@ -148,7 +142,7 @@
 						{{treeData.selectedNode.currentUser.title|EnToFaNumber}}
 					</div>
 					<div ng-show="Data.mode!='view'" class="col-sm-7">
-                        <ui-select ng-model="Data.currentUser" on-select="Func.onSelectcurrentUser(Data.currentUser)">
+                        <ui-select append-to-body="true" ng-model="Data.currentUser" on-select="Func.onSelectcurrentUser(Data.currentUser)">
                             <ui-select-match>{{$select.selected.title}}</ui-select-match>
                             <ui-select-choices repeat="user in Data.userList"
                                                refresh="Func.refreshCurrentUser($select.search)">

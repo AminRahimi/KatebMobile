@@ -51,7 +51,98 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
                 currentDate: new Date(),
                 officialMaxDate: new Date(),
 				hasExternalArchives: configObj.externalArchives.length,
-				vtFolderSelectorForm: ""
+				vtFolderSelectorForm: "",
+				isMobileView: homeSrvc.screenSizeDetector.isMobile(),
+				actionButtonsMap:{
+					'secretariat-incoming-return-action-button': {
+						click: function() {
+							return $scope.Func.onReturnClick()
+						},
+						isVisible: function() {
+							return true
+						}
+					},
+					'secretariat-incoming-edit-action-button': {
+						click: function() {
+							return $scope.Func.onEditClick()
+						},
+						isVisible: function() {
+							return $scope.Data.mode == 'view'
+						}
+					},
+					'secretariat-incoming-send-action-button': {
+						click: function() {
+							return $scope.Func.onSendClick()
+						},
+						isVisible: function() {
+							return true
+						},
+						isDisabled: function() {
+							return ($scope.Data.form && $scope.Data.form.$invalid && $scope.Data.validationClicked) || $scope.Data.sendClicked || $scope.Data.letter.duplicated == true
+						},
+					},
+					'secretariat-incoming-update-action-button': {
+						click: function() {
+							return $scope.Func.onUpdateClick()
+						},
+						isVisible: function() {
+							return $scope.Data.mode == 'edit'
+						},
+						isDisabled: function() {
+							return $scope.Data.form && $scope.Data.form.$invalid && $scope.Data.validationClicked
+						},
+					},
+					'secretariat-incoming-reset-action-button': {
+						click: function() {
+							return $scope.Func.onResetClick()
+						},
+						isVisible: function() {
+							return $scope.Data.mode == 'edit' || $scope.Data.mode == 'add'
+						},
+						isDisabled: function() {
+							return
+						},
+					},
+					'secretariat-incoming-remove-action-button': {
+						click: function() {
+							return $scope.Func.onDeleteClick()
+						},
+						isVisible: function() {
+							return !($scope.Data.mode != 'view' || $scope.Data.letter.receivingStyle == 'KATEB' || $scope.Data.letter.receivingStyle == 'ORG')
+						},
+						isDisabled: function() {
+							return
+						},
+					},
+					'secretariat-incoming-send-back-description-action-button': {
+					
+						isVisible: function() {
+							return $scope.Data.mode == 'view' && ($scope.Data.letter.receivingStyle == 'KATEB' || $scope.Data.letter.receivingStyle == 'ORG')
+						},
+						isDisabled: function() {
+							return
+						},
+					},
+					'secretariat-incoming-save-action-button': {
+						click: function() {
+							return $scope.Func.onSaveClick()
+						},
+						isVisible: function() {
+							return $scope.Data.mode == 'add'
+						},
+						isDisabled: function() {
+							return $scope.Data.form && $scope.Data.form.$invalid && $scope.Data.validationClicked
+						},
+					},
+					'secretariat-incoming-save-template-action-button': {
+						isVisible: function() {
+							return $scope.Data.mode == 'add'
+						},
+						isDisabled: function() {
+							return
+						},
+					},
+				}
 			}
 			$scope.Func = {
 				getStateName: function (stateName) {
@@ -114,7 +205,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
                     $scope.Func.searchLetterByExternalnumber($scope.Data.letter.externalNumber);
 				},
 				onSaveClick: function () {
-					if ($scope.form.$invalid) {
+					if ($scope.Data.form && $scope.Data.form.$invalid) {
 						$scope.Data.validationClicked = true;
 					} else {
 						if (_.isObject($scope.Data.scanedFile)) {
@@ -135,7 +226,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 
 				},
 				onUpdateClick: function () {
-					if ($scope.form.$invalid) {
+					if ($scope.Data.form && $scope.Data.form.$invalid) {
 						$scope.Data.validationClicked = true;
 					} else {
 						if (_.isObject($scope.Data.scanedFile)) {
@@ -153,7 +244,7 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 
 				},
 				onSendClick: function () {
-					if ($scope.form.$invalid) {
+					if ($scope.Data.form && $scope.Data.form.$invalid) {
 						$scope.Data.validationClicked = true;
 					} else {
 						if (_.isObject($scope.Data.scanedFile)) {
@@ -204,11 +295,10 @@ angular.module('secretariatModule').controller('secretariatIncomingCtrl',
 					});
 				},
 				searchTagList: function (query, type) {
-					if (query.length > 1) {
-						secretariatSrvc.searchPublicTagList($scope.Data.orgUid, query).then(function (response) {
-							$scope.Data.tagList = response.data.originalElement;
-						});
-					}
+					return secretariatSrvc.searchPublicTagList($scope.Data.orgUid, query).then(function (response) {
+						$scope.Data.tagList = response.data.originalElement;
+						return response;
+					});
 				},
 				getIndicatorBookList: function () {
 					secretariatSrvc.getIndicatorBookList($scope.Data.secUid).then(function (response) {

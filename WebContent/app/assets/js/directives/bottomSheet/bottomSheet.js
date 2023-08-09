@@ -1,12 +1,12 @@
-    angular.module("bottomSheet", []).directive('bottomSheet', function() {
+angular.module("bottomSheet", []).directive('bottomSheet', function () {
     return {
-		restrict : 'EA',
-		templateUrl : 'app/assets/js/directives/bottomSheet/bottomSheet.html',
-		scope : {
-		},
-        controller : function($scope,$element,$timeout,bottomSheetSrvc ) {
-            $scope.controller="emptyCtrl"
-            $scope.templateUrl="app/assets/js/directives/bottomSheet/bottomSheet.empty.html"
+        restrict: 'EA',
+        templateUrl: 'app/assets/js/directives/bottomSheet/bottomSheet.html',
+        scope: {
+        },
+        controller: function ($scope, $element, $timeout, bottomSheetSrvc) {
+            $scope.controller = "emptyCtrl"
+            $scope.templateUrl = "app/assets/js/directives/bottomSheet/bottomSheet.empty.html"
 
 
             // Copyright (c) 2022 Ivan Teplov
@@ -33,7 +33,7 @@
                 sheet.setAttribute("aria-hidden", String(!value))
             }
 
-            
+
 
             // Hide the sheet when clicking the 'close' button
             // sheet.querySelector(".close-sheet").addEventListener("click", () => {
@@ -69,17 +69,17 @@
             }
 
             const onDragEnd = () => {
-            dragPosition = undefined
-            sheetContents.classList.remove("not-selectable")
-            draggableArea.style.cursor = document.body.style.cursor = ""
+                dragPosition = undefined
+                sheetContents.classList.remove("not-selectable")
+                draggableArea.style.cursor = document.body.style.cursor = ""
 
-            if (sheetHeight < 25) {
-                setIsSheetShown(false)
-            } else if (sheetHeight > 75) {
-                setSheetHeight(100)
-            } else {
-                setSheetHeight(50)
-            }
+                if (sheetHeight < 25) {
+                    setIsSheetShown(false)
+                } else if (sheetHeight > 75) {
+                    setSheetHeight(100)
+                } else {
+                    setSheetHeight(50)
+                }
             }
 
             draggableArea.addEventListener("mousedown", onDragStart)
@@ -98,23 +98,27 @@
 
 
             $scope.Data = {
-                
+
             };
             $scope.Func = {
-                openSheet : function(controller,templateUrl,inputObject){
+                openSheet: function (controller, templateUrl, inputObject) {
                     bottomSheetSrvc.setInputObject(inputObject);
                     $scope.controller = controller || $scope.controller;
                     $scope.templateUrl = templateUrl || $scope.templateUrl;
                     $scope.isContentLoad = false;
-                    $timeout(()=>{
+                    $timeout(() => {
                         setSheetHeight(Math.min(50, 720 / window.innerHeight * 100));
                         setIsSheetShown(true);
                         $scope.isContentLoad = true;
                     });
+                },
+                closeSheet: function (result) {
+                    setIsSheetShown(false)
                 }
             };
             var Run = function () {
                 bottomSheetSrvc.setOpenFunction($scope.Func.openSheet);
+                bottomSheetSrvc.setCloseFunction($scope.Func.closeSheet);
             };
             Run();
 
@@ -124,56 +128,63 @@
 });
 
 
-angular.module("bottomSheet").directive('saadDynamicDirective', function($compile, $templateRequest) {
+angular.module("bottomSheet").directive('saadDynamicDirective', function ($compile, $templateRequest) {
     return {
-		restrict : 'EA',
-		scope : {
-            ctrl:"@",
-            templateUrl:"@"
-		},
-        controller : function($scope,$element ) {
-        
+        restrict: 'EA',
+        scope: {
+            ctrl: "@",
+            templateUrl: "@"
         },
-        link : function(scope, element, attrs) {
+        controller: function ($scope, $element) {
 
-            scope.$watchGroup(['ctrl','templateUrl'],()=>{
-                $templateRequest(scope.templateUrl).then(function(html) {
+        },
+        link: function (scope, element, attrs) {
+
+            scope.$watchGroup(['ctrl', 'templateUrl'], () => {
+                $templateRequest(scope.templateUrl).then(function (html) {
                     template = html;
                     element.html(`<div ng-controller="${scope.ctrl}" class="tw-h-full">${template}</div>`);
-    
+
                     return $compile(element.contents())(scope);
-    
+
                 });
             });
 
-            
+
 
         }
     };
 });
 
-angular.module("bottomSheet").factory('bottomSheetSrvc',function(){
+angular.module("bottomSheet").factory('bottomSheetSrvc', function () {
 
     let inputObject;
     let open;
+    let close;
 
     let bottomSheetSrvc = {
-        setOpenFunction(fn){
+        setOpenFunction(fn) {
             open = fn;
         },
-        open(controller,templateUrl,inputObject){
-            return open(controller,templateUrl,inputObject);
+        setCloseFunction(fn) {
+            close = fn;
         },
-        setInputObject(_inputObject){
+        open(controller, templateUrl, inputObject) {
+            return open(controller, templateUrl, inputObject);
+        },
+        close(result) {
+            return close(result);
+        },
+        setInputObject(_inputObject) {
             inputObject = _inputObject;
         },
-        getInputObject(){
+        getInputObject() {
             return inputObject;
         },
     }
     return bottomSheetSrvc;
 
 });
-angular.module("bottomSheet").controller('emptyCtrl',function(bottomSheetSrvc){
+angular.module("bottomSheet").controller('emptyCtrl', function (bottomSheetSrvc) {
 });
 

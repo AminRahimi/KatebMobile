@@ -9,7 +9,8 @@ angular.module('multiselectReciever').directive('multiselectDropdown', [
                 onSelect:"&",
                 onModelItemSelect:"&",
                 onRemove:"&",
-                options:"="
+                options:"=",
+                isTagging:"=",
             },
              templateUrl: 'app/assets/js/directives/multiselectReciever/dropDown/multiselectDropdown.html',
              controller: function() {

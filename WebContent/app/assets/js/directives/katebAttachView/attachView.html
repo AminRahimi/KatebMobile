@@ -1,8 +1,8 @@
 <div class="tw-flex tw-pr-em-1 tw-pl-em-1 tw-gap-x-em-1  tw-h-[70px]   tw-border 
-	tw-border-solid tw-border-light-gray tw-rounded-sm tw-items-center">
+	tw-border-solid tw-border-gray-light tw-rounded-sm tw-items-center">
 			
 		
-	<div class="saad-icon tw-w-em-6 tw-shrink-0" ng-include="'kateb-icon-report'"></div>
+	<div class="action-icon tw-h-em-6 tw-shrink-0" ng-include="'kateb-icon-report'"></div>
 	<div class="tw-flex tw-flex-col">
 		<!-- FIXME:implement split string -->
 		<span>{{attachment.name}}</span>
@@ -10,12 +10,12 @@
 		<span class="tw-text-gray">2.3 مگابایت</span>
 	</div>
 	<div class="tw-mr-auto tw-inline-flex tw-gap-x-8 ">
-		<div class="saad-icon" ng-include="'kateb-icon-arrow-to-bottom.svg'" ng-click="downloadFile()" ng-show="attachmentType==='FILE'"></div>
+		<div class="action-icon" ng-include="'kateb-icon-arrow-to-bottom.svg'" ng-click="downloadFile()" ng-show="attachmentType==='FILE'"></div>
 		
 		<a href="attachmentLink" ng-show="attachmentLink">
-			<div class="saad-icon" ng-include="'kateb-icon-eye.svg'"></div>
+			<div class="action-icon" ng-include="'kateb-icon-eye.svg'"></div>
 		</a>
-		<div class="saad-icon tw-text-danger" ng-include="'kateb-icon-trash-alt.svg'" ng-show="isEditMode" ng-click="onRemoveAttachment()"></div>
+		<div class="action-icon tw-text-danger" ng-include="'kateb-icon-trash-alt.svg'" ng-show="isEditMode" ng-click="onRemoveAttachment()"></div>
 		
 	</div>
 		

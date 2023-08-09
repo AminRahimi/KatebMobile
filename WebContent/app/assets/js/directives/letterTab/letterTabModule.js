@@ -88,21 +88,11 @@ angular.module('letterTabModule').directive('letterAttachment', [
                 isEditMode: "="
             },
             templateUrl: 'app/assets/js/directives/letterTab/letterAttachmentTemplate.html?vtPreventCache=' + new Date().getTime(),
-            controller: function ($scope,$state, $modal, secretariatSrvc, katebSrvc, fileSrvc, $rootScope, $interval, configObj, $q, $timeout) {
+            controller: function ($scope,$state, $modal, secretariatSrvc, katebSrvc, fileSrvc, $rootScope, $interval, configObj, $q, $timeout,homeSrvc,appConst) {
 
                 $scope.Data = {
-                    attachmentTypeList:[
-                        {key:'Turn',title:'عطف'},
-                        {key:'Follow',title:'پیرو'},
-                        {key:'Appendix',title:'پیوست'},
-                        {key:'Relation',title:'ارتباط'}
-                    ],
-                    attachFromList:[
-                        {key:'COMPUTER',title:'فایل از کامپیوتر'},
-                        {key:'SCAN',title:'فایل از نرم افزار اسکن'},
-                        {key:'GANJEH',title:'فایل از گنجه'},
-                        {key:'LETTER',title:'نامه'}
-                    ],
+                    attachmentTypeList: Object.keys(appConst['attachmentType']),
+                    attachFromList:Object.keys(appConst['attachSourceType']),
                     letter: {},
                     validationClicked: false,
                     attachmentList: [],
@@ -111,6 +101,7 @@ angular.module('letterTabModule').directive('letterAttachment', [
                     lastScannerVersion: "",
                     isLogin: configObj.userConfig.connectedToGanjeh,
                     ganjehFiles: null,
+                    isMobileView: homeSrvc.screenSizeDetector.isMobile(),
                 };
 
                 
@@ -130,10 +121,10 @@ angular.module('letterTabModule').directive('letterAttachment', [
                                     $scope.Data.file = file;
                                 }
                                 attachments = {
-                                    type: $scope.Data.chooseLetterType.key == 'LETTER' ? 'LETTER' : 'FILE',
-                                    relationTypeKey: $scope.Data.attachmentType.key,
-                                    fileBody: $scope.Data.chooseLetterType.key != 'LETTER' ? $scope.Data.file : null,
-                                    letterBody: ($scope.Data.chooseLetterType.key == 'LETTER' && $scope.Data.attachLetter) ? {
+                                    type: $scope.Data.chooseLetterType == 'LETTER' ? 'LETTER' : 'FILE',
+                                    relationTypeKey: $scope.Data.attachmentType,
+                                    fileBody: $scope.Data.chooseLetterType != 'LETTER' ? $scope.Data.file : null,
+                                    letterBody: ($scope.Data.chooseLetterType == 'LETTER' && $scope.Data.attachLetter) ? {
                                         uid: $scope.Data.attachLetter.uid,
                                         title: $scope.Data.attachLetter.internalNumber + '-' + $scope.Data.attachLetter.subject
                                     } : null,
@@ -158,6 +149,7 @@ angular.module('letterTabModule').directive('letterAttachment', [
                             $scope.Data.description = null;
                             $scope.Data.attachLetter = null;
                             $scope.Data.ganjehFiles = null;
+                            $scope.pdfUrl = null;
                         }
                     },
                     setDefaults: function(){

@@ -70,6 +70,7 @@ angular.module('vtCartable').directive('cartableMenu',
                     // onToggleMenuClick:function (){
                     //     $scope.Func.toggleCollapseMenu();
                     // },
+                    // FIXME:place it to rootscope
                     getStateName: function (stateName) {
                         return homeSrvc.getStateName(stateName);
                     },

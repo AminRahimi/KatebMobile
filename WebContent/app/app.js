@@ -13,7 +13,7 @@ kateb.internalDependency = [ 'vtCommon', 'appFilter', 'treeModule', 'vtMedia',  
 							'vtTypeahead', 'katebPrint', 'vtNotification','optionSelectWebservice',
 							'vtDropdownTaginputDirective', 'vtDateInterval', 'vtCartableDateInterval', 'scan', 'scannerCMModule',
 							'letterTabCMModule', 'vtDropdownMultiStringModule', 'deleteButton', 'deleteModule', 'deleteFromArchive', 'viraTree', 'viraTreePagination', 'docList', 'vtFolderSelector',
-							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser','mMainMenu','headerMenu','loggedInUserMenu','katebPriorityLabel','katebAttachView','bottomSheet','singleSelect'];
+							'vtArchivedLetterListModule', 'vtPatternRestrict', 'vtMoveNextInput', 'labelChooser','mMainMenu','headerMenu','loggedInUserMenu','katebPriorityLabel','katebAttachView','bottomSheet','singleSelect','moreBtnBottomSheetOpener'];
 
 
 
@@ -95,11 +95,16 @@ app.ckeditorConfig={
 		options: [
 			'default',
 			9,
+			10,
 			11,
+			12,
 			13,
+			14,
+			15,
+			16,
 			17,
 			19,
-			21
+			24
 		]
 	},
 	fontFamily: {

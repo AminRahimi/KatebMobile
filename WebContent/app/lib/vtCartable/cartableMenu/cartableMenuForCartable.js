@@ -19,18 +19,18 @@ angular.module('vtCartable').directive('cartableMenuForCartable',
                     cartableListMenuIndermidiariFn: function(cartableFilterObj) {
                         cartableSrvc.onCartableListItemChecked(null);
                         
+                        cartableSrvc.publishTo("selectedCartableFilterChanged",cartableFilterObj);
+                        $scope.Data.selectedFilter = cartableFilterObj;
+                        
+                        if(angular.isFunction($scope.onMenuItemClick)){
+                            
+                            $scope.onMenuItemClick()
+                        }
                         var stateName = $scope.Func.getStateName('base.home.cartable.cartableList');
                         $state.go(stateName,{
                             cartableUid: cartableFilterObj.cartable.taskType,
                             filter: cartableFilterObj.filter.uid
                         });
-                        cartableSrvc.publishTo("selectedCartableFilterChanged",cartableFilterObj);
-                        $scope.Data.selectedFilter = cartableFilterObj;
-
-                        if(angular.isFunction($scope.onMenuItemClick)){
-
-                            $scope.onMenuItemClick()
-                        }
                     }
                 }
 

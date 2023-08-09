@@ -1,10 +1,11 @@
-<multiselect-list
+<multiselect-reciever
 	model="input.model"
-	on-refresh="input.onRefresh({$query:$query})"
-	on-select="input.onSelect({$item:$item, $model:$model})"
-	on-remove="input.onRemove({$item:$item})"
+	widget="list"
+	search-fn="input.onRefresh({$query:query})"
+	on-select-fn="input.onSelect({$item:item, $model:model})"
+	on-remove-fn="input.onRemove({$item:item})"
 	is-edit-mode="true"
-	options="input.options"
-	class="tw-h-full tw-flex tw-flex-col"
+	init-options="input.options"
+	is-tagging="input.isTagging"
 	>
-</multiselect-list>
+</multiselect-reciever>

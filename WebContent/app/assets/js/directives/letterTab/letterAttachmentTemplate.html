@@ -1,15 +1,15 @@
-<div class=" " ng-repeat="item in model track by $index">
 
-    <div ng-if="item.type=='FILE'" class="tw-w-full">
-        <!-- FIXME:filetype (PDF,TXT,...) -->
-        <kateb-attach-view attachment-type="FILE" attachment="{name:item.fileBody.name,fileType:item.fileBody,hash:item.fileBody.hash}"  on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
-    </div>
-    <div ng-if="item.type=='LETTER'" class="tw-w-full">
-        <kateb-attach-view attachment-type="LETTER" attachment="{name:item.letterBody.title}" attachment-link="Func.getHref(Func.getStateName('base.home.cartable.orgLetter'),{letterUid: item.letterBody.uid})" on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
-    </div>
-
-
-    <div class="saad-form">
+<div class="saad-forms ">
+    <div class="saad-form tw-w-full" ng-repeat="item in model track by $index">
+        <div class="saad-form__row">
+            <div ng-if="item.type=='FILE'" class="tw-w-full">
+                <!-- FIXME:filetype (PDF,TXT,...) -->
+                <kateb-attach-view attachment-type="FILE" attachment="{name:item.fileBody.name,fileType:item.fileBody,hash:item.fileBody.hash}"  on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+            </div>
+            <div ng-if="item.type=='LETTER'" class="tw-w-full">
+                <kateb-attach-view attachment-type="LETTER" attachment="{name:item.letterBody.title}" attachment-link="Func.getHref(Func.getStateName('base.home.cartable.orgLetter'),{letterUid: item.letterBody.uid})" on-remove="Func.onRemove($attachment)" is-edit-mode="isEditMode"></kateb-attach-view>
+            </div>
+        </div>
         <div class="saad-form__row">
             <label class="saad-form__label">
                 نوع ضمیمه : 
@@ -28,18 +28,18 @@
                 <span ng-show="!item.description">توضیحاتی برای این ضمیمه نوشته نشده است.</span>
             </div>
         </div>
+        <div class="saad-form__row" >
+            <div class="tw-h-[1px] tw-bg-gray-light tw-w-full" >
+            </div>
+        </div>
+        
     </div>
-    
-</div>
-<div ng-show="isEditMode" class="is-edit-attachment">
-    <ng-form name="letterAttachementForm" isolate-form novalidate>
-        <i class="text-on-el">ضمیمه جدید</i>
-
+    <div ng-show="isEditMode" class="saad-form" ng-form name="letterAttachementForm" isolate-form novalidate>
         <div class="saad-form__row" 
             ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachmentType.$invalid}">
             <label class="saad-form__label" ng-class="{'required':isEditMode}">نوع ضمیمه</label>
             <div class="saad-form__value" ng-show="isEditMode">
-                <ui-select append-to-body="true"  ng-model="Data.attachmentType" required name="attachmentType">
+                <!-- <ui-select append-to-body="true"  ng-model="Data.attachmentType" required name="attachmentType">
                     <ui-select-match>
                         <span ng-bind="$select.selected.title"></span>
                     </ui-select-match>
@@ -47,7 +47,19 @@
                             repeat="attachmentType in (Data.attachmentTypeList) track by $index">
                         <span ng-bind="attachmentType.title"></span>
                     </ui-select-choices>
-                </ui-select>
+                </ui-select> -->
+
+                <single-select
+                    widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                    name="attachmentType"
+                    required
+                    app-enum-key="attachmentType"
+                    ng-model="Data.attachmentType"
+                    model="Data.attachmentType"
+                    is-edit-mode="Data.mode!='view'"
+                    >
+
+            </single-select>
             </div>
 
 
@@ -58,7 +70,7 @@
             <label class="saad-form__label">توضیحات</label>
             <div ng-show="isEditMode" class="saad-form__value">
                 <textarea type="text" class="form-control" name="description" ng-model="Data.description"
-                          rows="4" style="max-width: 300px; border-radius: 3px;">
+                        rows="4" style="max-width: 300px; border-radius: 3px;">
                 </textarea>
             </div>
         </div>
@@ -67,7 +79,7 @@
             <div class="saad-form__value">
 
 
-                <ui-select append-to-body="true" ng-model="Data.chooseLetterType"  
+                <!-- <ui-select append-to-body="true" ng-model="Data.chooseLetterType"  
                     name="attachFrom" 
                     on-select="Func.onChooseLetterTypeChange()">
 
@@ -78,38 +90,52 @@
                             repeat="attachFrom in (Data.attachFromList) track by $index">
                         <span ng-bind="attachFrom.title"></span>
                     </ui-select-choices>
-                </ui-select>
+                </ui-select> -->
+
+
+
+                <single-select
+                    widget="{{Data.isMobileView ? 'bottomSheetOpener':'dropdown'}}"
+                    name="attachFrom"
+                    app-enum-key="attachSourceType"
+                    ng-model="Data.chooseLetterType"  
+                    model="Data.chooseLetterType"  
+                    on-select="Func.onChooseLetterTypeChange()"
+                    is-edit-mode="Data.mode!='view'"
+                    >
+
+            </single-select>
 
 
             </div>
         </div>
-        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='COMPUTER'" style="">
+        <div class="saad-form__row" ng-if="Data.chooseLetterType=='COMPUTER'" style="">
             <label class="saad-form__label" ng-class="{'required':isEditMode}">فایل</label>
             <div class="saad-form__value"
-                 ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">
-                <letter-body class="katebLetterBody tw-flex tw-flex-col tw-h-[480px]" model="Data.file" 
+                ng-class="{'has-error':Data.validationClicked && letterAttachementForm.file.$invalid}">
+                <letter-body class="katebLetterBody tw-flex tw-flex-col" model="Data.file" 
                             ng-required="!Data.file.hash" name="file"
-                             ng-model="Data.file"
-                             is-edit-mode="isEditMode" api="controller.letterBody"
-                             type="Data.letterBodyType"
-                             on-file-uploaded="loadPdfFn" 
-                             hide-label="true"
-                             pdf-url="Data.file">
+                            ng-model="Data.file"
+                            is-edit-mode="isEditMode" api="controller.letterBody"
+                            type="Data.letterBodyType"
+                            on-file-uploaded="loadPdfFn" 
+                            hide-label="true"
+                            pdf-url="Data.file">
                 </letter-body>
             </div>
         </div>
-        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='SCAN'">
+        <div class="saad-form__row" ng-if="Data.chooseLetterType=='SCAN'">
             <div class="" ng-show="isEditMode"
-                 ng-class="{'has-error':Data.validationClicked && letterAttachementForm.scanner.$invalid}">
-             
+                ng-class="{'has-error':Data.validationClicked && letterAttachementForm.scanner.$invalid}">
+            
                 <scanner required ng-model="Data.file" name="scanner"
-                         class="scan-scanner" options="controller.scanner.options" isolate-form
-                         model="Data.file" api="controller.scanner" >
+                        class="scan-scanner" options="controller.scanner.options" isolate-form
+                        model="Data.file" api="controller.scanner" >
                 </scanner>
             </div>
         </div>
         <div class="saad-form__row"
-             ng-if="Data.chooseLetterType.key=='GANJEH'">
+            ng-if="Data.chooseLetterType=='GANJEH'">
             <label ng-show="!Data.isLogin && isEditMode" class="saad-form__label">ورود به گنجه جهت بایگانی</label>
             <div ng-show="!Data.isLogin && isEditMode" class="saad-form__value">
                 <button class="btn btn-default" ng-click="Func.onEnterToGanjehClick()">ورود</button>
@@ -122,14 +148,14 @@
                 <h4 ng-repeat="file in Data.ganjehFiles"><span class="label label-warning">{{file.name}}</span></h4>
             </div>
         </div>
-        <div class="saad-form__row" ng-if="Data.chooseLetterType.key=='LETTER'"
-             ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachLetter.$invalid}">
+        <div class="saad-form__row" ng-if="Data.chooseLetterType=='LETTER'"
+            ng-class="{'has-error':Data.validationClicked && letterAttachementForm.attachLetter.$invalid}">
             <label class="saad-form__label" ng-class="{'required':isEditMode}">نامه</label>
             <div class="saad-form__value">
                 <a class="btn btn-cs btn-default" ng-click="Func.onSelectLetter()">انتخاب</a>
                 <label ng-show="Data.attachLetter">نامه انتخاب شده: </label>
                 <span ng-show="Data.attachLetter" style="" class="label label-info"
-                      ng-model="Data.attachLetter" required name="attachLetter">
+                    ng-model="Data.attachLetter" required name="attachLetter">
                     {{Data.attachLetter.internalNumber}} - {{Data.attachLetter.subject}}
                 </span>
             </div>
@@ -141,5 +167,5 @@
                 </button>
             </div>
         </div>
-    </ng-form>
+    </div>
 </div>

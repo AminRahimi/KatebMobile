@@ -12,22 +12,28 @@
 		<div class="md-input-underline" >
 		</div>
 	</div>
+	<div ng-show="isTagging"
+	ng-click="onSelect({$item:Data.query,$model:Data.query})"
+		class="action-icon tw-h-full tw-self-center "
+		ng-include="'kateb-icon-plus.svg'"></div>
 </div>
 
-<ul class="tw-overflow-scroll tw-mt-3 tw-mb-3">
+<ul class="kateb-menu tw-overflow-scroll tw-mt-3 tw-mb-3">
 	<li ng-repeat="item in (options | filter: Data.query) track by $index"
-	class="tw-mb-listRowGap"
+	class="kateb-menu__menu-item"
 	 ng-click="onSelect({$item:item,$model:item})">
-		<span >{{item.title}}</span>
+		<span >
+			{{appEnumKey?(item | appEnum:appEnumKey): item[titlePropKey] || item.title || item}}
+		</span>
 	</li>
 </ul>
 
 
 <div class="tw-mt-auto">
-	<span class=" chips  chips-default " ng-repeat="item in model track by $index">
-		<span class="chips__close " ng-click="onRemove({$item:item})">×</span>
+	<span class=" chip  chip-default " ng-repeat="item in model track by $index">
+		<span class="chip__close " ng-click="onRemove({$item:item})">×</span>
 		<span class="tw-p-1" >
-		{{item.title}}
+		{{appEnumKey?(item | appEnum:appEnumKey): item[titlePropKey] || item.title || item}}
 		</span>
 	</span>
 </div>

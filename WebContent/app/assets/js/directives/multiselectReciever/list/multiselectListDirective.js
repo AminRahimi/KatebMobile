@@ -8,7 +8,8 @@ angular.module('multiselectReciever').directive('multiselectList', [
                 onRefresh: "&",
                 onSelect: "&",
                 onRemove: "&",
-                options: "="
+                options: "=",
+                isTagging:"="
 
             },
             templateUrl: 'app/assets/js/directives/multiselectReciever/list/multiselectList.html',

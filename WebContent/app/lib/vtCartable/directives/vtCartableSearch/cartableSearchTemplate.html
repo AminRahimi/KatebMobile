@@ -1,30 +1,51 @@
-</style>
-<div class="row cartableSearch" ng-if="!controlFn.advanced">
-	<div class="col-sm-9">
-     <div ng-repeat="field in controlFn.searchableFieldInfo track by $index" ng-switch on="field.type" ng-hide="field.isHidden">
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="string">
+
+
+<script type="text/ng-template" id="cartable-search-field-templates.html">
+     <span ng-switch on="field.type" class="">
+          <span class="" ng-switch-when="string">
                <input type="text" class="form-control search-input" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
-          </div>
-         <div class="col-sm-2 searchFilterBox fastSearch" ng-switch-when="fastSearch"
+          </span>
+          <!-- TODO:check if removed fastSearch css class cause bug! -->
+         <span class=" " ng-switch-when="fastSearch"
               tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-popup-delay="200" tooltip=" لطفا از جستجوی نوار ابزار بالا استفاده نمایید."
          >
-               <input id="fastSearch" ng-disabled="!Data.quickSearchEnabled" type="text" class="form-control search-input"
+               <input id="" ng-disabled="!Data.quickSearchEnabled" type="text" class="form-control search-input"
 
                       name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
-          </div>
-         <div class="col-sm-2 searchFilterBox fastSearch" ng-switch-when="multi_like">
-             <input id="multiLike" type="text" class="form-control search-input" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
-         </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="integer">
+          </span>
+         <span class=" " ng-switch-when="multi_like">
+
+
+          <!-- FIXME:  ui-keypress="{13:'onSearchClick()'}" on modal mode -->
+               <div class="md-input-main">
+                    <div class="md-input-box">
+                         <input
+                         type="text"
+                         id="multiLike" 
+                         class="md-input auto-size-input" 
+                         name="{{field.key}}"
+                         ng-model="controlFn.searchQuery[field.key]"
+                         
+                         ui-keypress="{13:'onSearchClick()'}"
+                         placeholder="{{field.label}}"
+                         />
+                         <!-- <label for="fullName" class="md-label">Full Name</label>-->
+                         <div class="md-input-underline" >
+                         </div>
+                    </div>
+               </div>
+             <!-- <input id="multiLike" type="text" class="form-control search-input" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}"> -->
+         </span>
+          <span class="" ng-switch-when="integer">
                <input type="number" class="form-control search-input" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]" placeholder="{{field.label}}">
-          </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="date">
+          </span>
+          <span class="" ng-switch-when="date">
               <vt-cartable-date-interval model="controlFn.searchQuery[field.key]" label="field.label"></vt-cartable-date-interval>
-          </div>
-          <div class="col-sm-2 viraDateBox searchFilterBox" ng-switch-when="timestamp">
+          </span>
+          <span class="" ng-switch-when="timestamp">
               <vt-cartable-date-interval model="controlFn.searchQuery[field.key]" label="field.label"></vt-cartable-date-interval>
-          </div>
-          <div class="col-sm-6 searchFilterBox" ng-switch-when="fTDate">
+          </span>
+          <span class="" ng-switch-when="fTDate">
               <div class="col-sm-6">
                   <label class="col-sm-2 from-to-label">از</label>
                   <vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-sm-10" model="field.gtValue"></vt-persian-date-picker>
@@ -33,194 +54,143 @@
                   <label class="col-sm-2 from-to-label">تا</label>
                   <vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-sm-10" model="field.ltValue"></vt-persian-date-picker>
               </div>
-          </div>
-          <!--<div class="col-sm-12" ng-switch-when="ftDate">-->
-              <!--<div class="row">-->
-                  <!--<div class="col-sm-1">-->
-                      <!--<label>از</label>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-5">-->
-                      <!--<vt-persian-date-picker model="controlFn.searchQurey[field.key]"></vt-persian-date-picker>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-1">-->
-                      <!--<label>تا</label>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-5">-->
-                      <!--<vt-persian-date-picker model="controlFn.searchQurey[field.key]"></vt-persian-date-picker>-->
-                  <!--</div>-->
-              <!--</div>-->
-          <!--</div>-->
-          <div class="col-sm-2 active-search-box searchFilterBox" ng-switch-when="bool">
+          </span>
+          <span class="" ng-switch-when="bool">
                
-                    <input type="checkbox" class="checkbox" indeterminate
+               <input type="checkbox" class="checkbox" indeterminate
 														ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]">
               <label class="indeterminate-label" style="padding: 0;">{{field.label}}</label> 
-          </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="enum">
+          </span>
+          <span class="" ng-switch-when="enum">
+
+               <single-select
+                    ng-if="!field.multiple" 
+                    widget="{{field.widget}}"
+                    options="field.itemList"
+                    ng-model="controlFn.searchQuery[field.key]" 
+                    model="controlFn.searchQuery[field.key]" 
+                    on-select="onSelectEnum()"
+                    is-edit-mode="true"
+                    >
+
+               </single-select>
+
+
+               <!-- <select 
+                    ng-if="!field.multiple" 
+                    class="form-control search-input" 
+                    ng-change="onSelectEnum()"
+                    ng-model="controlFn.searchQuery[field.key]" 
+                    ui-keypress="{13:'onSearchClick()'}"
+                    ng-options="item.title for item in field.itemList">
+                    <option value="">{{field.label}}</option>
+               </select> -->
+
+
+               <!-- FIXME: remove vt-dropdown-multiselect from project! -->
+               <!-- <vt-dropdown-multiselect 
+                    ng-if="field.multiple"  
+                    model="controlFn.searchQuery[field.key]"
+                    label="{{field.label}}" 
+                    options="field.itemList">
+               </vt-dropdown-multiselect> -->
+
+               <multiselect-reciever 
+                    ng-if="field.multiple"  
+                    widget="{{field.widget}}"
+                    model="controlFn.searchQuery[field.key]"
+                    init-options="field.itemList"
+                    ng-model="controlFn.searchQuery[field.key]"
+                    is-edit-mode="true">
+               </multiselect-reciever>
+          </span>
+          <span class="" ng-switch-when="enum2">
                <select ng-if="!field.multiple" class="form-control search-input" ng-change="onSelectEnum()"
 							 					ng-model="controlFn.searchQuery[field.key]" ui-keypress="{13:'onSearchClick()'}"
 												ng-options="item.title for item in field.itemList">
-                    		<option value="">{{field.label}}</option>
                </select>
                <vt-dropdown-multiselect ng-if="field.multiple"  model="controlFn.searchQuery[field.key]"
 							 													label="{{field.label}}" options="field.itemList">
 							 </vt-dropdown-multiselect>
-          </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="enum2">
-               <select ng-if="!field.multiple" class="form-control search-input" ng-change="onSelectEnum()"
-							 					ng-model="controlFn.searchQuery[field.key]" ui-keypress="{13:'onSearchClick()'}"
-												ng-options="item.title for item in field.itemList">
-               </select>
-               <vt-dropdown-multiselect ng-if="field.multiple"  model="controlFn.searchQuery[field.key]"
-							 													label="{{field.label}}" options="field.itemList">
-							 </vt-dropdown-multiselect>
-          </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="collection">
+          </span>
+          <span class="" ng-switch-when="collection">
                <vt-typeahead api="field"
                     model="controlFn.searchQuery[field.key]"
                     is-edit-mode="true">
                </vt-typeahead>
+          </span>
+          <span class="" ng-switch-when="tagInput">
+               <multiselect-reciever 
+                    widget="{{field.widget}}"
+                    model="controlFn.searchQuery[field.key]" 
+                    ng-model="controlFn.searchQuery[field.key]"
+                    is-tagging="true" 
+                    is-edit-mode="true">
+               </multiselect-reciever>
+               <!-- TODO: remove  vt-dropdown-multi-string directive-->
+              <!-- <vt-dropdown-multi-string label="field.label" model="controlFn.searchQuery[field.key]"></vt-dropdown-multi-string> -->
+          </span>
+     </span>
+</script>
+
+<div class="row cartableSearch" ng-if="!widget || widget==='search-bar'">
+	<div class="col-sm-9">
+          <div ng-repeat="field in controlFn.searchableFieldInfo track by $index"  ng-hide="field.isHidden">
+               <span ng-include="'cartable-search-field-templates.html'"></span>
           </div>
-          <div class="col-sm-2 searchFilterBox" ng-switch-when="tagInput">
-              <vt-dropdown-multi-string label="field.label" model="controlFn.searchQuery[field.key]"></vt-dropdown-multi-string>
-          </div>
-     </div>
 	</div>
 
   <div class="col-sm-3 p-t-6 p-b-6 pull-left" style="padding-right:0;padding-left: 0">
       <a class="btn btn-sm btn-default h-32 p-t p-b pull-left exitBtn" style="margin-right: 3px;" type="button" ng-click="onExitSearchModeClick()">
-           <span class="flaticon-close-button" aria-hidden="true"></span>
+          <span class="flaticon-close-button" aria-hidden="true"></span>
       </a>
       <a class="btn btn-sm btn-default h-32 p-t p-b pull-left" type="button" ng-click="onSearchClick()" ng-disabled="Data.isSearching" style="margin-right: 3px;">
-           <span class="flaticon-search" aria-hidden="true"></span>
+          <span class="flaticon-search" aria-hidden="true"></span>
       </a>
       <a access-checker="ACCESS_RESET_CACHE" class="btn btn-sm btn-default h-32 p-t p-b pull-left" type="button" ng-click="onNewSearchClick()" ng-disabled="Data.isSearching" style="margin-right: 3px;">
-           <img src="app/assets/img/finding-512.png" style="width: 25px; margin-top: -6px;">
+          <img src="app/assets/img/finding-512.png" style="width: 25px; margin-top: -6px;">
       </a>
       <div style="padding-right: 0; min-width: 120px; margin-left: 20px" class="multiSelector h-32 p-t p-b pull-left"
-						ng-dropdown-multiselect="" translation-texts="selectFiledCnt.multiSelectTranslate"
-						options="searchableFieldInfoCp" selected-model="selectFiledCnt.selectedFromMultiselect"
-						extra-settings="selectFiledCnt.multiSelectSettings" events="selectFiledCnt.multiSelectEvents">
-			</div>
+          ng-dropdown-multiselect="" translation-texts="selectFiledCnt.multiSelectTranslate"
+          options="searchableFieldInfoCp" selected-model="selectFiledCnt.selectedFromMultiselect"
+          extra-settings="selectFiledCnt.multiSelectSettings" events="selectFiledCnt.multiSelectEvents">
+     </div>
   </div>
 </div>
-<!-- ----------------------------------------------- ADVANCED SEARCH ------------------------------------------------------ -->
-<div class="row" ng-if="controlFn.advanced">
-     <div class="row rowForm" ng-repeat="field in controlFn.searchableFieldInfo" ng-switch on="field.type" ng-hide="field.isHidden">
-          <label class="col-sm-5">{{field.label}}</label>
-          <div class="col-sm-7" ng-switch-when="string">
-               <input type="text" class="form-control" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]">
-          </div>
-          <div class="col-sm-7" ng-switch-when="integer">
-               <input type="number" class="form-control search-input" name="{{field.key}}" ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]">
-          </div>
-          <div class="col-sm-7" ng-switch-when="date">
-               <!--                <div class="col-sm-6"> -->
-               <!--                     <label class="col-sm-1 p-t-10">از</label> -->
-               <!--                     <vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-sm-10" model="field.gtValue"></vt-persian-date-picker> -->
-               <!--                </div> -->
-               <!--                <div class="col-sm-6"> -->
-               <!--                     <label class="col-sm-1 p-t-10">تا</label> -->
-               <!--                     <vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-sm-10" model="field.ltValue"></vt-persian-date-picker> -->
-               <!--                </div> -->
-               <div class="dropdown date-interval-cnt" ng-init="DateTypeCnt.onInitDateInterval()">
-                    <!--           <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-                    <!--                Dropdown trigger -->
-                    <!--                <span class="caret"></span> -->
-                    <!--           </button> -->
-                    <div data-toggle="dropdown" ng-click="DateTypeCnt.onDropDateClick(field)">
-                         <p class="form-control-static">
-                              <label>تاریخ :</label>
-                              <label>از</label>
-                              <span> {{field.gtValue| tehranDate: (field.haveTime ? 'jYYYY/jMM/jDD HH:mm' :'jYYYY/jMM/jDD') }}</span>
-                              <label>تا</label>
-                              <span> {{field.ltValue| tehranDate:(field.haveTime ? 'jYYYY/jMM/jDD HH:mm' :'jYYYY/jMM/jDD')}}</span>
-                         </p>
-                    </div>
-                    <div class="dropdown-menu" aria-labelledby="dLabel">
-                         <div class="panel panel-default">
-                              <div class="panel-heading">
-                                   انتخاب بازه
-                                   <button class="btn btn-primary pull-left" ng-click="DateTypeCnt.onSaveClick(field)">تایید</button>
-                              </div>
-                              <div class="panel-body">
-                                   <div class="col-sm-12">
-                                        <div class="row">
-                                             <date-interval label="از" have-time="field.haveTime" date="field.tmpGtValue" houre="field.tmpFromHoure" minute="field.tmpFromMinute"></date-interval>
-                                        </div>
-                                   </div>
-                                   <div class="col-sm-12">
-                                        <div class="row">
-                                             <date-interval label="تا" have-time="field.haveTime" date="field.tmpLtValue" houre="field.tmpToHoure" minute="field.tmpToMinute"></date-interval>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
+
+
+<span ng-if="widget==='modalOpener'" 
+     class="action-icon tw-absolute tw-bottom-2 tw-h-7"
+     ng-click="onOpenSearchModalClick()"  
+     ng-include="'kateb-icon-search'">
+</span>
+
+
+<script type="text/ng-template" id="cartable-search-modal-template.html">
+     
+
+
+
+     <div class="modal-header">
+          فیلتر
+     </div>
+     <div class="modal-body">
+          <div class="saad-form">
+               <div class="saad-form__row" ng-repeat="field in controlFn.searchableFieldInfo track by $index"  ng-hide="field.isHidden">
+                    <label class="saad-form__label">{{field.label}}</label>
+                    <div class="saad-form__value">
+                         <span ng-include="'cartable-search-field-templates.html'"></span>
                     </div>
                </div>
           </div>
-          <div class="col-sm-7" ng-switch-when="timestamp">
-               <!--                <div class="col-sm-6"> -->
-               <!--                     <label class="col-sm-1 p-t-10">از</label> -->
-               <!--                     <vt-persian-date-picker name="creationDate_from_{{$index}}" class="col-sm-10" model="field.gtValue"></vt-persian-date-picker> -->
-               <!--                </div> -->
-               <!--                <div class="col-sm-6"> -->
-               <!--                     <label class="col-sm-1 p-t-10">تا</label> -->
-               <!--                     <vt-persian-date-picker name="creationDate_to_{{$index}}" class="col-sm-10" model="field.ltValue"></vt-persian-date-picker> -->
-               <!--                </div> -->
-               <div class="dropdown date-interval-cnt" ng-init="DateTypeCnt.onInitDateInterval()">
-                    <!--           <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-                    <!--                Dropdown trigger -->
-                    <!--                <span class="caret"></span> -->
-                    <!--           </button> -->
-                    <div data-toggle="dropdown" ng-click="DateTypeCnt.onDropDateClick(field)">
-                         <p class="form-control-static">
-                              <label>تاریخ :</label>
-                              <label>از</label>
-                              <span> {{field.gtValue| tehranDate: (field.haveTime ? 'jYYYY/jMM/jDD HH:mm' :'jYYYY/jMM/jDD') }}</span>
-                              <label>تا</label>
-                              <span> {{field.ltValue| tehranDate:(field.haveTime ? 'jYYYY/jMM/jDD HH:mm' :'jYYYY/jMM/jDD')}}</span>
-                         </p>
-                    </div>
-                    <div class="dropdown-menu" aria-labelledby="dLabel">
-                         <div class="panel panel-default">
-                              <div class="panel-heading">
-                                   انتخاب بازه
-                                   <button class="btn btn-primary pull-left" ng-click="DateTypeCnt.onSaveClick(field)">تایید</button>
-                              </div>
-                              <div class="panel-body">
-                                   <div class="col-sm-12">
-                                        <div class="row">
-                                             <date-interval label="از" have-time="field.haveTime" date="field.tmpGtValue" houre="field.tmpFromHoure" minute="field.tmpFromMinute"></date-interval>
-                                        </div>
-                                   </div>
-                                   <div class="col-sm-12">
-                                        <div class="row">
-                                             <date-interval label="تا" have-time="field.haveTime" date="field.tmpLtValue" houre="field.tmpToHoure" minute="field.tmpToMinute"></date-interval>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-                    </div>
-               </div>
-          </div>
-          <div class="col-sm-7" ng-switch-when="bool">
-               <input type="checkbox" class="checkbox" indeterminate ui-keypress="{13:'onSearchClick()'}" ng-model="controlFn.searchQuery[field.key]">
-          </div>
-          <div class="col-sm-7" ng-switch-when="enum">
-               <select ng-if="!field.multiple" class="form-control" ng-change="onSelectEnum()" ng-model="controlFn.searchQuery[field.key]" ui-keypress="{13:'onSearchClick()'}" ng-options="item.title for item in field.itemList">
-                    <option value="">{{field.label}}</option>
-               </select>
-               <vt-dropdown-multiselect ng-if="field.multiple" model="controlFn.searchQuery[field.key]" label="field.label" options="field.itemList"></vt-dropdown-multiselect>
-          </div>
      </div>
-     <hr>
-     <div class="col-sm-12">
-          <a class="btn btn-sm btn-default" type="button" ng-click="onSearchClick()">
-               <span class="flaticon-search" aria-hidden="true"></span>
-          </a>
-          <a class="btn btn-sm btn-default exitBtn" type="button" ng-click="onExitSearchModeClick()">
-               <span class="flaticon-close-button" aria-hidden="true"></span>
-          </a>
+     <div class="modal-footer">
+          <button type="button" class="btn btn-warning"
+            ng-click="Func.onCancelClick()">انصراف</button>
+
+          <button type="button" class="btn btn-success"
+            ng-click="Func.onExitSearchModeClick()">لغو جستجو</button>
+          <button type="button" class="btn btn-success"
+            ng-click="Func.onSearchClick()">جستجو</button>
      </div>
-</div>
+</script>

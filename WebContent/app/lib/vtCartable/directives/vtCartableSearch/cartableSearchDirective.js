@@ -5,14 +5,17 @@ angular.module('cartableSearch').directive("cartableSearch", function($http) {
 		templateUrl : "app/lib/vtCartable/directives/vtCartableSearch/cartableSearchTemplate.html",
 		scope : {
 			controlFn : '=',
-            options: '='
+            options: '=',
+			widget:'@?'
 		},
-		controller : function($scope, $element,configObj) {
+		controller : function($scope, $element,configObj,homeSrvc,$modal) {
 
 
 			$scope.Data = {
 				isSearching:false,
-				quickSearchEnabled:configObj.quickSearchEnabled
+				quickSearchEnabled: configObj.quickSearchEnabled,
+				// FIXME:place isMobileView in shared place
+				isMobileView: homeSrvc.screenSizeDetector.isMobile()
 			};
 
 
@@ -193,6 +196,7 @@ angular.module('cartableSearch').directive("cartableSearch", function($http) {
                 return $scope.onSearchClick(isNewSearch = true);
 			};
 
+
 			$scope.onSearchClick = function(isNewSearch) {
 				if($scope.Data.isSearching){
 					return false;
@@ -252,6 +256,35 @@ angular.module('cartableSearch').directive("cartableSearch", function($http) {
 			
 			$scope.controlFn.exitSearchApi = function() {
 				$scope.onExitSearchModeClick();
+			}
+
+
+			$scope.onOpenSearchModalClick = function(){
+				var modalInstance = $modal.open({
+					templateUrl : 'cartable-search-modal-template.html',
+					controller : 'cartableSearchModalCtrl',
+					resolve : {
+						controlFn : function() {
+							return $scope.controlFn
+						},
+						options : function() {
+							return $scope.options
+						}
+					}
+				});
+				modalInstance.result.then(function(result) {
+					if(!result) return
+
+					if(result==='onSearchClick'){
+						$scope.onSearchClick();
+					}
+
+					if(result==='onExitSearchModeClick'){
+						$scope.onExitSearchModeClick();
+					}
+
+
+				});
 			}
 		},
 		link : function(scope, element, attrs, ctrls) {

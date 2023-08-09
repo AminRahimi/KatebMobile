@@ -1,11 +1,15 @@
-<single-select-list
+<single-select
 	model="input.model"
-	on-refresh="input.onRefresh({$query:$query})"
+	widget="list"
+	search-fn="input.onRefresh({$query:$query})"
 	on-select="input.onSelect({$item:$item, $model:$model})"
+	on-remove="input.onRemove()"
 	is-edit-mode="true"
 	app-enum-key="{{input.appEnumKey}}"
 	title-prop-key="{{input.titlePropKey}}"
 	options="input.options"
-	class="tw-h-full tw-flex tw-flex-col"
+	filter-fn="input.filterFn({$query:$query,$appEnumKey:$appEnumKey})"
+	is-tagging="input.isTagging"
+	
 	>
-</single-select-list>
+</single-select>

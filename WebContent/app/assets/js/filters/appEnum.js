@@ -12,16 +12,7 @@
 	letterRecivingType: {
 		'Post': 'پست',
 		'Fax': 'فکس',
-		'Web_Service': 'وب سرویس',
 		'Courier': 'پیک'
-	},
-	letterRecivingTypeUpper: {
-		'POST': 'پست',
-		'FAX': 'فکس',
-		'COURIER': 'پیک',
-		'ECE': 'ECEP',
-		'KATEB': 'بین سازمانی',
-		'ORG': 'بین سازمانی'
 	},
 	attachmentType: {
 		'Turn': 'عطف',
@@ -29,12 +20,23 @@
 		'Appendix': 'پیوست',
 		'Relation': 'ارتباط'
 	},
+	attachSourceType:{
+		'COMPUTER':'فایل از کامپیوتر',
+		'SCAN':'فایل از نرم افزار اسکن',
+		'GANJEH':'فایل از گنجه',
+		'LETTER':'نامه'
+	},
 	priority: {
 		'Normal': 'عادی',
 		'Critical': 'فوری',
 		'Blocker': 'خیلی فوری',
 		'Immediate': 'آنی',
 		'Unknown': 'نامشخص'
+	},
+	letterIncommingPriority: {
+		'Normal': 'عادی',
+		'Critical': 'فوری',
+		'Blocker': 'خیلی فوری',
 	},
 	draftState: {
 		'INITIAL': 'در حال ویرایش ',

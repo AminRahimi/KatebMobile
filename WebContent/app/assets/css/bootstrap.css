@@ -1,4 +1,82 @@
-.h4, .h5, .h6, h4, h5, h6{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* New Design */
+
+
+
+.h4,
+.h5,
+.h6,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
+
+.dropdown-menu {
+    min-width: 100px;
+}
+
+
+body>.ui-select-bootstrap.open {
+    z-index: 1052;
+}

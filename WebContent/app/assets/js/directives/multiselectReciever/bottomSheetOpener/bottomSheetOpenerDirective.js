@@ -9,7 +9,8 @@ angular.module('multiselectReciever').directive('multiselectBottomSheetOpener', 
                 onSelect: "&",
                 onModelItemSelect: "&",
                 onRemove: "&",
-                options: "="
+                options: "=",
+                isTagging:"=",
             },
             templateUrl: 'app/assets/js/directives/multiselectReciever/bottomSheetOpener/bottomSheetOpener.html',
             controller: function ($scope, bottomSheetSrvc) {
@@ -30,7 +31,8 @@ angular.module('multiselectReciever').directive('multiselectBottomSheetOpener', 
                                 onRefresh: $scope.onRefresh,
                                 onSelect: $scope.onSelect,
                                 onRemove: $scope.onRemove,
-                                options: $scope.options
+                                options: $scope.options,
+                                isTagging: $scope.isTagging
                             });
                     }
                 }

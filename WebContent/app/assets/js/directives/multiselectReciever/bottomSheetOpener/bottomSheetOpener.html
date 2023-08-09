@@ -1,9 +1,10 @@
 
 <div ng-show="isEditMode">
-	<span class=" chips  chips-default" ng-click="onModelItemSelect({$item:item})" ng-repeat="item in model track by $index">
-		<span class="chips__close " ng-click="onRemove({$item:item})">×</span>
+	<span class=" chip  chip-default" ng-click="onModelItemSelect({$item:item})" ng-repeat="item in model track by $index">
+		<span class="chip__close " ng-click="onRemove({$item:item})">×</span>
 		<span class="tw-p-1" >
-		{{item.title}}
+			<!-- FIXME:implement supporting appEnumKey,titlePropKey  -->
+		{{appEnumKey?(item | appEnum:appEnumKey): item[titlePropKey] || item.title || item}}
 		</span>
 	</span>
 

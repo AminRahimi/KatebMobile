@@ -2,42 +2,17 @@ angular.module('secretariatModule').controller('secretariatIncomingListCtrl', fu
 
 	$scope.Data = {
 		secUid: $state.params.secUid,
-		featuresList: [],
+		featuresList: secretariatSrvc.getFeatureList($state.params.secUid),
 		// FIXME:pace in rootscope
 		isMobileView: homeSrvc.screenSizeDetector.isMobile()
 	}
 
 	$scope.Func = {
-		onAddClick: function(){
-			
-			
-			
-			
-			//$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid});
-			
-			
-			
-			
-			
-			var modalInstance = $modal.open({
-				templateUrl: 'app/modules/secretariat/incoming/incommingLetterTemplateList.html',
-				controller: 'incommingLetterTemplateListCtrl',
-				size: 'md'
-			});
-			modalInstance.result.then(function (incommingLetterTemplate) {
-					$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid, tmpUid: incommingLetterTemplate.uid});
-			});
-			
-			
-			
-			
-			
-			
-			
+		getStateName: function (stateName) {
+			return homeSrvc.getStateName(stateName);
 		},
-		
 		onIncomingClick: function(incoming){
-			$state.go('base.home.secretariat.incoming', {secUid: $scope.Data.secUid, incUid: incoming.uid});
+			$state.go($scope.Func.getStateName('base.home.secretariat.incoming'), {secUid: $scope.Data.secUid, incUid: incoming.uid});
 		},
         onIncomingDeleteClick: function (incoming) {
             secretariatSrvc.deleteIncoming($scope.Data.secUid, incoming.uid).then(function (res) {
@@ -61,7 +36,7 @@ angular.module('secretariatModule').controller('secretariatIncomingListCtrl', fu
 				],
 				mobile:[
 					{key:'subject', label: '',styleClass:"kateb-text-2 tw-text-black "},
-					{key:'creatorUser.title', label:'کاربر سازنده',styleClass:"kateb-text-2 tw-text-gray",
+					{key:'sender.title', label:'فرستنده',styleClass:"kateb-text-2 tw-text-gray",
 						labelClass:""},
 					{key:'externalNumber', label:'شماره خارجی',styleClass:"kateb-text-2 tw-float-right  tw-text-primary-light",
 						labelClass:"tw-text-black"},

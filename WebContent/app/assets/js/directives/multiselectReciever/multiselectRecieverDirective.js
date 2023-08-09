@@ -12,6 +12,7 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
                 hasDescription: "=",
                 initOptions: "=",
                 notShowModel: "=",
+                isTagging:"=",
                 widget: "@"
             },
             templateUrl: 'app/assets/js/directives/multiselectReciever/multiselectRecieverTemplate.html?v=2',
@@ -51,7 +52,7 @@ angular.module('multiselectReciever').directive('multiselectReciever', [
                         if (query && query.length >= 2) {
                             return $debouncedSearchFn({ query: query }).then(function (response) {
                                 $scope.options = response.data.originalElement;
-                                return $scope.options;
+                                return response;
                             });
                         }
                         return $q.reject();

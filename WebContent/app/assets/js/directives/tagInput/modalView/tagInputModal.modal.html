@@ -1,0 +1,18 @@
+
+<div class="modal-header">برچسب گذاری</div>
+<div class="modal-body">
+
+    <!-- FIXME:Add tagging mode posibiloity -->
+    <multiselect-reciever 
+        model="Data.tags"
+        search-fn="Func.refreshTegList(query)"
+        ng-model="Data.tags"
+        is-edit-mode="true">
+    </multiselect-reciever>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning"
+            ng-click="Func.onCancelClick()">انصراف</button>
+    <button type="button" class="btn btn-success"
+            ng-click="Func.onSendClick()">ارسال</button>
+</div>

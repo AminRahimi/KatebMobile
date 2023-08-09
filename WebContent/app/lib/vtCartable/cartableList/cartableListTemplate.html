@@ -19,22 +19,40 @@
     top:-12px
 }
 </style>
+
+<script type="text/ng-template" id="cartable-ist-search-template.html">
+    <cartable-search 
+            widget="{{Data.isMobileView?'modalOpener':'search-bar'}}"
+            control-fn="Controller.searchController" 
+            options="Controller.searchOptions">
+    </cartable-search>
+
+    <!-- FIXME: using vt-cartable-filter in modal mode -->
+    <vt-cartable-filter  data="Data" visible-header="visibleHeader"
+            controller="Controller" ng-if="showFilterManager">
+    </vt-cartable-filter>
+
+</script>
+
+
+
+
 <div class="kateb-filter-list">
-    <div class="  hidden-xs"  >
+    <!-- FIXME:refactor using hidden-xs for hidden in mobile view -->
+    <div class="hidden-xs"  >
         <!-- {{Data.selectedCartable.title}}  -->
         {{Data.selectedFilter.title}}
         <a ng-if="Data.selectedFilter.description" tooltip-append-to-body="true" tooltip-trigger="mouseenter" tooltip-class="customClass"
          tooltip-placement="left" tooltip-popup-delay="500"
          tooltip={{Data.selectedFilter.description}}><img src="app/assets/img/information-button.png" style="" /></a>
     </div>
-    <div class="hidden-xs" >
-        <cartable-search class=""
-                      control-fn="Controller.searchController" options="Controller.searchOptions">
-        </cartable-search>
-        <vt-cartable-filter  data="Data" visible-header="visibleHeader"
-                            controller="Controller" ng-if="showFilterManager"></vt-cartable-filter>
+    <div ng-if="!Data.isMobileView" >
+        <span ng-include="'cartable-ist-search-template.html'"></span>
     </div>
     <div class="kateb-filter-list__list" >
         <vt-cartable-grid control-fn="Controller.listController" options="{isMobileView:Data.isMobileView,infinitScroll:Data.isMobileView}" visible-headers="visibleHeader" style=""></vt-cartable-grid>
+
+        <span ng-if="Data.isMobileView" ng-include="'cartable-ist-search-template.html'"></span>
+        
     </div>
 </div>

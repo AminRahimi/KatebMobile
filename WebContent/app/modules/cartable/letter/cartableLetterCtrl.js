@@ -1,7 +1,7 @@
 angular.module('cartableModule').controller('cartableLetterCtrl', function($scope, $modal, $rootScope, $state, $timeout,
 																		   $sce, cartableKatebSrvc, fileSrvc, katebSrvc,
 																		   cartableSrvc, vtShowMessageSrvc,
-																		   Restangular, configObj) {
+																		   Restangular, configObj,homeSrvc) {
 
 	$scope.Data = {
         	orgUid: $rootScope.currentUserOrg.uid,
@@ -22,30 +22,121 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 			listView: false,
 			listViewInfo: [],
 			events: [],
-		referenceTabSelected: false,
-		logTabSelected: false,
-		followTagUid: "",
-		isFollow: false,
-        organizationList: [],
-        currentDate: new Date(),
-        isLoadingSaveClick: false,
-		treeMode: 'full',
-		selectedFolder: "",
-		archivedLetter: [],
-		hasExternalArchives: configObj.externalArchives.length,
-		vtFolderSelectorForm: "",
-		shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
-		isShamsDisabled:false,
-		forwardIsDisabled: false,
+			referenceTabSelected: false,
+			logTabSelected: false,
+			followTagUid: "",
+			isFollow: false,
+			organizationList: [],
+			currentDate: new Date(),
+			isLoadingSaveClick: false,
+			treeMode: 'full',
+			selectedFolder: "",
+			archivedLetter: [],
+			hasExternalArchives: configObj.externalArchives.length,
+			vtFolderSelectorForm: "",
+			shamsQRCodeEnabled: configObj.shamsQRCodeEnabled,
+			isShamsDisabled:false,
+			forwardIsDisabled: false,
 			lastCachedVisitedCartableFilterList: cartableSrvc.getLastCachedVisitedCartableFilterList($state.params.cartableUid + $state.params.filter),
 			isNextDisabled: false,
 			isPrevDisabled: false,
-			isNextPrevFeaturePossible:true,
-			actionButtons: cartableSrvc.getActionButtons($state.params.cartableType),
+			isNextPrevFeaturePossible: true,
+			actionButtonTpls: function(){
+				let actionButtonList = cartableSrvc.getActionButtons($state.params.cartableType);
+				let tpls = actionButtonList.map(function(actionButton){
+					return 'letter-'+ actionButton + '-action-button';
+				});
+
+				tpls.push('letter-prev-action-button');
+				tpls.push('letter-next-action-button');
+				return tpls;
+			}(),
+			actionButtonsMap: {
+				"letter-close-action-button": {
+					click: function() {
+						return $scope.Func.onReturnClick()
+					},
+					isVisible: function() {
+						return true
+					},
+				},
+				"letter-tag-action-button": {
+					isVisible: function() {
+						return true
+					},
+				},
+				"letter-archive-action-button": {
+					isVisible: function() {
+						return true
+					},
+				},
+				"letter-reply-action-button": {
+					click: function() {
+						return $scope.Func.onReplyClick()
+					},
+					isVisible: function() {
+						return true
+					},
+				},
+				"letter-user-archive-action-button": {
+					click: function() {
+						return $scope.Func.onAddToUserArchive()
+					},
+					isVisible: function() {
+						return true
+					},
+					access_checker: "USER_LETTER_ARCHIVE"
+				},
+				"letter-follow-action-button": {
+					click: function() {
+						return $scope.Func.onFollowClick()
+					},
+					isVisible: function() {
+						return !$scope.Data.isFollow
+					},
+				},
+				"letter-un-follow-action-button": {
+					click: function() {
+						return $scope.Func.onUnfollowClick()
+					},
+					isVisible: function() {
+						return $scope.Data.isFollow
+					},
+				},
+				"letter-prev-action-button": {
+					click: function() {
+						return $scope.Func.onGetPreviousLetterClick()
+					},
+					isVisible: function() {
+						return $scope.Data.isNextPrevFeaturePossible
+					},
+					isDisabled: function() {
+						return $scope.Data.isPrevDisabled
+					}
+				},
+				"letter-next-action-button": {
+					click: function() {
+						return $scope.Func.onGetNextLetterClick()
+					},
+					isVisible: function() {
+						return $scope.Data.isNextPrevFeaturePossible
+					},
+					isDisabled: function() {
+						return $scope.Data.isNextDisabled
+					},
+				},
+				"letter-user-un-archive-action-button": {
+					access_checker: "USER_LETTER_ARCHIVE"
+				}
+			
+			},
 			letterFeatures: cartableSrvc.getLetterDraftFeatures($state.params.cartableType),
 		};
 
 		$scope.Func = {
+			getStateName: function (stateName) {
+				return homeSrvc.getStateName(stateName);
+			},
 			// FIXME:refactor this code that is from a.najafvand
 			exchangeDelete: {
                 closeModalConfirm: function (resp) {
@@ -74,7 +165,8 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					id: 2,
 					title: 'ضمیمه',
 					uiSref: '',
-                    feature: '*'
+              
+					feature: '*'
 				}*/,{
 					id: 3,
 					title: 'ارجاع',
@@ -200,7 +292,6 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 					$scope.Func.getLetterForwardTree();
 					$scope.Func.reset();
 					cartableSrvc.setSelectedItems([]);
-					// $state.go('base.home.cartable.cartableList');
 				});
             	
             },
@@ -255,7 +346,7 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 			returnToCartableList: function(){
                 if (!_.isEmpty($scope.Func.getLastSearchQuery()))
                     cartableKatebSrvc.setSearchMode(true);
-				$state.go('base.home.cartable.cartableList');
+				$state.go($scope.Func.getStateName('base.home.cartable.cartableList'));
 			},
 			onPrintPDFClick: function(){
 				cartableKatebSrvc.openPDFModal($scope.Func.getPdfUrlWithSearchParams(true));
@@ -335,7 +426,8 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				});
 			},
 			onArchiveCb: function () {
-				$state.go('base.home.cartable.cartableList');
+				// FIXME:refactor getstatename
+				$state.go($scope.Func.getStateName('base.home.cartable.cartableList'));
                 cartableSrvc.setSelectedItems([]);
 			},
 			reset: function () {
@@ -440,10 +532,10 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				$scope.Data.letter.tags = $scope.Data.letter.tags.concat(tagList);
 			},
             onReplyClick: function () {
-                $state.go('base.home.cartable.draft', {replyFromUid: $scope.Data.letterUid,orgUid:'CURRENT'});
+                $state.go($scope.Func.getStateName('base.home.cartable.draft'), {replyFromUid: $scope.Data.letterUid,orgUid:'CURRENT'});
             },
 			onGoToProcessClick: function (event) {
-				$state.go("base.home.process.processInstanceInfo", {uid: event.object.uid});
+				$state.go($scope.Func.getStateName("base.home.process.processInstanceInfo"), {uid: event.object.uid});
 			},
 			onShowFullnameClick: function (event) {
 				if (!event.tooltipContent) {
@@ -512,17 +604,9 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				}
 
 
-				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
+				$state.go($scope.Func.getStateName('base.home.cartable.letter'), { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index +1].uid });
 
-
-
-
-                // cartableSrvc.getTask('next').then(function (res) {
-                // 	if (res.data.originalElement[0].itemUid === $scope.Data.letterUid)
-                // 		$scope.Func.onGetNextLetterClick();
-                //     else
-                //         $state.go('home.cartable.letter', {letterUid: res.data.originalElement[0].itemUid});
-                // });
+               
 
             },
 			//FIXME: duplicate in cartable draft and letter ctrl
@@ -552,12 +636,10 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				}
 				
 
-				$state.go('base.home.cartable.letter', { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
+				$state.go($scope.Func.getStateName('base.home.cartable.letter'), { letterUid: $scope.Data.lastCachedVisitedCartableFilterList[currentLetterIndexObj.index-1].uid });
 
 
-                // cartableSrvc.getTask('previous').then(function (res) {
-                //     $state.go('home.cartable.letter', {letterUid: res.data.originalElement[0].itemUid});
-                // });
+               
             },
             getLetterImage: function () {
 				return $scope.Func.trustSrc('/Kateb/api/letter/snapshot/' + $scope.Data.letter.uid);
@@ -579,7 +661,6 @@ angular.module('cartableModule').controller('cartableLetterCtrl', function($scop
 				$scope.Data.isLoadingSaveClick = true;
                 var sendData = $scope.Func.prepareSendData($scope.Data.letter);
                 cartableSrvc.saveIssued($scope.Data.letter.blankUid, sendData).then(function(){
-                    // $state.go('base.home.secretariat.issuedLetterList', {secUid: $scope.Data.secUid});
 					$scope.Func.getLpaOrJustLetter();
                     vtShowMessageSrvc.showMassage('success','', 'نامه با موفقیت ارسال شد.');
                 }, function () {

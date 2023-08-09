@@ -43,7 +43,7 @@ angular.module('vtPDFSignable', []).directive("vtPdfSignable",
                         var containerHeight = document.getElementById('viewerContainer').clientHeight;
                         
 
-                        var canvas = new fabric.Canvas('fabric-canvas', {
+                        var canvas = window.cc= new fabric.Canvas('fabric-canvas', {
                             width: containerWidth,
                             height: containerHeight,
                             selection: false,
@@ -87,75 +87,68 @@ angular.module('vtPDFSignable', []).directive("vtPdfSignable",
                         var rotateControls = controls.mtr;
                         rotateControls.visible = false;
 
+
+                        const updateDimensionsBySingSize=(fabricImg)=>{
+                            const POSITION = findePosition((fabricImg.top) + (fabricImg.height * fabricImg.scaleY), fabricImg.left);
+                            const PDF_VIEWER_CURRENT_SCALE =  PDFViewerApplication.pdfViewer.currentScale;
+                            $scope.controlFn.signCoords.y = POSITION.y < 1 ? 1 : POSITION.y;
+                            $scope.controlFn.signCoords.x = POSITION.x < 1 ? 1 : POSITION.x;
+                            $scope.controlFn.signCoords.pageNum = POSITION.pageNumber;
+
+                            $scope.controlFn.signCoords.width = (fabricImg.width * fabricImg.scaleX);
+                            $scope.controlFn.signCoords.height = (fabricImg.height * fabricImg.scaleY);
+                            $scope.controlFn.signCoords.widthRelatedToPdfViewerScale = $scope.controlFn.signCoords.width / PDF_VIEWER_CURRENT_SCALE;
+                            $scope.controlFn.signCoords.heightRelatedToPdfViewerScale = $scope.controlFn.signCoords.height / PDF_VIEWER_CURRENT_SCALE;
+
+                            var underSignElement =   document.getElementById('underSign');
+                            if(underSignElement){
+                                underSignElement.style.top = ((fabricImg.top) + (fabricImg.height * fabricImg.scaleY)) + 'px';
+                                underSignElement.style.left = (fabricImg.left) + 'px';
+                                underSignElement.style.width = ($scope.controlFn.signCoords.width) + 'px';
+                                
+                                // scaled calculated size by pdfViewer currentScale
+                                var maxFontSizeRelatedToPdfViewer = MAX_FONT_SIZE * PDF_VIEWER_CURRENT_SCALE;
+                                var minFontSizeRelatedToPdfViewer = MIN_FONT_SIZE * PDF_VIEWER_CURRENT_SCALE;
+                                var signFontSize = ($scope.controlFn.signCoords.width *6/100);
+                                signFontSize = Math.floor(Math.min(signFontSize,maxFontSizeRelatedToPdfViewer));
+                                signFontSize = Math.floor(Math.max(signFontSize,minFontSizeRelatedToPdfViewer));
+
+                                var signFontSizeRelatedToPdfViewer = signFontSize /PDF_VIEWER_CURRENT_SCALE
+                                
+                                angular.forEach(document.querySelectorAll("#underSign span"),function(element){
+
+                                    element.style.fontSize = signFontSize+'px';
+                                });
+                                $scope.controlFn.signFontSizeFloat = signFontSizeRelatedToPdfViewer;
+
+                            }
+                        }
+
                         fabric.Image.fromURL($scope.imageSrc, function(img) {
-                            var scale = (200 / img.width);
+                            var scale = ((containerWidth/4) / img.width);
                             // init signiture
                             img.scale(scale).set({
-                                left: 300,
+                                left: containerWidth/2,
                                 top: (containerHeight - 400),
                                 angle: 0,
                             });
-                            var position = findePosition((img.top) + (img.height * img.scaleY), img.left);
-                            $scope.controlFn.signCoords.y = position.y;
-                            $scope.controlFn.signCoords.x = position.x;
-                            $scope.controlFn.signCoords.pageNum = position.pageNumber;
-                            $scope.controlFn.signCoords.width = (img.width * img.scaleX);
-                            $scope.controlFn.signCoords.height = (img.height * img.scaleY);
-                            //$scope.controlFn.signCoords.rotate = Math.round(img.angle);
+
+                            updateDimensionsBySingSize(img);
+                            
 
                             canvas.add(img).setActiveObject(img);
 
-                            // init under signiture
-                            if(document.getElementById('underSign')){
-                                document.getElementById('underSign').style.top = ((img.top) + (img.height * img.scaleY)) + 'px';
-                                document.getElementById('underSign').style.left = (img.left) + 'px';
-                                document.getElementById('underSign').style.width = (img.width * img.scaleX) + 'px';
-                            }
-
+                            
                             // handle event signiture
                             img.on('moved', function(options) {
-                                var position = findePosition((options.target.top) + (options.target.height * options.target.scaleY), options.target.left);
-                                $scope.controlFn.signCoords.y = position.y < 1 ? 1 : position.y;
-                                $scope.controlFn.signCoords.x = position.x < 1 ? 1 : position.x;
-                                $scope.controlFn.signCoords.pageNum = position.pageNumber;
-                                if(document.getElementById('underSign')){
-                                    document.getElementById('underSign').style.top = ((options.target.top) + (options.target.height * options.target.scaleY)) + 'px';
-                                    document.getElementById('underSign').style.left = (options.target.left) + 'px';
-                                    document.getElementById('underSign').style.width = (options.target.width * options.target.scaleX) + 'px';
-                                }
+                                updateDimensionsBySingSize(options.target);
+                                
                             });
+
+                            
                             img.on('scaled', function(options) {
-                                var position = findePosition((options.target.top) + (options.target.height * options.target.scaleY), options.target.left);
-                                $scope.controlFn.signCoords.y = position.y < 1 ? 1 : position.y;
-                                $scope.controlFn.signCoords.x = position.x < 1 ? 1 : position.x;
-                                $scope.controlFn.signCoords.pageNum = position.pageNumber;
-                                $scope.controlFn.signCoords.width = (options.target.width * options.target.scaleX);
-                                $scope.controlFn.signCoords.height = (options.target.height * options.target.scaleY);
-                                var underSignElement =   document.getElementById('underSign');
-                                if(underSignElement){
-                                    underSignElement.style.top = ((options.target.top) + (options.target.height * options.target.scaleY)) + 'px';
-                                    underSignElement.style.left = (options.target.left) + 'px';
-                                    underSignElement.style.width = (options.target.width * options.target.scaleX) + 'px';
-                                    //resize font size relative to the sign size
-                                    //max font size
-                                    var signFontSize = Math.floor(Math.min($scope.controlFn.signCoords.width *6/100,MAX_FONT_SIZE));
-                                    //min font size
-                                    signFontSize = Math.floor(Math.max(signFontSize,MIN_FONT_SIZE));
-                                    angular.forEach(document.querySelectorAll("#underSign span"),function(element){
-
-                                        element.style.fontSize = $scope.controlFn.signFontSize = signFontSize+'px';
-                                        $scope.controlFn.signFontSizeFloat = signFontSize;
-                                    });
-                                    // if(document.querySelector("#underSign .underSign-paraph")){
-                                    //
-                                    //     document.querySelector("#underSign .underSign-paraph").style.fontSize = signFontSize +'px';
-                                    // }
-
-                                }
+                                updateDimensionsBySingSize(options.target)
                             });
-                            // img.on('rotated', function(options) {
-                            //     $scope.controlFn.signCoords.rotate = Math.round(options.target.angle);
-                            // });
                         });
                     }, 1);
                 };

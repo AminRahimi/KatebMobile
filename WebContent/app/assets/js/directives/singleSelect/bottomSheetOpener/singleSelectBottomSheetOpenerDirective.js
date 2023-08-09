@@ -7,8 +7,11 @@ angular.module('singleSelect').directive('singleSelectBottomSheetOpener', [
                 isEditMode: "=",
                 onRefresh: "&",
                 onSelect: "&",
-                appEnumKey:"@",
-                titlePropKey:"@",
+                onRemove:"&",
+                appEnumKey: "@",
+                titlePropKey: "@",
+                filterFn:"&",
+                isTagging:"=",
                 // FIXME:change options to initialList and place all optional inputs to option
                 options: "="
             },
@@ -30,9 +33,12 @@ angular.module('singleSelect').directive('singleSelectBottomSheetOpener', [
                                 isEditMode: $scope.isEditMode,
                                 onRefresh: $scope.onRefresh,
                                 onSelect: $scope.onSelect,
-                                appEnumKey:$scope.appEnumKey,
-                                titlePropKey:$scope.titlePropKey,
-                                options: $scope.options
+                                onRemove: $scope.onRemove,
+                                appEnumKey: $scope.appEnumKey,
+                                titlePropKey: $scope.titlePropKey,
+                                filterFn:$scope.filterFn,
+                                options: $scope.options,
+                                isTagging: $scope.isTagging
                             });
                     }
                 }

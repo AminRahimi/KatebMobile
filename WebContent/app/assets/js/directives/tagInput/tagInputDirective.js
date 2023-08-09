@@ -67,7 +67,7 @@ angular.module('tagInputModule').directive('tagInputModal', [
              refreshTegList:"&",
              onSendTagsClick:"&"
          },
-         templateUrl: 'app/assets/js/directives/tagInput/mobileView/tagInputModal.html',
+         templateUrl: 'app/assets/js/directives/tagInput/modalView/tagInputModal.html',
          controller: function($scope,$modal) {
             $scope.Data = {
                 
@@ -76,7 +76,7 @@ angular.module('tagInputModule').directive('tagInputModal', [
             $scope.Func = {
                 onActionBtnClick:function(){
                     var modalInstance = $modal.open({
-                       templateUrl : 'app/assets/js/directives/tagInput/mobileView/tagInputModal.modal.html',
+                       templateUrl : 'app/assets/js/directives/tagInput/modalView/tagInputModal.modal.html',
                        controller : function($scope,$modalInstance,refreshTegList){
 
 
@@ -124,7 +124,7 @@ angular.module('tagInputModule').directive('tagInputDropdown', [
              refreshTegList:"&",
              onSendTagsClick:"&"
          },
-         templateUrl: 'app/assets/js/directives/tagInput/desktopView/tagInputDropdown.html',
+         templateUrl: 'app/assets/js/directives/tagInput/dropdownView/tagInputDropdown.html',
          controller: function($scope) {
             $scope.Data = {
                 tagList: [],

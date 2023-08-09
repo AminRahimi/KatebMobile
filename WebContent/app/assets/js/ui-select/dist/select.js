@@ -2429,8 +2429,8 @@ uis.service('uisRepeatParser', ['uiSelectMinErr','$parse', function(uiSelectMinE
 angular.module("ui.select").run(["$templateCache", function($templateCache) {$templateCache.put("md/choices.tpl.html","<ul class=\"ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu\" ng-show=\"$select.open && $select.items.length > 0\"><li class=\"ui-select-choices-group\" id=\"ui-select-choices-{{ $select.generatedId }}\"><div class=\"divider\" ng-show=\"$select.isGrouped && $index > 0\"></div><div ng-show=\"$select.isGrouped\" class=\"ui-select-choices-group-label dropdown-header\" ng-bind=\"$group.name\"></div><div ng-attr-id=\"ui-select-choices-row-{{ $select.generatedId }}-{{$index}}\" class=\"ui-select-choices-row\" ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\" role=\"option\"><span class=\"ui-select-choices-row-inner\"></span></div></li></ul>");
 $templateCache.put("md/match-multiple.tpl.html","<span class=\"ui-select-match\">" +
   "<span ng-repeat=\"$item in $select.selected track by $index\">" +
-    "<span class=\"ui-select-match-item  chips \" tabindex=\"-1\"  ng-disabled=\"$select.disabled\" ng-click=\"$selectMultiple.activeMatchIndex = $index;$selectMultiple.onModelItemSelect($item,$index)\"   ng-class=\"{\'chips-primary\':$selectMultiple.activeMatchIndex === $index,\'chips-default\':$selectMultiple.activeMatchIndex !== $index, \'select-locked\':$select.isLocked(this, $index)}\" ui-select-sort=\"$select.selected\">" +
-      "<span class=\"ui-select-match-close chips__close \" ng-hide=\"$select.disabled\" ng-click=\"$selectMultiple.removeChoice($index)\">&nbsp;&times;</span> " +
+    "<span class=\"ui-select-match-item  chip \" tabindex=\"-1\"  ng-disabled=\"$select.disabled\" ng-click=\"$selectMultiple.activeMatchIndex = $index;$selectMultiple.onModelItemSelect($item,$index)\"   ng-class=\"{\'chip-primary\':$selectMultiple.activeMatchIndex === $index,\'chip-default\':$selectMultiple.activeMatchIndex !== $index, \'select-locked\':$select.isLocked(this, $index)}\" ui-select-sort=\"$select.selected\">" +
+      "<span class=\"ui-select-match-close chip__close \" ng-hide=\"$select.disabled\" ng-click=\"$selectMultiple.removeChoice($index)\">&nbsp;&times;</span> " +
       "<span class='tw-p-1' uis-transclude-append=\"\"></span></span></span></span>");
 $templateCache.put("md/match.tpl.html","<div class=\"ui-select-match tw-min-h-[1.75rem]\" ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=\"$select.disabled\" >" +
   "<span tabindex=\"-1\" class=\"ui-select-toggle tw-flex tw-items-center tw-h-full \" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=\"$select.disabled\" ng-click=\"$select.activate()\" style=\"outline: 0;\">" +
@@ -2451,7 +2451,7 @@ $templateCache.put("md/select-multiple.tpl.html","<div class=\"ui-select-contain
   "                                            </div>" +
 
   "</div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");
-$templateCache.put("md/select.tpl.html","<div class=\"ui-select-container ui-select-bootstrap dropdown tw-border-b tw-border-solid tw-border-light-gray\" ng-class=\"{open: $select.open}\">" +
+$templateCache.put("md/select.tpl.html","<div class=\"ui-select-container ui-select-bootstrap dropdown tw-border-b tw-border-solid tw-border-gray-light\" ng-class=\"{open: $select.open}\">" +
   "<div class=\"ui-select-match\"></div>" +
   "<span ng-show=\"$select.open && $select.refreshing && $select.spinnerEnabled\" class=\"ui-select-refreshing {{$select.spinnerClass}}\"></span> " +
 

@@ -20,7 +20,7 @@ angular.module('vtFolderSelector', []).directive('vtFolderSelector', function ()
                 archivedType: "",
                 validationClicked: true,
                 archivedTypesList: configObj.externalArchives,
-                systemTagsMap: configObj.userConfig.organization.code === 'sima-va-manzar' ? appConst.systemTagSimaManzar : appConst.systemTag,
+                systemTagsMap: (configObj.userConfig.organization && configObj.userConfig.organization.code === 'sima-va-manzar') ? appConst.systemTagSimaManzar : appConst.systemTag,
                 archiveType: "modernizationCode",
                 modernizationCodePopoverIsOpen: false,
                 rcShow: null,

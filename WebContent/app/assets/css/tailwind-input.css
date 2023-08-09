@@ -22,11 +22,10 @@
 
 
     .md-input-main {
-        @apply tw-font-sans tw-text-xl tw-w-full;
+        @apply tw-flex tw-font-sans tw-text-xl tw-w-full;
     }
     .md-input-box {
-        @apply tw-relative;
-        position: relative;
+        @apply tw-relative tw-grow;
     }
     .md-input {
         @apply tw-w-full;
@@ -45,8 +44,14 @@
         transform-origin: top left;
     }
     .md-input-underline {
-        @apply tw-border-b tw-border-solid tw-border-light-gray
+        @apply tw-border-b tw-border-solid tw-border-gray-light
     }
+
+
+    .has-error .md-input-underline{
+        @apply tw-border-danger
+    }
+
     .md-input-underline:after {
         @apply tw-absolute tw-left-0 tw-right-0 tw-pointer-events-none tw-border-b-black tw-border tw-border-solid;
         bottom: -0.05rem;
@@ -68,15 +73,15 @@
     */
 
 
-/*   Chips */
-    .chips {
+/*   Chip */
+    .chip {
         @apply tw-inline-flex tw-flex-row-reverse  tw-p-0 tw-ml-1 tw-mb-1;
     }
-    .chips__close{
+    .chip__close{
         @apply tw-border-r tw-border-solid tw-border-white tw-text-white tw-p-1 tw-flex tw-items-center;
     }
 
-    .chips.chips-default{
+    .chip.chip-default{
         @apply tw-border-gray tw-bg-gray tw-text-white tw-rounded;
     }
 
@@ -89,7 +94,7 @@
 
 
     
-    .btn.btn-primary, .label.label-primary,.chips.chips-primary {
+    .btn.btn-primary, .label.label-primary,.chip.chip-primary {
         @apply tw-border-hard tw-bg-hard tw-text-white tw-rounded;
     }
 
@@ -178,12 +183,17 @@
     }
 
 
-    .saad-icon{
-        @apply tw-w-em-3  tw-text-hard;
-    }
+
 
     .action-icon{
-        @apply tw-w-em-4 tw-ml-2 tw-text-hard;
+        @apply tw-h-em-4 tw-inline-block  tw-text-hard;
+    }
+    .has-error .action-icon{
+        @apply tw-text-danger;
+    }
+
+    .action-icon svg{
+        @apply tw-h-full;
     }
 
 
@@ -207,7 +217,7 @@
     }
 
     .kateb-label.kateb-label--default-light {
-        @apply tw-text-black tw-bg-light-gray;
+        @apply tw-text-black tw-bg-gray-light;
     }
     .kateb-label.kateb-label--default-deep {
         @apply tw-text-white tw-bg-gray;
@@ -239,7 +249,7 @@
 
 
     .letter-draft-view{
-        @apply tw-flex tw-flex-col tw-bg-light-gray tw-p-content-padding tw-overflow-hidden tw-flex-grow;
+        @apply tw-flex tw-flex-col tw-bg-gray-light tw-p-content-padding tw-overflow-hidden tw-flex-grow;
     }
 
     .letter-draft-view__header-summary{
@@ -255,6 +265,10 @@
 
 
 
+    .kateb-menu__menu-item{
+        @apply tw-flex tw-items-center tw-h-menuHeight tw-text-lg;
+    }
+
 
 
 
@@ -263,6 +277,22 @@
         @apply tw-text-right tw-text-sm tw-font-thin;
     }
 
+
+
+
+
+    .action-btn-widget--text .action-btn-widget{
+        @apply tw-hidden
+    }
+    .action-btn-widget--text .action-btn-widget--text{
+        @apply tw-block
+    }
+
+
+    .disabled .action-btn-widget {
+        @apply tw-text-gray
+    }
+    
 
 
 }

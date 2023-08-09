@@ -1,0 +1,10 @@
+<ul class="kateb-menu">
+
+    <li class="kateb-menu__menu-item" 
+        access-checker="{{Data.actionButtonsMap[menuItemTpl].access_checker || '*'}}"
+        ng-show="Data.actionButtonsMap[menuItemTpl].isVisible()"
+        ng-repeat="menuItemTpl in Data.menuItemTpls track by $index">
+        <!-- FIXME:refactor class name(action-btn-widget--text) for choosing what widget to show -->
+        <span ng-include="menuItemTpl" ng-click="onMenuItemClick(menuItemTpl)" class="action-btn-widget--text"></span>
+    </li>
+</ul>

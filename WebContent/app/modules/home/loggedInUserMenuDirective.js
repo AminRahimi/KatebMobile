@@ -14,7 +14,8 @@ angular.module('loggedInUserMenu',[]).directive('loggedInUserMenu',
                     currentUserConfig:currentUserConfig,
                     userFullName : currentUserConfig.userConfig.userFullName,
                     time : new Date(),
-                    settingMenu : homeSrvc.generateSettingMenu()
+                    settingMenu : homeSrvc.generateSettingMenu(),
+                    isMobileView:  homeSrvc.screenSizeDetector.isMobile(),
                 };
                 $scope.Func = {
                     getStateName: function (stateName){

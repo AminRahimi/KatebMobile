@@ -11,12 +11,11 @@ angular.module('deleteModule', []).controller('deleteFromModalCtrl', [ '$scope',
     return {
         restrict : 'EA',
         templateUrl : 'app/assets/js/directives/deleteModal/confirmButton.html',
+        transclude: true,
         scope : {
             modalTitle : "=",
             modalMessage : "=",
-            mode : "=mode",
             exchangeConfirmFunction : "=",
-            buttonTitle : "=",
         },
         controller : function($scope, $rootScope, $modal, $q) {
             // Open Modal

@@ -1,5 +1,15 @@
 
 <div ng-show="isEditMode">
-	<div ng-click="Func.onOpenClick()" ng-show="model" >{{appEnumKey?(model | appEnum:appEnumKey):titlePropKey? model[titlePropKey]: model.title? model.title: model}}</div>
+	<span class=" chip  chip-default" 	
+		ng-show="model"
+		ng-click="Func.onOpenClick()" >
+		<span class="chip__close " ng-click="onRemove();$event.stopPropagation();">×</span>
+		<span class="tw-p-1" >
+			<!-- TODO:refactor multiselect like this -->
+			{{appEnumKey?(model | appEnum:appEnumKey): model[titlePropKey] || model.title || model}}
+
+		</span>
+	</span>
+	
 	<div ng-click="Func.onOpenClick()" ng-hide="model" class="action-icon" ng-include="'kateb-icon-plus.svg'"></div>
 </div>

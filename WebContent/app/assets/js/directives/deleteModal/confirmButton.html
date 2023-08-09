@@ -1,11 +1,5 @@
-<script>
-    $(function() {
-        $("[data-toggle='tooltip']").tooltip();
-    });
-</script>
+<div ng-click="onConfirmationClick($event)">
 
-<div ng-click="onConfirmationClick($event)"
-     style="align-items: center">
-    <span ng-show="mode=='deleteButton'" style="font-size: 14px; margin-left: 5px" class="glyphicon glyphicon-trash"></span>
-    <span>{{buttonTitle}}</span>
+    <span ng-transclude></span>
+    
 </div>

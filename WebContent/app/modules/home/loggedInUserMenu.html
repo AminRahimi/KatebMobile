@@ -1,31 +1,29 @@
-<style>
-
-  :root{
-    --logged-in-user-menu-avatar-size: 24px;
-    --logged-in-user-menu-border: 1px solid var(--light);
-  }
-
-</style>
-
-
-
-
 <div class="btn-group  tw-border tw-border-light tw-rounded tw-border-solid">
-  <button type="button" class="btn btn-transparent   dropdown-toggle tw-flex tw-items-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<!--FIXME:src -->
+  <button type="button" class="btn btn-transparent   dropdown-toggle tw-flex tw-items-center" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    <!--FIXME:src -->
     <img src="https://docteav.saadev.ir/Ganjeh/app/assets/img/user.svg"
-         class="tw-rounded-full tw-h-[--logged-in-user-menu-avatar-size] tw-w-[--logged-in-user-menu-avatar-size] tw-border tw-border-light tw-border-solid" >
-    <span class=" tw-text-black tw-text-right tw-m-0 tw-mx-1">
-      <div>{{Data.userFullName}}</div>
-<!-- FIXME:user number     -->
-      <div>546849</div>
+      class="tw-rounded-full tw-h-user-box-avatar-size tw-w-usertw-h-user-box-avatar-size tw-border tw-border-light tw-border-solid">
+    <span class="  tw-text-right tw-m-0 tw-mx-1">
+      <div class="tw-text-lg tw-text-black">{{Data.userFullName}}</div>
+      <!-- FIXME:user number     -->
+      <div class="tw-text-gray">546849</div>
     </span>
-     <span class="caret"></span>
+    <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu tw-w-full">
-    <li><a>{{Data.time|persianDate:'yyyy/MM/dd'|EnToFaNumber}}</a></li>
-    <li><a ui-sref="Func.getStateName('base.home.changePassword')">تغییر رمز عبور</a></li>
-    <li class="menu-item dropdown dropdown-submenu dropdown-submenu-left">
+  <ul class="dropdown-menu kateb-menu tw-w-full">
+    <li class="kateb-menu__menu-item"><a>{{Data.time|persianDate:'yyyy/MM/dd'|EnToFaNumber}}</a></li>
+
+    <li class="kateb-menu__menu-item" ng-show="Data.isMobileView" access-checker="MANAGEMENT_CONFERMENT">
+      <a ui-sref="Func.getStateName('base.home.setting.conferment')">
+        تفویض اختیارات
+      </a>
+    </li>
+
+    <li class="kateb-menu__menu-item"><a ui-sref="Func.getStateName('base.home.changePassword')">تغییر رمز عبور</a></li>
+
+    <li  ng-hide="Data.isMobileView"
+      class="kateb-menu__menu-item  dropdown dropdown-submenu dropdown-submenu-left">
       <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> تنظیمات
       </a>
       <ul class="dropdown-menu">
@@ -34,12 +32,15 @@
         </li>
       </ul>
     </li>
-    <li><a ui-sref="Func.getStateName('base.home.theme')">تغییر ظاهر سامانه</a></li>
-    <li ng-show="Data.currentUserConfig.config.server.host==='kateb.saadev.ir'">
+
+    <li class="kateb-menu__menu-item" ng-hide="Data.isMobileView">
+        <a ui-sref="Func.getStateName('base.home.theme')">تغییر ظاهر سامانه</a>
+    </li>
+
+    <li class="kateb-menu__menu-item" ng-show="Data.currentUserConfig.config.server.host==='kateb.saadev.ir'">
       <a ng-click="Func.onGetClientLogClick()">client error log</a>
     </li>
-    <li class="divider"></li>
+    <li class="divider kateb-menu__menu-item"></li>
     <li><a href="logout">خروج</a></li>
   </ul>
 </div>
-
