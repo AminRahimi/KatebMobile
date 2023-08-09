@@ -101,7 +101,9 @@ angular.module('vtCartable').directive('cartableMenu',
                                     var cartable, filter;
                                     for (var int = 0; int < $scope.Data.cartableList.length; int++) {
                                         for (var jnt = 0; jnt < $scope.Data.cartableList[int].filters.length; jnt++) {
-                                            if ($scope.Data.cartableList[int].filters[jnt]['default']) {
+                                            // FIXME: default filter ignored!
+                                            // if ($scope.Data.cartableList[int].filters[jnt]['default']) {
+                                            if ($scope.Data.cartableList[int].filters[jnt].unreadCount) {
                                                 if (!cartable) {
                                                     cartable = $scope.Data.cartableList[int];
                                                     filter = $scope.Data.cartableList[int].filters[jnt];

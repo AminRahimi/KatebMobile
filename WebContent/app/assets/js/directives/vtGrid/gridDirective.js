@@ -348,7 +348,7 @@ angular.module('vtGrid', []).directive("vtGrid", function($http) {
 				pagination: {
 					totalItems : -1,
 					currentPage : cartableSrvc.getCurrentPage(),
-					perPage : ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : 10),
+					perPage : ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : $scope.options.isMobileView? 20: 10 ),
 					maxSize : 5,
 					inOnePage: function(){
 						if ($scope.Controller.pagination.totalItems <= $scope.Controller.pagination.perPage)
@@ -367,11 +367,10 @@ angular.module('vtGrid', []).directive("vtGrid", function($http) {
 					choices: $scope.controlFn.options.customPagination,
 					totalItems : -1,
 					currentPage : 1,
-					count : parseInt(localStorage.getItem('customPagination')) || 10,
+					count : ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : $scope.options.isMobileView? 20: 10 ),
 					maxSize : 5,
 					totalPages: 1,
 					change : function() {
-						localStorage.setItem('customPagination', $scope.Controller.customPagination.count);
 						$scope.Controller.customPagination.totalPages =  Math.ceil($scope.Controller.customPagination.totalItems/$scope.Controller.customPagination.count);
 						return $scope.Func.getItemsPerCondition();
 					}

@@ -25,13 +25,13 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                 pagination: {
                     totalItems: 1,
                     currentPage: $location.search()['page'] || cartableSrvc.getCurrentPage(),
-                    perPage: ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : 10),
+                    perPage: ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : $scope.options.isMobileView? 20: 10 ),
                     maxSize: 1,
                     inOnePage: function () {
                         return ($scope.Controller.pagination.totalItems <= $scope.Controller.pagination.perPage);
                     },
                     pageChanged: function () {
-                        if ((Math.ceil($scope.Controller.pagination.totalItems / 10)) == $scope.controlFn.currentPage) {
+                        if ((Math.ceil($scope.Controller.pagination.totalItems / $scope.Controller.pagination.perPage)) == $scope.controlFn.currentPage) {
                             $scope.controlFn.currentPage = 1;
                         }
                         cartableSrvc.current = $scope.controlFn.currentPage;
@@ -48,11 +48,10 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
                     choices: $scope.controlFn.options.customPagination,
                     totalItems : 1,
                     currentPage : 1,
-                    count : parseInt(localStorage.getItem('customPagination')) || 10,
+                    count : ($scope.controlFn.pageSize ? $scope.controlFn.pageSize : $scope.options.isMobileView? 20: 10 ),
                     maxSize : 1,
                     totalPages: 1,
                     change : function() {
-                        localStorage.setItem('customPagination', $scope.Controller.customPagination.count);
                         $scope.Controller.customPagination.totalPages =  Math.ceil($scope.Controller.customPagination.totalItems/$scope.Controller.customPagination.count);
                         cartableSrvc.current = $scope.controlFn.currentPage;
                         cartableSrvc.setCurrentPage($scope.Controller.customPagination.currentPage);
@@ -100,7 +99,7 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
 
                 },
                 getItemsPerCondition: function (isInfinityScrollOrigin) {
-			$scope.Data.isLoading=true;		
+			        $scope.Data.isLoading=true;		
                     $scope.controlFn.currentPage = $location.search()['page'] || $scope.Controller.pagination.currentPage;
 
                     var start, pageLen;
@@ -120,7 +119,7 @@ angular.module('vtCartableGrid', []).directive("vtCartableGrid", function () {
 
                     if ($scope.searchMode) {
                             return $scope.Func.search($scope.controlFn.searchQuery, start, pageLen,isInfinityScrollOrigin).then(function (data){
-                                $scope.Data.isLoading=false
+                                $scope.Data.isLoading=false;
                                 return data;
                             });
                     } else {
