@@ -1,9 +1,16 @@
-<!DOCTYPE html>
-<html lang="fa" class="fake">
+6<!DOCTYPE html>
+<html lang="fa">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>..:: اتوماسیون اداری - کاتب ::..</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
+<meta name="keywords" content="اتوماسیون اداری کاتب,اتوماسیون"/>
+<meta name="description" content="اتوماسیون اداری کاتب - تسریع و تسهیل در بروکراسی اداری و سازمانی"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<meta name="robots" content="index, follow"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<link rel="manifest" href="manifest.json"/>
 
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
@@ -1090,5 +1097,13 @@
     /*    }*/
     /*}*/
 </style>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("pwa.worker.js");
+}
+
+
+</script>
 </body>
 </html>

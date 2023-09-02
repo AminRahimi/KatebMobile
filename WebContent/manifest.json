@@ -1,0 +1,37 @@
+{
+  "short_name": "کاتب",
+  "name": "کاتب",
+  "description": "کاتب | اتوماسیون اداری",
+  "orientation": "portrait",
+  "start_url": "/Kateb",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "static/assets/img/kateb_logo.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "static/assets/img/kateb_logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "static/assets/img/kateb_logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "static/assets/img/kateb_logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
